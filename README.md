@@ -1,24 +1,24 @@
 # TuneTales
 
-A modern web application that tells the stories behind iconic music albums, built with Next.js 14, TypeScript, and Tailwind CSS.
+A modern web application that brings music stories to life through beautiful animations and interactive storytelling. Built with Next.js 14, Tailwind CSS, and Framer Motion.
 
 ## Features
 
-- 🎵 Rich storytelling about iconic music albums
-- ✨ Beautiful floating music note animations
-- 🎨 Modern, responsive design with Tailwind CSS
+- 🎵 Dynamic floating music notes animation
+- 🎨 Beautiful, responsive UI with Tailwind CSS
 - ⚡ Fast page loads with Next.js 14
 - 🎭 Smooth animations with Framer Motion
-- 📱 Mobile-first approach
-- 🎯 Type-safe development with TypeScript
+- 📱 Mobile-first design
+- 🌙 Dark theme optimized
+- 🎯 SEO-friendly
+- 🚀 Performance optimized
 
 ## Tech Stack
 
 - **Framework**: Next.js 14
-- **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
-- **Icons**: Lucide Icons
+- **Icons**: Heroicons
 - **Deployment**: Vercel
 
 ## Getting Started
@@ -45,33 +45,31 @@ A modern web application that tells the stories behind iconic music albums, buil
 
 ```
 tunetales/
-├── app/                    # Next.js app directory
-│   ├── components/        # React components
-│   ├── stories/          # Story pages
-│   └── page.tsx          # Home page
-├── public/               # Static assets
-└── ...config files
+├── app/
+│   ├── components/
+│   │   ├── FloatingNote.tsx
+│   │   ├── FloatingNotesLayer.tsx
+│   │   └── StoryCard.tsx
+│   ├── stories/
+│   │   └── [id]/
+│   │       ├── page.tsx
+│   │       └── loading.tsx
+│   ├── layout.tsx
+│   └── page.tsx
+├── public/
+│   └── grid.svg
+├── tailwind.config.ts
+└── package.json
 ```
 
-## Features in Detail
+## Performance Optimizations
 
-### Floating Notes Animation
-- Optimized performance with memoization
-- Three-layer depth effect (background, foreground, overlay)
-- Smooth transitions and movements
-- Responsive to screen size
-
-### Story Pages
-- Detailed album information
-- Rich media content
-- Smooth page transitions
-- Custom 404 handling
-
-### Performance Optimizations
-- Memoized components
-- Optimized animations
-- Efficient rendering
-- Proper error handling
+- Memoized components and calculations
+- Pre-computed random values pool
+- Hardware-accelerated animations
+- Optimized image loading
+- Reduced animation complexity
+- Efficient DOM updates
 
 ## Contributing
 
@@ -87,6 +85,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Album cover images from Unsplash
-- Music data for educational purposes
-- Inspired by music storytelling platforms
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Heroicons](https://heroicons.com/)

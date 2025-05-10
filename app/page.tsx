@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic';
 import StoryCard from './components/StoryCard';
 import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
-import FloatingNotesLayer from './components/FloatingNotesLayer';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
