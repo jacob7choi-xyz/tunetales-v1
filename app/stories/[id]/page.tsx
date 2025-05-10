@@ -61,7 +61,7 @@ const sampleStories = {
       genre: 'Dance, House, R&B',
       tracks: 16,
       duration: '62:14',
-      description: 'The first act of Beyoncé\'s three-part project, "RENAISSANCE" is a celebration of Black queer culture and house music. The album pays homage to the pioneers of dance music while pushing the genre forward with innovative production and powerful vocals. It\'s a journey through different eras of dance music, from disco to house, creating a space for liberation and joy.',
+      description: "The first act of Beyoncé's three-part project, \"RENAISSANCE\" is a celebration of Black queer culture and house music. The album pays homage to the pioneers of dance music while pushing the genre forward with innovative production and powerful vocals. It's a journey through different eras of dance music, from disco to house, creating a space for liberation and joy.",
       keyTracks: ['BREAK MY SOUL', 'CUFF IT', 'ALIEN SUPERSTAR', 'VIRGO\'S GROOVE', 'SUMMER RENAISSANCE'],
       criticalReception: 'Universal acclaim with a Metacritic score of 92/100',
       awards: ['Best Dance/Electronic Album - Grammy Awards 2023', 'Album of the Year - Grammy Awards 2023']
@@ -79,39 +79,35 @@ export default function StoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <FloatingNotesLayer count={30} layer="background" />
-      <FloatingNotesLayer count={20} layer="foreground" />
-      <FloatingNotesLayer count={10} layer="overlay" />
-      
-      <div className="relative max-w-4xl mx-auto px-4 py-16">
+    <div className="min-h-screen bg-black text-white p-0 m-0 relative overflow-hidden">
+      <div className="relative max-w-4xl mx-auto px-4 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="space-y-8"
+          className="space-y-8 relative"
         >
-          <div className="flex items-center space-x-4 text-sm text-white/70">
-            <span>{story.category}</span>
-            <span>•</span>
-            <span>{story.year}</span>
+          <div className="flex items-center text-sm text-white/70 mt-0">
+            <span>{story.category}{story.year}</span>
           </div>
-          
-          <h1 className="text-4xl font-bold">{story.artistName}</h1>
-          <h2 className="text-2xl text-indigo-200">{story.albumDetails.title}</h2>
-          
-          <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+          <h1 className="text-4xl font-bold mt-0">{story.artistName}</h1>
+          <h2 className="text-2xl text-indigo-200 mt-0">{story.albumDetails.title}</h2>
+          <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden relative">
             <img
               src={story.coverImageUrl}
               alt={`${story.artistName} - ${story.albumDetails.title}`}
               className="object-cover w-full h-full"
             />
+            {/* Floating notes absolutely positioned over the image */}
+            <div className="pointer-events-none absolute inset-0 z-30">
+              <FloatingNotesLayer count={30} layer="background" />
+              <FloatingNotesLayer count={20} layer="foreground" />
+              <FloatingNotesLayer count={10} layer="overlay" />
+            </div>
           </div>
-          
           <div className="prose prose-invert max-w-none">
             <p className="text-lg leading-relaxed">{story.albumDetails.description}</p>
           </div>
-          
           <div className="grid grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold mb-4">Album Details</h3>

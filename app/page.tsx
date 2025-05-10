@@ -105,7 +105,7 @@ const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) =>
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-black">
-      <main className="flex-1">
+      <main className="min-h-screen bg-black text-white p-0 m-0 flex-1">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
           <FloatingNotesLayer count={50} layer="background" />
@@ -180,48 +180,31 @@ export default function Home() {
         </div>
 
         {/* Stories Grid */}
-        <div className="relative py-16 bg-gradient-to-b from-gray-900 to-black">
-          <FloatingNotesLayer count={40} layer="background" />
-          <FloatingNotesLayer count={30} layer="foreground" />
-          <FloatingNotesLayer count={20} layer="overlay" />
-
-          <div className="relative">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="font-display text-xl font-bold text-white animate-3d-float transform-gpu" style={{ perspective: '2000px' }}>
-                Featured Stories
-              </h2>
-              <div className="flex items-center space-x-2 text-sm text-white/70">
-                <MusicalNoteIcon className="h-5 w-5 animate-music-pulse" />
-                <span>Updated daily</span>
-              </div>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {sampleStories.map((story) => (
-                <div key={story.id} className="transform-gpu transition-all duration-300 hover:scale-105 hover:translate-z-50">
-                  <StoryCard
-                    storyId={story.id}
-                    artistName={story.artistName}
-                    coverImageUrl={story.coverImageUrl}
-                    storyPreview={story.storyPreview}
-                    category={story.category}
-                    year={story.year}
-                  />
-                </div>
-              ))}
-            </div>
+        <div className="w-full max-w-7xl mx-auto px-2 py-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {sampleStories.map((story) => (
+              <StoryCard
+                key={story.id}
+                storyId={story.id}
+                artistName={story.artistName}
+                coverImageUrl={story.coverImageUrl}
+                storyPreview={story.storyPreview}
+                category={story.category}
+                year={story.year}
+              />
+            ))}
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="relative bg-black text-white py-12">
+      <footer className="relative bg-black text-white py-12 flex justify-center items-center">
         <FloatingNotesLayer count={30} layer="background" />
         <FloatingNotesLayer count={20} layer="foreground" />
         <FloatingNotesLayer count={15} layer="overlay" />
-        <div className="relative">
+        <div className="relative z-10 text-center w-full">
           <div className="animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:2000px_100%]">
-            © 2025 Jacob Choi • Designed & developed using Next.js, Tailwind CSS, and OpenAI GPT-4  
-            <br/>
+            © 2025 Jacob Choi • Designed & developed using Next.js, Tailwind CSS, and OpenAI GPT-4  <br/>
             <a href="https://jacobchoi.xyz" className="underline hover:text-white">jacobchoi.xyz</a> • 
             <a href="https://github.com/jacob7choi-xyz" className="underline hover:text-white">GitHub</a>
           </div>

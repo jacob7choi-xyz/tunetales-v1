@@ -15,9 +15,9 @@ const colors = Object.freeze([
 
 // Pre-compute size and opacity ranges for each layer
 const LAYER_CONFIGS = Object.freeze({
-  background: { size: [8, 16], opacity: [0.2, 0.4], zIndex: 'z-0' },
-  foreground: { size: [12, 24], opacity: [0.5, 0.8], zIndex: 'z-10' },
-  overlay: { size: [10, 20], opacity: [0.4, 0.8], zIndex: 'z-20' }
+  background: { size: [0.8, 1.5], opacity: [0.4, 0.6], zIndex: 'z-0' },
+  foreground: { size: [1.2, 2], opacity: [0.7, 0.9], zIndex: 'z-10' },
+  overlay: { size: [1, 1.8], opacity: [0.6, 0.8], zIndex: 'z-20' }
 } as const);
 
 interface Note {
@@ -48,7 +48,7 @@ const createRandomPool = (size: number) => {
   return pool;
 };
 
-const FloatingNotesLayer = ({ count = 30, layer = 'background' }: FloatingNotesLayerProps) => {
+const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesLayerProps) => {
   // Use refs to maintain values between renders
   const randomPoolRef = useRef<Float32Array | null>(null);
   const poolIndexRef = useRef(0);
@@ -74,15 +74,15 @@ const FloatingNotesLayer = ({ count = 30, layer = 'background' }: FloatingNotesL
     const [minSize, maxSize] = config.size;
     const [minOpacity, maxOpacity] = config.opacity;
     
-    // Distribute notes more evenly across the page
-    const x = (index / count) * 100 + (getNextRandom() * 10 - 5);
-    const y = getNextRandom() * 100;
+    // Generate completely random positions across the entire viewport
+    const x = getNextRandom() * 100; // Random x position (0-100%)
+    const y = getNextRandom() * 100; // Random y position (0-100%)
     
     return {
       id: index,
       symbol: musicSymbols[index % musicSymbols.length],
-      delay: getNextRandom() * 0.5, // Reduced delay for faster start
-      duration: 6 + getNextRandom() * 8, // Slightly faster animations
+      delay: getNextRandom() * 0.5,
+      duration: 3 + getNextRandom() * 3, // Even faster animations
       x,
       y,
       size: minSize + getNextRandom() * (maxSize - minSize),
