@@ -79,32 +79,61 @@ export default function StoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-0 m-0 relative overflow-hidden">
-      <div className="relative max-w-4xl mx-auto px-4 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a1446] via-[#1e2746] to-[#0e1126] text-white p-0 m-0 relative overflow-hidden font-sans">
+      {/* Floating notes absolutely positioned over all content */}
+      <div className="pointer-events-none fixed inset-0 z-10">
+        <FloatingNotesLayer count={30} layer="background" />
+        <FloatingNotesLayer count={20} layer="foreground" />
+        <FloatingNotesLayer count={10} layer="overlay" />
+      </div>
+      {/* Hero Section */}
+      <section className="relative flex flex-col justify-center items-center min-h-[60vh] px-4 py-12 z-20">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-stretch gap-10 md:gap-16"
+        >
+          {/* Image with glow and hover effect */}
+          <div className="flex-1 flex justify-center items-center">
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              className="relative rounded-3xl overflow-hidden shadow-2xl shadow-chroma-700/40 group"
+              style={{ boxShadow: '0 0 60px 0 #6366f1, 0 0 120px 0 #0ea5e9' }}
+            >
+              <img
+                src={story.coverImageUrl}
+                alt={`${story.artistName} - ${story.albumDetails.title}`}
+                className="object-cover w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl border-4 border-chroma-700/40 group-hover:scale-105 transition-transform duration-300"
+                style={{ filter: 'blur(0px)' }}
+              />
+              {/* Glow/blur effect around image */}
+              <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{
+                boxShadow: '0 0 80px 20px #6366f1, 0 0 120px 40px #0ea5e9',
+                filter: 'blur(16px)',
+                opacity: 0.5,
+                zIndex: 1,
+              }} />
+            </motion.div>
+          </div>
+          {/* Text content */}
+          <div className="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left gap-4">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(14,165,233,0.4)]" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{story.artistName}</h1>
+            <h2 className="text-2xl md:text-4xl font-bold text-chroma-400 drop-shadow-[0_1px_8px_rgba(99,102,241,0.5)] uppercase tracking-wide" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{story.albumDetails.title}</h2>
+            <div className="text-chroma-200 text-lg md:text-xl font-medium opacity-80 mb-2">
+              {story.category} <span className="mx-2">•</span> {story.year}
+            </div>
+          </div>
+        </motion.div>
+      </section>
+      {/* Album Info Section */}
+      <div className="relative max-w-4xl mx-auto px-4 pb-16 z-30">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="space-y-8 relative"
+          className="space-y-8"
         >
-          <div className="flex items-center text-sm text-white/70 mt-0">
-            <span>{story.category}{story.year}</span>
-          </div>
-          <h1 className="text-4xl font-bold mt-0">{story.artistName}</h1>
-          <h2 className="text-2xl text-indigo-200 mt-0">{story.albumDetails.title}</h2>
-          <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden relative">
-            <img
-              src={story.coverImageUrl}
-              alt={`${story.artistName} - ${story.albumDetails.title}`}
-              className="object-cover w-full h-full"
-            />
-            {/* Floating notes absolutely positioned over the image */}
-            <div className="pointer-events-none absolute inset-0 z-30">
-              <FloatingNotesLayer count={30} layer="background" />
-              <FloatingNotesLayer count={20} layer="foreground" />
-              <FloatingNotesLayer count={10} layer="overlay" />
-            </div>
-          </div>
           <div className="prose prose-invert max-w-none">
             <p className="text-lg leading-relaxed">{story.albumDetails.description}</p>
           </div>
@@ -138,7 +167,6 @@ export default function StoryPage() {
                 </div>
               </dl>
             </div>
-            
             <div>
               <h3 className="text-xl font-semibold mb-4">Key Tracks</h3>
               <ul className="space-y-2">
@@ -151,11 +179,9 @@ export default function StoryPage() {
               </ul>
             </div>
           </div>
-          
           <div className="space-y-4">
             <h3 className="text-xl font-semibold">Critical Reception</h3>
             <p>{story.albumDetails.criticalReception}</p>
-            
             <h3 className="text-xl font-semibold">Awards</h3>
             <ul className="space-y-2">
               {story.albumDetails.awards.map((award) => (

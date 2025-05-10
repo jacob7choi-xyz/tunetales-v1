@@ -41,7 +41,7 @@ const sampleStories = [
     artistName: 'Kendrick Lamar',
     coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
-    category: 'Hip Hop',
+    category: 'Hip Hop ',
     year: 2017,
     albumDetails: {
       title: 'DAMN.',
@@ -104,8 +104,8 @@ const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) =>
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-black">
-      <main className="min-h-screen bg-black text-white p-0 m-0 flex-1">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
+      <main className="min-h-screen flex-1 p-0 m-0 flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-blue-500 via-40% to-green-400/80 backdrop-blur-2xl">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
           <FloatingNotesLayer count={50} layer="background" />
@@ -198,7 +198,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="relative bg-black text-white py-12 flex justify-center items-center">
+      <footer className="relative bg-black/80 text-white py-12 flex justify-center items-center backdrop-blur-xl shadow-2xl shadow-pink-500/10">
         <FloatingNotesLayer count={30} layer="background" />
         <FloatingNotesLayer count={20} layer="foreground" />
         <FloatingNotesLayer count={15} layer="overlay" />
