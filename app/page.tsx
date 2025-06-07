@@ -6,6 +6,9 @@ import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@h
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
@@ -44,6 +47,7 @@ const sampleStories = [
     artistName: 'Kendrick Lamar',
     coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
+    category: 'Hip Hop',
     category: 'Hip Hop',
     year: 2017,
     albumDetails: {
@@ -135,8 +139,21 @@ export default function Home() {
     );
   }, [selectedCategory]);
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const selectedCategory = searchParams.get('category') || 'All';
+
+  const filteredStories = useMemo(() => {
+    if (selectedCategory === 'All') return sampleStories;
+    return sampleStories.filter(
+      (story) =>
+        story.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
+    );
+  }, [selectedCategory]);
+
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans overflow-x-hidden" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
       {/* Glassy Navbar */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-indigo-500/10">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
@@ -173,7 +190,7 @@ export default function Home() {
                 className="mb-4 font-display text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]"
               >
                 <span className="block animate-3d-float transform-gpu bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 bg-clip-text text-transparent">
-                  TuneTales: 
+                  TuneTales
                 </span>
                 <span className="block text-indigo-200 animate-3d-float transform-gpu text-2xl sm:text-3xl font-semibold mt-2" style={{ perspective: '2000px', animationDelay: '0.5s' }}>
                   Where Music Comes Alive
