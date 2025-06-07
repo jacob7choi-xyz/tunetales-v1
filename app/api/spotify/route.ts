@@ -17,6 +17,8 @@ async function getAccessToken() {
   }
 }
 
+// Note: For profiling (slow renders, re-renders, etc.) in Next.js 14, use React DevTools' Profiler tab (or a custom hook) instead of the deprecated --profile flag.
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -29,10 +31,10 @@ export async function GET(request: Request) {
 
     await getAccessToken();
 
-    const searchResults = await spotifyApi.search(query, [type], { limit: 1 });
+    const searchResults = await (await spotifyApi.search(query, [type as ('album' | 'artist')], { limit: 1 })).body;
     
     if (type === 'album') {
-      const album = searchResults.body.albums?.items[0];
+      const album = searchResults.albums?.items[0];
       if (!album) {
         return NextResponse.json({ error: 'Album not found' }, { status: 404 });
       }
@@ -43,7 +45,7 @@ export async function GET(request: Request) {
         releaseDate: album.release_date,
       });
     } else if (type === 'artist') {
-      const artist = searchResults.body.artists?.items[0];
+      const artist = searchResults.artists?.items[0];
       if (!artist) {
         return NextResponse.json({ error: 'Artist not found' }, { status: 404 });
       }

@@ -3,6 +3,9 @@
 import dynamic from 'next/dynamic';
 import StoryCard from './components/StoryCard';
 import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
@@ -41,7 +44,7 @@ const sampleStories = [
     artistName: 'Kendrick Lamar',
     coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
-    category: 'Hip Hop ',
+    category: 'Hip Hop',
     year: 2017,
     albumDetails: {
       title: 'DAMN.',
@@ -72,7 +75,7 @@ const sampleStories = [
       genre: 'Dance, House, R&B',
       tracks: 16,
       duration: '62:14',
-      description: 'The first act of Beyoncé\'s three-part project, "RENAISSANCE" is a celebration of Black queer culture and house music. The album pays homage to the pioneers of dance music while pushing the genre forward with innovative production and powerful vocals. It\'s a journey through different eras of dance music, from disco to house, creating a space for liberation and joy.',
+      description: "The first act of Beyoncé's three-part project, \"RENAISSANCE\" is a celebration of Black queer culture and house music. The album pays homage to the pioneers of dance music while pushing the genre forward with innovative production and powerful vocals. It's a journey through different eras of dance music, from disco to house, creating a space for liberation and joy.",
       keyTracks: ['BREAK MY SOUL', 'CUFF IT', 'ALIEN SUPERSTAR', 'VIRGO\'S GROOVE', 'SUMMER RENAISSANCE'],
       criticalReception: 'Universal acclaim with a Metacritic score of 92/100',
       awards: ['Best Dance/Electronic Album - Grammy Awards 2023', 'Album of the Year - Grammy Awards 2023']
@@ -81,6 +84,22 @@ const sampleStories = [
 ];
 
 const categories = ['All', 'Pop', 'Hip Hop', 'R&B', 'Rock', 'Electronic', 'Jazz'];
+
+const genreAtmospheres = {
+  All: {
+    gradient: 'linear-gradient(135deg, #ec4899 0%, #6366f1 50%, #22d3ee 100%)',
+    notes: ['♪', '♫', '♬', '🎵', '🎶'],
+    noteColor: ['#ec4899', '#6366f1', '#22d3ee'],
+    animation: 'float',
+  },
+  Pop: {
+    gradient: 'linear-gradient(135deg, #ff80b5 0%, #fff066 100%)',
+    notes: ['🎤', '🎧', '🎵'],
+    noteColor: ['#ff80b5', '#fff066'],
+    animation: 'bounce',
+  },
+  // ...repeat for each genre
+};
 
 // Floating music symbol component with enhanced 3D effects
 const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) => (
@@ -103,100 +122,171 @@ const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) =>
 );
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
-      <main className="min-h-screen flex-1 p-0 m-0 flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-blue-500 via-40% to-green-400/80 backdrop-blur-2xl">
-        {/* Hero Section */}
-        <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          <FloatingNotesLayer count={50} layer="background" />
-          <FloatingNotesLayer count={30} layer="foreground" />
-          <FloatingNotesLayer count={20} layer="overlay" />
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-          <div className="relative px-4 py-16 text-center sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl">
-              <div className="mb-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur-sm animate-pulse transform-gpu">
+  const selectedCategory = searchParams.get('category') || 'All';
+
+  const filteredStories = useMemo(() => {
+    if (selectedCategory === 'All') return sampleStories;
+    return sampleStories.filter(
+      (story) =>
+        story.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
+    );
+  }, [selectedCategory]);
+
+  return (
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans overflow-x-hidden" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
+      {/* Glassy Navbar */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-indigo-500/10">
+        <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]">🎶 TuneTales</span>
+            <span className="hidden sm:inline-block ml-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 text-xs font-semibold text-white/80 shadow-md shadow-pink-500/20 animate-glow">Beta</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="rounded-full px-4 py-2 bg-white/10 text-white font-medium text-sm shadow-md shadow-indigo-500/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-md">Sign In</button>
+          </div>
+        </div>
+      </nav>
+      <main className="min-h-screen flex-1 p-0 m-0 flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-blue-500 via-40% to-green-400/80 backdrop-blur-2xl pt-20">
+        {/* Hero Section */}
+        <section className="relative min-h-[80vh] w-full flex items-center justify-center overflow-hidden">
+          <FloatingNotesLayer count={60} layer="background" />
+          <FloatingNotesLayer count={40} layer="foreground" />
+          <FloatingNotesLayer count={25} layer="overlay" />
+          <div className="relative px-4 py-20 text-center sm:px-6 lg:px-8 w-full flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="mx-auto max-w-3xl"
+            >
+              <div className="mb-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur-sm animate-pulse transform-gpu shadow-lg shadow-indigo-500/10">
                 <SparklesIcon className="mr-2 h-4 w-4 animate-wave" />
                 Discover the magic behind the music
               </div>
-              <h1 className="mb-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                <span className="block animate-3d-float transform-gpu" style={{ perspective: '2000px' }}>
-                  TuneTales
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
+                className="mb-4 font-display text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]"
+              >
+                <span className="block animate-3d-float transform-gpu bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 bg-clip-text text-transparent">
+                  TuneTales: 
                 </span>
-                <span className="block text-indigo-200 animate-3d-float transform-gpu" style={{ perspective: '2000px', animationDelay: '0.5s' }}>
+                <span className="block text-indigo-200 animate-3d-float transform-gpu text-2xl sm:text-3xl font-semibold mt-2" style={{ perspective: '2000px', animationDelay: '0.5s' }}>
                   Where Music Comes Alive
                 </span>
-              </h1>
-              <p className="mx-auto mb-6 max-w-2xl text-lg text-indigo-100 animate-pulse transform-gpu">
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7, ease: 'easeOut' }}
+                className="mx-auto mb-8 max-w-2xl text-lg text-indigo-100 animate-pulse transform-gpu"
+              >
                 Every song is a story. We tell it beautifully.
-              </p>
-              <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <button className="group relative inline-flex items-center justify-center rounded-full bg-white/10 px-6 py-3 text-base font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:translate-z-50 hover:bg-white/20">
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.7, ease: 'easeOut' }}
+                className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
+              >
+                <button className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-8 py-3 text-lg font-bold text-white shadow-xl shadow-pink-500/20 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400/40">
                   <span className="relative z-10 flex items-center">
-                    <PlayIcon className="mr-2 h-5 w-5 animate-music-pulse" />
+                    <PlayIcon className="mr-2 h-6 w-6 animate-music-pulse" />
                     Start Listening
                   </span>
-                  <div className="absolute inset-0 animate-glow rounded-full" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 opacity-30 blur-xl" />
                 </button>
-                <div className="relative mx-auto max-w-xl sm:mx-0">
+                <div className="relative mx-auto max-w-xl sm:mx-0 w-full">
                   <div className="relative transform-gpu transition-all duration-300 hover:scale-105 hover:translate-z-50">
                     <input
                       type="text"
                       placeholder="Search for artists, albums, or stories..."
-                      className="w-full rounded-full border-0 bg-white/10 px-4 py-3 pl-10 text-white placeholder:text-white/70 backdrop-blur-sm focus:ring-2 focus:ring-white/20"
+                      className="w-full rounded-full border-0 bg-white/10 px-4 py-3 pl-10 text-white placeholder:text-white/70 backdrop-blur-md focus:ring-2 focus:ring-white/20 shadow-lg shadow-indigo-500/10"
                     />
                     <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/70 animate-music-pulse" />
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
-
           {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float-3d">
-            <div className="h-8 w-8 rounded-full border-2 border-white/20 p-1">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.7, ease: 'easeOut' }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float-3d"
+          >
+            <div className="h-8 w-8 rounded-full border-2 border-white/20 p-1 bg-white/10 backdrop-blur-md">
               <div className="h-full w-full rounded-full border-2 border-white/40 animate-pulse" />
             </div>
-          </div>
-        </div>
-
+          </motion.div>
+        </section>
         {/* Categories */}
-        <div className="sticky top-0 z-10 -mt-4 bg-black/80 px-4 py-3 backdrop-blur-sm sm:px-6 lg:px-8">
+        <section className="sticky top-16 z-40 -mt-4 w-full bg-black/60 px-4 py-3 backdrop-blur-xl shadow-md shadow-indigo-500/10">
           <div className="mx-auto max-w-7xl">
-            <div className="flex items-center space-x-3 overflow-x-auto pb-1">
+            <div className="flex items-center space-x-3 overflow-x-hidden pb-1">
               {categories.map((category) => (
                 <button
                   key={category}
-                  className="group relative transform-gpu rounded-full bg-white/10 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:translate-z-50 hover:bg-white/20"
+                  onClick={() => {
+                    if (category === 'All') {
+                      router.push('/', { scroll: false });
+                    } else {
+                      router.push(`/?category=${encodeURIComponent(category)}`, { scroll: false });
+                    }
+                  }}
+                  className={`group relative transform-gpu rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-pink-500/10 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-pink-500/30 focus:outline-none focus:ring-2 focus:ring-pink-400/40
+                    ${selectedCategory === category ? 'ring-2 ring-pink-400/80 scale-105 shadow-pink-500/40' : ''}`}
+                  aria-pressed={selectedCategory === category}
                 >
                   <span className="relative z-10 flex items-center">
                     <MusicalNoteIcon className="mr-1.5 h-4 w-4 animate-music-pulse" />
                     {category}
                   </span>
-                  <div className="absolute inset-0 animate-glow rounded-full opacity-0 transition-opacity group-hover:opacity-100" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 opacity-20 blur-md group-hover:opacity-40 transition-opacity" />
                 </button>
               ))}
             </div>
           </div>
-        </div>
-
+        </section>
         {/* Stories Grid */}
-        <div className="w-full max-w-7xl mx-auto px-2 py-4">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {sampleStories.map((story) => (
-              <StoryCard
-                key={story.id}
-                storyId={story.id}
-                artistName={story.artistName}
-                coverImageUrl={story.coverImageUrl}
-                storyPreview={story.storyPreview}
-                category={story.category}
-                year={story.year}
-              />
-            ))}
-          </div>
-        </div>
+        <section className="w-full max-w-7xl mx-auto px-2 py-8">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={selectedCategory}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredStories.map((story) => (
+                <motion.div
+                  key={story.id}
+                  layout
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 40 }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                >
+                  <StoryCard
+                    storyId={story.id}
+                    artistName={story.artistName}
+                    coverImageUrl={story.coverImageUrl}
+                    storyPreview={story.storyPreview}
+                    category={story.category}
+                    year={story.year}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </section>
       </main>
-
       {/* Footer */}
       <footer className="relative bg-black/80 text-white py-12 flex justify-center items-center backdrop-blur-xl shadow-2xl shadow-pink-500/10">
         <FloatingNotesLayer count={30} layer="background" />
