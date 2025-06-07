@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import StoryCard from './components/StoryCard';
 import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
@@ -42,7 +44,7 @@ const sampleStories = [
     artistName: 'Kendrick Lamar',
     coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
-    category: 'Hip Hop ',
+    category: 'Hip Hop',
     year: 2017,
     albumDetails: {
       title: 'DAMN.',
@@ -73,7 +75,7 @@ const sampleStories = [
       genre: 'Dance, House, R&B',
       tracks: 16,
       duration: '62:14',
-      description: 'The first act of Beyoncé\'s three-part project, "RENAISSANCE" is a celebration of Black queer culture and house music. The album pays homage to the pioneers of dance music while pushing the genre forward with innovative production and powerful vocals. It\'s a journey through different eras of dance music, from disco to house, creating a space for liberation and joy.',
+      description: "The first act of Beyoncé's three-part project, \"RENAISSANCE\" is a celebration of Black queer culture and house music. The album pays homage to the pioneers of dance music while pushing the genre forward with innovative production and powerful vocals. It's a journey through different eras of dance music, from disco to house, creating a space for liberation and joy.",
       keyTracks: ['BREAK MY SOUL', 'CUFF IT', 'ALIEN SUPERSTAR', 'VIRGO\'S GROOVE', 'SUMMER RENAISSANCE'],
       criticalReception: 'Universal acclaim with a Metacritic score of 92/100',
       awards: ['Best Dance/Electronic Album - Grammy Awards 2023', 'Album of the Year - Grammy Awards 2023']
@@ -104,6 +106,19 @@ const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) =>
 );
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const selectedCategory = searchParams.get('category') || 'All';
+
+  const filteredStories = useMemo(() => {
+    if (selectedCategory === 'All') return sampleStories;
+    return sampleStories.filter(
+      (story) =>
+        story.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
+    );
+  }, [selectedCategory]);
+
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
       {/* Glassy Navbar */}
@@ -201,7 +216,16 @@ export default function Home() {
               {categories.map((category) => (
                 <button
                   key={category}
-                  className="group relative transform-gpu rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-pink-500/10 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-pink-500/30 focus:outline-none focus:ring-2 focus:ring-pink-400/40"
+                  onClick={() => {
+                    if (category === 'All') {
+                      router.push('/', { scroll: false });
+                    } else {
+                      router.push(`/?category=${encodeURIComponent(category)}`, { scroll: false });
+                    }
+                  }}
+                  className={`group relative transform-gpu rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-pink-500/10 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-pink-500/30 focus:outline-none focus:ring-2 focus:ring-pink-400/40
+                    ${selectedCategory === category ? 'ring-2 ring-pink-400/80 scale-105 shadow-pink-500/40' : ''}`}
+                  aria-pressed={selectedCategory === category}
                 >
                   <span className="relative z-10 flex items-center">
                     <MusicalNoteIcon className="mr-1.5 h-4 w-4 animate-music-pulse" />
@@ -215,38 +239,36 @@ export default function Home() {
         </section>
         {/* Stories Grid */}
         <section className="w-full max-w-7xl mx-auto px-2 py-8">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.08,
-                },
-              },
-            }}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {sampleStories.map((story, idx) => (
-              <motion.div
-                key={story.id}
-                variants={{
-                  hidden: { opacity: 0, y: 40 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
-                }}
-              >
-                <StoryCard
-                  storyId={story.id}
-                  artistName={story.artistName}
-                  coverImageUrl={story.coverImageUrl}
-                  storyPreview={story.storyPreview}
-                  category={story.category}
-                  year={story.year}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={selectedCategory}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredStories.map((story) => (
+                <motion.div
+                  key={story.id}
+                  layout
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 40 }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                >
+                  <StoryCard
+                    storyId={story.id}
+                    artistName={story.artistName}
+                    coverImageUrl={story.coverImageUrl}
+                    storyPreview={story.storyPreview}
+                    category={story.category}
+                    year={story.year}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </section>
       </main>
       {/* Footer */}
