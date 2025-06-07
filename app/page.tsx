@@ -6,9 +6,6 @@ import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@h
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useMemo } from 'react';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
@@ -47,7 +44,6 @@ const sampleStories = [
     artistName: 'Kendrick Lamar',
     coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
-    category: 'Hip Hop',
     category: 'Hip Hop',
     year: 2017,
     albumDetails: {
@@ -126,19 +122,6 @@ const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) =>
 );
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const selectedCategory = searchParams.get('category') || 'All';
-
-  const filteredStories = useMemo(() => {
-    if (selectedCategory === 'All') return sampleStories;
-    return sampleStories.filter(
-      (story) =>
-        story.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
-    );
-  }, [selectedCategory]);
-
   const searchParams = useSearchParams();
   const router = useRouter();
 
