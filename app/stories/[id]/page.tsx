@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation';
 const sampleStories = {
   'taylor-swift-folklore': {
     artistName: 'Taylor Swift',
-    coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
+    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'In the depths of the pandemic, Taylor Swift crafted "Folklore" - an intimate journey through imagined lives and personal reflections that redefined her artistic identity.',
     category: 'Pop',
     year: 2020,
@@ -29,7 +29,7 @@ const sampleStories = {
   },
   'kendrick-lamar-damn': {
     artistName: 'Kendrick Lamar',
-    coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
+    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
     category: 'Hip Hop',
     year: 2017,
@@ -49,7 +49,7 @@ const sampleStories = {
   },
   'beyonce-renaissance': {
     artistName: 'Beyoncé',
-    coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
+    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'Beyoncé\'s "Renaissance" celebrates Black queer culture and house music, creating a space for liberation and joy in a world that often denies it.',
     category: 'R&B',
     year: 2022,

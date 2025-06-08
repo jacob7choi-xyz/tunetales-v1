@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useCallback, useRef, useEffect } from 'react';
-import FloatingNote from './FloatingNote';
+import { motion } from 'framer-motion';
 
 // Pre-compute symbol and color arrays to avoid runtime calculations
 const musicSymbols = Object.freeze([
@@ -115,10 +115,41 @@ const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesL
       }}
     >
       {notes.map((note) => (
-        <FloatingNote
+        <motion.div
           key={note.id}
-          {...note}
-        />
+          className="absolute pointer-events-none select-none"
+          style={{
+            left: `${note.x}%`,
+            top: `${note.y}%`,
+            fontSize: `${note.size}rem`,
+            color: note.color,
+            opacity: note.opacity,
+            transform: `rotate(${note.rotation}deg)`,
+            willChange: 'transform',
+            backfaceVisibility: 'hidden'
+          }}
+          initial={{ 
+            y: 0,
+            opacity: 0,
+            scale: 0.5,
+            rotate: note.rotation
+          }}
+          animate={{ 
+            y: [-20, -60, -100],
+            opacity: [0, note.opacity, 0],
+            scale: [0.5, 1, 0.8],
+            rotate: [note.rotation, note.rotation + 180, note.rotation + 360]
+          }}
+          transition={{
+            duration: note.duration,
+            delay: note.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+            times: [0, 0.5, 1]
+          }}
+        >
+          {note.symbol}
+        </motion.div>
       ))}
     </div>
   );

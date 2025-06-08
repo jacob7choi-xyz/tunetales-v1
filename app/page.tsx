@@ -5,23 +5,18 @@ import StoryCard from './components/StoryCard';
 import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
 });
-
-// Music symbols for floating animation
-const musicSymbols = [
-  '♪', '♫', '♬', '♩', '♭', '♮', '♯', '𝄞', '𝄢', '𝄡', '🎵', '🎶', '🎼', '🎹', '🎻', '🎺', '🎸', '🎷'
-];
 
 // Sample data - in a real app, this would come from an API or database
 const sampleStories = [
   {
     id: 'taylor-swift-folklore',
     artistName: 'Taylor Swift',
-    coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
+    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'In the depths of the pandemic, Taylor Swift crafted "Folklore" - an intimate journey through imagined lives and personal reflections that redefined her artistic identity.',
     category: 'Pop',
     year: 2020,
@@ -36,13 +31,13 @@ const sampleStories = [
       description: 'A surprise album written and recorded during the COVID-19 pandemic, "Folklore" marks a significant departure from Swift\'s previous pop sound. The album weaves together fictional narratives and personal reflections, exploring themes of love, loss, and nostalgia through a dreamy, indie-folk lens. Collaborating with The National\'s Aaron Dessner and longtime producer Jack Antonoff, Swift created her most critically acclaimed work to date, earning Album of the Year at the 63rd Grammy Awards.',
       keyTracks: ['cardigan', 'exile', 'august', 'the 1', 'betty'],
       criticalReception: 'Universal acclaim with a Metacritic score of 88/100',
-      awards: ['Album of the Year - Grammy Awards 2021', 'Best Pop Vocal Album - Grammy Awards 2021']
+      awards: [' Album of the Year - Grammy Awards 2021', 'Best Pop Vocal Album - Grammy Awards 2021']
     }
   },
   {
     id: 'kendrick-lamar-damn',
     artistName: 'Kendrick Lamar',
-    coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
+    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'From Compton to Pulitzer, Kendrick Lamar\'s "DAMN." explores the duality of human nature through raw storytelling and revolutionary soundscapes.',
     category: 'Hip Hop',
     year: 2017,
@@ -63,7 +58,7 @@ const sampleStories = [
   {
     id: 'beyonce-renaissance',
     artistName: 'Beyoncé',
-    coverImageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
+    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
     storyPreview: 'Beyoncé\'s "Renaissance" celebrates Black queer culture and house music, creating a space for liberation and joy in a world that often denies it.',
     category: 'R&B',
     year: 2022,
@@ -85,42 +80,6 @@ const sampleStories = [
 
 const categories = ['All', 'Pop', 'Hip Hop', 'R&B', 'Rock', 'Electronic', 'Jazz'];
 
-const genreAtmospheres = {
-  All: {
-    gradient: 'linear-gradient(135deg, #ec4899 0%, #6366f1 50%, #22d3ee 100%)',
-    notes: ['♪', '♫', '♬', '🎵', '🎶'],
-    noteColor: ['#ec4899', '#6366f1', '#22d3ee'],
-    animation: 'float',
-  },
-  Pop: {
-    gradient: 'linear-gradient(135deg, #ff80b5 0%, #fff066 100%)',
-    notes: ['🎤', '🎧', '🎵'],
-    noteColor: ['#ff80b5', '#fff066'],
-    animation: 'bounce',
-  },
-  // ...repeat for each genre
-};
-
-// Floating music symbol component with enhanced 3D effects
-const FloatingSymbol = ({ symbol, index }: { symbol: string; index: number }) => (
-  <div
-    className="absolute animate-3d-float text-white/20"
-    style={{
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      animationDelay: `${Math.random() * 5}s`,
-      animationDuration: `${5 + Math.random() * 10}s`,
-      fontSize: `${1 + Math.random() * 2}rem`,
-      transform: `rotate(${Math.random() * 360}deg)`,
-      transformStyle: 'preserve-3d',
-      perspective: '2000px',
-      willChange: 'transform',
-    }}
-  >
-    {symbol}
-  </div>
-);
-
 export default function Home() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -135,8 +94,36 @@ export default function Home() {
     );
   }, [selectedCategory]);
 
+  const [hue, setHue] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHue(prev => (prev + 0.3) % 360);
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#0f051d] via-[#1a1a2e] to-[#0e1126] text-white font-sans" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>
+    <div className="flex min-h-screen w-screen flex-col text-white font-sans transition-all duration-200 m-0 p-0" 
+    style={{ 
+      fontFamily: 'Inter, Sora, sans-serif',
+      background: `
+        radial-gradient(circle at ${20 + Math.sin(hue * 0.02) * 30}% ${30 + Math.cos(hue * 0.015) * 20}%, 
+          hsla(${280 + Math.sin(hue * 0.01) * 40}, 85%, 65%, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at ${70 + Math.sin((hue + 120) * 0.025) * 25}% ${60 + Math.cos((hue + 180) * 0.02) * 30}%, 
+          hsla(${220 + Math.sin((hue + 200) * 0.012) * 35}, 90%, 70%, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at ${40 + Math.sin((hue + 240) * 0.018) * 35}% ${80 + Math.cos((hue + 300) * 0.022) * 25}%, 
+          hsla(${260 + Math.sin((hue + 100) * 0.014) * 30}, 80%, 75%, 0.5) 0%, transparent 45%),
+        linear-gradient(135deg, 
+          hsl(${240 + Math.sin(hue * 0.008) * 20}, 70%, 25%) 0%, 
+          hsl(${200 + Math.sin((hue + 150) * 0.01) * 30}, 75%, 35%) 50%,
+          hsl(${280 + Math.sin((hue + 300) * 0.012) * 25}, 65%, 20%) 100%)`,
+        minWidth: '100vw',
+        margin: 0,
+        padding: 0,
+        overflowX: 'hidden'
+    }}
+    >
       {/* Glassy Navbar */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-indigo-500/10">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
@@ -149,7 +136,7 @@ export default function Home() {
           </div>
         </div>
       </nav>
-      <main className="min-h-screen flex-1 p-0 m-0 flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-blue-500 via-40% to-green-400/80 backdrop-blur-2xl pt-20">
+      <main className="min-h-screen flex-1 p-0 m-0 flex flex-col items-center justify-center pt-20"> 
         {/* Hero Section */}
         <section className="relative min-h-[80vh] w-full flex items-center justify-center overflow-hidden">
           <FloatingNotesLayer count={60} layer="background" />
@@ -175,9 +162,6 @@ export default function Home() {
                 <span className="block animate-3d-float transform-gpu bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 bg-clip-text text-transparent">
                   TuneTales
                 </span>
-                <span className="block text-indigo-200 animate-3d-float transform-gpu text-2xl sm:text-3xl font-semibold mt-2" style={{ perspective: '2000px', animationDelay: '0.5s' }}>
-                  Where Music Comes Alive
-                </span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -185,7 +169,7 @@ export default function Home() {
                 transition={{ delay: 0.4, duration: 0.7, ease: 'easeOut' }}
                 className="mx-auto mb-8 max-w-2xl text-lg text-indigo-100 animate-pulse transform-gpu"
               >
-                Every song is a story. We tell it beautifully.
+                Embark on an exquisite musical oddyssey.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -294,7 +278,7 @@ export default function Home() {
         <FloatingNotesLayer count={15} layer="overlay" />
         <div className="relative z-10 text-center w-full">
           <div className="animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:2000px_100%]">
-            © 2025 Jacob Choi • Designed & developed using Next.js, Tailwind CSS, and OpenAI GPT-4  <br/>
+            © 2025 Jacob J. Choi • Built with Next.js, TypeScript, Tailwind CSS & Framer Motion  <br/>
             <a href="https://jacobchoi.xyz" className="underline hover:text-white">jacobchoi.xyz</a> • 
             <a href="https://github.com/jacob7choi-xyz" className="underline hover:text-white">GitHub</a>
           </div>
