@@ -128,7 +128,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-indigo-500/10">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]">🎶 TuneTales</span>
+            <span className="text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]">BRUH TuneTales</span>
             <span className="hidden sm:inline-block ml-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 text-xs font-semibold text-white/80 shadow-md shadow-pink-500/20 animate-glow">Beta</span>
           </div>
           <div className="flex items-center gap-4">

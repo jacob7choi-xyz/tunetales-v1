@@ -3,10 +3,9 @@
 import { useMemo, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-// Pre-compute symbol and color arrays to avoid runtime calculations
-const musicSymbols = Object.freeze([
+const musicSymbols = [
   '♪', '♫', '♬', '♩', '♭', '♮', '♯', '𝄞', '𝄢', '𝄡', '🎵', '🎶', '🎼', '🎹', '🎻', '🎺', '🎸', '🎷'
-]);
+];
 
 const colors = Object.freeze([
   '#a78bfa', '#f87171', '#facc15', '#34d399', '#60a5fa', '#f472b6',
@@ -105,6 +104,9 @@ const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesL
     [layer]
   );
 
+    // Helper to create a glowing text-shadow based on the note color
+    const getGlow = (color: string) => '0 0 12px ${color}, 0 0 32px ${color}99, 0 0 48px white';
+
   return (
     <div 
       className={`pointer-events-none fixed inset-0 overflow-hidden ${zIndexClass}`}
@@ -126,7 +128,10 @@ const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesL
             opacity: note.opacity,
             transform: `rotate(${note.rotation}deg)`,
             willChange: 'transform',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
+            textShadow: getGlow(note.color),
+            filter: 'blur(0.5px)', // subtle blur for extra glow
+            userSelect: 'none'
           }}
           initial={{ 
             y: 0,
