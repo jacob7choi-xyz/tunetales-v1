@@ -281,8 +281,10 @@ export default function Home() {
         <div className="relative z-10 text-center w-full">
           <div className="animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:2000px_100%]">
             © 2025 Jacob J. Choi • Built with Next.js, TypeScript, Tailwind CSS & Framer Motion  <br/>
-            <a href="https://jacobchoi.xyz" className="underline hover:text-white">jacobchoi.xyz</a> • 
-            <a href="https://github.com/jacob7choi-xyz" className="underline hover:text-white">GitHub</a>
+            <a href="https://jacobchoi.xyz" className="underline hover:text-white">jacobchoi.xyz</a> •&nbsp;  
+            <a href="https://github.com/jacob7choi-xyz" className="underline hover:text-white">GitHub</a> •&nbsp; 
+            <a href="https://www.linkedin.com/in/jacobjchoi/" className="underline hover:text-white">LinkedIn</a> •&nbsp;  
+            <a href="https://x.com/jacob7choii" className="underline hover:text-white">X</a> 
           </div>
         </div>
       </footer>
