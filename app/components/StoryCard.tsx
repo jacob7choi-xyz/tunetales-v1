@@ -11,6 +11,20 @@ interface StoryCardProps {
   year: number;
 }
 
+// Helper function to create artist URL slug
+const createArtistSlug = (artistName: string) => {
+  return artistName
+    .toLowerCase()
+    .replace(/é/g, 'e')  // Handle accented characters
+    .replace(/[àáâãäå]/g, 'a')
+    .replace(/[èéêë]/g, 'e')
+    .replace(/[ìíîï]/g, 'i')
+    .replace(/[òóôõö]/g, 'o')
+    .replace(/[ùúûü]/g, 'u')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+};
+
 export default function StoryCard({
   storyId,
   artistName,
@@ -19,6 +33,7 @@ export default function StoryCard({
   category,
   year,
 }: StoryCardProps) {
+const artistSlug = createArtistSlug(artistName);
   return (
     <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f051d] to-[#1a1a2e] p-[2px] shadow-xl shadow-pink-500/10 hover:shadow-pink-500/30 transition-all duration-300 transform-gpu hover:scale-[1.03] will-change-transform">
       <div className="relative rounded-2xl bg-black/70 backdrop-blur-xl p-3 flex flex-col gap-2">
@@ -51,10 +66,12 @@ export default function StoryCard({
           </span>
         </div>
         {/* Read more link */}
-        <Link href={`/stories/${storyId}`} className="mt-2 block text-xs font-semibold text-white/90 bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 rounded-full px-4 py-2 shadow-lg shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 transition-all duration-200 backdrop-blur-md">
-          Read Full Story
+        <Link href={`/artists/${artistSlug}`} 
+        className="mt-2 block text-xs font-semibold text-white/90 bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 rounded-full px-4 py-2 shadow-lg shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 transition-all duration-200 backdrop-blur-md text-center"
+        >
+          Explore {artistName}
         </Link>
       </div>
     </div>
   );
-} 
+}
