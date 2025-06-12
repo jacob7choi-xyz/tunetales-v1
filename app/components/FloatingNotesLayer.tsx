@@ -14,9 +14,9 @@ const colors = Object.freeze([
 
 // Pre-compute size and opacity ranges for each layer
 const LAYER_CONFIGS = Object.freeze({
-  background: { size: [0.8, 1.5], opacity: [0.4, 0.6], zIndex: 'z-0' },
-  foreground: { size: [1.2, 2], opacity: [0.7, 0.9], zIndex: 'z-10' },
-  overlay: { size: [1, 1.8], opacity: [0.6, 0.8], zIndex: 'z-20' }
+  background: { size: [0.8, 1.2], opacity: [0.3, 0.5], zIndex: 'z-0' },
+  foreground: { size: [1.0, 1.5], opacity: [0.5, 0.7], zIndex: 'z-10' },
+  overlay: { size: [0.9, 1.3], opacity: [0.4, 0.6], zIndex: 'z-20' }
 } as const);
 
 interface Note {
@@ -38,6 +38,14 @@ interface FloatingNotesLayerProps {
   layer?: 'background' | 'foreground' | 'overlay';
 }
 
+// Pre-computed glow styles for performance
+const GLOW_STYLES = Object.freeze(
+  colors.reduce((acc, color) => {
+    acc[color] = `0 0 8px ${color}, 0 0 16px ${color}66`;
+    return acc;
+  }, {} as Record<string, string>)
+);
+
 // Create a pool of pre-computed random values
 const createRandomPool = (size: number) => {
   const pool = new Float32Array(size);
@@ -47,7 +55,7 @@ const createRandomPool = (size: number) => {
   return pool;
 };
 
-const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesLayerProps) => {
+const FloatingNotesLayer = ({ count = 10, layer = 'background' }: FloatingNotesLayerProps) => {
   // Use refs to maintain values between renders
   const randomPoolRef = useRef<Float32Array | null>(null);
   const poolIndexRef = useRef(0);
@@ -80,8 +88,8 @@ const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesL
     return {
       id: index,
       symbol: musicSymbols[index % musicSymbols.length],
-      delay: getNextRandom() * 0.5,
-      duration: 3 + getNextRandom() * 3, // Even faster animations
+      delay: getNextRandom() * 1.5,
+      duration: 4 + getNextRandom() * 4, // Even faster animations
       x,
       y,
       size: minSize + getNextRandom() * (maxSize - minSize),
@@ -104,16 +112,14 @@ const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesL
     [layer]
   );
 
-    // Helper to create a glowing text-shadow based on the note color
-    const getGlow = (color: string) => '0 0 12px ${color}, 0 0 32px ${color}99, 0 0 48px white';
-
   return (
     <div 
       className={`pointer-events-none fixed inset-0 overflow-hidden ${zIndexClass}`}
       style={{ 
         willChange: 'transform',
         transform: 'translateZ(0)',
-        backfaceVisibility: 'hidden'
+        backfaceVisibility: 'hidden',
+        contain: 'layout style paint'
       }}
     >
       {notes.map((note) => (
@@ -127,16 +133,15 @@ const FloatingNotesLayer = ({ count = 50, layer = 'background' }: FloatingNotesL
             color: note.color,
             opacity: note.opacity,
             transform: `rotate(${note.rotation}deg)`,
-            willChange: 'transform',
+            willChange: 'transform, opacity',
             backfaceVisibility: 'hidden',
-            textShadow: getGlow(note.color),
-            filter: 'blur(0.5px)', // subtle blur for extra glow
+            textShadow: GLOW_STYLES[note.color],
             userSelect: 'none'
           }}
           initial={{ 
             y: 0,
             opacity: 0,
-            scale: 0.5,
+            scale: 0.8,
             rotate: note.rotation
           }}
           animate={{ 

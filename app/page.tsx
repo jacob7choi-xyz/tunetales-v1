@@ -99,31 +99,32 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setHue(prev => (prev + 0.3) % 360);
-    }, 100);
+    }, 200);
     return () => clearInterval(interval);
   }, []);
 
+  const backgroundStyle = useMemo(() => ({
+    fontFamily: 'Inter, Sora, sans-serif',
+    background: `
+      radial-gradient(circle at ${20 + Math.sin(hue * 0.02) * 30}% ${30 + Math.cos(hue * 0.015) * 20}%, 
+        hsla(${280 + Math.sin(hue * 0.01) * 40}, 85%, 65%, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at ${70 + Math.sin((hue + 120) * 0.025) * 25}% ${60 + Math.cos((hue + 180) * 0.02) * 30}%, 
+        hsla(${220 + Math.sin((hue + 200) * 0.012) * 35}, 90%, 70%, 0.3) 0%, transparent 40%),
+      radial-gradient(circle at ${40 + Math.sin((hue + 240) * 0.018) * 35}% ${80 + Math.cos((hue + 300) * 0.022) * 25}%, 
+        hsla(${260 + Math.sin((hue + 100) * 0.014) * 30}, 80%, 75%, 0.5) 0%, transparent 45%),
+      linear-gradient(135deg, 
+        hsl(${240 + Math.sin(hue * 0.008) * 20}, 70%, 25%) 0%, 
+        hsl(${200 + Math.sin((hue + 150) * 0.01) * 30}, 75%, 35%) 50%,
+        hsl(${280 + Math.sin((hue + 300) * 0.012) * 25}, 65%, 20%) 100%)`,
+    minWidth: '100vw',
+    margin: 0,
+    padding: 0,
+    overflowX: 'hidden' as const
+  }), [hue]);
+
   return (
     <div className="flex min-h-screen w-screen flex-col text-white font-sans transition-all duration-200 m-0 p-0" 
-    style={{ 
-      fontFamily: 'Inter, Sora, sans-serif',
-      background: `
-        radial-gradient(circle at ${20 + Math.sin(hue * 0.02) * 30}% ${30 + Math.cos(hue * 0.015) * 20}%, 
-          hsla(${280 + Math.sin(hue * 0.01) * 40}, 85%, 65%, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at ${70 + Math.sin((hue + 120) * 0.025) * 25}% ${60 + Math.cos((hue + 180) * 0.02) * 30}%, 
-          hsla(${220 + Math.sin((hue + 200) * 0.012) * 35}, 90%, 70%, 0.3) 0%, transparent 40%),
-        radial-gradient(circle at ${40 + Math.sin((hue + 240) * 0.018) * 35}% ${80 + Math.cos((hue + 300) * 0.022) * 25}%, 
-          hsla(${260 + Math.sin((hue + 100) * 0.014) * 30}, 80%, 75%, 0.5) 0%, transparent 45%),
-        linear-gradient(135deg, 
-          hsl(${240 + Math.sin(hue * 0.008) * 20}, 70%, 25%) 0%, 
-          hsl(${200 + Math.sin((hue + 150) * 0.01) * 30}, 75%, 35%) 50%,
-          hsl(${280 + Math.sin((hue + 300) * 0.012) * 25}, 65%, 20%) 100%)`,
-        minWidth: '100vw',
-        margin: 0,
-        padding: 0,
-        overflowX: 'hidden'
-    }}
-    >
+      style={backgroundStyle}> 
       {/* Glassy Navbar */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-indigo-500/10">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
@@ -140,9 +141,9 @@ export default function Home() {
       <main className="min-h-screen flex-1 p-0 m-0 flex flex-col items-center justify-center pt-20"> 
         {/* Hero Section */}
         <section className="relative min-h-[80vh] w-full flex items-center justify-center overflow-hidden">
-          <FloatingNotesLayer count={60} layer="background" />
-          <FloatingNotesLayer count={40} layer="foreground" />
-          <FloatingNotesLayer count={25} layer="overlay" />
+          <FloatingNotesLayer count={30} layer="background" />
+          <FloatingNotesLayer count={20} layer="foreground" />
+          <FloatingNotesLayer count={8} layer="overlay" />
           <div className="relative px-4 py-20 text-center sm:px-6 lg:px-8 w-full flex flex-col items-center">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -274,9 +275,9 @@ export default function Home() {
       </main>
       {/* Footer */}
       <footer className="relative bg-black/80 text-white py-12 flex justify-center items-center backdrop-blur-xl shadow-2xl shadow-pink-500/10">
-        <FloatingNotesLayer count={30} layer="background" />
-        <FloatingNotesLayer count={20} layer="foreground" />
-        <FloatingNotesLayer count={15} layer="overlay" />
+        <FloatingNotesLayer count={8} layer="background" />
+        <FloatingNotesLayer count={4} layer="foreground" />
+        <FloatingNotesLayer count={6} layer="overlay" />
         <div className="relative z-10 text-center w-full">
           <div className="animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:2000px_100%]">
             © 2025 Jacob J. Choi • Built with Next.js, TypeScript, Tailwind CSS & Framer Motion  <br/>
