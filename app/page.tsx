@@ -5,7 +5,7 @@ import StoryCard from './components/StoryCard';
 import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, Suspense } from 'react';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false
@@ -80,7 +80,7 @@ const sampleStories = [
 
 const categories = ['All', 'Pop', 'Hip Hop', 'R&B', 'Rock', 'Electronic', 'Jazz'];
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -291,3 +291,15 @@ export default function Home() {
     </div>
   );
 } 
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-br from-purple-900 to-blue-900">
+        <div className="text-white text-lg">Loading TuneTales...</div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
+  );
+}
