@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "timestamp": "2025-06-20T04:55:21.773625",
+    "artist_name": "Frank Ocean",
+    "story_type": "artist_narrative",
+    "narrative_style": "disney",
+    "model_used": "claude-3-5-sonnet-20241022",
+    "tokens_used": 848
+  },
+  "narrative": "## Once Upon a Time...\n\nIn a sun-drenched corner of Long Beach, California, a special little boy named Christopher was born with a gift he didn't yet know he had. Like many wonderful stories, this one begins with family - a mother's love, a grandfather's wisdom, and music that seemed to float through the very walls of his childhood home. You see, young Christopher (though we'd come to know him as Frank Ocean) had a way of seeing the world that was just a little bit different from everyone else.\n\nHis grandfather, a gentle soul named Lionel, would take him to community meetings where people shared their stories of struggle and hope. Little did Christopher know that these moments, sitting quietly beside his grandfather, were like collecting precious stones that would one day become beautiful songs.\n\n## The Magic They Discovered\n\nNow, music has a funny way of finding those who need it most, and it found Christopher just when he needed it most. After Hurricane Katrina changed his world, he discovered something magical - he could paint with sound, weaving stories and feelings into melodies that felt like warm sunshine after rain. He started writing songs that weren't quite like anything anyone had heard before - they were like little dreams you could hear.\n\nHe chose a new name for himself - Frank Ocean - like the vast, deep waters that held so many stories. And oh, what stories he would tell! His songs weren't just songs, you see. They were like letters written straight from his heart, each one carrying a little piece of truth that made people feel less alone.\n\n## Adventures Along the Way\n\nFrank's journey wasn't always easy, but then again, the best stories rarely are. There was the time he released his first collection of songs, \"Nostalgia, Ultra,\" sharing it freely with the world like throwing starlight into the sky. People started to listen, and they heard something special in his voice - something honest and true.\n\nThen came a moment of remarkable courage, when Frank shared a beautiful letter about love - about how hearts don't always follow the paths others expect. He wrote it with such gentleness and grace that it helped many people feel braver about their own stories.\n\nHis next adventure was creating \"Channel Orange,\" an album that felt like opening a storybook filled with characters and colors and feelings so real you could almost touch them. And later, \"Blonde\" arrived like a quiet revolution, showing everyone that music could be both a whisper and a shout, both simple and profound.\n\n## The Gift They Share\n\nWhat makes Frank Ocean's gift so special isn't just the beautiful songs he creates - it's the way he helps us all feel a little less alone in this big, sometimes confusing world. His music is like a friendly voice saying \"I understand\" when you're feeling lost, or a warm hand holding yours when you're scared to be yourself.\n\nEven now, when Frank shares his art with the world, it's like watching someone set butterflies free - each song carrying hope and understanding on delicate wings. He reminds us that it's okay to take your time, to be different, to tell your story in your own way.\n\nAnd perhaps that's the most magical thing about Frank Ocean's story - it's still being written, one gentle note at a time, showing us all that there's beauty in being exactly who you are. After all, isn't that what the best stories teach us? That sometimes the greatest magic of all is simply being brave enough to be yourself, and kind enough to share that self with others.\n\nAnd so, like all the best tales, this one doesn't really end. It lives on in every person who finds comfort in Frank's songs, in every heart that feels a little braver because of his words, and in every dream that dares to be a little different. Because that's what real magic is all about - not the kind that turns pumpkins into carriages, but the kind that turns feelings into songs and strangers into friends who haven't met yet.",
+  "source_research": {
+    "artist_info_file": {
+      "timestamp": "2025-06-18T01:28:51.465915",
+      "query_type": "artist_info",
+      "artist_name": "Frank Ocean",
+      "query_details": "comprehensive",
+      "model_used": "llama-3.1-sonar-small-128k-online",
+      "tokens_used": 1793,
+      "cost_estimate": 0.001793
+    },
+    "timeline_file": {
+      "timestamp": "2025-06-18T01:36:14.040515",
+      "query_type": "timeline",
+      "artist_name": "Frank Ocean",
+      "query_details": "chronological_events",
+      "model_used": "llama-3.1-sonar-small-128k-online",
+      "tokens_used": 1656,
+      "cost_estimate": 0.001656
+    }
+  }
+}
