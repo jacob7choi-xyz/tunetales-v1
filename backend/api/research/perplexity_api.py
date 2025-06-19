@@ -11,6 +11,7 @@ import hashlib
 # Load environment variables
 load_dotenv()
 
+
 class PerplexityClient:
     
     # Available models with different capabilities and costs
