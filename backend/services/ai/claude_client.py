@@ -79,9 +79,9 @@ class ClaudeStorytellingClient:
         print(f"🎬 Story saved to: {filename}")
         return filepath
     
-    def create_artist_narrative(self, artist_name: str, narrative_style: str = "intimate") -> Dict:
+    def create_artist_narrative(self, artist_name: str, narrative_style: str = "disney") -> Dict:
         """Transform artist research into a compelling narrative overview"""
-        
+    
         research_data = self._load_research_data(artist_name)
         
         if not research_data["artist_info"]:
@@ -91,38 +91,40 @@ class ClaudeStorytellingClient:
         artist_content = research_data["artist_info"]["response"]["choices"][0]["message"]["content"]
         timeline_content = research_data["timeline"]["response"]["choices"][0]["message"]["content"] if research_data["timeline"] else ""
         
-        prompt = f"""You are a master storyteller creating an intimate, cinematic narrative about {artist_name} for TuneTales - a premium platform that creates emotional connections between fans and artists.
+        prompt = f"""You are a gentle, wise storyteller in the tradition of Disney's greatest narrators - think Jiminy Cricket or the narrator from classic Disney films. You have a warm, twinkling voice that makes listeners feel like they're gathered around a cozy fireplace, hearing a wonderful story about someone quite special.
 
-Transform the following research into a compelling narrative that makes fans feel like they're getting to know {artist_name} personally:
+        Tell the story of {artist_name} with the heart and wonder of a Disney tale - magical but real, whimsical but grounded, beautiful but never overly dramatic.
 
-RESEARCH DATA:
-{artist_content}
+        RESEARCH TO WEAVE INTO YOUR STORY:
+        {artist_content}
 
-{f"TIMELINE DATA: {timeline_content}" if timeline_content else ""}
+        {f"TIMELINE DETAILS: {timeline_content}" if timeline_content else ""}
 
-Create a narrative with these sections:
+        Create a gentle, enchanting narrative with these sections:
 
-## THE HUMAN BEHIND THE MUSIC
-Write a warm, intimate introduction that reveals {artist_name} as a person, not just an artist. Include their background, what shaped them, and the human moments that defined their journey.
+        ## Once Upon a Time...
+        Begin like a classic Disney story. Introduce {artist_name} as a person - where they came from, what made them special from the start. Use warm, simple language that makes listeners smile and feel curious to know more.
 
-## THE CREATIVE SOUL
-Describe their artistic evolution and creative process. What drives them? How do they create? What makes their music unique? Make it feel like fans are witnessing their creative genius.
+        ## The Magic They Discovered
+        Tell us about their musical gift - not as something grandiose, but as something beautiful they found along the way. How did they discover their voice? What made their music special? Make it feel like watching someone discover they can paint with starlight.
 
-## MOMENTS THAT CHANGED EVERYTHING
-Highlight 3-5 pivotal moments in their career/life that transformed them as an artist and person. Tell these as vivid, emotional stories.
+        ## Adventures Along the Way
+        Share 3-4 key moments in their journey - the challenges they faced, the friends they met, the choices they made. Tell these like gentle adventures, with wisdom and heart. Even difficult moments should feel like part of a greater story of growth.
 
-## THE LEGACY THEY'RE BUILDING
-Conclude with their impact and ongoing influence. Why do they matter? How have they changed music and culture?
+        ## The Gift They Share
+        Conclude with how their music touches hearts and what makes them special in the world. Keep it warm and hopeful, like the end of a beloved Disney film.
 
-STYLE REQUIREMENTS:
-- Write in second person ("You discover that...") to create intimacy
-- Use vivid, cinematic language that creates emotional resonance
-- Include specific details, quotes, and moments from the research
-- Make it feel like a personal conversation with the artist
-- 800-1000 words total
-- Create moments that make fans say "I never knew that about them"
+        DISNEY STORYTELLING GUIDELINES:
+        - Write in third person with a warm narrator voice ("Now, Frank was the kind of person who...")
+        - Use gentle, accessible language - beautiful but not overly poetic
+        - Include moments of quiet wonder and gentle humor
+        - Focus on heart, hope, and human connection over drama
+        - Keep metaphors simple and warm (like comparing music to "painting with sound" rather than complex imagery)
+        - Make it feel like a bedtime story told by someone who truly cares about the subject
+        - 700-900 words of pure warmth and wonder
+        - End on a note that makes listeners feel inspired and happy
 
-Focus on emotional storytelling that creates deep connection and understanding."""
+        Remember: This isn't a biography - it's a gentle celebration of a remarkable person, told with all the heart and magic of classic Disney storytelling."""
 
         try:
             response = requests.post(
@@ -187,36 +189,37 @@ Focus on emotional storytelling that creates deep connection and understanding."
         
         song_content = song_research["response"]["choices"][0]["message"]["content"]
         
-        prompt = f"""You are crafting an intimate, behind-the-scenes story about "{song_name}" by {artist_name} for TuneTales - where fans discover the human stories behind their favorite songs.
+        prompt = f"""You are a gentle Disney storyteller, and you're about to share the delightful tale of how a very special song came to be. Think of how Jiminy Cricket might tell the story of how "{song_name}" was born - with wonder, warmth, and that special Disney magic that makes even ordinary moments feel extraordinary.
 
-Transform this research into a captivating narrative that makes fans feel like they were in the room when the song was created:
+        RESEARCH TO WEAVE INTO YOUR STORY:
+        {song_content}
 
-RESEARCH DATA:
-{song_content}
+        Tell the enchanting story of "{song_name}" by {artist_name} with these gentle chapters:
 
-Create a story with these elements:
+        ## How It All Began
+        Set the scene like the opening of a Disney film. Where was {artist_name} when this song first whispered to them? What was happening in their world? Make it feel magical but real - like the moment when Pinocchio first wishes upon a star.
 
-## THE MOMENT IT BEGAN
-Set the scene - where was {artist_name} when this song started? What was happening in their life? Create a vivid opening that puts us in that moment.
+        ## The Creative Adventure
+        Tell us how the song grew and changed, like watching a garden bloom. Who helped along the way? What challenges did they face? What moments of discovery happened? Make it feel like a gentle adventure story.
 
-## THE CREATION JOURNEY  
-Tell the story of how the song came to life. Who was involved? What challenges did they face? What breakthrough moments happened? Make it feel like a mini-documentary.
+        ## The Heart of the Song
+        Share what the song really means - both to {artist_name} and to those who hear it. But tell it gently, like explaining why a lullaby is special, not like analyzing literature.
 
-## THE DEEPER MEANING
-Reveal what the song really means - both what {artist_name} intended and what it represents in their artistic journey. Include emotional context and personal significance.
+        ## Why It Matters
+        End with how this song touches hearts and why it's become special to so many people. Keep it warm and hopeful.
 
-## WHY IT MATTERS
-Explain the song's impact and why it resonates with fans. What makes it special in {artist_name}'s catalog?
+        DISNEY STORYTELLING MAGIC:
+        - Write as a warm, wise narrator telling a bedtime story
+        - Use simple, beautiful language that makes people smile
+        - Include gentle moments of wonder and discovery
+        - Focus on the joy of creation and human connection
+        - Keep it light and magical, never heavy or dramatic
+        - Use warm metaphors (music "dancing through the air" rather than complex imagery)
+        - Make listeners feel like they were there watching the magic happen
+        - 500-700 words of pure enchantment
+        - End with something that makes people feel happy and connected
 
-STYLE REQUIREMENTS:
-- Write as an engaging, intimate story (not a dry analysis)
-- Use present tense to create immediacy ("The studio is quiet when...")
-- Include dialogue and quotes when available from research
-- Paint vivid scenes that make readers feel present
-- 600-800 words
-- End with an emotional connection point for fans
-
-Make fans feel like they understand the song on a completely new level - like they've been given a secret glimpse into {artist_name}'s creative world."""
+        Remember: You're not writing a documentary - you're sharing a gentle, magical story about how something beautiful came into the world, told with all the heart of classic Disney storytelling."""
 
         try:
             response = requests.post(
