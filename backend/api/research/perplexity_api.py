@@ -407,6 +407,7 @@ class PerplexityClient:
             print(f"Error researching timeline: {e}")
             return {"error": str(e)}
 
+
 # Enhanced test function
 if __name__ == "__main__":
     client = PerplexityClient(default_model="sonar_small")
