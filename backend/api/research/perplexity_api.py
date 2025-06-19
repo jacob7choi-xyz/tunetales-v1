@@ -5,7 +5,7 @@ import requests
 import json
 from datetime import datetime
 from dotenv import load_dotenv
-from typing import Dict, Optional, List
+from typing import Dict
 import hashlib
 
 # Load environment variables
@@ -85,9 +85,10 @@ class PerplexityClient:
         
         if specific_query:
             # Custom query with enhanced context
-            prompt = f"""You are a professional music journalist researching {artist_name}. 
+            prompt = f"""You are researching and conducting due diligence for TuneTales, a premium storytelling platform 
+            that creates intimate, emotional connections between fans and artists.
             
-            Research Query: {specific_query}
+            Research Query: {specific_query} about {artist_name}
             
             Please provide:
             - Detailed, factual information with specific dates and sources
@@ -95,11 +96,14 @@ class PerplexityClient:
             - Context about the music industry and cultural significance
             - Verification from multiple reliable sources
             - Interesting lesser-known facts that music fans would appreciate
+            - Emotional context and human stories that reveal the artist's personality
             
             Focus on accuracy and cite all sources used."""
         else:
             # Comprehensive research prompt
-            prompt = f"""You are an expert music researcher compiling a comprehensive profile of {artist_name} for a premium music education platform.
+            prompt = f"""You are researching and conducting due diligence for TuneTales, a premium storytelling platform 
+            that creates intimate, emotional connections between fans and artists. Compile a comprehensive profile of {artist_name} 
+            for an immersive storytelling experience.
             
             Please research and provide detailed information about {artist_name} in the following categories:
             
@@ -134,8 +138,15 @@ class PerplexityClient:
             - Lesser-known collaborations or unreleased material
             - Fan culture and community insights
             
-            Please provide specific dates, sources, and quotes where possible. This information will be used to create an immersive educational experience for music fans."""
-        
+            ## 6. EMOTIONAL & STORYTELLING ELEMENTS
+            - Personal struggles and triumphs that shaped their music
+            - Vulnerable moments and breakthrough experiences
+            - Relationships and life events that influenced their artistry
+            - Stories that reveal their humanity and creative process
+            
+            Please provide specific dates, sources, and quotes where possible. Emphasize narrative elements 
+            that create emotional resonance and help fans understand the human story behind the artist."""
+                    
         payload = {
             "model": selected_model,
             "messages": [
@@ -174,46 +185,56 @@ class PerplexityClient:
         
         selected_model = model or self.default_model
         
-        prompt = f"""You are a music critic and historian researching the album "{album_name}" by {artist_name} for an in-depth documentary.
-        
+        prompt = f"""You are researching for TuneTales, a premium storytelling platform that creates intimate, 
+        emotional connections between fans and artists. Research the album "{album_name}" by {artist_name} 
+        to create an immersive documentary-style experience for music fans.
+
         Please provide comprehensive information about this album:
-        
+
         ## ALBUM OVERVIEW
         - Exact release date and label information
         - Genre and musical style classification
         - Album length, track count, and formats released
-        
+
         ## CREATION & RECORDING
         - Recording timeline and studio locations
         - Producers, engineers, and key collaborators
         - Recording techniques and equipment used
         - Budget and recording challenges
-        
+
         ## MUSICAL CONTENT
         - Complete track listing with song descriptions
         - Standout tracks and their significance
         - Musical themes and lyrical content
         - Influences and inspirations
-        
+
         ## COMMERCIAL PERFORMANCE
         - Chart positions in major markets
         - Sales figures and certifications
         - Singles released and their performance
         - Marketing and promotion strategies
-        
+
         ## CRITICAL RECEPTION
         - Initial reviews from major publications
         - Critic scores and awards received
         - Long-term critical reassessment
         - Cultural impact and legacy
-        
+
         ## BEHIND-THE-SCENES STORIES
         - Interesting anecdotes from recording sessions
         - Artist interviews about the album creation
         - Label politics or industry challenges
         - Fan reactions and memorable moments
-        
-        Include specific dates, sources, and direct quotes where available."""
+
+        ## EMOTIONAL JOURNEY & STORYTELLING ELEMENTS
+        - Overall emotional arc and mood of the album (nostalgic, triumphant, introspective, etc.)
+        - Personal struggles or life events that shaped the album
+        - Vulnerable moments or breakthroughs during creation
+        - Stories that reveal the artist's humanity and creative process
+        - How this album represents a chapter in the artist's life story
+
+        Include specific dates, sources, and direct quotes where available. Emphasize narrative elements 
+        that create emotional resonance and help fans understand the human story behind the music."""
         
         payload = {
             "model": selected_model,
@@ -252,54 +273,62 @@ class PerplexityClient:
         
         selected_model = model or self.default_model
         
-        prompt = f"""You are a music journalist investigating the complete story behind "{song_name}" by {artist_name}.
-        
+        prompt = f"""You are researching for TuneTales, a premium storytelling platform that creates intimate,
+        emotional connections between fans and artists. Research the complete story behind "{song_name}" by {artist_name}.
+
         Please research and provide detailed information about:
-        
+
         ## SONG CREATION
         - Writing process and timeline
-        - Co-writers and collaborators
+        - Co-writers and collaborators  
         - Original inspiration and concept
         - Demo versions and early iterations
-        
+
         ## MUSICAL COMPOSITION
         - Key, tempo, and musical structure
         - Instrumentation and arrangement details
         - Samples used (if any) and their sources
         - Production techniques and effects
-        
+
         ## LYRICAL CONTENT
         - Meaning and interpretation
         - Personal experiences referenced
         - Literary or cultural references
         - Artist's own explanation of the lyrics
-        
+
         ## RECORDING & PRODUCTION
         - Recording date and studio location
         - Producer and engineer credits
         - Recording techniques and equipment
         - Interesting studio stories
-        
+
         ## RELEASE & RECEPTION
         - Release date and context within album/project
         - Commercial performance and chart positions
         - Critical reception and reviews
         - Music video details (if applicable)
-        
+
         ## CULTURAL IMPACT
         - Cover versions by other artists
         - Use in films, TV, or advertisements
         - Live performance history
         - Fan interpretations and theories
-        
+
         ## INTERVIEWS & QUOTES
         - Direct quotes from the artist about the song
         - Producer or collaborator insights
         - Behind-the-scenes anecdotes
         - Fan or critic commentary
-        
-        Focus on verified information and include sources for all claims."""
-        
+
+        ## EMOTIONAL TONE & STORYTELLING ELEMENTS
+        - Identify the song's emotional mood (nostalgic, energetic, melancholic, triumphant, etc.)
+        - Personal struggles or breakthrough moments connected to this song
+        - Human stories that make fans feel closer to the artist
+        - Moments of vulnerability or authenticity in the creation process
+
+        Focus on verified information, include sources for all claims, and emphasize 
+        narrative elements that create emotional resonance for music fans."""
+                
         payload = {
             "model": selected_model,
             "messages": [
@@ -337,36 +366,46 @@ class PerplexityClient:
         
         selected_model = model or self.default_model
         
-        prompt = f"""You are a senior music journalist creating an authoritative timeline for {artist_name}.
-        
+        prompt = f"""You are researching and conducting due diligence for TuneTales, a premium storytelling platform 
+        that creates intimate, emotional connections between fans and artists. Create an authoritative, 
+        thorough timeline for {artist_name} that tells their life story as a compelling narrative journey. 
+
         Research {artist_name}'s career chronologically using only premium music sources (Rolling Stone, Pitchfork, Complex, Billboard, The Fader, NPR Music, Grammy.com).
-        
+
         Create a detailed timeline with:
-        
+
         **EARLY LIFE & CAREER (Birth - First Release)**
         - Birth date and location
         - Musical influences and early experiences
         - First recordings or performances
         - Career beginnings and breakthrough moments
-        
+
         **MAJOR RELEASES & MILESTONES**
         - Album releases with exact dates
         - Chart performance and critical reception
         - Award wins and nominations
         - Significant collaborations
-        
+
         **CULTURAL IMPACT & RECENT ACTIVITY**
         - Groundbreaking moments or statements
         - Recent projects and current status
         - Industry influence and legacy
-        
+
+        **EMOTIONAL & PERSONAL JOURNEY**
+        - Key life events that shaped their artistry
+        - Personal struggles, triumphs, and transformative moments
+        - Relationships, losses, and breakthroughs that influenced their music
+        - Periods of creative growth, experimentation, or reinvention
+
         For each major event, provide:
         - Exact date (when available)
         - Context and significance  
         - Source publication
         - Impact on career/culture
-        
-        Focus on verified facts from music industry sources, not speculation."""
+        - Emotional significance and how it shaped them as an artist
+
+        Focus on verified facts from music industry sources, not speculation. Emphasize the human story 
+        behind the timeline - the struggles, breakthroughs, and personal evolution that fans can connect with emotionally."""
         
         payload = {
             "model": selected_model,
@@ -377,7 +416,7 @@ class PerplexityClient:
                 }
             ],
             "max_tokens": 2500,
-            "temperature": 0.1,
+            "temperature": 0.05,
             "search_domain_filter": [
                 "rollingstone.com", 
                 "pitchfork.com", 
