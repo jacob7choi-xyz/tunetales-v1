@@ -257,12 +257,12 @@ Interactive component system showcasing:
 
 ## 👨‍💻 About the Creator
 
-Built with passion by **[Jacob J. Choi](https://jacobchoi.xyz)** - a CS:AI student at Colby College with backgrounds in economics, Spanish, and international experience. Currently studying abroad in Sydney, Australia, and driven by the belief that technology should create deeper human connections, not replace them.
+Built with passion by **[Jacob J. Choi](https://jacobjchoi.xyz)** - a CS:AI student at Colby College with backgrounds in economics, Spanish, and international experience. Currently studying abroad in Sydney, Australia, and driven by the belief that technology should create deeper human connections, not replace them.
 
 **Philosophy:** *"Melos contra mundum"* - Using music as a force for connection in an increasingly disconnected world.
 
 **Connect:**
-- 🌐 Website: [jacobchoi.xyz](https://jacobchoi.xyz)
+- 🌐 Website: [jacobjchoi.xyz](https://jacobjchoi.xyz)
 - 💼 GitHub: [@jacob7choi-xyz](https://github.com/jacob7choi-xyz)
 - 💼 LinkedIn: [Jacob J. Choi](https://www.linkedin.com/in/jacobjchoi/)
 - 🐦 Twitter: [@jacob7choii](https://x.com/jacob7choii)

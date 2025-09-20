@@ -16,13 +16,14 @@ class PerplexityClient:
     
     # Available models with different capabilities and costs
     MODELS = {
-        "sonar_small": "llama-3.1-sonar-small-128k-online",      # Cheapest, fastest
-        "sonar_large": "llama-3.1-sonar-large-128k-online",      # Better quality
-        "sonar_pro": "llama-3.1-sonar-huge-128k-online",         # Best quality, most expensive
-        "reasoning": "llama-3.1-sonar-reasoning-128k-online"     # For complex analysis
-    }
+        "sonar_small": "llama-3.1-sonar-small-128k-online",
+        "sonar_large": "llama-3.1-sonar-large-128k-online", 
+        "sonar_pro": "sonar-pro",  # Correct new model name
+        "sonar": "sonar",  # Basic new model
+        "reasoning": "llama-3.1-sonar-reasoning-128k-online"  # If this exists
+        }
     
-    def __init__(self, api_key: str = None, default_model: str = "sonar_small"):
+    def __init__(self, api_key: str = None, default_model: str = "sonar_pro"):
         self.api_key = api_key or os.getenv('PERPLEXITY_API_KEY')
         self.base_url = "https://api.perplexity.ai"
         self.default_model = self.MODELS.get(default_model, self.MODELS["sonar_small"])
