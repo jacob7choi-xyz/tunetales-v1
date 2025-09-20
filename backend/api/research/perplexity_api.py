@@ -67,13 +67,28 @@ class PerplexityClient:
         return filepath
     
     def _estimate_cost(self, usage: Dict) -> float:
-        """Estimate API cost based on token usage"""
+        """Estimate API cost based on token usage and model pricing"""
         if not usage:
             return 0.0
         
-        # Sonar small pricing: $1 per million tokens (input + output)
+        # Updated Perplexity pricing (as of 2024/2025)
+        # sonar-pro: ~$20 per million tokens
+        # sonar models: ~$5 per million tokens  
+        # sonar_small/large: ~$1 per million tokens
+        
         total_tokens = usage.get("total_tokens", 0)
-        return (total_tokens / 1_000_000) * 1.0  # $1 per million tokens
+
+        # Determine pricing based on model used
+        model_used = usage.get("model", self.default_model)
+        
+        if "sonar-pro" in str(model_used):
+            rate = 20.0  # $20 per million tokens
+        elif "sonar" in str(model_used) and "small" not in str(model_used) and "large" not in str(model_used):
+            rate = 5.0   # $5 per million tokens for basic sonar
+        else:
+            rate = 1.0   # $1 per million tokens for sonar_small/large
+        
+        return (total_tokens / 1_000_000) * rate    
     
     def search_artist_info(self, artist_name: str, specific_query: str = None, model: str = None) -> Dict:
         """
@@ -86,67 +101,84 @@ class PerplexityClient:
         
         if specific_query:
             # Custom query with enhanced context
-            prompt = f"""You are researching and conducting due diligence for TuneTales, a premium storytelling platform 
-            that creates intimate, emotional connections between fans and artists.
-            
-            Research Query: {specific_query} about {artist_name}
-            
+            prompt = f"""Research {specific_query} about {artist_name} using ONLY premium music journalism sources.
+
+            REQUIRED SOURCES (prioritize in this order):
+            1. Rolling Stone magazine articles and interviews
+            2. Pitchfork reviews and features  
+            3. Complex magazine coverage
+            4. Billboard industry reporting
+            5. The Fader interviews and profiles
+            6. NPR Music features
+            7. Genius lyrical annotations and artist verified content
+
+            STRICTLY EXCLUDE: Wikipedia, fan sites, blogs, social media posts, unofficial sources
+
             Please provide:
             - Detailed, factual information with specific dates and sources
             - Direct quotes from interviews when available
             - Context about the music industry and cultural significance
-            - Verification from multiple reliable sources
-            - Interesting lesser-known facts that music fans would appreciate
-            - Emotional context and human stories that reveal the artist's personality
-            
-            Focus on accuracy and cite all sources used."""
+            - Verification from multiple reliable music journalism sources
+            - Interesting lesser-known facts from industry insiders
+            - Emotional context and human stories from credible interviews
+
+            Include publication name and date for every fact cited."""
         else:
-            # Comprehensive research prompt
-            prompt = f"""You are researching and conducting due diligence for TuneTales, a premium storytelling platform 
-            that creates intimate, emotional connections between fans and artists. Compile a comprehensive profile of {artist_name} 
-            for an immersive storytelling experience.
-            
-            Please research and provide detailed information about {artist_name} in the following categories:
-            
+            # Comprehensive research prompt with premium source requirements
+            prompt = f"""Research {artist_name} using ONLY premium music journalism sources for TuneTales, 
+            a premium storytelling platform. 
+
+            REQUIRED SOURCES ONLY:
+            - Rolling Stone (interviews, features, reviews)
+            - Pitchfork (reviews, interviews, profiles)
+            - Complex (cover stories, interviews)
+            - Billboard (industry reporting, charts)
+            - The Fader (long-form profiles)
+            - NPR Music (features, interviews)
+            - Genius (verified lyrical content, artist annotations)
+
+            STRICTLY EXCLUDE: Wikipedia, fan sites, blogs, social media
+
+            Compile comprehensive information about {artist_name}:
+
             ## 1. BIOGRAPHY & EARLY LIFE
-            - Birth date, location, family background
+            - Birth date, location, family background (from verified interviews)
             - Childhood influences and early musical exposure
             - Education and formative experiences
             - Key events that shaped their artistic vision
-            
+
             ## 2. MUSICAL CAREER TIMELINE
             - Career beginnings and breakthrough moments
-            - Major albums with release dates and context
+            - Major albums with release dates and industry context
             - Collaborations and notable features
             - Evolution of their musical style
             - Label history and business decisions
-            
+
             ## 3. CULTURAL IMPACT & ACHIEVEMENTS
-            - Awards and critical recognition
+            - Awards and critical recognition from music industry
             - Influence on other artists and genres
             - Social and cultural contributions
-            - Groundbreaking moments in their career
-            
+            - Groundbreaking moments covered by music press
+
             ## 4. RECENT ACTIVITIES & NEWS
-            - Latest releases or projects (2020-2024)
-            - Recent interviews or public appearances
+            - Latest releases or projects (from industry sources)
+            - Recent interviews from major music publications
             - Current artistic direction
-            - Upcoming projects or rumors
-            
-            ## 5. INTERESTING FACTS & STORIES
+            - Industry rumors from credible sources
+
+            ## 5. PREMIUM INSIGHTS & STORIES
             - Behind-the-scenes stories from recording sessions
-            - Personal anecdotes from interviews
-            - Lesser-known collaborations or unreleased material
-            - Fan culture and community insights
-            
+            - Personal anecdotes from major music magazine interviews
+            - Industry insider perspectives
+            - Exclusive content from music journalism
+
             ## 6. EMOTIONAL & STORYTELLING ELEMENTS
-            - Personal struggles and triumphs that shaped their music
+            - Personal struggles and triumphs from verified interviews
             - Vulnerable moments and breakthrough experiences
             - Relationships and life events that influenced their artistry
-            - Stories that reveal their humanity and creative process
-            
-            Please provide specific dates, sources, and quotes where possible. Emphasize narrative elements 
-            that create emotional resonance and help fans understand the human story behind the artist."""
+            - Stories that reveal their humanity from credible sources
+
+            Cite specific publication names and dates. Focus on premium music journalism insights."""
                     
         payload = {
             "model": selected_model,
@@ -158,7 +190,15 @@ class PerplexityClient:
             ],
             "max_tokens": 3000,
             "temperature": 0.1,  # Lower temperature for more factual responses
-            "search_domain_filter": ["wikipedia.org", "pitchfork.com", "rollingstone.com", "billboard.com", "complex.com"],
+            "search_domain_filter": [
+                "rollingstone.com", 
+                "pitchfork.com", 
+                "complex.com", 
+                "billboard.com",
+                "thefader.com",
+                "npr.org",
+                "genius.com"
+            ],
             "search_recency_filter": "year"
         }
         
@@ -186,56 +226,58 @@ class PerplexityClient:
         
         selected_model = model or self.default_model
         
-        prompt = f"""You are researching for TuneTales, a premium storytelling platform that creates intimate, 
-        emotional connections between fans and artists. Research the album "{album_name}" by {artist_name} 
-        to create an immersive documentary-style experience for music fans.
+        prompt = f"""Research the album "{album_name}" by {artist_name} using ONLY premium music journalism sources.
 
-        Please provide comprehensive information about this album:
+        REQUIRED SOURCES ONLY:
+        - Rolling Stone (album reviews, interviews)
+        - Pitchfork (reviews, retrospectives)
+        - Complex (album coverage, interviews)
+        - Billboard (commercial performance, industry context)
+        - The Fader (album profiles, interviews)
+        - NPR Music (album reviews, artist interviews)
+        - AllMusic (professional discography data)
+        - Metacritic (review aggregation from credible sources)
+
+        STRICTLY EXCLUDE: Wikipedia, fan sites, blogs, social media
+
+        Provide comprehensive album information:
 
         ## ALBUM OVERVIEW
         - Exact release date and label information
-        - Genre and musical style classification
+        - Genre and musical style from professional reviews
         - Album length, track count, and formats released
 
-        ## CREATION & RECORDING
+        ## CREATION & RECORDING (from interviews)
         - Recording timeline and studio locations
         - Producers, engineers, and key collaborators
-        - Recording techniques and equipment used
-        - Budget and recording challenges
+        - Recording techniques from professional sources
+        - Budget and recording challenges from industry reporting
 
-        ## MUSICAL CONTENT
-        - Complete track listing with song descriptions
-        - Standout tracks and their significance
-        - Musical themes and lyrical content
-        - Influences and inspirations
+        ## MUSICAL CONTENT (from reviews and interviews)
+        - Complete track listing with professional descriptions
+        - Standout tracks according to critics
+        - Musical themes and lyrical content analysis
+        - Influences and inspirations from artist interviews
 
-        ## COMMERCIAL PERFORMANCE
+        ## COMMERCIAL PERFORMANCE (from Billboard/industry sources)
         - Chart positions in major markets
         - Sales figures and certifications
         - Singles released and their performance
-        - Marketing and promotion strategies
+        - Marketing strategies from industry sources
 
-        ## CRITICAL RECEPTION
-        - Initial reviews from major publications
-        - Critic scores and awards received
+        ## CRITICAL RECEPTION (from major music publications)
+        - Reviews from Rolling Stone, Pitchfork, Complex
+        - Professional critic scores and awards
         - Long-term critical reassessment
-        - Cultural impact and legacy
+        - Cultural impact from music journalism
 
-        ## BEHIND-THE-SCENES STORIES
-        - Interesting anecdotes from recording sessions
-        - Artist interviews about the album creation
-        - Label politics or industry challenges
-        - Fan reactions and memorable moments
+        ## BEHIND-THE-SCENES (from credible interviews)
+        - Recording session stories from interviews
+        - Artist statements about album creation
+        - Industry challenges from music press
+        - Professional commentary and analysis
 
-        ## EMOTIONAL JOURNEY & STORYTELLING ELEMENTS
-        - Overall emotional arc and mood of the album (nostalgic, triumphant, introspective, etc.)
-        - Personal struggles or life events that shaped the album
-        - Vulnerable moments or breakthroughs during creation
-        - Stories that reveal the artist's humanity and creative process
-        - How this album represents a chapter in the artist's life story
-
-        Include specific dates, sources, and direct quotes where available. Emphasize narrative elements 
-        that create emotional resonance and help fans understand the human story behind the music."""
+        Cite specific publication names and dates for all information."""
         
         payload = {
             "model": selected_model,
@@ -247,8 +289,17 @@ class PerplexityClient:
             ],
             "max_tokens": 2500,
             "temperature": 0.1,
-            "search_domain_filter": ["pitchfork.com", "rollingstone.com", "allmusic.com", "metacritic.com", "wikipedia.org"]
-        }
+            "search_domain_filter": [
+                "rollingstone.com",
+                "pitchfork.com", 
+                "complex.com",
+                "billboard.com",
+                "thefader.com",
+                "npr.org",
+                "allmusic.com",
+                "metacritic.com"
+            ]
+        }  
         
         try:
             response = requests.post(
@@ -274,61 +325,58 @@ class PerplexityClient:
         
         selected_model = model or self.default_model
         
-        prompt = f"""You are researching for TuneTales, a premium storytelling platform that creates intimate,
-        emotional connections between fans and artists. Research the complete story behind "{song_name}" by {artist_name}.
+        prompt = f"""Research the complete story behind "{song_name}" by {artist_name} using ONLY premium music sources.
 
-        Please research and provide detailed information about:
+        REQUIRED SOURCES ONLY:
+        - Genius (verified artist annotations, lyrical breakdowns)
+        - Rolling Stone (song interviews, album coverage)
+        - Pitchfork (song analysis, reviews)
+        - Complex (track breakdowns, interviews)
+        - The Fader (artist interviews about specific songs)
+        - NPR Music (song features, interviews)
+        - Songfacts (verified song information)
 
-        ## SONG CREATION
-        - Writing process and timeline
-        - Co-writers and collaborators  
-        - Original inspiration and concept
-        - Demo versions and early iterations
+        STRICTLY EXCLUDE: Wikipedia, fan sites, blogs, unverified sources
 
-        ## MUSICAL COMPOSITION
-        - Key, tempo, and musical structure
-        - Instrumentation and arrangement details
-        - Samples used (if any) and their sources
-        - Production techniques and effects
+        Research comprehensive song details:
 
-        ## LYRICAL CONTENT
-        - Meaning and interpretation
-        - Personal experiences referenced
-        - Literary or cultural references
-        - Artist's own explanation of the lyrics
+        ## SONG CREATION (from interviews)
+        - Writing process and timeline from artist interviews
+        - Co-writers and collaborators from credits
+        - Original inspiration from verified artist statements
+        - Demo versions and iterations from industry sources
 
-        ## RECORDING & PRODUCTION
-        - Recording date and studio location
+        ## MUSICAL COMPOSITION (from professional analysis)
+        - Key, tempo, and structure from music analysis
+        - Instrumentation details from production credits
+        - Samples used and their sources from verified data
+        - Production techniques from professional sources
+
+        ## LYRICAL CONTENT (from Genius and interviews)
+        - Meaning from verified artist explanations
+        - Personal experiences referenced in interviews
+        - Cultural references from professional analysis
+        - Artist's own lyrical explanations
+
+        ## RECORDING & PRODUCTION (from industry sources)
+        - Recording details from professional sources
         - Producer and engineer credits
-        - Recording techniques and equipment
-        - Interesting studio stories
+        - Studio stories from credible interviews
+        - Technical details from industry reporting
 
-        ## RELEASE & RECEPTION
-        - Release date and context within album/project
-        - Commercial performance and chart positions
-        - Critical reception and reviews
-        - Music video details (if applicable)
+        ## RELEASE & RECEPTION (from music press)
+        - Release context from music journalism
+        - Commercial performance from Billboard
+        - Critical reception from major publications
+        - Music video details from industry sources
 
-        ## CULTURAL IMPACT
-        - Cover versions by other artists
-        - Use in films, TV, or advertisements
-        - Live performance history
-        - Fan interpretations and theories
+        ## CULTURAL IMPACT (from music journalism)
+        - Cover versions documented by music press
+        - Media usage from industry tracking
+        - Live performance history from concert reviews
+        - Professional critical analysis
 
-        ## INTERVIEWS & QUOTES
-        - Direct quotes from the artist about the song
-        - Producer or collaborator insights
-        - Behind-the-scenes anecdotes
-        - Fan or critic commentary
-
-        ## EMOTIONAL TONE & STORYTELLING ELEMENTS
-        - Identify the song's emotional mood (nostalgic, energetic, melancholic, triumphant, etc.)
-        - Personal struggles or breakthrough moments connected to this song
-        - Human stories that make fans feel closer to the artist
-        - Moments of vulnerability or authenticity in the creation process
-
-        Focus on verified information, include sources for all claims, and emphasize 
-        narrative elements that create emotional resonance for music fans."""
+        Focus on verified information from credible music sources. Include publication names and dates."""
                 
         payload = {
             "model": selected_model,
@@ -340,7 +388,15 @@ class PerplexityClient:
             ],
             "max_tokens": 2000,
             "temperature": 0.1,
-            "search_domain_filter": ["genius.com", "pitchfork.com", "rollingstone.com", "songfacts.com", "wikipedia.org"]
+            "search_domain_filter": [
+                "genius.com",
+                "rollingstone.com",
+                "pitchfork.com", 
+                "complex.com",
+                "thefader.com",
+                "npr.org",
+                "songfacts.com"
+            ]
         }
         
         try:
@@ -367,47 +423,52 @@ class PerplexityClient:
         
         selected_model = model or self.default_model
         
-        prompt = f"""You are researching and conducting due diligence for TuneTales, a premium storytelling platform 
-        that creates intimate, emotional connections between fans and artists. Create an authoritative, 
-        thorough timeline for {artist_name} that tells their life story as a compelling narrative journey. 
+        prompt = f"""Create an authoritative timeline for {artist_name} using ONLY premium music industry sources.
 
-        Research {artist_name}'s career chronologically using only premium music sources (Rolling Stone, Pitchfork, Complex, Billboard, The Fader, NPR Music, Grammy.com).
+        REQUIRED SOURCES ONLY:
+        - Rolling Stone (career milestones, interviews)
+        - Pitchfork (album releases, critical moments)
+        - Complex (career coverage, profiles)
+        - Billboard (chart data, industry milestones)
+        - The Fader (career profiles, interviews)
+        - NPR Music (career features, interviews)
+        - Grammy.com (award information)
 
-        Create a detailed timeline with:
+        STRICTLY EXCLUDE: Wikipedia, fan sites, unofficial sources
 
-        **EARLY LIFE & CAREER (Birth - First Release)**
-        - Birth date and location
-        - Musical influences and early experiences
-        - First recordings or performances
-        - Career beginnings and breakthrough moments
+        Create detailed timeline with verified information:
 
-        **MAJOR RELEASES & MILESTONES**
-        - Album releases with exact dates
-        - Chart performance and critical reception
-        - Award wins and nominations
-        - Significant collaborations
+        **EARLY LIFE & CAREER (from interviews)**
+        - Birth date and location from verified sources
+        - Musical influences from artist interviews
+        - First recordings from industry documentation
+        - Career beginnings from music journalism
 
-        **CULTURAL IMPACT & RECENT ACTIVITY**
-        - Groundbreaking moments or statements
-        - Recent projects and current status
-        - Industry influence and legacy
+        **MAJOR RELEASES & MILESTONES (from industry sources)**
+        - Album releases with exact dates from labels/Billboard
+        - Chart performance from Billboard data
+        - Critical reception from major publications
+        - Award wins from official sources
 
-        **EMOTIONAL & PERSONAL JOURNEY**
-        - Key life events that shaped their artistry
-        - Personal struggles, triumphs, and transformative moments
-        - Relationships, losses, and breakthroughs that influenced their music
-        - Periods of creative growth, experimentation, or reinvention
+        **CULTURAL IMPACT & RECENT ACTIVITY (from music press)**
+        - Groundbreaking moments from music journalism
+        - Recent projects from industry reporting
+        - Industry influence from professional analysis
 
-        For each major event, provide:
-        - Exact date (when available)
-        - Context and significance  
-        - Source publication
-        - Impact on career/culture
-        - Emotional significance and how it shaped them as an artist
+        **EMOTIONAL & PERSONAL JOURNEY (from credible interviews)**
+        - Life events from verified artist interviews
+        - Creative periods from music journalism
+        - Personal struggles from credible sources
+        - Artistic evolution from professional coverage
 
-        Focus on verified facts from music industry sources, not speculation. Emphasize the human story 
-        behind the timeline - the struggles, breakthroughs, and personal evolution that fans can connect with emotionally."""
-        
+        For each event provide:
+        - Exact date (when available from sources)
+        - Source publication name
+        - Context from music industry perspective
+        - Impact on career from professional analysis
+
+        Focus ONLY on information from credible music industry sources."""
+
         payload = {
             "model": selected_model,
             "messages": [
@@ -451,21 +512,34 @@ class PerplexityClient:
 
 # Enhanced test function
 if __name__ == "__main__":
-    client = PerplexityClient(default_model="sonar_small")
+    client = PerplexityClient(default_model="sonar_pro")
     
-    print("🎵 Testing Enhanced Perplexity Client...")
+    print("🎵 Testing Premium-Only Perplexity Client...")
     print("="*50)
     
-    # Test comprehensive artist info
-    print("\n1. Testing comprehensive artist research...")
-    result = client.search_artist_info("Frank Ocean")
+    # Test premium source research
+    print("\n1. Testing premium music journalism research...")
+    result = client.search_artist_info("Frank Ocean", "Frank Ocean Boys Don't Cry magazine Rolling Stone Pitchfork coverage")
     
     if "error" not in result:
-        print("✅ Artist research successful!")
+        print("✅ Premium research successful!")
         print(f"📊 Tokens used: {result['usage']['total_tokens']}")
         print(f"💰 Estimated cost: ${result['usage']['total_tokens'] / 1_000_000:.6f}")
-        print(f"📚 Citations: {len(result.get('citations', []))}")
-        print(f"📝 Response length: {len(result['choices'][0]['message']['content'])} chars")
+        
+        # Check for premium sources in citations
+        citations = result.get('citations', [])
+        print(f"📚 Citations: {len(citations)}")
+        
+        premium_sources = [c for c in citations if any(domain in c for domain in 
+                          ['rollingstone.com', 'pitchfork.com', 'complex.com', 'billboard.com', 'thefader.com', 'npr.org', 'genius.com'])]
+        
+        print(f"🏆 Premium sources: {len(premium_sources)}/{len(citations)}")
+        
+        if 'wikipedia.org' in str(citations):
+            print("⚠️  WARNING: Wikipedia found in citations!")
+        else:
+            print("✅ No Wikipedia sources - premium only!")
+            
     else:
         print("❌ Error:", result['error'])
     
