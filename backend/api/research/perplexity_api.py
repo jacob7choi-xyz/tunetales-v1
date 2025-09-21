@@ -189,17 +189,17 @@ class PerplexityClient:
                 }
             ],
             "max_tokens": 3000,
-            "temperature": 0.1,  # Lower temperature for more factual responses
-            "search_domain_filter": [
-                "rollingstone.com", 
-                "pitchfork.com", 
-                "complex.com", 
-                "billboard.com",
-                "thefader.com",
-                "npr.org",
-                "genius.com"
-            ],
-            "search_recency_filter": "year"
+            "temperature": 0.1  # Lower temperature for more factual responses
+            # "search_domain_filter": [
+            #     "rollingstone.com", 
+            #     "pitchfork.com", 
+            #     "complex.com", 
+            #     "billboard.com",
+            #     "thefader.com",
+            #     "npr.org",
+            #     "genius.com"
+            # ],
+            # "search_recency_filter": "year"
         }
         
         try:
@@ -288,17 +288,17 @@ class PerplexityClient:
                 }
             ],
             "max_tokens": 2500,
-            "temperature": 0.1,
-            "search_domain_filter": [
-                "rollingstone.com",
-                "pitchfork.com", 
-                "complex.com",
-                "billboard.com",
-                "thefader.com",
-                "npr.org",
-                "allmusic.com",
-                "metacritic.com"
-            ]
+            "temperature": 0.1
+            # "search_domain_filter": [
+            #     "rollingstone.com",
+            #     "pitchfork.com", 
+            #     "complex.com",
+            #     "billboard.com",
+            #     "thefader.com",
+            #     "npr.org",
+            #     "allmusic.com",
+            #     "metacritic.com"
+            # ]
         }  
         
         try:
@@ -387,16 +387,16 @@ class PerplexityClient:
                 }
             ],
             "max_tokens": 2000,
-            "temperature": 0.1,
-            "search_domain_filter": [
-                "genius.com",
-                "rollingstone.com",
-                "pitchfork.com", 
-                "complex.com",
-                "thefader.com",
-                "npr.org",
-                "songfacts.com"
-            ]
+            "temperature": 0.1
+            # "search_domain_filter": [
+            #     "genius.com",
+            #     "rollingstone.com",
+            #     "pitchfork.com", 
+            #     "complex.com",
+            #     "thefader.com",
+            #     "npr.org",
+            #     "songfacts.com"
+            # ]
         }
         
         try:
@@ -478,16 +478,16 @@ class PerplexityClient:
                 }
             ],
             "max_tokens": 2500,
-            "temperature": 0.05,
-            "search_domain_filter": [
-                "rollingstone.com", 
-                "pitchfork.com", 
-                "complex.com", 
-                "billboard.com", 
-                "thefader.com",
-                "npr.org",
-                "grammy.com"
-            ]
+            "temperature": 0.05
+            # "search_domain_filter": [
+            #     "rollingstone.com", 
+            #     "pitchfork.com", 
+            #     "complex.com", 
+            #     "billboard.com", 
+            #     "thefader.com",
+            #     "npr.org",
+            #     "grammy.com"
+            # ]
         }
         
         try:

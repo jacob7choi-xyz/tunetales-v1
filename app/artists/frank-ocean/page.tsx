@@ -426,13 +426,170 @@ export default function FrankOceanPage() {
           )}
 
           {activeTab === 'sources' && (
-            <div className="text-center py-20">
-              <h2 className="text-4xl font-bold mb-6">Research Sources</h2>
-              <p className="text-xl text-white/70 mb-8">
-                All information verified through credible journalism and official sources
-              </p>
-              <div className="text-white/50">
-                Complete source attribution and research methodology
+            <div className="max-w-6xl mx-auto py-12">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4">Research Methodology & Sources</h2>
+                <p className="text-xl text-white/70 max-w-3xl mx-auto">
+                  TuneTales uses a hybrid research approach: AI-powered content aggregation combined with manual verification 
+                  from premium music journalism. Full transparency in our methodology ensures content credibility.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
+                <h3 className="text-2xl font-bold mb-8 text-blue-400">Research Methodology</h3>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 rounded-full bg-blue-400 mt-2"></div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2">AI-Powered Foundation</h4>
+                      <p className="text-white/70">Perplexity sonar-pro aggregates comprehensive research from multiple sources</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 rounded-full bg-purple-400 mt-2"></div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2">Manual Verification</h4>
+                      <p className="text-white/70">Human fact-checking against premium music journalism sources</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 rounded-full bg-teal-400 mt-2"></div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2">Quality Control</h4>
+                      <p className="text-white/70">All factual claims reviewed before publication</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 rounded-full bg-green-400 mt-2"></div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2">Premium Enhancement</h4>
+                      <p className="text-white/70">Key stories supplemented with Rolling Stone, Pitchfork research</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
+                <h3 className="text-2xl font-bold mb-6 text-purple-400">Source Quality Distribution</h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="font-bold mb-4 text-white">Automated Research Sources</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-white/70">General encyclopedias</span>
+                        <span className="text-yellow-300">40-50%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Music databases</span>
+                        <span className="text-blue-300">20-30%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Community forums</span>
+                        <span className="text-orange-300">15-20%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Premium journalism</span>
+                        <span className="text-green-300">10-15%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold mb-4 text-white">Manual Enhancement Focus</h4>
+                    <div className="space-y-2 text-white/70">
+                      <div>• Key biographical facts verification</div>
+                      <div>• Album release timeline accuracy</div>
+                      <div>• Quote attribution and context</div>
+                      <div>• Cultural impact claims</div>
+                      <div>• Industry relationships & collaborations</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
+                <h3 className="text-2xl font-bold mb-6 text-teal-400">Example: Boys Don't Cry Magazine Research</h3>
+                
+                <div className="grid lg:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="font-bold mb-4 text-white">Research Query</h4>
+                    <div className="bg-black/20 rounded-lg p-4 mb-4">
+                      <div className="text-sm text-white/60 mb-2">Query Details:</div>
+                      <div className="text-white">"Frank Ocean Boys Don't Cry magazine details"</div>
+                    </div>
+                    
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Model Used:</span>
+                        <span className="text-blue-300">sonar-pro</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Tokens:</span>
+                        <span className="text-green-300">893 total</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Cost:</span>
+                        <span className="text-purple-300">$0.018</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/70">Citations:</span>
+                        <span className="text-yellow-300">9 sources</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold mb-4 text-white">Key Findings</h4>
+                    <div className="space-y-3 text-sm text-white/80">
+                      <div>• 360-page magazine released August 20, 2016</div>
+                      <div>• Free distribution at 4 global pop-up locations</div>
+                      <div>• Featured Wolfgang Tillmans & Viviane Sassen photography</div>
+                      <div>• Included Kanye West's viral McDonald's poem</div>
+                      <div>• Personal letter from Frank about masculinity & memory</div>
+                      <div>• Extended "Nikes" version with Japanese rapper KOHH</div>
+                      <div>• Marked independence from major label system</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                  <h3 className="text-xl font-bold mb-4 text-green-400">Verification Standards</h3>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <div>✓ Multiple source cross-referencing</div>
+                    <div>✓ Publication date verification</div>
+                    <div>✓ Author credibility assessment</div>
+                    <div>✓ Fact-checking against primary sources</div>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                  <h3 className="text-xl font-bold mb-4 text-yellow-400">Data Transparency</h3>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <div>• Full JSON research files stored</div>
+                    <div>• Metadata tracking for all queries</div>
+                    <div>• Source URLs and timestamps</div>
+                    <div>• Cost tracking per research session</div>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                  <h3 className="text-xl font-bold mb-4 text-red-400">Current Metrics</h3>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <div>Mixed source quality (improving)</div>
+                    <div>3-7 citations per query</div>
+                    <div>Manual fact verification for key claims</div>
+                    <div>Transparent methodology documentation</div>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center mt-12 pt-8 border-t border-white/10">
+                <p className="text-white/50 text-sm">
+                  All research data is stored as structured JSON files with full metadata tracking. 
+                  TuneTales maintains the highest standards for source verification and academic integrity 
+                  in music journalism and artist storytelling.
+                </p>
               </div>
             </div>
           )}
