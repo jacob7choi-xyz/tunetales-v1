@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint app/",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "verify": "node scripts/verify-files.js",
     "precommit": "npm run verify",
     "prepare": "husky install"
@@ -22,12 +24,17 @@
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.1.6",
     "husky": "^9.1.7",
-    "typescript": "^5"
+    "jsdom": "^28.1.0",
+    "typescript": "^5",
+    "vitest": "^4.1.0"
   }
 }

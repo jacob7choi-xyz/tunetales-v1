@@ -12,53 +12,30 @@ const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer
   ssr: false
 });
 
-// Sample data - in a real app, this would come from an API or database
-const sampleStories = [
-  {
-    id: 'frank-ocean',
-    artistName: 'Frank Ocean',
-    coverImageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60',
-    category: 'Alternative R&B',
-    year: 2016,
-  },
-  {
-    id: 'taylor-swift',
-    artistName: 'Taylor Swift',
-    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
-    category: 'Pop',
-    year: 2020,
-  },
-  {
-    id: 'kendrick-lamar',
-    artistName: 'Kendrick Lamar',
-    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
-    category: 'Hip Hop',
-    year: 2017,
-  },
-  {
-    id: 'beyonce',
-    artistName: 'Beyoncé',
-    coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
-    category: 'R&B',
-    year: 2022,
-  },
-];
+import type { Artist } from './lib/types';
 
 const categories = ['All', 'Pop', 'Hip Hop', 'R&B', 'Rock', 'Electronic', 'Jazz'];
 
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [artists, setArtists] = useState<Artist[]>([]);
+
+  useEffect(() => {
+    fetch('/api/artists')
+      .then((res) => res.json())
+      .then((data: Artist[]) => setArtists(data))
+      .catch(() => setArtists([]));
+  }, []);
 
   const selectedCategory = searchParams.get('category') || 'All';
 
   const filteredStories = useMemo(() => {
-    if (selectedCategory === 'All') return sampleStories;
-    return sampleStories.filter(
-      (story) =>
-        story.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
+    if (selectedCategory === 'All') return artists;
+    return artists.filter(
+      (a) => a.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
     );
-  }, [selectedCategory]);
+  }, [selectedCategory, artists]);
 
   const [hue, setHue] = useState(0);
 
@@ -216,9 +193,9 @@ function HomeContent() {
               transition={{ duration: 0.4, ease: 'easeOut' }}
               className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
-              {filteredStories.map((story) => (
+              {filteredStories.map((artist) => (
                 <motion.div
-                  key={story.id}
+                  key={artist.id}
                   layout
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -226,10 +203,10 @@ function HomeContent() {
                   transition={{ duration: 0.7, ease: 'easeOut' }}
                 >
                   <StoryCard
-                    artistName={story.artistName}
-                    coverImageUrl={story.coverImageUrl}
-                    category={story.category}
-                    year={story.year}
+                    artistName={artist.artistName}
+                    coverImageUrl={artist.coverImageUrl}
+                    category={artist.category}
+                    year={artist.year}
                   />
                 </motion.div>
               ))}

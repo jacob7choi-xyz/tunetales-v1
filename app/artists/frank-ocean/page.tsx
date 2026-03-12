@@ -7,75 +7,12 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
+import type { ArtistStory } from '../../lib/types';
+
 const FloatingNotesLayer = dynamic(() => import('../../components/FloatingNotesLayer'), {
   ssr: false,
   loading: () => <div></div>
 });
-
-// Research-based Frank Ocean story content using your new Perplexity data
-const frankOceanStory = {
-  title: "Frank Ocean: The Beautiful Mystery",
-  sections: [
-    {
-      id: "origins",
-      title: "THE BOY FROM LONG BEACH",
-      content: `Christopher Edwin Breaux was born on October 28, 1987, in Long Beach, California. At home, he was called "Lonny" after his maternal grandfather, Lionel McGruder Jr., who would become a father figure after Christopher's own father, Calvin Cooksey, left the family when he was six years old. When Christopher was five, his mother Katonya moved the family to New Orleans, where he grew up immersed in the city's rich jazz traditions and listened to his mother's R&B collection in the car.
-
-What shaped young Christopher most profoundly was accompanying his grandfather to Alcoholics Anonymous and Narcotics Anonymous meetings. Lionel was a recovering addict who served as a mentor at these meetings, and these experiences became masterclasses in human nature for teenage Frank, teaching him that beauty often emerges from life's darkest corners. This would later inspire his song "Crack Rock" from Channel Orange.
-
-By thirteen, Christopher had decided to become a songwriter and started recording music while in high school, paying for studio time by washing neighbors' cars, mowing lawns and walking dogs. He was determined to make music his life.`
-    },
-    {
-      id: "katrina",
-      title: "THE STORM THAT CHANGED EVERYTHING", 
-      content: `In 2005, after graduating high school, Christopher enrolled at the University of New Orleans to study English. But on August 29, Hurricane Katrina hit the city with devastating force. The recording facility where Christopher had been working was flooded and looted in the chaos that followed. What little music he had recorded was destroyed.
-
-This catastrophe became transformation. Realizing there was no scope for continuing his recording dreams in New Orleans, Christopher made a life-changing decision: he would move to Los Angeles to pursue music, intending to stay only briefly to continue his recording projects.
-
-In Los Angeles, he worked various fast-food and service jobs to support himself while establishing himself as a songwriter under the name Lonny Breaux. After getting a songwriting deal, he wrote tracks for major artists including Justin Bieber, Beyoncé, John Legend, and Brandy.`
-    },
-    {
-      id: "boys_dont_cry",
-      title: "THE BOYS DON'T CRY MASTERPIECE",
-      content: `On August 20, 2016, Frank Ocean released one of the most innovative album rollouts in music history. Alongside his album "Blonde," he distributed a free 360-page magazine called "Boys Don't Cry" at pop-up shops in Los Angeles, New York City, Chicago, and London.
-
-The magazine was a work of art itself, featuring photography by Wolfgang Tillmans and Viviane Sassen, and famously included a poem by Kanye West about McDonald's that became viral. But most significantly, it opened with a deeply personal letter from Frank Ocean reflecting on masculinity and vulnerability: "Boys do cry, but I don't think I shed a tear for a good chunk of my teenage years. It's surprisingly my favorite part of life so far."
-
-This wasn't just an album release - it was Frank's declaration of independence from the traditional music industry. The magazine represented his break from Def Jam and the major-label system, marking a new era of artistic autonomy. The magazine included an extended version of "Nikes" featuring Japanese rapper KOHH, exclusive to the physical release.`
-    },
-    {
-      id: "transformation",
-      title: "BECOMING FRANK OCEAN",
-      content: `Around 2009, Christopher met the Los Angeles-based hip hop collective Odd Future through networking. His friendship with Tyler, The Creator reinvigorated his songwriting and encouraged him to write for himself rather than just other artists. That same year, he met producer Christopher "Tricky" Stewart, who helped him sign a contract with Def Jam Recordings as a solo artist.
-
-In 2010, through a legal website, he officially changed his name from Christopher Breaux to Christopher Francis Ocean. The name was inspired by Frank Sinatra and the 1960 film Ocean's Eleven, believing the new name would look better on magazine covers.
-
-But Def Jam wasn't supportive of his artistic vision. Frustrated by the label's lack of promotion, Frank made a bold move: in February 2011, he self-released his mixtape "Nostalgia, Ultra" as a free download on his Tumblr site, without Def Jam's knowledge. The recording featured both original compositions and creative samples from artists like Coldplay, the Eagles, and MGMT.`
-    },
-    {
-      id: "breakthrough",
-      title: "THE LETTER THAT CHANGED EVERYTHING",
-      content: `On July 4, 2012, on the eve of releasing his debut studio album "Channel Orange," Frank Ocean published an open letter on his Tumblr blog. What was initially intended as liner notes became one of music's most powerful moments of vulnerability. Frank detailed his first love - who happened to be a man - when he was 19 years old.
-
-In the letter, Frank wrote with raw honesty about this relationship: "By the time I realized I was in love, it was malignant. It was hopeless... He wouldn't tell me the truth about his feelings for me for another three years." The letter's transparency sent ripples through hip-hop culture and beyond.
-
-This act of radical tenderness came at a time when hip-hop culture was still grappling with homophobia. Frank's letter represented what one critic called "the most radical form of expression in a world that asks you to present your most uncaring self was tenderness."
-
-"Channel Orange" was released shortly after and debuted at number two on the Billboard 200. The album won the Grammy for Best Urban Contemporary Album and established Frank as a pioneer of alternative R&B, with standout tracks like "Thinkin Bout You," "Super Rich Kids," and "Pink Matter."`
-    },
-    {
-      id: "legacy",
-      title: "THE CULTURAL IMPACT",
-      content: `Frank Ocean's influence extends far beyond music. His approach to vulnerability and emotional honesty has inspired countless artists including Tyler, The Creator, Billie Eilish, and James Blake. He demonstrated that an artist could maintain mystique while being radically honest about their inner life.
-
-Despite releasing only two studio albums in over a decade, Frank maintains 20 million monthly Spotify listeners. His music represents what one critic described as "the emotional equivalent of being invited to sit in silence next to someone in a dark room, looking out a window over a cityscape and listening to your inner dialogue."
-
-Frank Ocean proved that in the streaming era, an artist could still create albums as integral artistic statements. His use of enigma, silence, and carefully curated releases turned his work into cultural phenomena rather than just products.
-
-His legacy lives in the spaces between: between R&B and avant-garde, between presence and absence, between what music is and what it could be. In a world of constant noise, Frank Ocean showed the power of silence, patience, and vulnerability as strength.`
-    }
-  ]
-};
 
 export default function FrankOceanPage() {
   const router = useRouter();
@@ -83,6 +20,14 @@ export default function FrankOceanPage() {
   const [showStory, setShowStory] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
   const [hue, setHue] = useState(0);
+  const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
+
+  useEffect(() => {
+    fetch('/api/artists/frank-ocean')
+      .then((res) => res.json())
+      .then((data: { story: ArtistStory }) => setFrankOceanStory(data.story))
+      .catch(() => setFrankOceanStory(null));
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -109,6 +54,14 @@ export default function FrankOceanPage() {
     { id: 'impact', label: 'Cultural Legacy', icon: SparklesIcon, description: 'How Frank changed music forever' },
     { id: 'sources', label: 'Research Sources', icon: LinkIcon, description: 'Verified journalism and interviews' }
   ];
+
+  if (!frankOceanStory) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white" style={{ background: 'linear-gradient(135deg, hsl(220, 75%, 20%), hsl(240, 65%, 18%))' }}>
+        <div className="text-lg animate-pulse">Loading story...</div>
+      </div>
+    );
+  }
 
   const currentSectionData = frankOceanStory.sections[currentSection];
 
