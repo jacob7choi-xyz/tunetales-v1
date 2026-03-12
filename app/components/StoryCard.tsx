@@ -10,7 +10,7 @@ interface StoryCardProps {
 }
 
 // Helper function to create artist URL slug
-const createArtistSlug = (artistName: string) => {
+export const createArtistSlug = (artistName: string) => {
   return artistName
     .toLowerCase()
     .replace(/é/g, 'e')  // Handle accented characters
