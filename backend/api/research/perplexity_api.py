@@ -63,7 +63,7 @@ class PerplexityClient:
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(storage_data, f, indent=2, ensure_ascii=False)
         
-        print(f"💾 Response saved to: {filename}")
+        print(f"[SAVED] Response saved to: {filename}")
         return filepath
     
     def _estimate_cost(self, usage: Dict) -> float:
@@ -514,7 +514,7 @@ class PerplexityClient:
 if __name__ == "__main__":
     client = PerplexityClient(default_model="sonar_pro")
     
-    print("🎵 Testing Premium-Only Perplexity Client...")
+    print("[INFO] Testing Premium-Only Perplexity Client...")
     print("="*50)
     
     # Test premium source research
@@ -522,26 +522,26 @@ if __name__ == "__main__":
     result = client.search_artist_info("Frank Ocean", "Frank Ocean Boys Don't Cry magazine Rolling Stone Pitchfork coverage")
     
     if "error" not in result:
-        print("✅ Premium research successful!")
-        print(f"📊 Tokens used: {result['usage']['total_tokens']}")
-        print(f"💰 Estimated cost: ${result['usage']['total_tokens'] / 1_000_000:.6f}")
+        print("[OK] Premium research successful!")
+        print(f"[STATS] Tokens used: {result['usage']['total_tokens']}")
+        print(f"[COST] Estimated cost: ${result['usage']['total_tokens'] / 1_000_000:.6f}")
         
         # Check for premium sources in citations
         citations = result.get('citations', [])
-        print(f"📚 Citations: {len(citations)}")
+        print(f"[REFS] Citations: {len(citations)}")
         
         premium_sources = [c for c in citations if any(domain in c for domain in 
                           ['rollingstone.com', 'pitchfork.com', 'complex.com', 'billboard.com', 'thefader.com', 'npr.org', 'genius.com'])]
         
-        print(f"🏆 Premium sources: {len(premium_sources)}/{len(citations)}")
+        print(f"[PREMIUM] Premium sources: {len(premium_sources)}/{len(citations)}")
         
         if 'wikipedia.org' in str(citations):
-            print("⚠️  WARNING: Wikipedia found in citations!")
+            print("[WARN]  WARNING: Wikipedia found in citations!")
         else:
-            print("✅ No Wikipedia sources - premium only!")
+            print("[OK] No Wikipedia sources - premium only!")
             
     else:
-        print("❌ Error:", result['error'])
+        print("[FAIL] Error:", result['error'])
     
     print("\n" + "="*50)
     print("Check the data/research/ folder for saved responses!")

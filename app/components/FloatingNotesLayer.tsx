@@ -1,10 +1,11 @@
 'use client';
 
-import { useMemo, useCallback, useRef, useEffect } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const musicSymbols = [
-  '♪', '♫', '♬', '♩', '♭', '♮', '♯', '𝄞', '𝄢', '𝄡', '🎵', '🎶', '🎼', '🎹', '🎻', '🎺', '🎸', '🎷'
+  '\u266A', '\u266B', '\u266C', '\u2669', '\u266D', '\u266E', '\u266F',
+  '\uD834\uDD1E', '\uD834\uDD22', '\uD834\uDD21'
 ];
 
 const colors = Object.freeze([
@@ -12,7 +13,6 @@ const colors = Object.freeze([
   '#a3e635', '#fb923c', '#c084fc', '#22d3ee', '#fbbf24', '#4ade80'
 ]);
 
-// Pre-compute size and opacity ranges for each layer
 const LAYER_CONFIGS = Object.freeze({
   background: { size: [0.8, 1.2], opacity: [0.3, 0.5], zIndex: 'z-0' },
   foreground: { size: [1.0, 1.5], opacity: [0.5, 0.7], zIndex: 'z-10' },
@@ -38,7 +38,6 @@ interface FloatingNotesLayerProps {
   layer?: 'background' | 'foreground' | 'overlay';
 }
 
-// Pre-computed glow styles for performance
 const GLOW_STYLES = Object.freeze(
   colors.reduce((acc, color) => {
     acc[color] = `0 0 8px ${color}, 0 0 16px ${color}66`;
@@ -46,76 +45,52 @@ const GLOW_STYLES = Object.freeze(
   }, {} as Record<string, string>)
 );
 
-// Create a pool of pre-computed random values
-const createRandomPool = (size: number) => {
-  const pool = new Float32Array(size);
-  for (let i = 0; i < size; i++) {
-    pool[i] = Math.random();
-  }
-  return pool;
-};
+// Module-level random pool -- shared across all instances, no refs needed
+const RANDOM_POOL_SIZE = 1000;
+const RANDOM_POOL = new Float32Array(RANDOM_POOL_SIZE);
+for (let i = 0; i < RANDOM_POOL_SIZE; i++) {
+  RANDOM_POOL[i] = Math.random();
+}
+let poolIndex = 0;
+
+function getNextRandom(): number {
+  const value = RANDOM_POOL[poolIndex];
+  poolIndex = (poolIndex + 1) % RANDOM_POOL_SIZE;
+  return value;
+}
+
+function generateNote(index: number, layer: 'background' | 'foreground' | 'overlay'): Note {
+  const config = LAYER_CONFIGS[layer];
+  const [minSize, maxSize] = config.size;
+  const [minOpacity, maxOpacity] = config.opacity;
+
+  return {
+    id: index,
+    symbol: musicSymbols[index % musicSymbols.length],
+    delay: getNextRandom() * 1.5,
+    duration: 4 + getNextRandom() * 4,
+    x: getNextRandom() * 100,
+    y: getNextRandom() * 100,
+    size: minSize + getNextRandom() * (maxSize - minSize),
+    color: colors[index % colors.length],
+    speed: 0.8 + getNextRandom() * 0.8,
+    rotation: getNextRandom() * 360,
+    opacity: minOpacity + getNextRandom() * (maxOpacity - minOpacity)
+  };
+}
 
 const FloatingNotesLayer = ({ count = 10, layer = 'background' }: FloatingNotesLayerProps) => {
-  // Use refs to maintain values between renders
-  const randomPoolRef = useRef<Float32Array | null>(null);
-  const poolIndexRef = useRef(0);
-
-  // Initialize random pool if not exists
-  useEffect(() => {
-    if (!randomPoolRef.current) {
-      randomPoolRef.current = createRandomPool(1000);
-    }
-  }, []);
-
-  // Get next random value from pool
-  const getNextRandom = useCallback(() => {
-    if (!randomPoolRef.current) return Math.random();
-    const value = randomPoolRef.current[poolIndexRef.current];
-    poolIndexRef.current = (poolIndexRef.current + 1) % randomPoolRef.current.length;
-    return value;
-  }, []);
-
-  // Memoize the note generation function
-  const generateNote = useCallback((index: number): Note => {
-    const config = LAYER_CONFIGS[layer];
-    const [minSize, maxSize] = config.size;
-    const [minOpacity, maxOpacity] = config.opacity;
-    
-    // Generate completely random positions across the entire viewport
-    const x = getNextRandom() * 100; // Random x position (0-100%)
-    const y = getNextRandom() * 100; // Random y position (0-100%)
-    
-    return {
-      id: index,
-      symbol: musicSymbols[index % musicSymbols.length],
-      delay: getNextRandom() * 1.5,
-      duration: 4 + getNextRandom() * 4, // Even faster animations
-      x,
-      y,
-      size: minSize + getNextRandom() * (maxSize - minSize),
-      color: colors[index % colors.length],
-      speed: 0.8 + getNextRandom() * 0.8,
-      rotation: getNextRandom() * 360,
-      opacity: minOpacity + getNextRandom() * (maxOpacity - minOpacity)
-    };
-  }, [layer, getNextRandom, count]);
-
-  // Use useMemo to cache the notes array
-  const notes = useMemo(() => 
-    Array.from({ length: count }, (_, i) => generateNote(i)),
-    [count, generateNote]
+  const notes = useMemo(
+    () => Array.from({ length: count }, (_, i) => generateNote(i, layer)),
+    [count, layer]
   );
 
-  // Memoize the z-index class
-  const zIndexClass = useMemo(() => 
-    LAYER_CONFIGS[layer].zIndex,
-    [layer]
-  );
+  const zIndexClass = LAYER_CONFIGS[layer].zIndex;
 
   return (
-    <div 
+    <div
       className={`pointer-events-none fixed inset-0 overflow-hidden ${zIndexClass}`}
-      style={{ 
+      style={{
         willChange: 'transform',
         transform: 'translateZ(0)',
         backfaceVisibility: 'hidden',
@@ -138,13 +113,13 @@ const FloatingNotesLayer = ({ count = 10, layer = 'background' }: FloatingNotesL
             textShadow: GLOW_STYLES[note.color],
             userSelect: 'none'
           }}
-          initial={{ 
+          initial={{
             y: 0,
             opacity: 0,
             scale: 0.8,
             rotate: note.rotation
           }}
-          animate={{ 
+          animate={{
             y: [-20, -60, -100],
             opacity: [0, note.opacity, 0],
             scale: [0.5, 1, 0.8],

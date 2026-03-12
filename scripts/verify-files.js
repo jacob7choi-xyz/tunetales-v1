@@ -16,30 +16,30 @@ const criticalFiles = [
 
 let allPassed = true;
 
-console.log('🔍 Verifying file integrity...');
+console.log('[SCAN] Verifying file integrity...');
 
 for (const file of criticalFiles) {
   const filePath = path.resolve(file);
   if (!fs.existsSync(filePath)) {
-    console.error(`❌ ${file} is missing!`);
+    console.error(`[FAIL] ${file} is missing!`);
     allPassed = false;
     continue;
   }
 
   try {
     execSync(`tsc --noEmit ${filePath}`, { stdio: 'ignore' });
-    console.log(`✅ ${file} is valid`);
+    console.log(`[OK] ${file} is valid`);
   } catch (e) {
-    console.error(`❌ ${file} has TypeScript errors`);
+    console.error(`[FAIL] ${file} has TypeScript errors`);
     allPassed = false;
   }
 }
 
 if (allPassed) {
-  console.log('\n✨ All files are valid!');
-  console.log('✅ File verification passed.');
+  console.log('\n[DONE] All files are valid!');
+  console.log('[OK] File verification passed.');
   process.exit(0);
 } else {
-  console.error('\n❌ File verification failed. Please fix the issues before committing.');
+  console.error('\n[FAIL] File verification failed. Please fix the issues before committing.');
   process.exit(1);
 }

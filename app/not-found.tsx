@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeftIcon, MusicalNoteIcon, SparklesIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { MusicalNoteIcon, SparklesIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
@@ -56,7 +57,7 @@ export default function NotFound() {
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2">
             <span className="text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]">
-              <img src="/TuneTales_Transparent_Logo.png" alt="" className="w-8 h-8 inline mr-2" /> TuneTales
+              <Image src="/TuneTales_Transparent_Logo.png" alt="" width={32} height={32} className="inline mr-2" /> TuneTales
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -105,8 +106,8 @@ export default function NotFound() {
             transition={{ delay: 0.6, duration: 0.7, ease: 'easeOut' }}
             className="text-xl text-white/70 mb-12 leading-relaxed max-w-2xl mx-auto"
           >
-            This page seems to have wandered off into another dimension of sound and story. 
-            Let's guide you back to the magical musical journey.
+            This page seems to have wandered off into another dimension of sound and story.
+            Let&apos;s guide you back to the magical musical journey.
           </motion.p>
 
           {/* Action Buttons */}

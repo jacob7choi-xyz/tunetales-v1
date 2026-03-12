@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import StoryCard from './components/StoryCard';
 import { MagnifyingGlassIcon, MusicalNoteIcon, SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -99,7 +100,7 @@ function HomeContent() {
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2">
           <span className="text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]">
-          <img src="/TuneTales_Transparent_Logo.png" alt="" className="w-8 h-8 inline mr-2" /> TuneTales</span>
+          <Image src="/TuneTales_Transparent_Logo.png" alt="" width={32} height={32} className="inline mr-2" /> TuneTales</span>
             <span className="hidden sm:inline-block ml-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 text-xs font-semibold text-white/80 shadow-md shadow-pink-500/20 animate-glow">Beta</span>
           </div>
           <div className="flex items-center gap-4">

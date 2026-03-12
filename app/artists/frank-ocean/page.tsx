@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeftIcon, PlayIcon, LinkIcon, ClockIcon, CalendarIcon, UserIcon, MusicalNoteIcon, SparklesIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 const FloatingNotesLayer = dynamic(() => import('../../components/FloatingNotesLayer'), {
@@ -275,10 +276,11 @@ export default function FrankOceanPage() {
             {/* Artist Image */}
             <div className="relative inline-block mb-8">
               <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl shadow-blue-500/20">
-                <img 
-                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60" 
+                <Image
+                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60"
                   alt="Frank Ocean"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               </div>
               <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-teal-400/20 blur-xl animate-pulse" />
@@ -369,10 +371,10 @@ export default function FrankOceanPage() {
             <div className="text-center py-20">
               <div className="mb-8">
                 <SparklesIcon className="w-24 h-24 mx-auto text-blue-400 mb-6" />
-                <h2 className="text-4xl font-bold mb-4">Frank's Musical Odyssey</h2>
+                <h2 className="text-4xl font-bold mb-4">Frank&apos;s Musical Odyssey</h2>
                 <p className="text-xl text-white/70 max-w-2xl mx-auto">
-                  Dive deep into the meticulously researched story of Christopher Breaux's transformation 
-                  into one of music's most enigmatic artists.
+                  Dive deep into the meticulously researched story of Christopher Breaux&apos;s transformation
+                  into one of music&apos;s most enigmatic artists.
                 </p>
               </div>
               
@@ -396,7 +398,7 @@ export default function FrankOceanPage() {
           {activeTab === 'journey' && showStory && (
             <div className="text-center py-20">
               <div className="text-white/50">
-                Reading Frank's story in the modal above
+                Reading Frank&apos;s story in the modal above
               </div>
             </div>
           )}
@@ -405,7 +407,7 @@ export default function FrankOceanPage() {
             <div className="text-center py-20">
               <h2 className="text-4xl font-bold mb-6">Musical Creations</h2>
               <p className="text-xl text-white/70 mb-8">
-                Explore Frank's complete catalog of albums, singles, and rare gems
+                Explore Frank&apos;s complete catalog of albums, singles, and rare gems
               </p>
               <div className="text-white/50">
                 Coming Soon: Interactive discography with song bubbles
@@ -509,14 +511,14 @@ export default function FrankOceanPage() {
                 </div>
               </div>
               <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
-                <h3 className="text-2xl font-bold mb-6 text-teal-400">Example: Boys Don't Cry Magazine Research</h3>
+                <h3 className="text-2xl font-bold mb-6 text-teal-400">Example: Boys Don&apos;t Cry Magazine Research</h3>
                 
                 <div className="grid lg:grid-cols-2 gap-8">
                   <div>
                     <h4 className="font-bold mb-4 text-white">Research Query</h4>
                     <div className="bg-black/20 rounded-lg p-4 mb-4">
                       <div className="text-sm text-white/60 mb-2">Query Details:</div>
-                      <div className="text-white">"Frank Ocean Boys Don't Cry magazine details"</div>
+                      <div className="text-white">&quot;Frank Ocean Boys Don&apos;t Cry magazine details&quot;</div>
                     </div>
                     
                     <div className="space-y-3 text-sm">
@@ -545,9 +547,9 @@ export default function FrankOceanPage() {
                       <div>• 360-page magazine released August 20, 2016</div>
                       <div>• Free distribution at 4 global pop-up locations</div>
                       <div>• Featured Wolfgang Tillmans & Viviane Sassen photography</div>
-                      <div>• Included Kanye West's viral McDonald's poem</div>
-                      <div>• Personal letter from Frank about masculinity & memory</div>
-                      <div>• Extended "Nikes" version with Japanese rapper KOHH</div>
+                      <div>• Included Kanye West&apos;s viral McDonald&apos;s poem</div>
+                      <div>• Personal letter from Frank about masculinity &amp; memory</div>
+                      <div>• Extended &quot;Nikes&quot; version with Japanese rapper KOHH</div>
                       <div>• Marked independence from major label system</div>
                     </div>
                   </div>
@@ -557,10 +559,10 @@ export default function FrankOceanPage() {
                 <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
                   <h3 className="text-xl font-bold mb-4 text-green-400">Verification Standards</h3>
                   <div className="space-y-2 text-sm text-white/70">
-                    <div>✓ Multiple source cross-referencing</div>
-                    <div>✓ Publication date verification</div>
-                    <div>✓ Author credibility assessment</div>
-                    <div>✓ Fact-checking against primary sources</div>
+                    <div>- Multiple source cross-referencing</div>
+                    <div>- Publication date verification</div>
+                    <div>- Author credibility assessment</div>
+                    <div>- Fact-checking against primary sources</div>
                   </div>
                 </div>
 

@@ -1,0 +1,21 @@
+[project]
+name = "tunetales-backend"
+version = "0.1.0"
+description = "Backend services for TuneTales"
+requires-python = ">= 3.11"
+dependencies = [
+    "requests",
+    "python-dotenv",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "mypy",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+strict = true

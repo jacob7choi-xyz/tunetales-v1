@@ -76,7 +76,7 @@ class ClaudeStorytellingClient:
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(story_data, f, indent=2, ensure_ascii=False)
         
-        print(f"🎬 Story saved to: {filename}")
+        print(f"[SAVED] Story saved to: {filename}")
         return filepath
     
     def create_artist_narrative(self, artist_name: str, narrative_style: str = "disney") -> Dict:
@@ -374,7 +374,7 @@ Respond with only the mood word."""
 if __name__ == "__main__":
     client = ClaudeStorytellingClient()
     
-    print("🎬 Testing Claude Storytelling Client...")
+    print("[SAVED] Testing Claude Storytelling Client...")
     print("="*60)
     
     # Test artist narrative creation
@@ -383,16 +383,16 @@ if __name__ == "__main__":
         narrative = client.create_artist_narrative("Frank Ocean")
         
         if "error" not in narrative:
-            print("✅ Artist narrative created successfully!")
-            print(f"📊 Tokens used: {narrative['metadata']['tokens_used']}")
-            print(f"📝 Story length: {len(narrative['narrative'])} characters")
-            print("\n🎭 Preview:")
+            print("[OK] Artist narrative created successfully!")
+            print(f"[STATS] Tokens used: {narrative['metadata']['tokens_used']}")
+            print(f"[INFO] Story length: {len(narrative['narrative'])} characters")
+            print("\n[PREVIEW] Preview:")
             print(narrative['narrative'][:200] + "...")
         else:
-            print("❌ Error:", narrative['error'])
+            print("[FAIL] Error:", narrative['error'])
             
     except Exception as e:
-        print(f"❌ Error testing narrative creation: {e}")
+        print(f"[FAIL] Error testing narrative creation: {e}")
     
     print("\n" + "="*60)
     print("Check the data/stories/ folder for generated narratives!")

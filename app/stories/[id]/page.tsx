@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import FloatingNotesLayer from '../../components/FloatingNotesLayer';
 import { notFound } from 'next/navigation';
 
@@ -101,11 +102,12 @@ export default function StoryPage() {
               className="relative rounded-3xl overflow-hidden shadow-2xl shadow-chroma-700/40 group"
               style={{ boxShadow: '0 0 60px 0 #6366f1, 0 0 120px 0 #0ea5e9' }}
             >
-              <img
+              <Image
                 src={story.coverImageUrl}
                 alt={`${story.artistName} - ${story.albumDetails.title}`}
+                width={400}
+                height={400}
                 className="object-cover w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl border-4 border-chroma-700/40 group-hover:scale-105 transition-transform duration-300"
-                style={{ filter: 'blur(0px)' }}
               />
               {/* Glow/blur effect around image */}
               <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{

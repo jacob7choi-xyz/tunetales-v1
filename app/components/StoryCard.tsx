@@ -26,10 +26,8 @@ const createArtistSlug = (artistName: string) => {
 };
 
 export default function StoryCard({
-  storyId,
   artistName,
   coverImageUrl,
-  storyPreview,
   category,
   year,
 }: StoryCardProps) {

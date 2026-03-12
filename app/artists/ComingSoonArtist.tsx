@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon, SparklesIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 const FloatingNotesLayer = dynamic(() => import('../components/FloatingNotesLayer'), {
@@ -80,10 +81,11 @@ export default function ComingSoonArtist({
           {/* Artist Image */}
           <div className="relative inline-block mb-8">
             <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
-              <img 
+              <Image
                 src={artistImage}
                 alt={artistName}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
             <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-teal-400/20 blur-xl animate-pulse" />
@@ -118,7 +120,7 @@ export default function ComingSoonArtist({
             <SparklesIcon className="w-24 h-24 mx-auto text-blue-400 mb-6" />
             <h2 className="text-4xl font-bold mb-4">Coming Soon</h2>
             <p className="text-xl text-white/70 mb-6 max-w-2xl mx-auto">
-              We're crafting an immersive, cinematic experience for {artistName} that will revolutionize 
+              We&apos;re crafting an immersive, cinematic experience for {artistName} that will revolutionize
               how you discover their musical journey.
             </p>
             

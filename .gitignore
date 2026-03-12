@@ -51,3 +51,7 @@ ehthumbs.db
 Thumbs.db
 
 certificates
+
+# AI assistant config
+CLAUDE.md
+AGENTS.md
