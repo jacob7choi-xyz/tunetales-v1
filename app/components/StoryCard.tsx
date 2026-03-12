@@ -30,41 +30,76 @@ export default function StoryCard({
   category,
   year,
 }: StoryCardProps) {
-const artistSlug = createArtistSlug(artistName);
+  const artistSlug = createArtistSlug(artistName);
   return (
-    <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f051d] to-[#1a1a2e] p-[2px] shadow-xl shadow-pink-500/10 hover:shadow-pink-500/30 transition-all duration-300 transform-gpu hover:scale-[1.03] will-change-transform">
-      <div className="relative rounded-2xl bg-black/70 backdrop-blur-xl p-3 flex flex-col gap-2">
-        {/* Cover image with floating notes over it */}
-        <div className="relative aspect-[4/3] overflow-hidden rounded-xl mb-2">
+    <div className="group relative transition-transform duration-300 hover:-translate-y-1">
+      {/* Ambient glow behind card on hover */}
+      <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-purple-500/0 via-blue-500/0 to-teal-500/0 blur-xl transition-all duration-500 group-hover:from-purple-500/20 group-hover:via-blue-500/15 group-hover:to-teal-500/20" />
+
+      <div
+        className="relative rounded-3xl card-enchanted flex flex-col"
+        style={{ padding: '20px', gap: '16px' }}
+      >
+        {/* Cover image with floating particles */}
+        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
           <Image
             src={coverImageUrl}
             alt={`${artistName} album cover`}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            style={{ fontFamily: 'Inter, Sora, sans-serif' }}
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          {/* Floating notes absolutely positioned over the image */}
+          {/* Particles over image */}
           <div className="pointer-events-none absolute inset-0 z-30">
-            <FloatingNotesLayer count={8} layer="background" />
-            <FloatingNotesLayer count={5} layer="foreground" />
-            <FloatingNotesLayer count={3} layer="overlay" />
+            <FloatingNotesLayer count={5} layer="background" />
+            <FloatingNotesLayer count={3} layer="foreground" />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          {/* Vignette + colored overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <div className="absolute inset-0 transition-colors duration-500" style={{ background: 'rgba(88,28,135,0)' }} />
         </div>
+
         {/* Artist name */}
-        <h3 className="text-lg font-bold text-white leading-tight drop-shadow-[0_1px_8px_rgba(255,0,255,0.4)]" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{artistName}</h3>
-        {/* Category and year badges below artist name */}
-        <div className="flex items-center space-x-2 mb-1">
-          <span className="inline-flex items-center rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-3 py-0.5 text-xs font-semibold text-white/90 shadow-lg shadow-pink-500/20 backdrop-blur-md">
+        <h3 className="font-bold text-white leading-tight" style={{ fontSize: '20px', paddingTop: '4px' }}>{artistName}</h3>
+
+        {/* Frosted glass badges */}
+        <div className="flex items-center" style={{ gap: '10px' }}>
+          <span
+            className="inline-flex items-center rounded-full font-semibold backdrop-blur-md"
+            style={{
+              padding: '6px 16px',
+              fontSize: '13px',
+              background: 'rgba(147,51,234,0.3)',
+              border: '1px solid rgba(192,132,252,0.4)',
+              color: '#d8b4fe',
+            }}
+          >
             {category.trim()}
           </span>
-          <span className="inline-flex items-center rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-violet-500 px-3 py-0.5 text-xs font-semibold text-white/90 shadow-lg shadow-yellow-400/20 backdrop-blur-md">
+          <span
+            className="inline-flex items-center rounded-full font-semibold backdrop-blur-md"
+            style={{
+              padding: '6px 16px',
+              fontSize: '13px',
+              background: 'rgba(59,130,246,0.25)',
+              border: '1px solid rgba(96,165,250,0.4)',
+              color: '#93c5fd',
+            }}
+          >
             {year}
           </span>
         </div>
-        {/* Read more link */}
-        <Link href={`/artists/${artistSlug}`} 
-        className="mt-2 block text-xs font-semibold text-white/90 bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 rounded-full px-4 py-2 shadow-lg shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 transition-all duration-200 backdrop-blur-md text-center"
+
+        {/* Frosted glass explore button */}
+        <Link
+          href={`/artists/${artistSlug}`}
+          className="block font-semibold text-white rounded-full text-center backdrop-blur-md transition-all duration-300 hover:scale-105"
+          style={{
+            padding: '12px 24px',
+            fontSize: '14px',
+            marginTop: '4px',
+            background: 'rgba(255,255,255,0.12)',
+            border: '1px solid rgba(255,255,255,0.25)',
+          }}
         >
           Explore {artistName}
         </Link>

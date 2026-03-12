@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon, SparklesIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
@@ -16,71 +16,75 @@ interface ComingSoonArtistProps {
   artistImage: string;
   description: string;
   genre: string;
-  accentColor: string; // For theming each artist differently
+  accentColor: string;
 }
 
-export default function ComingSoonArtist({ 
-  artistName, 
-  artistImage, 
-  description, 
+export default function ComingSoonArtist({
+  artistName,
+  artistImage,
+  description,
   genre,
-  accentColor 
+  accentColor
 }: ComingSoonArtistProps) {
   const router = useRouter();
-  const [hue, setHue] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHue(prev => (prev + 0.15) % 360);
-    }, 200);
-    return () => clearInterval(interval);
-  }, []);
-
-  const backgroundStyle = useMemo(() => ({
-    background: `
-      radial-gradient(circle at ${30 + Math.sin(hue * 0.015) * 20}% ${40 + Math.cos(hue * 0.012) * 15}%, 
-        rgba(139, 69, 19, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at ${70 + Math.sin((hue + 160) * 0.018) * 25}% ${60 + Math.cos((hue + 200) * 0.015) * 20}%, 
-        rgba(139, 69, 19, 0.25) 0%, transparent 45%),
-      linear-gradient(135deg, 
-        hsl(${220 + Math.sin(hue * 0.006) * 15}, 75%, 20%) 0%, 
-        hsl(${180 + Math.sin((hue + 100) * 0.008) * 20}, 70%, 25%) 50%,
-        hsl(${240 + Math.sin((hue + 200) * 0.009) * 18}, 65%, 18%) 100%)`
-  }), [hue]);
 
   return (
-    <div className="min-h-screen text-white font-sans flex items-center justify-center" style={backgroundStyle}>
-      {/* Floating musical elements */}
+    <div className="min-h-screen text-white font-sans animated-bg">
       <FloatingNotesLayer count={8} layer="background" />
       <FloatingNotesLayer count={5} layer="foreground" />
-      
-      {/* Header with back navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button 
+
+      {/* Header */}
+      <header
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
+        style={{ background: 'rgba(0,0,0,0.5)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px 16px 16px', paddingRight: '32px' }}>
+          <button
             onClick={() => router.push('/')}
-            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors duration-200"
+            className="transition-colors duration-200"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '10px 24px',
+              fontSize: '15px',
+              fontWeight: 600,
+              color: 'rgba(255,255,255,0.9)',
+              background: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '9999px',
+              cursor: 'pointer',
+            }}
           >
-            <ArrowLeftIcon className="w-5 h-5" />
+            <ArrowLeftIcon style={{ width: '20px', height: '20px' }} />
             <span>Back to Artists</span>
           </button>
-          
-          <div className="text-sm text-white/60">
-            TuneTales • Coming Soon
+
+          <div style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)' }}>
+            TuneTales &bull; Coming Soon
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="text-center px-6 max-w-6xl mx-auto pt-24 pb-16">
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '120px 24px 80px' }}>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
         >
           {/* Artist Image */}
-          <div className="relative inline-block mb-8">
-            <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
+          <div style={{ position: 'relative', width: '200px', height: '200px', marginBottom: '40px' }}>
+            <div style={{
+              width: '200px',
+              height: '200px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: '4px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 25px 50px rgba(0,0,0,0.3)',
+              position: 'relative',
+            }}>
               <Image
                 src={artistImage}
                 alt={artistName}
@@ -88,45 +92,72 @@ export default function ComingSoonArtist({
                 className="object-cover"
               />
             </div>
-            <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-teal-400/20 blur-xl animate-pulse" />
+            <div style={{
+              position: 'absolute',
+              inset: '-16px',
+              borderRadius: '50%',
+              background: 'linear-gradient(to right, rgba(96,165,250,0.2), rgba(167,139,250,0.2), rgba(45,212,191,0.2))',
+              filter: 'blur(24px)',
+              zIndex: -1,
+            }} />
           </div>
 
-          {/* Artist Name & Stats */}
-          <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight mb-4">
+          {/* Artist Name */}
+          <h1 style={{ fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
             <span className={`bg-gradient-to-r ${accentColor} bg-clip-text text-transparent`}>
               {artistName}
             </span>
           </h1>
-          
+
           {/* Genre Badge */}
-          <div className="flex flex-wrap justify-center gap-6 text-white/80 mb-8">
-            <div className="inline-flex items-center rounded-full bg-white/10 px-6 py-2 backdrop-blur-md">
-              <span className="text-lg font-medium">{genre}</span>
-            </div>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            padding: '8px 24px',
+            marginBottom: '32px',
+            fontSize: '16px',
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.8)',
+            background: 'rgba(255,255,255,0.1)',
+            borderRadius: '9999px',
+            backdropFilter: 'blur(12px)',
+          }}>
+            {genre}
           </div>
 
           {/* Description */}
-          <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed mb-16">
+          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.65)', lineHeight: '1.7', maxWidth: '680px', marginBottom: '56px' }}>
             {description}
           </p>
 
-          {/* Coming Soon Section */}
+          {/* Coming Soon Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="bg-white/5 backdrop-blur-md rounded-2xl p-12 border border-white/10 mb-12 max-w-4xl mx-auto"
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              padding: '48px 40px',
+              marginBottom: '56px',
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '24px',
+              backdropFilter: 'blur(12px)',
+              textAlign: 'center',
+            }}
           >
-            <SparklesIcon className="w-24 h-24 mx-auto text-blue-400 mb-6" />
-            <h2 className="text-4xl font-bold mb-4">Coming Soon</h2>
-            <p className="text-xl text-white/70 mb-6 max-w-2xl mx-auto">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '24px' }}>
+              <SparklesIcon className="text-blue-400" style={{ width: '32px', height: '32px' }} />
+              <h2 style={{ fontSize: '30px', fontWeight: 700, color: '#fff' }}>Coming Soon</h2>
+            </div>
+            <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.7', maxWidth: '460px', margin: '0 auto 28px' }}>
               We&apos;re crafting an immersive, cinematic experience for {artistName} that will revolutionize
               how you discover their musical journey.
             </p>
-            
-            <div className="flex items-center justify-center space-x-2 text-white/50 mt-12">
-              <ClockIcon className="w-5 h-5" />
-              <span>Currently building their musical odyssey...</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'rgba(255,255,255,0.35)' }}>
+              <ClockIcon style={{ width: '18px', height: '18px' }} />
+              <span style={{ fontSize: '14px' }}>Currently building their musical odyssey...</span>
             </div>
           </motion.div>
 
@@ -135,19 +166,32 @@ export default function ComingSoonArtist({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
           >
-            <p className="text-white/60 mb-6">
+            <p style={{ color: 'rgba(255,255,255,0.55)', marginBottom: '24px', fontSize: '16px' }}>
               Want to experience our first artist deep dive?
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => router.push('/artists/frank-ocean')}
-              className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 rounded-full shadow-xl shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '16px 36px',
+                fontSize: '17px',
+                fontWeight: 700,
+                color: '#fff',
+                background: 'rgba(147,51,234,0.4)',
+                border: '2px solid rgba(192,132,252,0.5)',
+                borderRadius: '9999px',
+                boxShadow: '0 0 30px rgba(147,51,234,0.25)',
+                cursor: 'pointer',
+              }}
             >
-              <SparklesIcon className="w-6 h-6 mr-3" />
+              <SparklesIcon style={{ width: '24px', height: '24px', marginRight: '12px' }} />
               Explore Frank Ocean
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 opacity-30 blur-xl group-hover:opacity-50 transition-opacity" />
             </motion.button>
           </motion.div>
         </motion.div>

@@ -1,36 +1,34 @@
 'use client';
 
 import { useMemo } from 'react';
-import { motion } from 'framer-motion';
 
-const musicSymbols = [
-  '\u266A', '\u266B', '\u266C', '\u2669', '\u266D', '\u266E', '\u266F',
-  '\uD834\uDD1E', '\uD834\uDD22', '\uD834\uDD21'
-];
-
-const colors = Object.freeze([
-  '#a78bfa', '#f87171', '#facc15', '#34d399', '#60a5fa', '#f472b6',
-  '#a3e635', '#fb923c', '#c084fc', '#22d3ee', '#fbbf24', '#4ade80'
+const PARTICLE_COLORS = Object.freeze([
+  '#c4b5fd', // soft purple
+  '#93c5fd', // soft blue
+  '#ddd6fe', // lavender
+  '#67e8f9', // soft cyan
+  '#f9a8d4', // soft pink
+  '#6ee7b7', // soft mint
 ]);
 
+type ParticleType = 'orb' | 'sparkle' | 'star' | 'note';
+
 const LAYER_CONFIGS = Object.freeze({
-  background: { size: [0.8, 1.2], opacity: [0.3, 0.5], zIndex: 'z-0' },
-  foreground: { size: [1.0, 1.5], opacity: [0.5, 0.7], zIndex: 'z-10' },
-  overlay: { size: [0.9, 1.3], opacity: [0.4, 0.6], zIndex: 'z-20' }
+  background: { size: [3, 6], opacity: [0.2, 0.4], zIndex: 'z-0' },
+  foreground: { size: [4, 7], opacity: [0.35, 0.55], zIndex: 'z-10' },
+  overlay: { size: [3, 5], opacity: [0.3, 0.5], zIndex: 'z-20' },
 } as const);
 
-interface Note {
+interface Particle {
   id: number;
-  symbol: string;
-  delay: number;
-  duration: number;
+  type: ParticleType;
   x: number;
   y: number;
   size: number;
   color: string;
-  speed: number;
-  rotation: number;
   opacity: number;
+  duration: number;
+  delay: number;
 }
 
 interface FloatingNotesLayerProps {
@@ -38,14 +36,7 @@ interface FloatingNotesLayerProps {
   layer?: 'background' | 'foreground' | 'overlay';
 }
 
-const GLOW_STYLES = Object.freeze(
-  colors.reduce((acc, color) => {
-    acc[color] = `0 0 8px ${color}, 0 0 16px ${color}66`;
-    return acc;
-  }, {} as Record<string, string>)
-);
-
-// Module-level random pool -- shared across all instances, no refs needed
+// Module-level random pool -- shared across all instances
 const RANDOM_POOL_SIZE = 1000;
 const RANDOM_POOL = new Float32Array(RANDOM_POOL_SIZE);
 for (let i = 0; i < RANDOM_POOL_SIZE; i++) {
@@ -59,29 +50,52 @@ function getNextRandom(): number {
   return value;
 }
 
-function generateNote(index: number, layer: 'background' | 'foreground' | 'overlay'): Note {
+function pickParticleType(index: number): ParticleType {
+  const bucket = index % 10;
+  if (bucket < 3) return 'orb';
+  if (bucket < 6) return 'sparkle';
+  if (bucket < 8) return 'star';
+  return 'note';
+}
+
+function generateParticle(
+  index: number,
+  layer: 'background' | 'foreground' | 'overlay'
+): Particle {
   const config = LAYER_CONFIGS[layer];
   const [minSize, maxSize] = config.size;
   const [minOpacity, maxOpacity] = config.opacity;
 
   return {
     id: index,
-    symbol: musicSymbols[index % musicSymbols.length],
-    delay: getNextRandom() * 1.5,
-    duration: 4 + getNextRandom() * 4,
+    type: pickParticleType(index),
     x: getNextRandom() * 100,
     y: getNextRandom() * 100,
     size: minSize + getNextRandom() * (maxSize - minSize),
-    color: colors[index % colors.length],
-    speed: 0.8 + getNextRandom() * 0.8,
-    rotation: getNextRandom() * 360,
-    opacity: minOpacity + getNextRandom() * (maxOpacity - minOpacity)
+    color: PARTICLE_COLORS[index % PARTICLE_COLORS.length],
+    opacity: minOpacity + getNextRandom() * (maxOpacity - minOpacity),
+    duration: 6 + getNextRandom() * 8,
+    delay: getNextRandom() * 6,
   };
 }
 
-const FloatingNotesLayer = ({ count = 10, layer = 'background' }: FloatingNotesLayerProps) => {
-  const notes = useMemo(
-    () => Array.from({ length: count }, (_, i) => generateNote(i, layer)),
+function particleClassName(type: ParticleType): string {
+  switch (type) {
+    case 'star':
+      return 'fairy-particle fairy-particle--star';
+    case 'sparkle':
+      return 'fairy-particle fairy-particle--twinkle';
+    default:
+      return 'fairy-particle';
+  }
+}
+
+const FloatingNotesLayer = ({
+  count = 10,
+  layer = 'background',
+}: FloatingNotesLayerProps) => {
+  const particles = useMemo(
+    () => Array.from({ length: count }, (_, i) => generateParticle(i, layer)),
     [count, layer]
   );
 
@@ -94,47 +108,27 @@ const FloatingNotesLayer = ({ count = 10, layer = 'background' }: FloatingNotesL
         willChange: 'transform',
         transform: 'translateZ(0)',
         backfaceVisibility: 'hidden',
-        contain: 'layout style paint'
+        contain: 'layout style paint',
       }}
     >
-      {notes.map((note) => (
-        <motion.div
-          key={note.id}
-          className="absolute pointer-events-none select-none"
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className={`${particleClassName(p.type)} pointer-events-none select-none`}
           style={{
-            left: `${note.x}%`,
-            top: `${note.y}%`,
-            fontSize: `${note.size}rem`,
-            color: note.color,
-            opacity: note.opacity,
-            transform: `rotate(${note.rotation}deg)`,
-            willChange: 'transform, opacity',
-            backfaceVisibility: 'hidden',
-            textShadow: GLOW_STYLES[note.color],
-            userSelect: 'none'
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            backgroundColor: p.color,
+            boxShadow: `0 0 ${p.size * 1.5}px ${p.color}88, 0 0 ${p.size * 3}px ${p.color}44`,
+            ['--duration' as string]: `${p.duration}s`,
+            ['--delay' as string]: `${p.delay}s`,
+            ['--peak-opacity' as string]: p.opacity,
+            ['--scale-start' as string]: 0.5,
+            ['--scale-end' as string]: p.type === 'sparkle' ? 0.3 : 0.8,
           }}
-          initial={{
-            y: 0,
-            opacity: 0,
-            scale: 0.8,
-            rotate: note.rotation
-          }}
-          animate={{
-            y: [-20, -60, -100],
-            opacity: [0, note.opacity, 0],
-            scale: [0.5, 1, 0.8],
-            rotate: [note.rotation, note.rotation + 180, note.rotation + 360]
-          }}
-          transition={{
-            duration: note.duration,
-            delay: note.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-            times: [0, 0.5, 1]
-          }}
-        >
-          {note.symbol}
-        </motion.div>
+        />
       ))}
     </div>
   );

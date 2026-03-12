@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeftIcon, PlayIcon, LinkIcon, ClockIcon, CalendarIcon, UserIcon, MusicalNoteIcon, SparklesIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
@@ -19,7 +19,6 @@ export default function FrankOceanPage() {
   const [activeTab, setActiveTab] = useState('journey');
   const [showStory, setShowStory] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
-  const [hue, setHue] = useState(0);
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
   const [storyError, setStoryError] = useState(false);
 
@@ -33,24 +32,6 @@ export default function FrankOceanPage() {
       .catch(() => setStoryError(true));
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHue(prev => (prev + 0.2) % 360);
-    }, 150);
-    return () => clearInterval(interval);
-  }, []);
-
-  const backgroundStyle = useMemo(() => ({
-    background: `
-      radial-gradient(circle at ${30 + Math.sin(hue * 0.015) * 20}% ${40 + Math.cos(hue * 0.012) * 15}%, 
-        hsla(${200 + Math.sin(hue * 0.008) * 30}, 80%, 60%, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at ${70 + Math.sin((hue + 160) * 0.018) * 25}% ${60 + Math.cos((hue + 200) * 0.015) * 20}%, 
-        hsla(${240 + Math.sin((hue + 120) * 0.01) * 25}, 85%, 65%, 0.25) 0%, transparent 45%),
-      linear-gradient(135deg, 
-        hsl(${220 + Math.sin(hue * 0.006) * 15}, 75%, 20%) 0%, 
-        hsl(${180 + Math.sin((hue + 100) * 0.008) * 20}, 70%, 25%) 50%,
-        hsl(${240 + Math.sin((hue + 200) * 0.009) * 18}, 65%, 18%) 100%)`
-  }), [hue]);
 
   const tabs = [
     { id: 'journey', label: "Frank's Journey", icon: ClockIcon, description: 'Interactive timeline of his musical odyssey' },
@@ -107,24 +88,40 @@ export default function FrankOceanPage() {
   };
 
   return (
-    <div className="min-h-screen text-white font-sans" style={backgroundStyle}>
+    <div className="min-h-screen text-white font-sans animated-bg">
       {/* Floating musical elements */}
-      <FloatingNotesLayer count={12} layer="background" />
-      <FloatingNotesLayer count={8} layer="foreground" />
+      <FloatingNotesLayer count={8} layer="background" />
+      <FloatingNotesLayer count={4} layer="foreground" />
       
       {/* Header with back navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button 
+      <header
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
+        style={{ background: 'rgba(0,0,0,0.5)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px 16px 16px', paddingRight: '32px' }}>
+          <button
             onClick={() => router.push('/')}
-            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors duration-200"
+            className="transition-colors duration-200"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '10px 24px',
+              fontSize: '15px',
+              fontWeight: 600,
+              color: 'rgba(255,255,255,0.9)',
+              background: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '9999px',
+              cursor: 'pointer',
+            }}
           >
-            <ArrowLeftIcon className="w-5 h-5" />
+            <ArrowLeftIcon style={{ width: '20px', height: '20px' }} />
             <span>Back to Artists</span>
           </button>
-          
-          <div className="text-sm text-white/60">
-            TuneTales • Artist Deep Dive
+
+          <div style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)' }}>
+            TuneTales &bull; Artist Deep Dive
           </div>
         </div>
       </header>
@@ -242,99 +239,117 @@ export default function FrankOceanPage() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="text-center"
-          >
-            {/* Artist Image */}
-            <div className="relative inline-block mb-8">
-              <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl shadow-blue-500/20">
-                <Image
-                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60"
-                  alt="Frank Ocean"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-teal-400/20 blur-xl animate-pulse" />
+      <section style={{ position: 'relative', padding: '120px 24px 48px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+        >
+          {/* Artist Image */}
+          <div style={{ position: 'relative', width: '200px', height: '200px', marginBottom: '40px' }}>
+            <div style={{
+              width: '200px',
+              height: '200px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: '4px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 25px 50px rgba(59,130,246,0.2)',
+              position: 'relative',
+            }}>
+              <Image
+                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60"
+                alt="Frank Ocean"
+                fill
+                className="object-cover"
+              />
             </div>
+            <div style={{
+              position: 'absolute',
+              inset: '-16px',
+              borderRadius: '50%',
+              background: 'linear-gradient(to right, rgba(96,165,250,0.2), rgba(167,139,250,0.2), rgba(45,212,191,0.2))',
+              filter: 'blur(24px)',
+              zIndex: -1,
+            }} />
+          </div>
 
-            {/* Artist Name & Stats */}
-            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight mb-4">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">
-                Frank Ocean
-              </span>
-            </h1>
-            
-            <div className="flex flex-wrap justify-center gap-6 text-white/80 mb-8">
-              <div className="flex items-center space-x-2">
-                <UserIcon className="w-5 h-5" />
-                <span>20M+ Monthly Listeners</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CalendarIcon className="w-5 h-5" />
-                <span>2005 - Present</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MusicalNoteIcon className="w-5 h-5" />
-                <span>Alternative R&B Pioneer</span>
-              </div>
+          {/* Artist Name */}
+          <h1 style={{ fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">
+              Frank Ocean
+            </span>
+          </h1>
+
+          {/* Stats */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '24px', color: 'rgba(255,255,255,0.8)', marginBottom: '32px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <UserIcon style={{ width: '20px', height: '20px' }} />
+              <span>20M+ Monthly Listeners</span>
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <CalendarIcon style={{ width: '20px', height: '20px' }} />
+              <span>2005 - Present</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <MusicalNoteIcon style={{ width: '20px', height: '20px' }} />
+              <span>Alternative R&B Pioneer</span>
+            </div>
+          </div>
 
-            <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-              The enigmatic artist who redefined vulnerability in music, broke barriers for LGBTQ+ representation, 
-              and created some of the most influential albums of the 21st century.
-            </p>
-          </motion.div>
-        </div>
+          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.65)', maxWidth: '680px', lineHeight: '1.7' }}>
+            The enigmatic artist who redefined vulnerability in music, broke barriers for LGBTQ+ representation,
+            and created some of the most influential albums of the 21st century.
+          </p>
+        </motion.div>
       </section>
 
       {/* Navigation Tabs */}
-      <section className="sticky top-20 z-30 bg-black/40 backdrop-blur-xl border-y border-white/10">
-        <div className="max-w-6xl mx-auto px-6">
-          <nav className="flex justify-center space-x-1 py-4">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`relative px-6 py-3 rounded-lg font-medium transition-all duration-300 group ${
-                    activeTab === tab.id
-                      ? 'text-white bg-white/10 shadow-lg'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2">
-                    <Icon className="w-5 h-5" />
-                    <span>{tab.label}</span>
-                  </div>
-                  
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-black/80 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-                    {tab.description}
-                  </div>
-                  
-                  {activeTab === tab.id && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+      <section
+        className="sticky z-30 backdrop-blur-2xl"
+        style={{ top: '68px', background: 'rgba(0,0,0,0.4)', borderTop: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
+      >
+        <nav style={{ display: 'flex', justifyContent: 'center', gap: '12px', padding: '16px 24px' }}>
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className="relative group transition-all duration-300"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 20px',
+                  borderRadius: '9999px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  ...(activeTab === tab.id
+                    ? {
+                        background: 'rgba(147,51,234,0.3)',
+                        border: '1px solid rgba(192,132,252,0.5)',
+                        color: '#fff',
+                        boxShadow: '0 0 15px rgba(147,51,234,0.2)',
+                      }
+                    : {
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        color: 'rgba(255,255,255,0.6)',
+                      }),
+                }}
+              >
+                <Icon style={{ width: '18px', height: '18px' }} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
       </section>
 
       {/* Content Area */}
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main style={{ width: '100%', margin: '0 auto', padding: '48px 24px' }}>
       <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}
@@ -345,28 +360,40 @@ export default function FrankOceanPage() {
           className="min-h-[60vh]"
         >
           {activeTab === 'journey' && !showStory && (
-            <div className="text-center py-20">
-              <div className="mb-8">
-                <SparklesIcon className="w-24 h-24 mx-auto text-blue-400 mb-6" />
-                <h2 className="text-4xl font-bold mb-4">Frank&apos;s Musical Odyssey</h2>
-                <p className="text-xl text-white/70 max-w-2xl mx-auto">
-                  Dive deep into the meticulously researched story of Christopher Breaux&apos;s transformation
-                  into one of music&apos;s most enigmatic artists.
-                </p>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '80px 24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '20px' }}>
+                <SparklesIcon className="text-blue-400" style={{ width: '36px', height: '36px' }} />
+                <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#fff' }}>Frank&apos;s Musical Odyssey</h2>
               </div>
-              
+              <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.6)', maxWidth: '560px', lineHeight: '1.7', marginBottom: '40px' }}>
+                Dive deep into the meticulously researched story of Christopher Breaux&apos;s transformation
+                into one of music&apos;s most enigmatic artists.
+              </p>
+
               <motion.button
                 onClick={handleEnterJourney}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 rounded-full shadow-xl shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '16px 36px',
+                  fontSize: '17px',
+                  fontWeight: 700,
+                  color: '#fff',
+                  background: 'rgba(147,51,234,0.4)',
+                  border: '2px solid rgba(192,132,252,0.5)',
+                  borderRadius: '9999px',
+                  boxShadow: '0 0 30px rgba(147,51,234,0.25)',
+                  cursor: 'pointer',
+                }}
               >
-                <PlayIcon className="w-6 h-6 mr-3" />
+                <PlayIcon style={{ width: '24px', height: '24px', marginRight: '12px' }} />
                 Enter the Journey
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 opacity-30 blur-xl group-hover:opacity-50 transition-opacity" />
               </motion.button>
-              
-              <div className="mt-12 text-sm text-white/50">
+
+              <div style={{ marginTop: '48px', fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
                 Based on comprehensive research from premium music journalism sources
               </div>
             </div>

@@ -24,3 +24,163 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* --- Background gradient --- */
+
+@keyframes bg-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-bg {
+  background: linear-gradient(
+    135deg,
+    hsl(240, 70%, 25%) 0%,
+    hsl(280, 75%, 30%) 25%,
+    hsl(200, 75%, 35%) 50%,
+    hsl(260, 80%, 28%) 75%,
+    hsl(240, 70%, 25%) 100%
+  );
+  background-size: 400% 400%;
+  animation: bg-shift 20s ease infinite;
+}
+
+/* --- Fairy-dust particle animations --- */
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) scale(var(--scale-start, 0.5));
+    opacity: 0;
+  }
+  15% {
+    opacity: var(--peak-opacity, 0.6);
+  }
+  85% {
+    opacity: var(--peak-opacity, 0.6);
+  }
+  100% {
+    transform: translateY(-120px) scale(var(--scale-end, 0.8));
+    opacity: 0;
+  }
+}
+
+@keyframes drift-diagonal {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(var(--scale-start, 0.5));
+    opacity: 0;
+  }
+  15% {
+    opacity: var(--peak-opacity, 0.5);
+  }
+  85% {
+    opacity: var(--peak-opacity, 0.5);
+  }
+  100% {
+    transform: translate(40px, -100px) rotate(180deg) scale(var(--scale-end, 0.7));
+    opacity: 0;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: var(--peak-opacity, 0.7);
+    transform: scale(1);
+  }
+}
+
+@keyframes soft-pulse {
+  0%, 100% {
+    border-color: rgba(168, 130, 255, 0.15);
+    box-shadow: 0 0 15px rgba(168, 130, 255, 0.05);
+  }
+  50% {
+    border-color: rgba(168, 130, 255, 0.3);
+    box-shadow: 0 0 25px rgba(168, 130, 255, 0.1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* Fairy particle base */
+.fairy-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: float-up var(--duration, 8s) var(--delay, 0s) ease-in-out infinite;
+}
+
+/* Star variant -- rotates diagonally */
+.fairy-particle--star {
+  border-radius: 2px;
+  animation-name: drift-diagonal;
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%,
+    79% 91%, 50% 70%, 21% 91%, 32% 57%,
+    2% 35%, 39% 35%
+  );
+}
+
+/* Twinkle variant -- pulses in place */
+.fairy-particle--twinkle {
+  animation-name: twinkle;
+}
+
+/* Enchanted glass card */
+.card-enchanted {
+  background: rgba(15, 5, 30, 0.6);
+  border: 1px solid rgba(168, 130, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: soft-pulse 4s ease-in-out infinite;
+}
+
+/* Shimmer gradient text */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #c4b5fd 0%,
+    #93c5fd 20%,
+    #f0abfc 40%,
+    #67e8f9 60%,
+    #c4b5fd 80%,
+    #93c5fd 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s linear infinite;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
