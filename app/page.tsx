@@ -114,7 +114,7 @@ function HomeContent() {
                 transition={{ delay: 0.4, duration: 0.7, ease: 'easeOut' }}
                 className="mx-auto mb-8 max-w-2xl text-lg text-indigo-100 animate-pulse transform-gpu"
               >
-                Embark on an exquisite musical oddyssey.
+                Embark on an exquisite musical odyssey.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

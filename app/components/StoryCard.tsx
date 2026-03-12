@@ -20,7 +20,8 @@ export const createArtistSlug = (artistName: string) => {
     .replace(/[òóôõö]/g, 'o')
     .replace(/[ùúûü]/g, 'u')
     .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '');
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/^-+|-+$/g, '');
 };
 
 export default function StoryCard({

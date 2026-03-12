@@ -21,12 +21,16 @@ export default function FrankOceanPage() {
   const [currentSection, setCurrentSection] = useState(0);
   const [hue, setHue] = useState(0);
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
+  const [storyError, setStoryError] = useState(false);
 
   useEffect(() => {
     fetch('/api/artists/frank-ocean')
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
       .then((data: { story: ArtistStory }) => setFrankOceanStory(data.story))
-      .catch(() => setFrankOceanStory(null));
+      .catch(() => setStoryError(true));
   }, []);
 
   useEffect(() => {
@@ -55,6 +59,22 @@ export default function FrankOceanPage() {
     { id: 'sources', label: 'Research Sources', icon: LinkIcon, description: 'Verified journalism and interviews' }
   ];
 
+  if (storyError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white" style={{ background: 'linear-gradient(135deg, hsl(220, 75%, 20%), hsl(240, 65%, 18%))' }}>
+        <div className="text-center">
+          <div className="text-lg mb-4">Failed to load story</div>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-2 bg-white/10 rounded-full text-sm hover:bg-white/20 transition-colors"
+          >
+            Try again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (!frankOceanStory) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white" style={{ background: 'linear-gradient(135deg, hsl(220, 75%, 20%), hsl(240, 65%, 18%))' }}>
@@ -63,7 +83,11 @@ export default function FrankOceanPage() {
     );
   }
 
-  const currentSectionData = frankOceanStory.sections[currentSection];
+  const currentSectionData = frankOceanStory.sections[currentSection] ?? {
+    id: '',
+    title: 'Untitled',
+    content: '',
+  };
 
   const nextSection = () => {
     if (currentSection < frankOceanStory.sections.length - 1) {

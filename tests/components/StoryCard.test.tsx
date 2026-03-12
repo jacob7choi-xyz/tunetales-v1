@@ -26,6 +26,19 @@ describe("createArtistSlug", () => {
   it("handles multiple accented vowels", () => {
     expect(createArtistSlug("Àngèlique Ünö")).toBe("angelique-uno");
   });
+
+  it("strips leading and trailing hyphens", () => {
+    expect(createArtistSlug(" Frank Ocean ")).toBe("frank-ocean");
+    expect(createArtistSlug("'Frank Ocean'")).toBe("frank-ocean");
+  });
+
+  it("handles names with only numbers", () => {
+    expect(createArtistSlug("21 Savage")).toBe("21-savage");
+  });
+
+  it("returns empty string for non-latin input", () => {
+    expect(createArtistSlug("!!!")).toBe("");
+  });
 });
 
 describe("StoryCard", () => {

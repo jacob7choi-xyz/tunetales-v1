@@ -32,6 +32,19 @@ describe("getArtistStory", () => {
     const story = await getArtistStory("nonexistent-artist");
     expect(story).toBeNull();
   });
+
+  it("rejects path traversal attempts", async () => {
+    await expect(getArtistStory("../../etc/passwd")).rejects.toThrow(
+      "Invalid slug"
+    );
+  });
+
+  it("rejects slugs with special characters", async () => {
+    await expect(getArtistStory("frank_ocean")).rejects.toThrow("Invalid slug");
+    await expect(getArtistStory("frank ocean")).rejects.toThrow("Invalid slug");
+    await expect(getArtistStory("frank/ocean")).rejects.toThrow("Invalid slug");
+    await expect(getArtistStory("")).rejects.toThrow("Invalid slug");
+  });
 });
 
 describe("getResearchFiles", () => {
@@ -43,5 +56,15 @@ describe("getResearchFiles", () => {
   it("returns empty array for unknown artist", async () => {
     const files = await getResearchFiles("nonexistent-artist");
     expect(files).toEqual([]);
+  });
+
+  it("rejects path traversal attempts", async () => {
+    await expect(getResearchFiles("../../etc/passwd")).rejects.toThrow(
+      "Invalid slug"
+    );
+  });
+
+  it("rejects empty slug", async () => {
+    await expect(getResearchFiles("")).rejects.toThrow("Invalid slug");
   });
 });
