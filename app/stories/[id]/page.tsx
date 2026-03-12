@@ -99,7 +99,7 @@ export default function StoryPage() {
           <div className="flex-1 flex justify-center items-center">
             <motion.div
               whileHover={{ scale: 1.04 }}
-              className="relative rounded-3xl overflow-hidden shadow-2xl shadow-chroma-700/40 group"
+              className="relative rounded-3xl overflow-hidden shadow-2xl shadow-indigo-700/40 group"
               style={{ boxShadow: '0 0 60px 0 #6366f1, 0 0 120px 0 #0ea5e9' }}
             >
               <Image
@@ -107,7 +107,7 @@ export default function StoryPage() {
                 alt={`${story.artistName} - ${story.albumDetails.title}`}
                 width={400}
                 height={400}
-                className="object-cover w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl border-4 border-chroma-700/40 group-hover:scale-105 transition-transform duration-300"
+                className="object-cover w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl border-4 border-indigo-700/40 group-hover:scale-105 transition-transform duration-300"
               />
               {/* Glow/blur effect around image */}
               <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{
@@ -121,8 +121,8 @@ export default function StoryPage() {
           {/* Text content */}
           <div className="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left gap-4">
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(14,165,233,0.4)]" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{story.artistName}</h1>
-            <h2 className="text-2xl md:text-4xl font-bold text-chroma-400 drop-shadow-[0_1px_8px_rgba(99,102,241,0.5)] uppercase tracking-wide" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{story.albumDetails.title}</h2>
-            <div className="text-chroma-200 text-lg md:text-xl font-medium opacity-80 mb-2">
+            <h2 className="text-2xl md:text-4xl font-bold text-sky-400 drop-shadow-[0_1px_8px_rgba(99,102,241,0.5)] uppercase tracking-wide" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{story.albumDetails.title}</h2>
+            <div className="text-sky-200 text-lg md:text-xl font-medium opacity-80 mb-2">
               {story.category} <span className="mx-2">•</span> {story.year}
             </div>
           </div>

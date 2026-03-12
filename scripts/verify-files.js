@@ -6,12 +6,12 @@ const { execSync } = require('child_process');
 
 const criticalFiles = [
   'app/components/StoryCard.tsx',
-  'app/components/FloatingNote.tsx',
   'app/components/FloatingNotesLayer.tsx',
-  'app/api/generate/route.ts',
-  'app/api/spotify/route.ts',
   'app/page.tsx',
   'app/layout.tsx',
+  'app/not-found.tsx',
+  'app/artists/frank-ocean/page.tsx',
+  'app/artists/ComingSoonArtist.tsx',
 ];
 
 let allPassed = true;

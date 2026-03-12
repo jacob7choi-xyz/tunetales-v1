@@ -3,10 +3,8 @@ import Link from 'next/link';
 import FloatingNotesLayer from './FloatingNotesLayer';
 
 interface StoryCardProps {
-  storyId: string;
   artistName: string;
   coverImageUrl: string;
-  storyPreview: string;
   category: string;
   year: number;
 }
@@ -53,7 +51,7 @@ const artistSlug = createArtistSlug(artistName);
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         </div>
         {/* Artist name */}
-        <h3 className="font-display text-lg font-bold text-white leading-tight drop-shadow-[0_1px_8px_rgba(255,0,255,0.4)]" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{artistName}</h3>
+        <h3 className="text-lg font-bold text-white leading-tight drop-shadow-[0_1px_8px_rgba(255,0,255,0.4)]" style={{ fontFamily: 'Inter, Sora, sans-serif' }}>{artistName}</h3>
         {/* Category and year badges below artist name */}
         <div className="flex items-center space-x-2 mb-1">
           <span className="inline-flex items-center rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-3 py-0.5 text-xs font-semibold text-white/90 shadow-lg shadow-pink-500/20 backdrop-blur-md">

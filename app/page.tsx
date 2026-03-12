@@ -18,7 +18,6 @@ const sampleStories = [
     id: 'frank-ocean',
     artistName: 'Frank Ocean',
     coverImageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60',
-    storyPreview: 'First openly bisexual artist to win Grammy for Best Urban Contemporary Album',
     category: 'Alternative R&B',
     year: 2016,
   },
@@ -26,7 +25,6 @@ const sampleStories = [
     id: 'taylor-swift',
     artistName: 'Taylor Swift',
     coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
-    storyPreview: 'Only artist to have 5 albums debut with 1M+ first-week sales',
     category: 'Pop',
     year: 2020,
   },
@@ -34,7 +32,6 @@ const sampleStories = [
     id: 'kendrick-lamar',
     artistName: 'Kendrick Lamar',
     coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
-    storyPreview: 'First rapper to win Pulitzer Prize for Music',
     category: 'Hip Hop',
     year: 2017,
   },
@@ -42,7 +39,6 @@ const sampleStories = [
     id: 'beyonce',
     artistName: 'Beyoncé',
     coverImageUrl: 'https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60',
-    storyPreview: 'Most Grammy-nominated artist in history with 88 nominations',
     category: 'R&B',
     year: 2022,
   },
@@ -101,7 +97,7 @@ function HomeContent() {
           <div className="flex items-center gap-2">
           <span className="text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]">
           <Image src="/TuneTales_Transparent_Logo.png" alt="" width={32} height={32} className="inline mr-2" /> TuneTales</span>
-            <span className="hidden sm:inline-block ml-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 text-xs font-semibold text-white/80 shadow-md shadow-pink-500/20 animate-glow">Beta</span>
+            <span className="hidden sm:inline-block ml-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 text-xs font-semibold text-white/80 shadow-md shadow-pink-500/20 animate-pulse">Beta</span>
           </div>
           <div className="flex items-center gap-4">
             <button className="rounded-full px-4 py-2 bg-white/10 text-white font-medium text-sm shadow-md shadow-indigo-500/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-md">Sign In</button>
@@ -122,16 +118,16 @@ function HomeContent() {
               className="mx-auto max-w-3xl"
             >
               <div className="mb-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur-sm animate-pulse transform-gpu shadow-lg shadow-indigo-500/10">
-                <SparklesIcon className="mr-2 h-4 w-4 animate-wave" />
+                <SparklesIcon className="mr-2 h-4 w-4" />
                 Discover the magic behind your favorite music
               </div>
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
-                className="mb-4 font-display text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]"
+                className="mb-4 text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(99,102,241,0.4)]"
               >
-                <span className="block animate-3d-float transform-gpu bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 bg-clip-text text-transparent">
+                <span className="block transform-gpu bg-gradient-to-r from-pink-400 via-blue-400 to-green-400 bg-clip-text text-transparent">
                   TuneTales
                 </span>
               </motion.h1>
@@ -151,7 +147,7 @@ function HomeContent() {
               >
                 <button className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 px-8 py-3 text-lg font-bold text-white shadow-xl shadow-pink-500/20 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400/40">
                   <span className="relative z-10 flex items-center">
-                    <PlayIcon className="mr-2 h-6 w-6 animate-music-pulse" />
+                    <PlayIcon className="mr-2 h-6 w-6 animate-pulse" />
                     Start Listening
                   </span>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 opacity-30 blur-xl" />
@@ -163,7 +159,7 @@ function HomeContent() {
                       placeholder="Search for artists, albums, or stories..."
                       className="w-full rounded-full border-0 bg-white/10 px-4 py-3 pl-10 text-white placeholder:text-white/70 backdrop-blur-md focus:ring-2 focus:ring-white/20 shadow-lg shadow-indigo-500/10"
                     />
-                    <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/70 animate-music-pulse" />
+                    <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-white/70 animate-pulse" />
                   </div>
                 </div>
               </motion.div>
@@ -174,7 +170,7 @@ function HomeContent() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.7, ease: 'easeOut' }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float-3d"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
           >
             <div className="h-8 w-8 rounded-full border-2 border-white/20 p-1 bg-white/10 backdrop-blur-md">
               <div className="h-full w-full rounded-full border-2 border-white/40 animate-pulse" />
@@ -200,7 +196,7 @@ function HomeContent() {
                   aria-pressed={selectedCategory === category}
                 >
                   <span className="relative z-10 flex items-center">
-                    <MusicalNoteIcon className="mr-1.5 h-4 w-4 animate-music-pulse" />
+                    <MusicalNoteIcon className="mr-1.5 h-4 w-4 animate-pulse" />
                     {category}
                   </span>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-blue-500 to-green-400 opacity-20 blur-md group-hover:opacity-40 transition-opacity" />
@@ -230,10 +226,8 @@ function HomeContent() {
                   transition={{ duration: 0.7, ease: 'easeOut' }}
                 >
                   <StoryCard
-                    storyId={story.id}
                     artistName={story.artistName}
                     coverImageUrl={story.coverImageUrl}
-                    storyPreview={story.storyPreview}
                     category={story.category}
                     year={story.year}
                   />
@@ -249,7 +243,7 @@ function HomeContent() {
         <FloatingNotesLayer count={4} layer="foreground" />
         <FloatingNotesLayer count={6} layer="overlay" />
         <div className="relative z-10 text-center w-full">
-          <div className="animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:2000px_100%]">
+          <div>
             © 2025 Jacob J. Choi • Built with Next.js, TypeScript, Tailwind CSS & Framer Motion  <br/>
             <a href="https://jacobjchoi.xyz" className="underline hover:text-white">jacobjchoi.xyz</a> •&nbsp;  
             <a href="https://github.com/jacob7choi-xyz" className="underline hover:text-white">GitHub</a> •&nbsp; 
