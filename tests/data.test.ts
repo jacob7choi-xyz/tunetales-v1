@@ -34,24 +34,38 @@ describe("data/artists.json", () => {
 });
 
 describe("data/stories/frank-ocean.json", () => {
-  it("is valid JSON with story sections", async () => {
+  it("is valid schema v2 JSON with ordered chapters", async () => {
     const raw = await readFile(
       path.join(DATA_DIR, "stories", "frank-ocean.json"),
       "utf-8"
     );
     const story = JSON.parse(raw);
 
+    expect(story.schemaVersion).toBe(2);
     expect(story).toHaveProperty("title");
-    expect(story).toHaveProperty("sections");
-    expect(Array.isArray(story.sections)).toBe(true);
-    expect(story.sections.length).toBeGreaterThan(0);
+    expect(story.artistSlug).toBe("frank-ocean");
+    expect(Array.isArray(story.chapters)).toBe(true);
+    expect(story.chapters.length).toBeGreaterThan(0);
 
-    for (const section of story.sections) {
-      expect(section).toHaveProperty("id");
-      expect(section).toHaveProperty("title");
-      expect(section).toHaveProperty("content");
-      expect(section.content.length).toBeGreaterThan(100);
+    for (const chapter of story.chapters) {
+      expect(chapter).toHaveProperty("id");
+      expect(chapter).toHaveProperty("title");
+      expect(chapter).toHaveProperty("content");
+      expect(chapter.content.length).toBeGreaterThan(100);
+      expect(typeof chapter.order).toBe("number");
+      expect(chapter.ambience).toHaveProperty("mood");
+      expect(chapter.ambience.accentHsl).toMatch(/^\d+,\s*\d+%,\s*\d+%$/);
     }
+  });
+
+  it("chapters are in chronological order", async () => {
+    const raw = await readFile(
+      path.join(DATA_DIR, "stories", "frank-ocean.json"),
+      "utf-8"
+    );
+    const story = JSON.parse(raw);
+    const orders = story.chapters.map((c: { order: number }) => c.order);
+    expect(orders).toEqual([...orders].sort((a, b) => a - b));
   });
 });
 

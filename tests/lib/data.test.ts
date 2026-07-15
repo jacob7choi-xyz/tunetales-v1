@@ -25,7 +25,9 @@ describe("getArtistStory", () => {
     const story = await getArtistStory("frank-ocean");
     expect(story).not.toBeNull();
     expect(story?.title).toBe("Frank Ocean: The Beautiful Mystery");
-    expect(story?.sections.length).toBe(6);
+    expect(story?.schemaVersion).toBe(2);
+    expect(story?.chapters.length).toBe(6);
+    expect(story?.chapters[0].ambience.mood).toBeDefined();
   });
 
   it("returns null for unknown artist", async () => {

@@ -64,14 +64,14 @@ export default function FrankOceanPage() {
     );
   }
 
-  const currentSectionData = frankOceanStory.sections[currentSection] ?? {
+  const currentSectionData = frankOceanStory.chapters[currentSection] ?? {
     id: '',
     title: 'Untitled',
     content: '',
   };
 
   const nextSection = () => {
-    if (currentSection < frankOceanStory.sections.length - 1) {
+    if (currentSection < frankOceanStory.chapters.length - 1) {
       setCurrentSection(currentSection + 1);
     }
   };
@@ -148,7 +148,7 @@ export default function FrankOceanPage() {
                 <div>
                   <h2 className="text-2xl font-bold text-white">{frankOceanStory.title}</h2>
                   <span className="text-blue-200">
-                    {currentSection + 1} of {frankOceanStory.sections.length}
+                    {currentSection + 1} of {frankOceanStory.chapters.length}
                   </span>
                 </div>
                 <button
@@ -165,7 +165,7 @@ export default function FrankOceanPage() {
                   <motion.div
                     className="bg-blue-400 h-2 rounded-full"
                     initial={{ width: 0 }}
-                    animate={{ width: `${((currentSection + 1) / frankOceanStory.sections.length) * 100}%` }}
+                    animate={{ width: `${((currentSection + 1) / frankOceanStory.chapters.length) * 100}%` }}
                     transition={{ duration: 0.5 }}
                   />
                 </div>
@@ -208,7 +208,7 @@ export default function FrankOceanPage() {
                 </motion.button>
 
                 <div className="flex space-x-2">
-                  {frankOceanStory.sections.map((_, index) => (
+                  {frankOceanStory.chapters.map((_, index) => (
                     <motion.button
                       key={index}
                       onClick={() => setCurrentSection(index)}
@@ -222,13 +222,13 @@ export default function FrankOceanPage() {
 
                 <motion.button
                   onClick={nextSection}
-                  disabled={currentSection === frankOceanStory.sections.length - 1}
+                  disabled={currentSection === frankOceanStory.chapters.length - 1}
                   className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-                    currentSection === frankOceanStory.sections.length - 1
+                    currentSection === frankOceanStory.chapters.length - 1
                       ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                       : 'bg-blue-500 text-white hover:bg-blue-600'
                   }`}
-                  whileHover={currentSection < frankOceanStory.sections.length - 1 ? { scale: 1.05 } : {}}
+                  whileHover={currentSection < frankOceanStory.chapters.length - 1 ? { scale: 1.05 } : {}}
                 >
                   Next
                 </motion.button>

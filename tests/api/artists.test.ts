@@ -29,19 +29,19 @@ describe("API data layer - artists", () => {
 });
 
 describe("API data layer - stories", () => {
-  it("frank-ocean story sections have non-empty content", async () => {
+  it("frank-ocean story chapters have non-empty content", async () => {
     const story = await getArtistStory("frank-ocean");
     expect(story).not.toBeNull();
-    for (const section of story!.sections) {
-      expect(section.id.length).toBeGreaterThan(0);
-      expect(section.title.length).toBeGreaterThan(0);
-      expect(section.content.length).toBeGreaterThan(100);
+    for (const chapter of story!.chapters) {
+      expect(chapter.id.length).toBeGreaterThan(0);
+      expect(chapter.title.length).toBeGreaterThan(0);
+      expect(chapter.content.length).toBeGreaterThan(100);
     }
   });
 
-  it("story sections have unique IDs", async () => {
+  it("story chapters have unique IDs", async () => {
     const story = await getArtistStory("frank-ocean");
-    const ids = story!.sections.map((s) => s.id);
+    const ids = story!.chapters.map((c) => c.id);
     expect(new Set(ids).size).toBe(ids.length);
   });
 });
