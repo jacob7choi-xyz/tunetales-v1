@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import type { ArtistStory, StoryChapter } from '@/app/lib/types';
+import Navbar from '@/app/components/Navbar';
 import AmbienceLayer from '@/app/components/AmbienceLayer';
 import ChapterProgress from '@/app/components/ChapterProgress';
 import ChapterNav from '@/app/components/ChapterNav';
@@ -123,38 +123,11 @@ export default function JourneyClient({ story }: JourneyClientProps) {
       <FloatingNotesLayer count={8} layer="background" />
       <FloatingNotesLayer count={5} layer="foreground" />
 
-      {/* Frosted header */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
-        style={{ background: 'rgba(0, 0, 0, 0.5)', borderBottom: '1px solid rgba(255, 255, 255, 0.12)' }}
-      >
-        <div
-          className="flex items-center justify-between"
-          style={{ maxWidth: '1080px', margin: '0 auto', padding: '14px 24px' }}
-        >
-          <button
-            onClick={() => router.push('/artists/frank-ocean')}
-            className="flex items-center transition-all duration-200 hover:scale-105"
-            style={{
-              gap: '10px',
-              padding: '10px 22px',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'rgba(255, 255, 255, 0.9)',
-              background: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-            }}
-          >
-            <ArrowLeftIcon style={{ width: '18px', height: '18px' }} />
-            <span>Frank Ocean</span>
-          </button>
-          <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.5)' }}>
-            {story.title}
-          </div>
-        </div>
-      </header>
+      <Navbar
+        backHref="/artists/frank-ocean"
+        backLabel="Frank Ocean"
+        subtitle={story.title}
+      />
 
       {/* Chapter content */}
       <main className="relative" style={{ zIndex: 10, padding: '130px 24px 40px' }}>

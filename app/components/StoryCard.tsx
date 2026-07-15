@@ -56,7 +56,7 @@ export default function StoryCard({
         </div>
 
         {/* Artist name */}
-        <h3 className="font-bold text-white leading-tight" style={{ fontSize: '20px', paddingTop: '4px' }}>{artistName}</h3>
+        <h3 className="font-bold text-white leading-tight" style={{ fontSize: '20px', paddingTop: '4px', fontFamily: 'var(--font-display)' }}>{artistName}</h3>
 
         {/* Frosted glass badges */}
         <div className="flex items-center" style={{ gap: '10px' }}>

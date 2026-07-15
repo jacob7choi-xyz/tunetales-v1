@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 import { MusicalNoteIcon, SparklesIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { COLORS } from './lib/tokens';
+import Navbar from './components/Navbar';
 
 const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
   ssr: false,
@@ -21,29 +21,7 @@ export default function NotFound() {
       <FloatingNotesLayer count={8} layer="background" />
       <FloatingNotesLayer count={4} layer="foreground" />
 
-      {/* Frosted navbar, aligned with the homepage chrome */}
-      <nav
-        className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl"
-        style={{
-          background: 'rgba(0, 0, 0, 0.5)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-        }}
-      >
-        <div
-          className="flex items-center justify-between"
-          style={{ maxWidth: '1280px', margin: '0 auto', padding: '12px 24px' }}
-        >
-          <div className="flex items-center" style={{ gap: '8px' }}>
-            <Image src="/TuneTales_Transparent_Logo.png" alt="" width={32} height={32} />
-            <span style={{ fontSize: '22px', fontWeight: 800, letterSpacing: '-0.02em' }}>
-              TuneTales
-            </span>
-          </div>
-          <span style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)' }}>
-            Page Not Found
-          </span>
-        </div>
-      </nav>
+      <Navbar subtitle="Page Not Found" />
 
       {/* Main content */}
       <div className="text-center relative z-10" style={{ padding: '80px 24px 24px', maxWidth: '896px', margin: '0 auto' }}>

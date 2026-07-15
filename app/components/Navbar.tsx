@@ -1,0 +1,78 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+
+interface NavbarProps {
+  subtitle?: string;
+  backHref?: string;
+  backLabel?: string;
+}
+
+// The one site-wide chrome bar: frosted glass, logo, wordmark, Beta badge.
+// Fixed height keeps sticky elements below it deterministic (top: 72px).
+export default function Navbar({ subtitle, backHref, backLabel }: NavbarProps) {
+  return (
+    <nav
+      className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl"
+      style={{
+        height: '72px',
+        background: 'rgba(0, 0, 0, 0.5)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+      }}
+    >
+      <div
+        className="flex items-center justify-between"
+        style={{ height: '100%', padding: '0 24px' }}
+      >
+        <div className="flex items-center" style={{ gap: '16px' }}>
+          {backHref && (
+            <Link
+              href={backHref}
+              className="flex items-center transition-all duration-200 hover:scale-105"
+              style={{
+                gap: '8px',
+                padding: '8px 18px',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: 'rgba(255, 255, 255, 0.9)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                borderRadius: '9999px',
+              }}
+            >
+              <ArrowLeftIcon style={{ width: '16px', height: '16px' }} />
+              <span>{backLabel ?? 'Back'}</span>
+            </Link>
+          )}
+          <Link href="/" className="flex items-center" style={{ gap: '12px' }}>
+            <Image src="/TuneTales_Transparent_Logo.png" alt="" width={36} height={36} />
+            <span
+              className="font-bold tracking-tight text-white"
+              style={{ fontSize: '24px', fontFamily: 'var(--font-display)' }}
+            >
+              TuneTales
+            </span>
+          </Link>
+          <span
+            className="rounded-full font-bold uppercase"
+            style={{
+              padding: '6px 14px',
+              fontSize: '11px',
+              letterSpacing: '0.1em',
+              background: 'rgba(147, 51, 234, 0.35)',
+              border: '1px solid rgba(192, 132, 252, 0.5)',
+              color: '#d8b4fe',
+            }}
+          >
+            Beta
+          </span>
+        </div>
+        {subtitle && (
+          <span style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.55)' }}>
+            {subtitle}
+          </span>
+        )}
+      </div>
+    </nav>
+  );
+}

@@ -2,10 +2,11 @@
 
 
 import { motion } from 'framer-motion';
-import { ArrowLeftIcon, SparklesIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import Navbar from './Navbar';
 
 const FloatingNotesLayer = dynamic(() => import('./FloatingNotesLayer'), {
   ssr: false
@@ -33,38 +34,7 @@ export default function ComingSoonArtist({
       <FloatingNotesLayer count={8} layer="background" />
       <FloatingNotesLayer count={5} layer="foreground" />
 
-      {/* Header */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
-        style={{ background: 'rgba(0,0,0,0.5)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px 16px 16px', paddingRight: '32px' }}>
-          <button
-            onClick={() => router.push('/')}
-            className="transition-colors duration-200"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 24px',
-              fontSize: '15px',
-              fontWeight: 600,
-              color: 'rgba(255,255,255,0.9)',
-              background: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-            }}
-          >
-            <ArrowLeftIcon style={{ width: '20px', height: '20px' }} />
-            <span>Back to Artists</span>
-          </button>
-
-          <div style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)' }}>
-            TuneTales &bull; Coming Soon
-          </div>
-        </div>
-      </header>
+      <Navbar backHref="/" backLabel="Back to Artists" subtitle="Coming Soon" />
 
       {/* Main Content */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '120px 24px 80px' }}>

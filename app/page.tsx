@@ -1,8 +1,8 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import StoryCard from './components/StoryCard';
+import Navbar from './components/Navbar';
 import { MagnifyingGlassIcon, ChevronDownIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -45,31 +45,7 @@ function HomeContent() {
 
   return (
     <div className="flex min-h-screen w-screen flex-col text-white font-sans animated-bg">
-      {/* Navbar -- frosted glass */}
-      <nav
-        className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl"
-        style={{ background: 'rgba(0,0,0,0.5)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}
-      >
-        <div className="flex items-center justify-between" style={{ padding: '16px 20px' }}>
-          <div className="flex items-center" style={{ gap: '16px' }}>
-            <Image src="/TuneTales_Transparent_Logo.png" alt="" width={36} height={36} />
-            <span className="font-bold tracking-tight text-white" style={{ fontSize: '24px' }}>TuneTales</span>
-            <span
-              className="rounded-full font-bold uppercase"
-              style={{
-                padding: '6px 14px',
-                fontSize: '11px',
-                letterSpacing: '0.1em',
-                background: 'rgba(147,51,234,0.35)',
-                border: '1px solid rgba(192,132,252,0.5)',
-                color: '#d8b4fe',
-              }}
-            >
-              Beta
-            </span>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="flex-1 flex flex-col">
         {/* Hero -- full viewport height */}

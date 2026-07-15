@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeftIcon, PlayIcon, LinkIcon, ClockIcon, CalendarIcon, UserIcon, MusicalNoteIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { PlayIcon, LinkIcon, ClockIcon, CalendarIcon, UserIcon, MusicalNoteIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 import type { ArtistStory } from '../../lib/types';
+import Navbar from '../../components/Navbar';
 
 const FloatingNotesLayer = dynamic(() => import('../../components/FloatingNotesLayer'), {
   ssr: false,
@@ -72,38 +73,7 @@ export default function FrankOceanPage() {
       <FloatingNotesLayer count={8} layer="background" />
       <FloatingNotesLayer count={4} layer="foreground" />
       
-      {/* Header with back navigation */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl"
-        style={{ background: 'rgba(0,0,0,0.5)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px 16px 16px', paddingRight: '32px' }}>
-          <button
-            onClick={() => router.push('/')}
-            className="transition-colors duration-200"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 24px',
-              fontSize: '15px',
-              fontWeight: 600,
-              color: 'rgba(255,255,255,0.9)',
-              background: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-            }}
-          >
-            <ArrowLeftIcon style={{ width: '20px', height: '20px' }} />
-            <span>Back to Artists</span>
-          </button>
-
-          <div style={{ fontSize: '15px', color: 'rgba(255,255,255,0.5)' }}>
-            TuneTales &bull; Artist Deep Dive
-          </div>
-        </div>
-      </header>
+      <Navbar backHref="/" backLabel="Back to Artists" subtitle="Artist Deep Dive" />
 
       {/* Hero Section */}
       <section style={{ position: 'relative', padding: '120px 24px 48px' }}>
@@ -142,7 +112,7 @@ export default function FrankOceanPage() {
           </div>
 
           {/* Artist Name */}
-          <h1 style={{ fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+          <h1 style={{ fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px', fontFamily: 'var(--font-display)' }}>
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">
               Frank Ocean
             </span>
@@ -174,7 +144,7 @@ export default function FrankOceanPage() {
       {/* Navigation Tabs */}
       <section
         className="sticky z-30 backdrop-blur-2xl"
-        style={{ top: '68px', background: 'rgba(0,0,0,0.4)', borderTop: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
+        style={{ top: '72px', background: 'rgba(0,0,0,0.4)', borderTop: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}
       >
         <nav style={{ display: 'flex', justifyContent: 'center', gap: '12px', padding: '16px 24px' }}>
           {tabs.map((tab) => {
@@ -268,24 +238,36 @@ export default function FrankOceanPage() {
 
           {activeTab === 'discography' && (
             <div className="text-center py-20">
-              <h2 className="text-4xl font-bold mb-6">Musical Creations</h2>
+              <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)' }}>Musical Creations</h2>
               <p className="text-xl text-white/70 mb-8">
                 Explore Frank&apos;s complete catalog of albums, singles, and rare gems
               </p>
-              <div className="text-white/50">
-                Coming Soon: Interactive discography with song bubbles
+              <div
+                className="card-enchanted rounded-2xl inline-flex items-center"
+                style={{ padding: '20px 36px', gap: '12px' }}
+              >
+                <MusicalNoteIcon style={{ width: '22px', height: '22px', color: '#c4b5fd' }} />
+                <span style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  A universe of song bubbles is being composed. Coming soon.
+                </span>
               </div>
             </div>
           )}
 
           {activeTab === 'impact' && (
             <div className="text-center py-20">
-              <h2 className="text-4xl font-bold mb-6">Cultural Legacy</h2>
+              <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)' }}>Cultural Legacy</h2>
               <p className="text-xl text-white/70 mb-8">
                 How Frank Ocean changed music, culture, and representation forever
               </p>
-              <div className="text-white/50">
-                Coming Soon: Interactive impact visualization
+              <div
+                className="card-enchanted rounded-2xl inline-flex items-center"
+                style={{ padding: '20px 36px', gap: '12px' }}
+              >
+                <SparklesIcon style={{ width: '22px', height: '22px', color: '#c4b5fd' }} />
+                <span style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  An interactive map of his influence is on the way. Coming soon.
+                </span>
               </div>
             </div>
           )}
@@ -300,7 +282,7 @@ export default function FrankOceanPage() {
                 </p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
+              <div className="card-enchanted rounded-2xl p-8 mb-8">
                 <h3 className="text-2xl font-bold mb-8 text-blue-400">Research Methodology</h3>
                 
                 <div className="space-y-6">
@@ -337,7 +319,7 @@ export default function FrankOceanPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
+              <div className="card-enchanted rounded-2xl p-8 mb-8">
                 <h3 className="text-2xl font-bold mb-6 text-purple-400">Source Quality Distribution</h3>
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
@@ -373,7 +355,7 @@ export default function FrankOceanPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-8">
+              <div className="card-enchanted rounded-2xl p-8 mb-8">
                 <h3 className="text-2xl font-bold mb-6 text-teal-400">Example: Boys Don&apos;t Cry Magazine Research</h3>
                 
                 <div className="grid lg:grid-cols-2 gap-8">
@@ -419,7 +401,7 @@ export default function FrankOceanPage() {
                 </div>
               </div>
               <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                <div className="card-enchanted rounded-2xl p-6">
                   <h3 className="text-xl font-bold mb-4 text-green-400">Verification Standards</h3>
                   <div className="space-y-2 text-sm text-white/70">
                     <div>- Multiple source cross-referencing</div>
@@ -429,7 +411,7 @@ export default function FrankOceanPage() {
                   </div>
                 </div>
 
-                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                <div className="card-enchanted rounded-2xl p-6">
                   <h3 className="text-xl font-bold mb-4 text-yellow-400">Data Transparency</h3>
                   <div className="space-y-2 text-sm text-white/70">
                     <div>• Full JSON research files stored</div>
@@ -439,7 +421,7 @@ export default function FrankOceanPage() {
                   </div>
                 </div>
 
-                <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                <div className="card-enchanted rounded-2xl p-6">
                   <h3 className="text-xl font-bold mb-4 text-red-400">Current Metrics</h3>
                   <div className="space-y-2 text-sm text-white/70">
                     <div>Mixed source quality (improving)</div>
