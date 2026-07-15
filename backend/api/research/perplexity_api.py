@@ -15,18 +15,20 @@ load_dotenv()
 class PerplexityClient:
     
     # Available models with different capabilities and costs
+    # (the legacy llama-3.1-sonar-* names were decommissioned by Perplexity)
     MODELS = {
-        "sonar_small": "llama-3.1-sonar-small-128k-online",
-        "sonar_large": "llama-3.1-sonar-large-128k-online", 
-        "sonar_pro": "sonar-pro",  # Correct new model name
-        "sonar": "sonar",  # Basic new model
-        "reasoning": "llama-3.1-sonar-reasoning-128k-online"  # If this exists
+        "sonar": "sonar",
+        "sonar_pro": "sonar-pro",
+        "reasoning": "sonar-reasoning",
+        # Legacy keys kept for backward compatibility with existing callers
+        "sonar_small": "sonar",
+        "sonar_large": "sonar-pro",
         }
-    
+
     def __init__(self, api_key: str = None, default_model: str = "sonar_pro"):
         self.api_key = api_key or os.getenv('PERPLEXITY_API_KEY')
         self.base_url = "https://api.perplexity.ai"
-        self.default_model = self.MODELS.get(default_model, self.MODELS["sonar_small"])
+        self.default_model = self.MODELS.get(default_model, self.MODELS["sonar"])
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"

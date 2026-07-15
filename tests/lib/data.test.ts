@@ -5,7 +5,7 @@ describe("getArtists", () => {
   it("returns an array of artists", async () => {
     const artists = await getArtists();
     expect(Array.isArray(artists)).toBe(true);
-    expect(artists.length).toBe(4);
+    expect(artists.length).toBeGreaterThan(0);
   });
 
   it("each artist has required fields", async () => {

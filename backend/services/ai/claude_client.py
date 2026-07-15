@@ -11,6 +11,10 @@ import glob
 # Load environment variables
 load_dotenv()
 
+# Model IDs (aliases resolve to the latest snapshot)
+NARRATIVE_MODEL = "claude-sonnet-4-6"
+MOOD_MODEL = "claude-haiku-4-5"
+
 
 class ClaudeStorytellingClient:
     
@@ -131,7 +135,7 @@ class ClaudeStorytellingClient:
                 self.base_url,
                 headers=self.headers,
                 json={
-                    "model": "claude-3-5-sonnet-20241022",
+                    "model": NARRATIVE_MODEL,
                     "max_tokens": 2000,
                     "temperature": 0.7,
                     "messages": [
@@ -153,7 +157,7 @@ class ClaudeStorytellingClient:
                     "artist_name": artist_name,
                     "story_type": "artist_narrative",
                     "narrative_style": narrative_style,
-                    "model_used": "claude-3-5-sonnet-20241022",
+                    "model_used": NARRATIVE_MODEL,
                     "tokens_used": result.get("usage", {}).get("output_tokens", 0)
                 },
                 "narrative": result["content"][0]["text"],
@@ -226,7 +230,7 @@ class ClaudeStorytellingClient:
                 self.base_url,
                 headers=self.headers,
                 json={
-                    "model": "claude-3-5-sonnet-20241022",
+                    "model": NARRATIVE_MODEL,
                     "max_tokens": 1500,
                     "temperature": 0.7,
                     "messages": [
@@ -247,7 +251,7 @@ class ClaudeStorytellingClient:
                     "artist_name": artist_name,
                     "song_name": song_name,
                     "story_type": "song_story",
-                    "model_used": "claude-3-5-sonnet-20241022",
+                    "model_used": NARRATIVE_MODEL,
                     "tokens_used": result.get("usage", {}).get("output_tokens", 0)
                 },
                 "story": result["content"][0]["text"],
@@ -330,7 +334,7 @@ Respond with only the mood word."""
                 self.base_url,
                 headers=self.headers,
                 json={
-                    "model": "claude-3-5-haiku-20241022",  # Faster model for simple tasks
+                    "model": MOOD_MODEL,  # Faster model for simple tasks
                     "max_tokens": 10,
                     "temperature": 0.3,
                     "messages": [

@@ -55,3 +55,7 @@ certificates
 # AI assistant config
 CLAUDE.md
 AGENTS.md
+# Python
+__pycache__/
+*.pyc
+.venv/
