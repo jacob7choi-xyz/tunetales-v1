@@ -1,10 +1,9 @@
 import { readFile, readdir } from "fs/promises";
 import path from "path";
 import type { Artist, ArtistStory, ResearchFile } from "./types";
+import { SLUG_PATTERN } from "./tokens";
 
 const DATA_DIR = path.join(process.cwd(), "data");
-
-const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function validateSlug(slug: string): void {
   if (!slug || !SLUG_PATTERN.test(slug)) {

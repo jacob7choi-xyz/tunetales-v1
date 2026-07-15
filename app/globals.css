@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+:root {
+  /* Primary palette */
+  --color-purple-primary: rgba(147, 51, 234, 1);
+  --color-purple-primary-20: rgba(147, 51, 234, 0.2);
+  --color-purple-primary-40: rgba(147, 51, 234, 0.4);
+  --color-border-glow: #c084fc;
+  --color-text-accent: #d8b4fe;
+  --color-blue-accent: #93c5fd;
+
+  /* Enchanted glass card */
+  --card-bg: rgba(15, 5, 30, 0.6);
+  --card-border: rgba(168, 130, 255, 0.15);
+
+  /* Shimmer palette */
+  --shimmer-1: #c4b5fd;
+  --shimmer-2: #93c5fd;
+  --shimmer-3: #f0abfc;
+  --shimmer-4: #67e8f9;
+
+  /* Typography -- font files are loaded via next/font in layout.tsx, which
+     defines --font-inter and --font-playfair on the html element */
+  --font-display: var(--font-playfair, Georgia), Georgia, serif;
+  --font-body: var(--font-inter, Arial), Arial, Helvetica, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +40,7 @@ html, body {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   background: transparent !important;
 }
 

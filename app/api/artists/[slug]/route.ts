@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { getArtists, getArtistStory } from "@/app/lib/data";
-
-const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+import { SLUG_PATTERN } from "@/app/lib/tokens";
 
 export async function GET(
   _request: Request,
