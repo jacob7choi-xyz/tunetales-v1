@@ -224,6 +224,7 @@ function HomeContent() {
                     year={artist.year}
                     status={artist.status}
                     teaser={artist.teaser}
+                    accentHsl={artist.accentHsl}
                   />
                 </motion.div>
               ))}

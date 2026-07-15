@@ -8,7 +8,11 @@ interface StoryCardProps {
   year: number;
   status?: 'active' | 'coming-soon';
   teaser?: string;
+  // h,s,l values -- the artist's aura color glowing around the poster
+  accentHsl?: string;
 }
+
+const DEFAULT_ACCENT = '260, 65%, 55%';
 
 // Helper function to create artist URL slug
 export const createArtistSlug = (artistName: string) => {
@@ -25,53 +29,111 @@ export const createArtistSlug = (artistName: string) => {
     .replace(/^-+|-+$/g, '');
 };
 
-function CardBody({ artistName, coverImageUrl, category, year, comingSoon, teaser }: {
+function Poster({ artistName, coverImageUrl, category, year, comingSoon, teaser, accent }: {
   artistName: string;
   coverImageUrl: string;
   category: string;
   year: number;
   comingSoon: boolean;
   teaser?: string;
+  accent: string;
 }) {
   return (
     <>
+      {/* Aura: the artist's own light bleeding out from behind the poster */}
       <div
-        className="relative aspect-square overflow-hidden"
-        style={{ borderRadius: '10px', marginBottom: '14px', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)' }}
+        aria-hidden="true"
+        className="absolute transition-opacity duration-700 opacity-50 group-hover:opacity-100"
+        style={{
+          inset: '-10px',
+          borderRadius: '24px',
+          background: `radial-gradient(ellipse at 50% 65%, hsla(${accent}, 0.4) 0%, hsla(${accent}, 0.12) 55%, transparent 75%)`,
+          filter: 'blur(22px)',
+        }}
+      />
+
+      {/* Poster: full-bleed portrait, text living inside the image */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          borderRadius: '16px',
+          aspectRatio: '3 / 4',
+          border: `1px solid hsla(${accent}, 0.3)`,
+          boxShadow: '0 12px 36px rgba(0, 0, 0, 0.5)',
+        }}
       >
         <Image
           src={coverImageUrl}
           alt={`${artistName} album cover`}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-      </div>
-      <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
-        {artistName}
-      </h3>
-      <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
-        {category.trim()} &bull; {year}
-      </p>
-      {teaser && (
-        <p
-          className="opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+
+        {/* Scrim so the text belongs to the image instead of sitting below it */}
+        <div
+          className="absolute inset-0"
           style={{
-            fontSize: '13px',
-            fontStyle: 'italic',
-            lineHeight: 1.45,
-            color: 'rgba(216, 180, 254, 0.85)',
-            marginTop: '8px',
-            minHeight: '38px',
+            background:
+              'linear-gradient(to top, rgba(5, 2, 15, 0.92) 0%, rgba(5, 2, 15, 0.45) 38%, transparent 68%)',
           }}
-        >
-          {teaser}
-        </p>
-      )}
-      {comingSoon && (
-        <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(216, 180, 254, 0.8)', marginTop: '6px' }}>
-          Coming soon
-        </p>
-      )}
+        />
+
+        {/* Accent light inside the poster's lower edge */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 transition-opacity duration-700 opacity-40 group-hover:opacity-75"
+          style={{
+            background: `radial-gradient(ellipse at 50% 108%, hsla(${accent}, 0.5) 0%, transparent 60%)`,
+          }}
+        />
+
+        <div className="absolute bottom-0 left-0 right-0" style={{ padding: '18px' }}>
+          <h3
+            style={{
+              fontSize: '19px',
+              fontWeight: 700,
+              color: '#fff',
+              marginBottom: '4px',
+              fontFamily: 'var(--font-display)',
+              textShadow: '0 2px 12px rgba(0, 0, 0, 0.6)',
+            }}
+          >
+            {artistName}
+          </h3>
+          <p style={{ fontSize: '12px', letterSpacing: '0.04em', color: 'rgba(255, 255, 255, 0.6)' }}>
+            {category.trim()} &bull; {year}
+          </p>
+          {teaser && (
+            <p
+              className="opacity-0 group-hover:opacity-100 transition-all duration-500"
+              style={{
+                fontSize: '13px',
+                fontStyle: 'italic',
+                lineHeight: 1.45,
+                color: `hsla(${accent}, 0.95)`,
+                marginTop: '8px',
+                textShadow: '0 1px 8px rgba(0, 0, 0, 0.8)',
+              }}
+            >
+              {teaser}
+            </p>
+          )}
+          {comingSoon && (
+            <p
+              style={{
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: `hsla(${accent}, 0.9)`,
+                marginTop: '10px',
+              }}
+            >
+              Coming soon
+            </p>
+          )}
+        </div>
+      </div>
     </>
   );
 }
@@ -83,20 +145,22 @@ export default function StoryCard({
   year,
   status = 'active',
   teaser,
+  accentHsl,
 }: StoryCardProps) {
   const isComingSoon = status === 'coming-soon';
-  const cardStyle = { padding: '14px', borderRadius: '14px' };
+  const accent = accentHsl ?? DEFAULT_ACCENT;
 
   if (isComingSoon) {
     return (
-      <div className="group card-clean" style={{ ...cardStyle, opacity: 0.75 }}>
-        <CardBody
+      <div className="group relative" style={{ opacity: 0.85 }}>
+        <Poster
           artistName={artistName}
           coverImageUrl={coverImageUrl}
           category={category}
           year={year}
           comingSoon
           teaser={teaser}
+          accent={accent}
         />
       </div>
     );
@@ -105,16 +169,16 @@ export default function StoryCard({
   return (
     <Link
       href={`/artists/${createArtistSlug(artistName)}`}
-      className="group card-clean block hover:-translate-y-1"
-      style={cardStyle}
+      className="group relative block transition-transform duration-500 hover:-translate-y-1.5"
     >
-      <CardBody
+      <Poster
         artistName={artistName}
         coverImageUrl={coverImageUrl}
         category={category}
         year={year}
         comingSoon={false}
         teaser={teaser}
+        accent={accent}
       />
     </Link>
   );
