@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-const FloatingNotesLayer = dynamic(() => import('../components/FloatingNotesLayer'), {
+const FloatingNotesLayer = dynamic(() => import('./FloatingNotesLayer'), {
   ssr: false
 });
 

@@ -20,6 +20,7 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [artists, setArtists] = useState<Artist[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch('/api/artists')
@@ -31,11 +32,16 @@ function HomeContent() {
   const selectedCategory = searchParams.get('category') || 'All';
 
   const filteredStories = useMemo(() => {
-    if (selectedCategory === 'All') return artists;
-    return artists.filter(
-      (a) => a.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
-    );
-  }, [selectedCategory, artists]);
+    const byCategory =
+      selectedCategory === 'All'
+        ? artists
+        : artists.filter(
+            (a) => a.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()
+          );
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return byCategory;
+    return byCategory.filter((a) => a.artistName.toLowerCase().includes(query));
+  }, [selectedCategory, artists, searchQuery]);
 
   return (
     <div className="flex min-h-screen w-screen flex-col text-white font-sans animated-bg">
@@ -62,17 +68,6 @@ function HomeContent() {
               Beta
             </span>
           </div>
-          <button
-            className="rounded-full font-semibold text-white backdrop-blur-md transition-all duration-300 hover:scale-105"
-            style={{
-              padding: '12px 28px',
-              fontSize: '15px',
-              background: 'rgba(255,255,255,0.12)',
-              border: '1px solid rgba(255,255,255,0.25)',
-            }}
-          >
-            Sign In
-          </button>
         </div>
       </nav>
 
@@ -98,6 +93,9 @@ function HomeContent() {
 
             <div className="flex flex-col items-center w-full" style={{ gap: '24px', maxWidth: '520px', marginTop: '40px' }}>
               <button
+                onClick={() =>
+                  document.getElementById('discover')?.scrollIntoView({ behavior: 'smooth' })
+                }
                 className="inline-flex items-center rounded-full font-bold text-white backdrop-blur-md transition-all duration-300 hover:scale-105"
                 style={{
                   padding: '18px 48px',
@@ -114,7 +112,10 @@ function HomeContent() {
               <div className="relative w-full">
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search artists, albums, stories..."
+                  aria-label="Search artists"
                   className="w-full rounded-full text-white focus:outline-none transition-all duration-300"
                   style={{
                     padding: '18px 24px 18px 52px',
@@ -179,7 +180,7 @@ function HomeContent() {
         </section>
 
         {/* Artist Grid */}
-        <section className="w-full mx-auto" style={{ padding: '48px 48px 64px' }}>
+        <section id="discover" className="w-full mx-auto" style={{ padding: '48px 48px 64px' }}>
           {/* Section header with gradient divider */}
           <div style={{ marginBottom: '40px' }}>
             <h2 className="font-bold text-white" style={{ fontSize: '28px', marginBottom: '12px' }}>Discover Stories</h2>
@@ -208,6 +209,7 @@ function HomeContent() {
                     coverImageUrl={artist.coverImageUrl}
                     category={artist.category}
                     year={artist.year}
+                    status={artist.status}
                   />
                 </motion.div>
               ))}

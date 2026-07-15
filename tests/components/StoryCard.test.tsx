@@ -1,10 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import StoryCard, { createArtistSlug } from "@/app/components/StoryCard";
-
-vi.mock("@/app/components/FloatingNotesLayer", () => ({
-  default: () => null,
-}));
 
 describe("createArtistSlug", () => {
   it("lowercases and hyphenates spaces", () => {
@@ -72,5 +68,25 @@ describe("StoryCard", () => {
     render(<StoryCard {...defaultProps} />);
     const images = screen.getAllByAltText("Frank Ocean album cover");
     expect(images.length).toBeGreaterThan(0);
+  });
+
+  it("renders an active explore link when status is active", () => {
+    render(<StoryCard {...defaultProps} status="active" />);
+    const links = screen.getAllByRole("link", { name: /explore frank ocean/i });
+    expect(links.length).toBeGreaterThan(0);
+  });
+
+  it("renders a coming-soon badge instead of a link when status is coming-soon", () => {
+    render(
+      <StoryCard
+        {...defaultProps}
+        artistName="Kendrick Lamar"
+        status="coming-soon"
+      />
+    );
+    expect(screen.getAllByText("Story Coming Soon").length).toBeGreaterThan(0);
+    expect(
+      screen.queryByRole("link", { name: /explore kendrick lamar/i })
+    ).toBeNull();
   });
 });

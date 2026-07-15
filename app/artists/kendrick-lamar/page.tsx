@@ -1,4 +1,4 @@
-import ComingSoonArtist from '../ComingSoonArtist';
+import ComingSoonArtist from '@/app/components/ComingSoonArtist';
 
 export default function KendrickLamarPage() {
   return (

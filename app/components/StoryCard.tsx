@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import FloatingNotesLayer from './FloatingNotesLayer';
 
 interface StoryCardProps {
   artistName: string;
   coverImageUrl: string;
   category: string;
   year: number;
+  status?: 'active' | 'coming-soon';
 }
 
 // Helper function to create artist URL slug
@@ -29,8 +29,10 @@ export default function StoryCard({
   coverImageUrl,
   category,
   year,
+  status = 'active',
 }: StoryCardProps) {
   const artistSlug = createArtistSlug(artistName);
+  const isComingSoon = status === 'coming-soon';
   return (
     <div className="group relative transition-transform duration-300 hover:-translate-y-1">
       {/* Ambient glow behind card on hover */}
@@ -48,11 +50,6 @@ export default function StoryCard({
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          {/* Particles over image */}
-          <div className="pointer-events-none absolute inset-0 z-30">
-            <FloatingNotesLayer count={5} layer="background" />
-            <FloatingNotesLayer count={3} layer="foreground" />
-          </div>
           {/* Vignette + colored overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           <div className="absolute inset-0 transition-colors duration-500" style={{ background: 'rgba(88,28,135,0)' }} />
@@ -89,20 +86,36 @@ export default function StoryCard({
           </span>
         </div>
 
-        {/* Frosted glass explore button */}
-        <Link
-          href={`/artists/${artistSlug}`}
-          className="block font-semibold text-white rounded-full text-center backdrop-blur-md transition-all duration-300 hover:scale-105"
-          style={{
-            padding: '12px 24px',
-            fontSize: '14px',
-            marginTop: '4px',
-            background: 'rgba(255,255,255,0.12)',
-            border: '1px solid rgba(255,255,255,0.25)',
-          }}
-        >
-          Explore {artistName}
-        </Link>
+        {/* Frosted glass explore button, or a quiet teaser for coming-soon artists */}
+        {isComingSoon ? (
+          <div
+            className="block font-semibold rounded-full text-center backdrop-blur-md"
+            style={{
+              padding: '12px 24px',
+              fontSize: '14px',
+              marginTop: '4px',
+              background: 'rgba(147,51,234,0.15)',
+              border: '1px solid rgba(192,132,252,0.25)',
+              color: 'rgba(216,180,254,0.75)',
+            }}
+          >
+            Story Coming Soon
+          </div>
+        ) : (
+          <Link
+            href={`/artists/${artistSlug}`}
+            className="block font-semibold text-white rounded-full text-center backdrop-blur-md transition-all duration-300 hover:scale-105"
+            style={{
+              padding: '12px 24px',
+              fontSize: '14px',
+              marginTop: '4px',
+              background: 'rgba(255,255,255,0.12)',
+              border: '1px solid rgba(255,255,255,0.25)',
+            }}
+          >
+            Explore {artistName}
+          </Link>
+        )}
       </div>
     </div>
   );
