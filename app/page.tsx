@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useMemo, useState, useEffect, Suspense } from 'react';
 
-const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
+const Starfield = dynamic(() => import('./components/Starfield'), {
   ssr: false
 });
 
@@ -51,8 +51,7 @@ function HomeContent() {
       <main className="flex-1 flex flex-col">
         {/* Hero -- left-aligned, content-forward so the grid peeks above the fold */}
         <section className="relative w-full flex flex-col justify-center" style={{ minHeight: '68vh' }}>
-          <FloatingNotesLayer count={10} layer="background" />
-          <FloatingNotesLayer count={5} layer="foreground" />
+          <Starfield />
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}

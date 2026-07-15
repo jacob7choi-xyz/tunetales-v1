@@ -11,7 +11,7 @@ import ChapterProgress from '@/app/components/ChapterProgress';
 import ChapterNav from '@/app/components/ChapterNav';
 import SpotifyEmbed from '@/app/components/SpotifyEmbed';
 
-const FloatingNotesLayer = dynamic(() => import('@/app/components/FloatingNotesLayer'), {
+const Starfield = dynamic(() => import('@/app/components/Starfield'), {
   ssr: false,
   loading: () => <div></div>,
 });
@@ -120,8 +120,7 @@ export default function JourneyClient({ story }: JourneyClientProps) {
   return (
     <div className="min-h-screen text-white animated-bg relative overflow-hidden">
       <AmbienceLayer accentHsl={chapter.ambience.accentHsl} />
-      <FloatingNotesLayer count={8} layer="background" />
-      <FloatingNotesLayer count={5} layer="foreground" />
+      <Starfield />
 
       <Navbar
         backHref="/artists/frank-ocean"

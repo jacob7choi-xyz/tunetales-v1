@@ -8,7 +8,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Navbar from './Navbar';
 
-const FloatingNotesLayer = dynamic(() => import('./FloatingNotesLayer'), {
+const Starfield = dynamic(() => import('./Starfield'), {
   ssr: false
 });
 
@@ -31,8 +31,7 @@ export default function ComingSoonArtist({
 
   return (
     <div className="min-h-screen text-white font-sans animated-bg">
-      <FloatingNotesLayer count={8} layer="background" />
-      <FloatingNotesLayer count={5} layer="foreground" />
+      <Starfield />
 
       <Navbar backHref="/" backLabel="Back to Artists" subtitle="Coming Soon" />
 

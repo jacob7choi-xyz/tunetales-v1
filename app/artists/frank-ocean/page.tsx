@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import type { ArtistStory } from '../../lib/types';
 import Navbar from '../../components/Navbar';
 
-const FloatingNotesLayer = dynamic(() => import('../../components/FloatingNotesLayer'), {
+const Starfield = dynamic(() => import('../../components/Starfield'), {
   ssr: false,
   loading: () => <div></div>
 });
@@ -70,8 +70,7 @@ export default function FrankOceanPage() {
   return (
     <div className="min-h-screen text-white font-sans animated-bg">
       {/* Floating musical elements */}
-      <FloatingNotesLayer count={8} layer="background" />
-      <FloatingNotesLayer count={4} layer="foreground" />
+      <Starfield />
       
       <Navbar backHref="/" backLabel="Back to Artists" subtitle="Artist Deep Dive" />
 
@@ -94,7 +93,7 @@ export default function FrankOceanPage() {
             }}
           >
             <Image
-              src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Frank_Ocean_2022_Blonded.jpg/960px-Frank_Ocean_2022_Blonded.jpg"
               alt="Frank Ocean"
               fill
               className="object-cover"

@@ -2,7 +2,7 @@
   {
     "id": "frank-ocean",
     "artistName": "Frank Ocean",
-    "coverImageUrl": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&auto=format&fit=crop&q=60",
+    "coverImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Frank_Ocean_2022_Blonded.jpg/960px-Frank_Ocean_2022_Blonded.jpg",
     "category": "Alternative R&B",
     "year": 2016,
     "status": "active"
@@ -10,7 +10,7 @@
   {
     "id": "taylor-swift",
     "artistName": "Taylor Swift",
-    "coverImageUrl": "https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60",
+    "coverImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png/960px-Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png",
     "category": "Pop",
     "year": 2020,
     "status": "coming-soon"
@@ -18,7 +18,7 @@
   {
     "id": "kendrick-lamar",
     "artistName": "Kendrick Lamar",
-    "coverImageUrl": "https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60",
+    "coverImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/KendrickSZASPurs230725-144_%28cropped%29_desaturated.jpg/960px-KendrickSZASPurs230725-144_%28cropped%29_desaturated.jpg",
     "category": "Hip Hop",
     "year": 2017,
     "status": "coming-soon"
@@ -26,7 +26,7 @@
   {
     "id": "beyonce",
     "artistName": "Beyonce",
-    "coverImageUrl": "https://images.unsplash.com/photo-1668626317130-02228b116fd9?w=800&auto=format&fit=crop&q=60",
+    "coverImageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg",
     "category": "R&B",
     "year": 2022,
     "status": "coming-soon"

@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { COLORS } from './lib/tokens';
 import Navbar from './components/Navbar';
 
-const FloatingNotesLayer = dynamic(() => import('./components/FloatingNotesLayer'), {
+const Starfield = dynamic(() => import('./components/Starfield'), {
   ssr: false,
   loading: () => <div></div>
 });
@@ -17,9 +17,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen w-screen animated-bg text-white flex items-center justify-center relative overflow-hidden">
-      {/* Fairy-dust ambience -- 12 particles total, within budget */}
-      <FloatingNotesLayer count={8} layer="background" />
-      <FloatingNotesLayer count={4} layer="foreground" />
+      <Starfield />
 
       <Navbar subtitle="Page Not Found" />
 
