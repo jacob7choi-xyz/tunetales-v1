@@ -2,21 +2,20 @@
 
 import { useMemo } from 'react';
 
+// Purple-blue family only: cohesive celestial tone, no carnival colors
 const PARTICLE_COLORS = Object.freeze([
   '#c4b5fd', // soft purple
   '#93c5fd', // soft blue
   '#ddd6fe', // lavender
   '#67e8f9', // soft cyan
-  '#f9a8d4', // soft pink
-  '#6ee7b7', // soft mint
 ]);
 
-type ParticleType = 'orb' | 'sparkle' | 'star' | 'note';
+type ParticleType = 'orb' | 'sparkle';
 
 const LAYER_CONFIGS = Object.freeze({
-  background: { size: [3, 6], opacity: [0.2, 0.4], zIndex: 'z-0' },
-  foreground: { size: [4, 7], opacity: [0.35, 0.55], zIndex: 'z-10' },
-  overlay: { size: [3, 5], opacity: [0.3, 0.5], zIndex: 'z-20' },
+  background: { size: [2, 5], opacity: [0.12, 0.28], zIndex: 'z-0' },
+  foreground: { size: [3, 6], opacity: [0.2, 0.38], zIndex: 'z-10' },
+  overlay: { size: [2, 4], opacity: [0.18, 0.35], zIndex: 'z-20' },
 } as const);
 
 interface Particle {
@@ -50,12 +49,9 @@ function getNextRandom(): number {
   return value;
 }
 
+// Soft bokeh only: drifting orbs and gentle twinkles, no shaped particles
 function pickParticleType(index: number): ParticleType {
-  const bucket = index % 10;
-  if (bucket < 3) return 'orb';
-  if (bucket < 6) return 'sparkle';
-  if (bucket < 8) return 'star';
-  return 'note';
+  return index % 5 < 3 ? 'orb' : 'sparkle';
 }
 
 function generateParticle(
@@ -74,20 +70,15 @@ function generateParticle(
     size: minSize + getNextRandom() * (maxSize - minSize),
     color: PARTICLE_COLORS[index % PARTICLE_COLORS.length],
     opacity: minOpacity + getNextRandom() * (maxOpacity - minOpacity),
-    duration: 6 + getNextRandom() * 8,
+    duration: 10 + getNextRandom() * 8,
     delay: getNextRandom() * 6,
   };
 }
 
 function particleClassName(type: ParticleType): string {
-  switch (type) {
-    case 'star':
-      return 'fairy-particle fairy-particle--star';
-    case 'sparkle':
-      return 'fairy-particle fairy-particle--twinkle';
-    default:
-      return 'fairy-particle';
-  }
+  return type === 'sparkle'
+    ? 'fairy-particle fairy-particle--twinkle'
+    : 'fairy-particle';
 }
 
 const FloatingNotesLayer = ({

@@ -96,23 +96,6 @@ body {
   }
 }
 
-@keyframes drift-diagonal {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(var(--scale-start, 0.5));
-    opacity: 0;
-  }
-  15% {
-    opacity: var(--peak-opacity, 0.5);
-  }
-  85% {
-    opacity: var(--peak-opacity, 0.5);
-  }
-  100% {
-    transform: translate(40px, -100px) rotate(180deg) scale(var(--scale-end, 0.7));
-    opacity: 0;
-  }
-}
-
 @keyframes twinkle {
   0%, 100% {
     opacity: 0;
@@ -175,17 +158,6 @@ body {
   pointer-events: none;
   will-change: transform, opacity;
   animation: float-up var(--duration, 8s) var(--delay, 0s) ease-in-out infinite;
-}
-
-/* Star variant -- rotates diagonally */
-.fairy-particle--star {
-  border-radius: 2px;
-  animation-name: drift-diagonal;
-  clip-path: polygon(
-    50% 0%, 61% 35%, 98% 35%, 68% 57%,
-    79% 91%, 50% 70%, 21% 91%, 32% 57%,
-    2% 35%, 39% 35%
-  );
 }
 
 /* Twinkle variant -- pulses in place */
