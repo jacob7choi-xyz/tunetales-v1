@@ -7,6 +7,7 @@ interface StoryCardProps {
   category: string;
   year: number;
   status?: 'active' | 'coming-soon';
+  teaser?: string;
 }
 
 // Helper function to create artist URL slug
@@ -24,12 +25,13 @@ export const createArtistSlug = (artistName: string) => {
     .replace(/^-+|-+$/g, '');
 };
 
-function CardBody({ artistName, coverImageUrl, category, year, comingSoon }: {
+function CardBody({ artistName, coverImageUrl, category, year, comingSoon, teaser }: {
   artistName: string;
   coverImageUrl: string;
   category: string;
   year: number;
   comingSoon: boolean;
+  teaser?: string;
 }) {
   return (
     <>
@@ -50,6 +52,21 @@ function CardBody({ artistName, coverImageUrl, category, year, comingSoon }: {
       <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
         {category.trim()} &bull; {year}
       </p>
+      {teaser && (
+        <p
+          className="opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            fontSize: '13px',
+            fontStyle: 'italic',
+            lineHeight: 1.45,
+            color: 'rgba(216, 180, 254, 0.85)',
+            marginTop: '8px',
+            minHeight: '38px',
+          }}
+        >
+          {teaser}
+        </p>
+      )}
       {comingSoon && (
         <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(216, 180, 254, 0.8)', marginTop: '6px' }}>
           Coming soon
@@ -65,6 +82,7 @@ export default function StoryCard({
   category,
   year,
   status = 'active',
+  teaser,
 }: StoryCardProps) {
   const isComingSoon = status === 'coming-soon';
   const cardStyle = { padding: '14px', borderRadius: '14px' };
@@ -78,6 +96,7 @@ export default function StoryCard({
           category={category}
           year={year}
           comingSoon
+          teaser={teaser}
         />
       </div>
     );
@@ -95,6 +114,7 @@ export default function StoryCard({
         category={category}
         year={year}
         comingSoon={false}
+        teaser={teaser}
       />
     </Link>
   );

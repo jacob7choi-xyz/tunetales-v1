@@ -5,6 +5,10 @@ export interface Artist {
   category: string;
   year: number;
   status: "active" | "coming-soon";
+  // h,s,l values (e.g. "260, 70%, 55%") -- the page's ambient tint shifts
+  // to this color when the artist's card is hovered
+  accentHsl?: string;
+  teaser?: string;
 }
 
 export type ChapterMood =

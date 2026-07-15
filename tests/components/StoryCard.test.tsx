@@ -75,6 +75,18 @@ describe("StoryCard", () => {
     expect(links.length).toBeGreaterThan(0);
   });
 
+  it("renders the teaser line when provided", () => {
+    render(
+      <StoryCard
+        {...defaultProps}
+        teaser="A boy from Long Beach who painted with sound"
+      />
+    );
+    expect(
+      screen.getAllByText("A boy from Long Beach who painted with sound").length
+    ).toBeGreaterThan(0);
+  });
+
   it("renders a coming-soon label and no link when status is coming-soon", () => {
     render(
       <StoryCard

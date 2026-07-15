@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import StoryCard from './components/StoryCard';
 import Navbar from './components/Navbar';
+import AmbienceLayer from './components/AmbienceLayer';
 import { MagnifyingGlassIcon, PlayIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -17,11 +18,16 @@ import type { Artist } from './lib/types';
 
 const categories = ['All', 'Pop', 'Hip Hop', 'R&B', 'Rock', 'Electronic', 'Jazz'];
 
+// Barely-there violet that matches the resting background; hovering an
+// artist card cross-fades the room to that artist's accent instead
+const RESTING_HSL = '250, 60%, 45%';
+
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [artists, setArtists] = useState<Artist[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [hoveredAccent, setHoveredAccent] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/artists')
@@ -47,6 +53,7 @@ function HomeContent() {
   return (
     <div className="flex min-h-screen w-screen flex-col text-white font-sans animated-bg">
       <Navbar />
+      <AmbienceLayer accentHsl={hoveredAccent ?? RESTING_HSL} />
 
       <main className="flex-1 flex flex-col">
         {/* Hero -- left-aligned, content-forward so the grid peeks above the fold */}
@@ -184,7 +191,7 @@ function HomeContent() {
         </section>
 
         {/* Artist Grid */}
-        <section id="discover" className="w-full" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 48px 72px' }}>
+        <section id="discover" className="w-full relative z-10" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 48px 72px' }}>
           <h2 className="font-semibold text-white" style={{ fontSize: '22px', marginBottom: '20px' }}>
             Discover stories
           </h2>
@@ -205,6 +212,10 @@ function HomeContent() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: i * 0.05, ease: 'easeOut' }}
+                  onMouseEnter={() => setHoveredAccent(artist.accentHsl ?? null)}
+                  onMouseLeave={() => setHoveredAccent(null)}
+                  onFocus={() => setHoveredAccent(artist.accentHsl ?? null)}
+                  onBlur={() => setHoveredAccent(null)}
                 >
                   <StoryCard
                     artistName={artist.artistName}
@@ -212,6 +223,7 @@ function HomeContent() {
                     category={artist.category}
                     year={artist.year}
                     status={artist.status}
+                    teaser={artist.teaser}
                   />
                 </motion.div>
               ))}
