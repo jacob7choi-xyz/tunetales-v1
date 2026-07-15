@@ -24,6 +24,41 @@ export const createArtistSlug = (artistName: string) => {
     .replace(/^-+|-+$/g, '');
 };
 
+function CardBody({ artistName, coverImageUrl, category, year, comingSoon }: {
+  artistName: string;
+  coverImageUrl: string;
+  category: string;
+  year: number;
+  comingSoon: boolean;
+}) {
+  return (
+    <>
+      <div
+        className="relative aspect-square overflow-hidden"
+        style={{ borderRadius: '10px', marginBottom: '14px', boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)' }}
+      >
+        <Image
+          src={coverImageUrl}
+          alt={`${artistName} album cover`}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+      <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>
+        {artistName}
+      </h3>
+      <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
+        {category.trim()} &bull; {year}
+      </p>
+      {comingSoon && (
+        <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(216, 180, 254, 0.8)', marginTop: '6px' }}>
+          Coming soon
+        </p>
+      )}
+    </>
+  );
+}
+
 export default function StoryCard({
   artistName,
   coverImageUrl,
@@ -31,92 +66,36 @@ export default function StoryCard({
   year,
   status = 'active',
 }: StoryCardProps) {
-  const artistSlug = createArtistSlug(artistName);
   const isComingSoon = status === 'coming-soon';
-  return (
-    <div className="group relative transition-transform duration-300 hover:-translate-y-1">
-      {/* Ambient glow behind card on hover */}
-      <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-purple-500/0 via-blue-500/0 to-teal-500/0 blur-xl transition-all duration-500 group-hover:from-purple-500/20 group-hover:via-blue-500/15 group-hover:to-teal-500/20" />
+  const cardStyle = { padding: '14px', borderRadius: '14px' };
 
-      <div
-        className="relative rounded-3xl card-enchanted flex flex-col"
-        style={{ padding: '20px', gap: '16px' }}
-      >
-        {/* Cover image with floating particles */}
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-          <Image
-            src={coverImageUrl}
-            alt={`${artistName} album cover`}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-          {/* Vignette + colored overlay on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-          <div className="absolute inset-0 transition-colors duration-500" style={{ background: 'rgba(88,28,135,0)' }} />
-        </div>
-
-        {/* Artist name */}
-        <h3 className="font-bold text-white leading-tight" style={{ fontSize: '20px', paddingTop: '4px', fontFamily: 'var(--font-display)' }}>{artistName}</h3>
-
-        {/* Frosted glass badges */}
-        <div className="flex items-center" style={{ gap: '10px' }}>
-          <span
-            className="inline-flex items-center rounded-full font-semibold backdrop-blur-md"
-            style={{
-              padding: '6px 16px',
-              fontSize: '13px',
-              background: 'rgba(147,51,234,0.3)',
-              border: '1px solid rgba(192,132,252,0.4)',
-              color: '#d8b4fe',
-            }}
-          >
-            {category.trim()}
-          </span>
-          <span
-            className="inline-flex items-center rounded-full font-semibold backdrop-blur-md"
-            style={{
-              padding: '6px 16px',
-              fontSize: '13px',
-              background: 'rgba(59,130,246,0.25)',
-              border: '1px solid rgba(96,165,250,0.4)',
-              color: '#93c5fd',
-            }}
-          >
-            {year}
-          </span>
-        </div>
-
-        {/* Frosted glass explore button, or a quiet teaser for coming-soon artists */}
-        {isComingSoon ? (
-          <div
-            className="block font-semibold rounded-full text-center backdrop-blur-md"
-            style={{
-              padding: '12px 24px',
-              fontSize: '14px',
-              marginTop: '4px',
-              background: 'rgba(147,51,234,0.15)',
-              border: '1px solid rgba(192,132,252,0.25)',
-              color: 'rgba(216,180,254,0.75)',
-            }}
-          >
-            Story Coming Soon
-          </div>
-        ) : (
-          <Link
-            href={`/artists/${artistSlug}`}
-            className="block font-semibold text-white rounded-full text-center backdrop-blur-md transition-all duration-300 hover:scale-105"
-            style={{
-              padding: '12px 24px',
-              fontSize: '14px',
-              marginTop: '4px',
-              background: 'rgba(255,255,255,0.12)',
-              border: '1px solid rgba(255,255,255,0.25)',
-            }}
-          >
-            Explore {artistName}
-          </Link>
-        )}
+  if (isComingSoon) {
+    return (
+      <div className="group card-clean" style={{ ...cardStyle, opacity: 0.75 }}>
+        <CardBody
+          artistName={artistName}
+          coverImageUrl={coverImageUrl}
+          category={category}
+          year={year}
+          comingSoon
+        />
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <Link
+      href={`/artists/${createArtistSlug(artistName)}`}
+      className="group card-clean block hover:-translate-y-1"
+      style={cardStyle}
+    >
+      <CardBody
+        artistName={artistName}
+        coverImageUrl={coverImageUrl}
+        category={category}
+        year={year}
+        comingSoon={false}
+      />
+    </Link>
   );
 }

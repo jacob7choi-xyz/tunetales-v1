@@ -1,9 +1,10 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import StoryCard from './components/StoryCard';
 import Navbar from './components/Navbar';
-import { MagnifyingGlassIcon, ChevronDownIcon, PlayIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, PlayIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useMemo, useState, useEffect, Suspense } from 'react';
@@ -48,77 +49,90 @@ function HomeContent() {
       <Navbar />
 
       <main className="flex-1 flex flex-col">
-        {/* Hero -- full viewport height */}
-        <section className="relative min-h-screen w-full flex flex-col items-center justify-center px-6">
-          <FloatingNotesLayer count={15} layer="background" />
-          <FloatingNotesLayer count={8} layer="foreground" />
+        {/* Hero -- left-aligned, content-forward so the grid peeks above the fold */}
+        <section className="relative w-full flex flex-col justify-center" style={{ minHeight: '68vh' }}>
+          <FloatingNotesLayer count={10} layer="background" />
+          <FloatingNotesLayer count={5} layer="foreground" />
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="relative z-10 text-center max-w-3xl mx-auto flex flex-col items-center gap-6"
+            className="relative z-10 w-full"
+            style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 48px 48px' }}
           >
-            <h1 className="text-7xl sm:text-8xl md:text-9xl font-extrabold tracking-tight shimmer-text">
-              TuneTales
+            <h1
+              style={{
+                fontSize: 'clamp(44px, 6vw, 76px)',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.08,
+                fontFamily: 'var(--font-display)',
+                color: '#fff',
+              }}
+            >
+              Every song has a story
+              <br />
+              <span className="shimmer-text">waiting to be told.</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/50 font-light max-w-xl">
-              Where every song has a story waiting to be told
+            <p
+              style={{
+                fontSize: '18px',
+                lineHeight: 1.65,
+                color: 'rgba(255, 255, 255, 0.55)',
+                maxWidth: '480px',
+                marginTop: '24px',
+              }}
+            >
+              Immersive journeys through the artists you love, told with warmth,
+              wonder, and the music itself.
             </p>
 
-            <div className="flex flex-col items-center w-full" style={{ gap: '24px', maxWidth: '520px', marginTop: '40px' }}>
+            <div className="flex items-center" style={{ gap: '28px', marginTop: '40px' }}>
               <button
                 onClick={() =>
                   document.getElementById('discover')?.scrollIntoView({ behavior: 'smooth' })
                 }
-                className="inline-flex items-center rounded-full font-bold text-white backdrop-blur-md transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center rounded-full font-semibold text-white transition-all duration-300 hover:scale-105"
                 style={{
-                  padding: '18px 48px',
-                  fontSize: '18px',
-                  background: 'rgba(147,51,234,0.45)',
-                  border: '2px solid rgba(192,132,252,0.6)',
-                  boxShadow: '0 0 30px rgba(147,51,234,0.3)',
+                  padding: '13px 30px',
+                  fontSize: '15px',
+                  background: '#9333ea',
+                  boxShadow: '0 4px 20px rgba(147, 51, 234, 0.35)',
                 }}
               >
-                <PlayIcon className="h-6 w-6" style={{ marginRight: '12px' }} />
+                <PlayIcon style={{ width: '18px', height: '18px', marginRight: '10px' }} />
                 Start Listening
               </button>
 
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search artists, albums, stories..."
-                  aria-label="Search artists"
-                  className="w-full rounded-full text-white focus:outline-none transition-all duration-300"
-                  style={{
-                    padding: '18px 24px 18px 52px',
-                    fontSize: '16px',
-                    background: 'rgba(255,255,255,0.12)',
-                    border: '2px solid rgba(255,255,255,0.2)',
-                    backdropFilter: 'blur(12px)',
-                  }}
-                />
-                <MagnifyingGlassIcon
-                  className="absolute text-white/60"
-                  style={{ left: '20px', top: '50%', transform: 'translateY(-50%)', width: '22px', height: '22px' }}
-                />
-              </div>
+              <Link
+                href="/artists/frank-ocean"
+                className="inline-flex items-center transition-colors duration-200 hover:text-white"
+                style={{ fontSize: '15px', fontWeight: 500, color: 'rgba(255, 255, 255, 0.65)', gap: '6px' }}
+              >
+                Explore Frank Ocean
+                <ArrowRightIcon style={{ width: '15px', height: '15px' }} />
+              </Link>
             </div>
           </motion.div>
-
-          {/* Scroll indicator at bottom of hero */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 scroll-indicator">
-            <ChevronDownIcon className="h-6 w-6 text-white/30" />
-          </div>
         </section>
 
-        {/* Categories */}
-        <section className="sticky top-[72px] z-40 w-full bg-black/40 backdrop-blur-2xl border-y border-white/10">
-          <div className="w-full" style={{ padding: '16px 32px' }}>
-            <div className="flex items-center justify-center overflow-x-auto" style={{ gap: '56px' }}>
+        {/* Filter row: category chips left, search right */}
+        <section
+          className="sticky z-40 w-full backdrop-blur-2xl"
+          style={{
+            top: '60px',
+            background: 'rgba(0, 0, 0, 0.35)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          }}
+        >
+          <div
+            className="flex items-center justify-between"
+            style={{ maxWidth: '1200px', margin: '0 auto', padding: '12px 48px', gap: '24px' }}
+          >
+            <div className="flex items-center overflow-x-auto" style={{ gap: '8px' }}>
               {categories.map((category) => (
                 <button
                   key={category}
@@ -129,22 +143,16 @@ function HomeContent() {
                       router.push(`/?category=${encodeURIComponent(category)}`, { scroll: false });
                     }
                   }}
-                  className="shrink-0 rounded-full font-semibold transition-all duration-200"
+                  className="shrink-0 rounded-full transition-all duration-200"
                   style={{
-                    padding: '10px 22px',
-                    fontSize: '14px',
+                    padding: '7px 16px',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    border: 'none',
+                    cursor: 'pointer',
                     ...(selectedCategory === category
-                      ? {
-                          background: 'rgba(147,51,234,0.35)',
-                          border: '1px solid rgba(192,132,252,0.6)',
-                          color: '#fff',
-                          boxShadow: '0 0 15px rgba(147,51,234,0.25)',
-                        }
-                      : {
-                          background: 'rgba(255,255,255,0.08)',
-                          border: '1px solid rgba(255,255,255,0.15)',
-                          color: 'rgba(255,255,255,0.6)',
-                        }),
+                      ? { background: 'rgba(255, 255, 255, 0.92)', color: '#1a1035' }
+                      : { background: 'rgba(255, 255, 255, 0.07)', color: 'rgba(255, 255, 255, 0.65)' }),
                   }}
                   aria-pressed={selectedCategory === category}
                 >
@@ -152,16 +160,35 @@ function HomeContent() {
                 </button>
               ))}
             </div>
+
+            <div className="relative shrink-0 hidden sm:block" style={{ width: '250px' }}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search artists..."
+                aria-label="Search artists"
+                className="w-full rounded-full text-white focus:outline-none"
+                style={{
+                  padding: '8px 16px 8px 36px',
+                  fontSize: '14px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: 'none',
+                }}
+              />
+              <MagnifyingGlassIcon
+                className="absolute text-white/50"
+                style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }}
+              />
+            </div>
           </div>
         </section>
 
         {/* Artist Grid */}
-        <section id="discover" className="w-full mx-auto" style={{ padding: '48px 48px 64px' }}>
-          {/* Section header with gradient divider */}
-          <div style={{ marginBottom: '40px' }}>
-            <h2 className="font-bold text-white" style={{ fontSize: '28px', marginBottom: '12px' }}>Discover Stories</h2>
-            <div style={{ height: '1px', background: 'linear-gradient(to right, rgba(147,51,234,0.5), rgba(59,130,246,0.3), transparent)' }} />
-          </div>
+        <section id="discover" className="w-full" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 48px 72px' }}>
+          <h2 className="font-semibold text-white" style={{ fontSize: '22px', marginBottom: '20px' }}>
+            Discover stories
+          </h2>
 
           <AnimatePresence initial={false}>
             <motion.div
@@ -170,8 +197,8 @@ function HomeContent() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="grid grid-cols-4"
-              style={{ gap: '24px' }}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+              style={{ gap: '20px' }}
             >
               {filteredStories.map((artist, i) => (
                 <motion.div

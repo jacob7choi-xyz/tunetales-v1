@@ -50,17 +50,16 @@ describe("StoryCard", () => {
     expect(screen.getByText("Frank Ocean")).toBeInTheDocument();
   });
 
-  it("renders category and year badges", () => {
+  it("renders category and year metadata", () => {
     render(<StoryCard {...defaultProps} />);
-    const categories = screen.getAllByText("R&B");
-    expect(categories.length).toBeGreaterThan(0);
-    const years = screen.getAllByText("2012");
-    expect(years.length).toBeGreaterThan(0);
+    const meta = screen.getAllByText(/R&B/);
+    expect(meta.length).toBeGreaterThan(0);
+    expect(meta[0].textContent).toContain("2012");
   });
 
-  it("renders explore link with correct href", () => {
+  it("makes the whole card a link with the correct href", () => {
     render(<StoryCard {...defaultProps} />);
-    const links = screen.getAllByRole("link", { name: /explore frank ocean/i });
+    const links = screen.getAllByRole("link", { name: /frank ocean/i });
     expect(links[0]).toHaveAttribute("href", "/artists/frank-ocean");
   });
 
@@ -70,13 +69,13 @@ describe("StoryCard", () => {
     expect(images.length).toBeGreaterThan(0);
   });
 
-  it("renders an active explore link when status is active", () => {
+  it("renders a clickable card when status is active", () => {
     render(<StoryCard {...defaultProps} status="active" />);
-    const links = screen.getAllByRole("link", { name: /explore frank ocean/i });
+    const links = screen.getAllByRole("link", { name: /frank ocean/i });
     expect(links.length).toBeGreaterThan(0);
   });
 
-  it("renders a coming-soon badge instead of a link when status is coming-soon", () => {
+  it("renders a coming-soon label and no link when status is coming-soon", () => {
     render(
       <StoryCard
         {...defaultProps}
@@ -84,9 +83,9 @@ describe("StoryCard", () => {
         status="coming-soon"
       />
     );
-    expect(screen.getAllByText("Story Coming Soon").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Coming soon").length).toBeGreaterThan(0);
     expect(
-      screen.queryByRole("link", { name: /explore kendrick lamar/i })
+      screen.queryByRole("link", { name: /kendrick lamar/i })
     ).toBeNull();
   });
 });

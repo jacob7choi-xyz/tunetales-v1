@@ -9,58 +9,56 @@ interface NavbarProps {
 }
 
 // The one site-wide chrome bar: frosted glass, logo, wordmark, Beta badge.
-// Fixed height keeps sticky elements below it deterministic (top: 72px).
+// Fixed height keeps sticky elements below it deterministic (top: 60px).
 export default function Navbar({ subtitle, backHref, backLabel }: NavbarProps) {
   return (
     <nav
       className="fixed top-0 left-0 w-full z-50 backdrop-blur-2xl"
       style={{
-        height: '72px',
-        background: 'rgba(0, 0, 0, 0.5)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+        height: '60px',
+        background: 'rgba(0, 0, 0, 0.4)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
       <div
         className="flex items-center justify-between"
-        style={{ height: '100%', padding: '0 24px' }}
+        style={{ height: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}
       >
-        <div className="flex items-center" style={{ gap: '16px' }}>
+        <div className="flex items-center" style={{ gap: '14px' }}>
           {backHref && (
             <Link
               href={backHref}
               className="flex items-center transition-all duration-200 hover:scale-105"
               style={{
-                gap: '8px',
-                padding: '8px 18px',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'rgba(255, 255, 255, 0.9)',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
+                gap: '7px',
+                padding: '6px 14px',
+                fontSize: '13px',
+                fontWeight: 500,
+                color: 'rgba(255, 255, 255, 0.85)',
+                background: 'rgba(255, 255, 255, 0.08)',
                 borderRadius: '9999px',
               }}
             >
-              <ArrowLeftIcon style={{ width: '16px', height: '16px' }} />
+              <ArrowLeftIcon style={{ width: '14px', height: '14px' }} />
               <span>{backLabel ?? 'Back'}</span>
             </Link>
           )}
-          <Link href="/" className="flex items-center" style={{ gap: '12px' }}>
-            <Image src="/TuneTales_Transparent_Logo.png" alt="" width={36} height={36} />
+          <Link href="/" className="flex items-center" style={{ gap: '10px' }}>
+            <Image src="/TuneTales_Transparent_Logo.png" alt="" width={28} height={28} />
             <span
               className="font-bold tracking-tight text-white"
-              style={{ fontSize: '24px', fontFamily: 'var(--font-display)' }}
+              style={{ fontSize: '19px', fontFamily: 'var(--font-display)' }}
             >
               TuneTales
             </span>
           </Link>
           <span
-            className="rounded-full font-bold uppercase"
+            className="rounded-full font-semibold uppercase"
             style={{
-              padding: '6px 14px',
-              fontSize: '11px',
+              padding: '3px 9px',
+              fontSize: '10px',
               letterSpacing: '0.1em',
-              background: 'rgba(147, 51, 234, 0.35)',
-              border: '1px solid rgba(192, 132, 252, 0.5)',
+              background: 'rgba(147, 51, 234, 0.3)',
               color: '#d8b4fe',
             }}
           >
@@ -68,7 +66,7 @@ export default function Navbar({ subtitle, backHref, backLabel }: NavbarProps) {
           </span>
         </div>
         {subtitle && (
-          <span style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.55)' }}>
+          <span style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
             {subtitle}
           </span>
         )}

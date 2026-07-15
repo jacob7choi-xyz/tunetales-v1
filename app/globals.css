@@ -193,6 +193,16 @@ body {
   animation-name: twinkle;
 }
 
+/* Clean flat card (Spotify-style): subtle surface, brightens on hover */
+.card-clean {
+  background: rgba(255, 255, 255, 0.04);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.card-clean:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
 /* Enchanted glass card */
 .card-enchanted {
   background: rgba(15, 5, 30, 0.6);
