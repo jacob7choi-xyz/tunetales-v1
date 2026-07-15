@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeftIcon, PlayIcon, LinkIcon, ClockIcon, CalendarIcon, UserIcon, MusicalNoteIcon, SparklesIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PlayIcon, LinkIcon, ClockIcon, CalendarIcon, UserIcon, MusicalNoteIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -17,8 +17,6 @@ const FloatingNotesLayer = dynamic(() => import('../../components/FloatingNotesL
 export default function FrankOceanPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('journey');
-  const [showStory, setShowStory] = useState(false);
-  const [currentSection, setCurrentSection] = useState(0);
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
   const [storyError, setStoryError] = useState(false);
 
@@ -64,27 +62,8 @@ export default function FrankOceanPage() {
     );
   }
 
-  const currentSectionData = frankOceanStory.chapters[currentSection] ?? {
-    id: '',
-    title: 'Untitled',
-    content: '',
-  };
-
-  const nextSection = () => {
-    if (currentSection < frankOceanStory.chapters.length - 1) {
-      setCurrentSection(currentSection + 1);
-    }
-  };
-
-  const prevSection = () => {
-    if (currentSection > 0) {
-      setCurrentSection(currentSection - 1);
-    }
-  };
-
   const handleEnterJourney = () => {
-    setShowStory(true);
-    setCurrentSection(0);
+    router.push('/artists/frank-ocean/journey');
   };
 
   return (
@@ -125,118 +104,6 @@ export default function FrankOceanPage() {
           </div>
         </div>
       </header>
-
-      {/* Story Modal - NEW ADDITION */}
-      <AnimatePresence>
-        {showStory && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
-            onClick={() => setShowStory(false)}
-        >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-black/80 backdrop-blur-xl rounded-2xl border border-white/20 max-w-4xl w-full max-h-[90vh] overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Story Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <div>
-                  <h2 className="text-2xl font-bold text-white">{frankOceanStory.title}</h2>
-                  <span className="text-blue-200">
-                    {currentSection + 1} of {frankOceanStory.chapters.length}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setShowStory(false)}
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  <XMarkIcon className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="px-6 pt-4">
-                <div className="w-full bg-white/20 rounded-full h-2">
-                  <motion.div
-                    className="bg-blue-400 h-2 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${((currentSection + 1) / frankOceanStory.chapters.length) * 100}%` }}
-                    transition={{ duration: 0.5 }}
-                  />
-                </div>
-              </div>
-
-              {/* Story Content */}
-              <div className="p-6 overflow-y-auto max-h-[60vh]">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentSection}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <h3 className="text-2xl font-bold text-white mb-6">
-                      {currentSectionData.title}
-                    </h3>
-                    
-                    <div className="text-white/90 leading-relaxed text-lg space-y-4">
-                      {currentSectionData.content}
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* Navigation */}
-              <div className="flex justify-between items-center p-6 border-t border-white/10">
-                <motion.button
-                  onClick={prevSection}
-                  disabled={currentSection === 0}
-                  className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-                    currentSection === 0
-                      ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                      : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-md border border-white/20'
-                  }`}
-                  whileHover={currentSection > 0 ? { scale: 1.05 } : {}}
-                >
-                  Previous
-                </motion.button>
-
-                <div className="flex space-x-2">
-                  {frankOceanStory.chapters.map((_, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => setCurrentSection(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentSection ? 'bg-blue-400' : 'bg-white/30'
-                      }`}
-                      whileHover={{ scale: 1.2 }}
-                    />
-                  ))}
-                </div>
-
-                <motion.button
-                  onClick={nextSection}
-                  disabled={currentSection === frankOceanStory.chapters.length - 1}
-                  className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-                    currentSection === frankOceanStory.chapters.length - 1
-                      ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  }`}
-                  whileHover={currentSection < frankOceanStory.chapters.length - 1 ? { scale: 1.05 } : {}}
-                >
-                  Next
-                </motion.button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Hero Section */}
       <section style={{ position: 'relative', padding: '120px 24px 48px' }}>
@@ -359,7 +226,7 @@ export default function FrankOceanPage() {
           transition={{ duration: 0.4 }}
           className="min-h-[60vh]"
         >
-          {activeTab === 'journey' && !showStory && (
+          {activeTab === 'journey' && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '80px 24px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '20px' }}>
                 <SparklesIcon className="text-blue-400" style={{ width: '36px', height: '36px' }} />
@@ -395,14 +262,6 @@ export default function FrankOceanPage() {
 
               <div style={{ marginTop: '48px', fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
                 Based on comprehensive research from premium music journalism sources
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'journey' && showStory && (
-            <div className="text-center py-20">
-              <div className="text-white/50">
-                Reading Frank&apos;s story in the modal above
               </div>
             </div>
           )}

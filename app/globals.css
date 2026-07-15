@@ -144,6 +144,21 @@ body {
   }
 }
 
+@keyframes chapter-ambience-pulse {
+  0%, 100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Journey page mood tint -- gradient colors animate via Framer Motion on
+   chapter change; this class only adds the slow continuous breathing */
+.chapter-ambience {
+  animation: chapter-ambience-pulse 6s ease-in-out infinite;
+}
+
 @keyframes scroll-bounce {
   0%, 100% {
     transform: translateY(0);
