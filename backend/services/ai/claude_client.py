@@ -7,14 +7,18 @@ from datetime import datetime
 from typing import Dict
 
 import anthropic
+import httpx
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
-# Model IDs (aliases resolve to the latest snapshot)
+# Model IDs per provider (STORY_PROVIDER env var selects: anthropic | openai)
 NARRATIVE_MODEL = "claude-sonnet-4-6"
 MOOD_MODEL = "claude-haiku-4-5"
+OPENAI_NARRATIVE_MODEL = "gpt-4o"
+OPENAI_MOOD_MODEL = "gpt-4o-mini"
+OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions"
 
 MOOD_COLORS = {
     "nostalgic": "#9A6B9A",
@@ -120,15 +124,28 @@ Respond with only the mood word."""
 
 
 class ClaudeStorytellingClient:
+    """Storytelling client. Anthropic by default; set STORY_PROVIDER=openai
+    to route generation through the OpenAI API with the same prompts."""
 
     def __init__(self, api_key: str | None = None):
-        resolved_key = api_key or os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
-        self.client = anthropic.Anthropic(api_key=resolved_key)
+        self.provider = (os.getenv("STORY_PROVIDER") or "anthropic").lower()
+        self.openai_key = os.getenv("OPENAI_API_KEY")
+        if self.provider == "openai":
+            self.client = None
+        else:
+            resolved_key = api_key or os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
+            self.client = anthropic.Anthropic(api_key=resolved_key)
 
         # Paths for reading research data and saving stories
         self.research_dir = os.path.join(os.path.dirname(__file__), "../../../data/research")
         self.stories_dir = os.path.join(os.path.dirname(__file__), "../../../data/stories")
         os.makedirs(self.stories_dir, exist_ok=True)
+
+    def _model_for(self, tier: str) -> str:
+        """Resolve the concrete model for a task tier on the active provider."""
+        if self.provider == "openai":
+            return OPENAI_NARRATIVE_MODEL if tier == "narrative" else OPENAI_MOOD_MODEL
+        return NARRATIVE_MODEL if tier == "narrative" else MOOD_MODEL
 
     def _load_research_data(self, artist_name: str) -> Dict:
         """Load all Perplexity research data for an artist.
@@ -190,8 +207,35 @@ class ClaudeStorytellingClient:
         print(f"[SAVED] Story saved to: {filename}")
         return filepath
 
-    def _generate_text(self, model: str, prompt: str, max_tokens: int, temperature: float) -> tuple[str, int]:
-        """Call the Messages API and return (text, output_tokens)."""
+    def _generate_text(self, tier: str, prompt: str, max_tokens: int, temperature: float) -> tuple[str, int, str]:
+        """Generate text on the active provider.
+
+        Args:
+            tier: "narrative" or "mood" -- resolved to a concrete model.
+
+        Returns:
+            (text, output_tokens, model_used)
+        """
+        model = self._model_for(tier)
+
+        if self.provider == "openai":
+            response = httpx.post(
+                OPENAI_CHAT_URL,
+                headers={"Authorization": f"Bearer {self.openai_key}"},
+                json={
+                    "model": model,
+                    "max_tokens": max_tokens,
+                    "temperature": temperature,
+                    "messages": [{"role": "user", "content": prompt}],
+                },
+                timeout=120,
+            )
+            response.raise_for_status()
+            data = response.json()
+            text = data["choices"][0]["message"]["content"]
+            tokens = data.get("usage", {}).get("completion_tokens", 0)
+            return text, tokens, model
+
         message = self.client.messages.create(
             model=model,
             max_tokens=max_tokens,
@@ -199,7 +243,7 @@ class ClaudeStorytellingClient:
             messages=[{"role": "user", "content": prompt}],
         )
         text = "".join(block.text for block in message.content if block.type == "text")
-        return text, message.usage.output_tokens
+        return text, message.usage.output_tokens, model
 
     def create_artist_narrative(self, artist_name: str, narrative_style: str = "disney") -> Dict:
         """Transform artist research into a compelling narrative overview."""
@@ -218,11 +262,11 @@ class ClaudeStorytellingClient:
         prompt = _build_narrative_prompt(artist_name, artist_content, timeline_content)
 
         try:
-            narrative_text, tokens_used = self._generate_text(
-                NARRATIVE_MODEL, prompt, max_tokens=2000, temperature=0.7
+            narrative_text, tokens_used, model_used = self._generate_text(
+                "narrative", prompt, max_tokens=2000, temperature=0.7
             )
-        except anthropic.APIError as e:
-            print(f"Error calling Claude API: {e}")
+        except (anthropic.APIError, httpx.HTTPError) as e:
+            print(f"Error calling story API: {e}")
             return {"error": str(e)}
 
         story_data = {
@@ -231,7 +275,7 @@ class ClaudeStorytellingClient:
                 "artist_name": artist_name,
                 "story_type": "artist_narrative",
                 "narrative_style": narrative_style,
-                "model_used": NARRATIVE_MODEL,
+                "model_used": model_used,
                 "tokens_used": tokens_used,
             },
             "narrative": narrative_text,
@@ -263,10 +307,10 @@ class ClaudeStorytellingClient:
         prompt = _build_song_prompt(artist_name, song_name, song_content)
 
         try:
-            story_text, tokens_used = self._generate_text(
-                NARRATIVE_MODEL, prompt, max_tokens=1500, temperature=0.7
+            story_text, tokens_used, model_used = self._generate_text(
+                "narrative", prompt, max_tokens=1500, temperature=0.7
             )
-        except anthropic.APIError as e:
+        except (anthropic.APIError, httpx.HTTPError) as e:
             print(f"Error creating song story: {e}")
             return {"error": str(e)}
 
@@ -276,7 +320,7 @@ class ClaudeStorytellingClient:
                 "artist_name": artist_name,
                 "song_name": song_name,
                 "story_type": "song_story",
-                "model_used": NARRATIVE_MODEL,
+                "model_used": model_used,
                 "tokens_used": tokens_used,
             },
             "story": story_text,
@@ -328,12 +372,12 @@ class ClaudeStorytellingClient:
     def _extract_song_mood(self, story_text: str) -> str:
         """Extract the emotional mood from a song story using Claude."""
         try:
-            mood_text, _ = self._generate_text(
-                MOOD_MODEL, _build_mood_prompt(story_text), max_tokens=10, temperature=0.3
+            mood_text, _, _ = self._generate_text(
+                "mood", _build_mood_prompt(story_text), max_tokens=16, temperature=0.3
             )
             mood = mood_text.strip().lower()
             return mood if mood in MOOD_COLORS else DEFAULT_MOOD
-        except anthropic.APIError as e:
+        except (anthropic.APIError, httpx.HTTPError) as e:
             print(f"Error extracting mood: {e}")
             return DEFAULT_MOOD
 
