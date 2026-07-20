@@ -1,25 +1,67 @@
 # TuneTales
 
-AI-powered music storytelling platform that turns artist histories into immersive, narrative-driven experiences.
+Immersive, narrative-driven music storytelling. TuneTales turns an artist's history into a cinematic experience: deeply researched stories, told with warmth, paired with the music itself.
 
-TuneTales combines automated research (via Perplexity AI) with narrative generation (via Claude) to create in-depth artist stories. The MVP focuses on Frank Ocean as the first fully built-out artist experience.
+**Live: [tunetales-v1.vercel.app](https://tunetales-v1.vercel.app)**
+
+The theme of the project is connection. Every design and engineering decision serves one goal: making a listener feel closer to the artists and songs they love.
 
 ---
 
-## Features
+## The Experience
 
-### What's Working
-- **Artist storytelling pages** -- Frank Ocean deep-dive with a 6-section interactive narrative modal, tabs for journey/discography/impact/sources
-- **AI research pipeline** -- Perplexity API integration that aggregates content from music journalism sources, stores structured JSON with metadata and cost tracking
-- **Narrative generation** -- Claude API transforms raw research into readable, story-driven content
-- **Animated UI** -- Chromatic gradient backgrounds, floating musical notes with physics-based motion, glassmorphism navigation (Framer Motion, 60fps target)
-- **Category filtering** -- Genre/era filtering on the homepage artist grid
-- **Responsive design** -- Works across desktop and mobile
+### The Homepage
+A deep-nebula night sky with a three-layer twinkling starfield. Each artist is a poster card wrapped in their own aura color, and the entire room's ambient light shifts to match whichever artist you hover: violet for Frank Ocean, ember for Kendrick Lamar, rose for Taylor Swift, gold for Beyonce. Story teasers whisper in on hover.
 
-### Placeholder / In Progress
-- Taylor Swift, Kendrick Lamar, Beyonce artist pages (coming soon stubs)
-- No frontend-to-backend API bridge (Python scripts output JSON files; frontend reads them statically)
-- No authentication, no database, no deployment
+### The Journey
+A full-page, chapter-based reading experience for an artist's life story (`/artists/frank-ocean/journey`). Six chapters in true chronological order, each with its own mood: the page's ambient color cross-fades per chapter, entrances are staggered, navigation works by button, progress dot, or arrow key, and each chapter ends with the song that belongs to that moment, playable in place.
+
+### The Musical Odyssey
+The complete discography as a film in six acts (`/artists/frank-ocean?tab=discography`): Nostalgia, Ultra / Channel Orange / Endless / Blonde / Singles / Collaborations. Each act has a tagline and its own ambient tint that takes over as you scroll into it. Songs are album-art poster cards in side-scrolling film strips; opening one takes over the entire screen with a mood-tinted story reader and, where the song exists on streaming, the track itself.
+
+### The Catalog
+All 77 songs across the artist's career, each with an original researched origin story and a classified emotional mood that drives its color everywhere it appears:
+
+| Era | Songs | Playable |
+|-----|-------|----------|
+| Nostalgia, Ultra (2011) | 10 | 3 |
+| Channel Orange (2012) | 15 | 14 |
+| Endless (2016) | 16 | 1 |
+| Blonde (2016) | 17 | 17 |
+| Singles (2017-2020) | 9 | 9 |
+| Collaborations | 10 | 10 |
+
+Songs that have never been released to streaming say so honestly in the reader instead of pretending otherwise.
+
+### Research Transparency
+The Research Sources tab shows the actual paper trail: a three-step account of how stories are made (researched, written, finished by hand) and a live archive of every research file behind the content, with dates and source volume. Nothing is written that is not on file.
+
+---
+
+## Architecture
+
+Two halves with a deliberate split: a Next.js app that serves the experience, and a Python pipeline that generates content. The pipeline runs locally and writes JSON; the site reads JSON. They never talk at runtime.
+
+```
+Research engine ----> data/research/*.json      (cited source material)
+                              |
+Story pipeline  ----> data/stories/*.json       (narratives, song stories, universe)
+                              |
+                      data/artists.json         (registry: identity, aura, teaser)
+                              |
+                app/lib/data.ts  (slug validation, schema normalization)
+                              |
+        /api/artists   /api/research   /api/universe
+                              |
+                   app/ (pages + components)
+```
+
+Key properties:
+
+- **Generation is explicit and safe.** The pipeline writes to `*.generated.json` by default and never overwrites hand-curated content. Regeneration is incremental: existing song stories are reused, so growing the catalog only pays for what is new.
+- **The registry is the single source of truth.** Each artist's photo, aura color, and teaser live in `data/artists.json`; every page derives from it. Adding an artist is data entry, not page building.
+- **Story schema v2** carries per-chapter ambience (mood, accent color, track, imagery hints), with a compatibility normalizer so older story files still render.
+- **The API layer sanitizes.** Internal pipeline metadata is stripped at the boundary before anything is served.
 
 ---
 
@@ -27,45 +69,63 @@ TuneTales combines automated research (via Perplexity AI) with narrative generat
 
 | Layer | Technology |
 |-------|------------|
-| Frontend | Next.js 15.3.3 (App Router), React 18, TypeScript (strict) |
-| Styling | Tailwind CSS 3.4.17, Framer Motion 12.10.5 |
-| Icons | Heroicons 2.2.0 |
-| Research | Perplexity AI (sonar-pro model) via Python |
-| Narrative | Claude API (3.5 Sonnet/Haiku) via Python |
-| Data | JSON files on disk (`data/research/`, `data/stories/`) |
+| Framework | Next.js 16 (App Router), React 19, TypeScript (strict) |
+| Styling | Tailwind CSS 4 (structural) + inline styles (visual), CSS keyframes for all continuous animation |
+| Motion | Framer Motion for entrances, transitions, and interactions |
+| Typography | Playfair Display (display serif) + Inter (text), self-hosted via next/font |
+| Content pipeline | Python 3.11+, managed with uv (`pyproject.toml` + `uv.lock`), FastAPI generation service |
+| Data | JSON on disk (`data/`), validated and normalized at the access layer |
+| Music | Official streaming embeds, one verified track ID per available song |
+| Artwork | Album art from streaming CDN and Wikipedia; artist photography from Wikimedia Commons |
+| Testing | Vitest + Testing Library (81 tests), GitHub Actions CI |
+| Hosting | Vercel |
 
 ---
 
 ## Getting Started
 
-### Prerequisites
-- Node.js 18+
-- Python 3.x
-- npm
+### Frontend
 
-### Installation
 ```bash
-git clone https://github.com/jacob7choi-xyz/tunetales-v1.git
-cd tunetales-v1
 npm install
+npm run dev        # http://localhost:3000
 ```
 
-### Environment Setup
+That is all the site needs. All content ships as JSON in `data/`, so the frontend runs fully without any keys.
+
+### Content pipeline (optional, for generating new content)
+
 ```bash
-cp backend/.env.example backend/.env
+cd backend
+uv sync
+cp .env.example .env   # then add your API keys
 ```
 
-Add your API keys to `backend/.env`:
-```
-PERPLEXITY_API_KEY=your_key_here
-CLAUDE_API_KEY=your_key_here
-```
+Run the generation service:
 
-### Run
 ```bash
-npm run dev
-# Open http://localhost:3000
+uv run uvicorn api.fastapi_app:app --reload
 ```
+
+Or drive the pipeline directly from Python (research a song, write its story, rebuild the universe). Generation costs real API credits and is always an explicit, owner-run step.
+
+---
+
+## Quality Gate
+
+Every change must pass all four before merge:
+
+```bash
+npm run lint && npx tsc --noEmit && npm test && npm run build
+```
+
+CI runs the same gate plus `npm audit --audit-level=high`. Conventions that matter here:
+
+- Inline styles for visual CSS properties (Tailwind v4 utilities are unreliable for them in this project)
+- CSS `@keyframes` for anything that animates continuously; JS animation loops are banned
+- Slug validation with a strict whitelist before any filesystem access
+- Every API route handler has tests covering its 200, 400, and 404 paths
+- Generated prose carries no machine tells: no em or en dashes, no stock phrases, enforced in prompts and by a deterministic polish pass
 
 ---
 
@@ -73,44 +133,39 @@ npm run dev
 
 ```
 tunetales-v1/
-├── app/                        # Next.js App Router (frontend)
-│   ├── artists/                # Artist pages (frank-ocean is the MVP)
-│   ├── stories/[id]/           # Dynamic story detail pages
-│   ├── components/             # Shared components
-│   ├── page.tsx                # Homepage
-│   └── layout.tsx              # Root layout
+├── app/
+│   ├── page.tsx                       # Homepage: starfield, aura posters, responsive room
+│   ├── artists/
+│   │   ├── frank-ocean/page.tsx       # Artist page: hero, tabs, odyssey, sources
+│   │   └── frank-ocean/journey/       # The chapter-based Journey experience
+│   ├── components/                    # Navbar, Starfield, AmbienceLayer, SongOdyssey,
+│   │                                  # StoryCard, SpotifyEmbed, chapter navigation
+│   ├── lib/                           # data access, types, design tokens, covers, tracks
+│   └── api/                           # artists, research, universe routes
 ├── backend/
-│   ├── api/research/           # Perplexity AI research pipeline
-│   └── services/ai/            # Claude narrative generation
+│   ├── api/                           # research client, FastAPI generation service
+│   ├── services/                      # storytelling client, story compiler, pipeline
+│   └── schemas/                       # Pydantic mirror of the story schema
 ├── data/
-│   ├── research/               # Cached API responses (JSON)
-│   └── stories/                # Generated narratives (JSON)
-├── public/                     # Static assets
-└── scripts/                    # Build/dev utilities
+│   ├── artists.json                   # Artist registry (identity, aura, teaser)
+│   ├── research/                      # Cited research, saved verbatim
+│   └── stories/                       # Journey chapters, song stories, the universe
+└── tests/                             # Vitest suite: data, schema, components, routes
 ```
 
 ---
 
-## Data Pipeline
+## Roadmap
 
-```
-Perplexity AI  -->  data/research/*.json  -->  Claude API  -->  data/stories/*.json  -->  Frontend
-```
-
-There is no HTTP API between frontend and backend. Python scripts generate JSON files; the frontend reads them.
-
----
-
-## License
-
-MIT -- see [LICENSE](LICENSE) for details.
+- Cultural Legacy tab: an interactive map of the artist's influence
+- Second artist end to end, powered by the same registry and pipeline
+- Remaining artwork for the three songs without clean sources
+- Custom domain
 
 ---
 
-*Embark on an exquisite musical odyssey. Discover the stories behind the music.*
+## Credits
 
-*TuneTales -- where every song becomes a universe.*
+Built by [Jacob J. Choi](https://jacobjchoi.xyz).
 
----
-
-Built by [Jacob J. Choi](https://jacobjchoi.xyz)
+Artist photography via Wikimedia Commons (freely licensed). Album artwork displayed under fair use via Wikipedia and official streaming CDNs. Music playback through official embeds; all rights to the music belong to the artists and their labels. Stories are original writing grounded in cited music journalism.
