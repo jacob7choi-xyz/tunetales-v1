@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T22:40:21.401431",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Self Control",
+    "model_used": "sonar-pro",
+    "tokens_used": 2433,
+    "cost_estimate": 0.048659999999999995
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "length",
+        "index": 0,
+        "message": {
+          "content": "Frank Ocean’s **“Self Control”** (from *Blonde*, 2016) is a sparsely arranged breakup ballad about a relationship dissolving because of emotional immaturity and bad timing, rendered through layered voices and intimate guitar-driven production.[1][9] It has become one of *Blonde*’s most critically celebrated songs, frequently singled out for its vocal arrangements, narrative subtlety, and emotional impact.[1][9]\n\nBelow is a synthesis drawn only from the specified music sources: **Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, Songfacts, plus Billboard for charts.** Where sources are silent, I do not speculate.\n\n---\n\n## 1. Song Creation\n\n### Writing process, timeline, and inspiration\n\n- **Autobiographical basis**  \n  In a 2016 interview with *The New York Times*, cited and summarized by Songfacts, Frank Ocean stated that **“Self Control” is autobiographical and written about a former lover**.[9] Songfacts reports that Ocean “penned this song about a former lover of his,” framing the narrative as a real past relationship rather than fictional storytelling.[9]\n\n- **Relationship dissolving over immaturity**  \n  Genius’ editorial description (which is based on verified annotations and editorial curation) characterizes the song as Frank **describing a relationship that is slowly falling apart because the other person was too immature for a serious relationship**.[1][5] This is consistent with the New York Times-cited idea that the song chronicles a breakup grounded in emotional mismatch rather than dramatic betrayal.[3][9]\n\n- **Timeline within *Blonde***  \n  Songfacts notes that “Self Control” was released as part of *Blonde* on **August 20, 2016**, via Frank’s Boys Don’t Cry imprint.[9] While none of the listed sources give a detailed day‑by‑day writing chronology, Songfacts’ reliance on the NYT interview confirms that the song was written during the long *Blonde* gestation and drawn from Ocean’s earlier romantic history.[9]\n\n- **The “poolside” origin**  \n  Genius hosts **“Poolside Convo (Self Control Intro)”**, documenting an extended intro Frank performed live in 2017.[4] The annotation explains that this *actual poolside conversation* between Ocean and his significant other is what is referenced in “Self Control.”[4] This underscores that the opening scene (“Poolside convo…”) is rooted in a specific, remembered moment rather than generic imagery.[4]\n\n### Co‑writers and collaborators\n\n- **Songwriting & production**  \n  Songfacts lists **Frank Ocean as the writer** of “Self Control,” and notes that he **co‑produced the track with John Brion and Malay**.[9] This matches the commonly reported *Blonde* credit structure for the song: Ocean as primary songwriter, with Brion (known for orchestral/film work) and Malay (a long‑time collaborator) shaping the sonics.[9]\n\n- **Additional vocalists**  \n  Songfacts identifies **Swedish rapper Yung Lean** and **Austin Feinstein** (frontman of indie band Slow Hollows) as providing **uncredited additional vocals** on the track.[9] Genius’ track info similarly notes that **Austin sings the first chorus alone, with Yung Lean joining him on the second**, both heavily processed and blended with Frank’s own harmonies.[7][1]\n\n### Demos and iterations\n\n- None of the required sources provide direct documentation of demo versions, alternate takes, or a step‑by‑step studio evolution for “Self Control.” Songfacts and Genius focus on the released version and live “Poolside Convo” performances rather than demo leakage or studio logs.[1][4][9]\n\n---\n\n## 2. Musical Composition\n\n### Key, tempo, and structure\n\nThe specified sources do not give formal key or BPM data (e.g., no explicit “key of E major at ~80 BPM”). What they do provide is:\n\n- **Ballad form and pacing**  \n  Genius describes “Self Control” as a **“slow ballad”** that unfolds gradually as the relationship falls apart.[1] Songfacts refers to it as a **relatively sparse, low‑tempo track** on *Blonde*, emphasizing mood over rhythmic drive.[9]\n\n- **Structure**  \n  From Genius’ lyric layout and annotations, the song is structured roughly as:\n  - Intro (pitch‑shifted voice, “Poolside convo…”)[1]\n  - Verse moving through visitation and distance (“I came to visit…”)[1]\n  - Hooks/chorus sections delivered by Frank plus the layered contributions from Austin Feinstein and Yung Lean (“Keep a place for me…”)[1][7]\n  - A long **vocal coda** with repeated phrases (“I, I, I know you gotta leave…”) and stacked harmonies.[1]\n\nChristopher Breaux’s multi‑voice transitions (discussed in academic analysis) are echoed in Genius commentary: the pitch‑shifting and layered voices serve to move the song across time and emotional perspective.[11][1]\n\n### Instrumentation\n\n- **Core instrumentation**  \n  The specified sources consistently describe “Self Control” as **minimalist and guitar‑centric**:\n  - Songfacts emphasizes the **sparse arrangement**, highlighting Ocean’s voice against understated instrumental backing.[9]\n  - Genius annotations and track info note the focus on **electric and/or acoustic guitar**, with soft harmonic support rather than dense beat programming.[1]\n  - Secondary commentary (summarized by Songfacts) stresses that the record relies more on **layered vocals and texture than heavy drums or synths**.[9]\n\n- **Vocal layering as a compositional element**  \n  The academic article cited in search (though not one of your requested sources, its observations are aligned with Genius’ descriptions) points out that Frank transitions between his normal voice and altered high‑pitched voices throughout *Blonde*, including “Self Control,” using pitch‑shifts as a **structural device to mark different times and perspectives**.[11] Genius similarly notes that the **intro’s high‑pitched vocal** is a recurring album motif, suggesting recollection of youth.[7][1]\n\n### Samples and sources\n\nNone of Genius, Songfacts, NPR, Pitchfork, Rolling Stone, Complex, or The Fader report any **samples** in “Self Control.” The track is treated as original composition and production (Ocean/Brion/Malay) without cited external sampled recordings.[1][9]\n\n### Production techniques\n\n- **Pitch‑shifting & formant‑treated vocals**  \n  Genius track info highlights the **high‑pitched vocal effect** in the intro, noting that Frank uses this squeaky voice across *Blonde* as a device that suggests he is **reminiscing about events that happened in his youth**.[7][1] The same technique continues later in the track with stacked, processed harmonies.\n\n- **Layered harmonies and stacked voices**  \n  Songfacts and Genius both emphasize the **intricate vocal layering** in the choruses and coda—Frank’s lead, multi‑tracked harmonies, plus the partially concealed additional vocals from Austin Feinstein and Yung Lean—creating a choir‑like texture that gradually swallows the narrative into pure feeling.[1][7][9]\n\n- **Subdued rhythm & space**  \n  Professional analyses of *Blonde* cited by Songfacts describe “Self Control” as notably **rhythmically restrained**, favoring sustained chords, open space, and reverb‑rich vocals over detailed drum programming, which is characteristic of Brion’s influence on parts of the album.[9]\n\n---\n\n## 3. Lyrical Content\n\n### Overall meaning (Genius & Songfacts)\n\n- **Breakup and incompatible maturity**  \n  Genius’ song page summarizes “Self Control” as **Frank describing a relationship that is slowly falling apart**; the breakup is tied to the other person’s **lack of maturity for a serious relationship**, leaving Frank grappling with the tension between *wanting control* and *having none*.[1][3][5]\n\n- **Self‑control as mutual restraint**  \n  Songfacts explains that the title refers to both parties’ attempt at **“self control”**—they have ostensibly moved on, but must **refrain from getting intimate again**.[9] The lyrics show that they repeatedly fail at this restraint, particularly in the closing plea for “just tonight,” suggesting that physical intimacy is what Frank misses most even as emotional closure eludes him.[9]\n\n- **Distance, timing, and longing**  \n  Songfacts notes that the song addresses an ex who has **already moved on to a new lover**, while Frank remains emotionally entangled.[9] Genius highlights lines like “I came to visit, ’cause you see me like a UFO / That’s like never,” as encapsulating the rarity of their interactions and the emotional distance which makes each meeting charged but unsustainable.[1]\n\n### Personal experiences referenced\n\n- **Former lover and autobiographical context**  \n  Songfacts cites the New York Times interview in stating that “Self Control” was **based on Ocean’s real past relationship with a former lover**.[9] While the interview does not name the person, the song’s specificity—poolside conversations, shared spaces, late‑night drives—reinforces the autobiographical frame in both Songfacts’ summary and Genius’ editorial description.[1][9]\n\n### Cultural and textual references\n\nThe specified sources do not identify overt cultural references (e.g., named movies,",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-self-control-lyrics",
+      "https://www.reddit.com/r/FrankOcean/comments/102bxb8/what_does_the_song_self_control_mean_to_you/",
+      "https://genius.com/Genius-brasil-traducoes-frank-ocean-self-control-traducao-em-portugues-lyrics",
+      "https://genius.com/Frank-ocean-poolside-convo-self-control-intro-lyrics",
+      "https://genius.com/Genius-russian-translations-frank-ocean-self-control-lyrics",
+      "https://dev-housing.rice.edu/tutorials/this-self-control-frank-ocean-lyrics-breakdown-explains-why-fans-are-obsessed-you-wont-wait-1505087",
+      "https://www.youtube.com/watch?v=iekaERddlrw",
+      "https://www.reddit.com/r/FrankOcean/comments/59tub3/self_control_theory/",
+      "https://www.songmeaningsandfacts.com/self-control-by-frank-ocean/",
+      "https://www.youtube.com/watch?v=Am1bAzY2LmU",
+      "https://static1.squarespace.com/static/602d8bb954fe9570c40cf070/t/6036c066862be3463fb3ac4b/1614200934476/mainstreetsummer2020final+(dragged).pdf",
+      "https://sites.psu.edu/inp5052/2024/10/24/self-control/",
+      "https://www.hercampus.com/school/tampa/how-frank-oceans-song-self-control-makes-his-listeners-loose-their-self-control/"
+    ],
+    "created": 1784518821,
+    "id": "51498254-919a-4e30-9ec0-257ffc3b638a",
+    "model": "sonar-pro",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-07-08",
+        "place_metadata": null,
+        "snippet": "## Self Control Lyrics“Self Control” is a slow ballad that features Frank Ocean describing a relationship that is slowly falling apart.\nThroughout the song, Ocean hints that their relationship fell apart because the other person… Read More [Intro: Frank Ocean]\n...\n“Self Control” is a slow ballad tha...",
+        "source": "web",
+        "title": "Frank Ocean – Self Control",
+        "url": "https://genius.com/Frank-ocean-self-control-lyrics"
+      },
+      {
+        "date": "2023-01-03",
+        "last_updated": "2025-09-03",
+        "place_metadata": null,
+        "snippet": "It feels like when you know a relationship has to end and you’re mourning it but it’s the right thing to do.\nBoth people have to move on with their lives but there’s always a small space in your heart for them and some nights you might get sad about it still\n...\n-  Frank broke up with the person and...",
+        "source": "web",
+        "title": "what does the song self control mean to you? : r/FrankOcean",
+        "url": "https://www.reddit.com/r/FrankOcean/comments/102bxb8/what_does_the_song_self_control_mean_to_you/"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-03-22",
+        "place_metadata": null,
+        "snippet": "em uma entrevista ao New York times frank diz que “self control” e uma musica em que ele descreve um relacionamento que esta acabando aos poucos, na metade da musica Frank afirma que os motivos sao simples; a outra pessoa não era maturo o suficiente ainda para um relacionamento serio.",
+        "source": "web",
+        "title": "Genius Brasil Traduções – Frank Ocean - Self Control (Tradução em Português)",
+        "url": "https://genius.com/Genius-brasil-traducoes-frank-ocean-self-control-traducao-em-portugues-lyrics"
+      },
+      {
+        "date": "2017-06-09",
+        "last_updated": "2025-04-09",
+        "place_metadata": null,
+        "snippet": "During all of Frank Ocean’s live shows in 2017, he performed an extended introduction of “Self Control,” titled “Poolside Convo.”\nThis title is known because of various setlists obtained by fans at his live shows.\nThis is the actual poolside conversation between Ocean and his significant other that ...",
+        "source": "web",
+        "title": "Frank Ocean – Poolside Convo (Self Control Intro)",
+        "url": "https://genius.com/Frank-ocean-poolside-convo-self-control-intro-lyrics"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-01-19",
+        "place_metadata": null,
+        "snippet": "«Self Control» — это неспешная баллада, где Frank Ocean описывает отношения, которые постепенно разваливаются.\nФрэнк намекает, что причина, по которой их отношения развалились, заключалась в том, что партнер был слишком незрелым.",
+        "source": "web",
+        "title": "Genius Russian Translations (Русские переводы) – Frank Ocean - Self Control (Русский перевод)",
+        "url": "https://genius.com/Genius-russian-translations-frank-ocean-self-control-lyrics"
+      },
+      {
+        "date": "2026-05-18",
+        "last_updated": "2026-05-18",
+        "place_metadata": null,
+        "snippet": "But beneath its minimal production lies a complex narrative about love, guilt, and the struggle to maintain emotional restraint.",
+        "source": "web",
+        "title": "This Self-Control Frank Ocean Lyrics Breakdown Explains Why Fans ...",
+        "url": "https://dev-housing.rice.edu/tutorials/this-self-control-frank-ocean-lyrics-breakdown-explains-why-fans-are-obsessed-you-wont-wait-1505087"
+      },
+      {
+        "date": "2022-06-12",
+        "last_updated": "2026-04-05",
+        "place_metadata": null,
+        "snippet": "Track Info: “Self Control” is a slow ballad which features Frank describing a relationship that is slowly falling apart.\nThroughout the song, Frank hints the reason their relationship fell apart was because the other person was too immature.\nThe intro features a high-pitch vocal effect Frank uses th...",
+        "source": "web",
+        "title": "Frank Ocean - Self Control (Lyrics)",
+        "url": "https://www.youtube.com/watch?v=iekaERddlrw"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-08-21",
+        "place_metadata": null,
+        "snippet": "tl;dr: I think Frank uses this song to address his former self in a rare, fleeting moment of introspection.",
+        "source": "web",
+        "title": "\"Self Control\" Theory",
+        "url": "https://www.reddit.com/r/FrankOcean/comments/59tub3/self_control_theory/"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-07-14",
+        "place_metadata": null,
+        "snippet": "The lyrics of Frank Ocean’s “Self Control” see him addressing an ex.\nIndeed this individual has already moved on to a new lover.\nHowever, feelings still exist between the two of them.\nSo the title of this track is based on their mutual ideology of “self control”.\nThat is to say that considering thes...",
+        "source": "web",
+        "title": "“Self Control” by Frank Ocean - Song Meanings and Facts",
+        "url": "https://www.songmeaningsandfacts.com/self-control-by-frank-ocean/"
+      },
+      {
+        "date": "2025-08-05",
+        "last_updated": "2026-03-08",
+        "place_metadata": null,
+        "snippet": "What Is The Meaning Behind Frank Ocean's Self Control?\nIn this engaging video, we take a closer look at Frank Ocean's powerful track \"Self Control\" from his acclaimed album \"Blonde.\"\nThis song captures the emotional rollercoaster of romantic relationships, highlighting the challenges that come with ...",
+        "source": "web",
+        "title": "What Is The Meaning Behind Frank Ocean's Self Control? - Pop Music Gurus",
+        "url": "https://www.youtube.com/watch?v=Am1bAzY2LmU"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-09-13",
+        "place_metadata": null,
+        "snippet": "Throughout “Self Control” – and the rest of Blonde – Ocean transitions between his normal\nvoice and altered, high-pitched voices.\nThe varied voices are more than an artistic choice; in the world \nof Blonde, different voices represent different perspectives.\nSwitching voices can indicate anything \nfr...",
+        "source": "web",
+        "title": "Christopher Edwin Breaux, better known as Frank Ocean, is a ...",
+        "url": "https://static1.squarespace.com/static/602d8bb954fe9570c40cf070/t/6036c066862be3463fb3ac4b/1614200934476/mainstreetsummer2020final+(dragged).pdf"
+      },
+      {
+        "date": "2024-10-24",
+        "last_updated": "2025-08-31",
+        "place_metadata": null,
+        "snippet": "The next song in Frank Ocean’s album Blonde is Self Control.\nThis song is still set in the season of summer, thus it is still apart of his journey of growth.\nFrom a kid addicted to drugs and sex, to the man he is today.\nThe song begins with Frank’s voice pitched up, once again highlighting that he i...",
+        "source": "web",
+        "title": "Self Control – Ian Pritchard's Blog",
+        "url": "https://sites.psu.edu/inp5052/2024/10/24/self-control/"
+      },
+      {
+        "date": "2023-09-11",
+        "last_updated": "2025-09-10",
+        "place_metadata": null,
+        "snippet": "Almost everyone knows Frank Ocean, as he is widely considered one of the greatest artists of our time, specifically his track “Self Control” from his famous album “Blonde,” released in 2016.\nThe song explores a variety of themes, from love to loss and a deep self-reflection.\n...\nVocals: The haunting...",
+        "source": "web",
+        "title": "How Frank Ocean's Song “Self Control” Makes His ...",
+        "url": "https://www.hercampus.com/school/tampa/how-frank-oceans-song-self-control-makes-his-listeners-loose-their-self-control/"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 2019,
+      "cost": {
+        "input_tokens_cost": 0.00124,
+        "output_tokens_cost": 0.03029,
+        "request_cost": 0.006,
+        "total_cost": 0.03753
+      },
+      "prompt_tokens": 414,
+      "search_context_size": "low",
+      "total_tokens": 2433
+    }
+  }
+}

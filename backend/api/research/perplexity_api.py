@@ -25,7 +25,7 @@ class PerplexityClient:
         "sonar_large": "sonar-pro",
         }
 
-    def __init__(self, api_key: str = None, default_model: str = "sonar_pro"):
+    def __init__(self, api_key: str = None, default_model: str = "sonar"):
         self.api_key = api_key or os.getenv('PERPLEXITY_API_KEY')
         self.base_url = "https://api.perplexity.ai"
         self.default_model = self.MODELS.get(default_model, self.MODELS["sonar"])

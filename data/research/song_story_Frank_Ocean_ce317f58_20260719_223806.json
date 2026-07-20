@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T22:38:06.074032",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Swim Good",
+    "model_used": "sonar-pro",
+    "tokens_used": 970,
+    "cost_estimate": 0.0194
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "I can’t complete this request as written because the provided search results do **not** include the required premium sources for most of the story, and several of the available results are from sources you explicitly excluded. The only clearly relevant premium-source evidence in the results is a **Genius** annotation and an **MTV interview clip**; I do not have usable Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts results to ground a “complete story” with the required sourcing.\n\nWhat the available premium-source evidence does support is this:\n\n- **Writing process:** Frank Ocean said in an MTV interview that “Swim Good” was written very quickly, in “like half an hour,” while Midi Mafia’s Dirty Swift told Genius that the song was made in “probably 10 minutes.”[3][2]\n- **Creation context:** Genius reports that the track was recorded in a late-night/early-morning session, and that Ocean’s lyric writing drew on historical references and fact-checking habits.[2]\n- **Credits:** Genius identifies the track as written by **Frank Ocean, Waynne Nugent, and Kevin Risto** of Midi Mafia.[2] The search results also show a Composer/Lyricist credit listing **Frank Ocean** and **Waynne Nugent**.[8]\n- **Lyrical theme:** The Genius annotation says Ocean’s lyrics in “Swim Good” include recurring imagery of **cars**, **driving**, and a sense of internal turmoil, with the song framed around heartbreak and dark escape imagery.[2]\n- **Release context:** Genius notes that “Swim Good” was promoted as a single from *nostalgia, ULTRA* and became one of the mixtape’s most popular songs on Genius.[2]\n\nBecause you asked for a **complete story behind the song** using **only** premium music sources, I would need a fresh result set from the allowed outlets before I can responsibly cover:\n\n- **musical composition** details like key, tempo, and structure,\n- **production credits** and studio/engineering specifics,\n- **verified meaning** from artist interviews and lyrical breakdowns,\n- **release and reception** from Rolling Stone, Pitchfork, Complex, NPR Music, The Fader, and Songfacts,\n- **commercial performance** and any documented cover/live-performance history.\n\nIf you want, I can do one of these next:\n\n- **Option 1:** give you a **strictly sourced mini-profile** using only the premium-source evidence currently available in the search results, or\n- **Option 2:** you can provide or let me search again for the allowed outlets, and I’ll build the full research brief you requested.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://en.wikipedia.org/wiki/Swim_Good",
+      "https://genius.com/a/frank-ocean-recorded-swim-good-in-10-minutes",
+      "https://www.youtube.com/watch?v=FxLoUMiu3DM",
+      "https://www.youtube.com/watch?v=gbbuHdM5Tlc",
+      "https://hu.wikipedia.org/wiki/Swim_Good",
+      "https://pt.wikipedia.org/wiki/Swim_Good",
+      "https://djbooth.net/features/2019-12-18-frank-ocean-swim-good-overcoming-heart/",
+      "https://www.youtube.com/watch?v=ic1nhvWBvIo",
+      "https://tuhinternational.com/2011/08/01/frank-ocean-swim-good/",
+      "https://genius.com/Frank-ocean-swim-good-lyrics",
+      "https://www.songsmagazine.com/rnb/2024/06/28/swim-good-an-introspective-journey-into-the-depths-of-the-soul/",
+      "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/"
+    ],
+    "created": 1784518686,
+    "id": "1ac0180c-09cd-4117-82bd-7b657ecbfcb9",
+    "model": "sonar-pro",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2011-09-01",
+        "last_updated": "2026-04-26",
+        "place_metadata": null,
+        "snippet": "\"**Swim Good**\" is a song by American singer Frank Ocean, released as the second single from his mixtape *Nostalgia, Ultra* (2011).\nThe song was written by Ocean alongside producers Midi Mafia and Charles Gambetta.\nIt features additional vocals by fellow Odd Future member Tyler, The Creator.\nThe son...",
+        "source": "web",
+        "title": "Swim Good",
+        "url": "https://en.wikipedia.org/wiki/Swim_Good"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-03-27",
+        "place_metadata": null,
+        "snippet": "One interesting tidbit is the quick turnaround time for “Swim Good,” which Midi Mafia’s Dirty Swift recalled came together in just a few minutes.\n“We did ‘Swim Good’ in probably 10 minutes,” he said.\n“I don’t remember when he wrote it.\nIt was probably one of those 5 a.m. sessions and we woke up the ...",
+        "source": "web",
+        "title": "Frank Ocean Recorded “Swim Good” In 10 Minutes",
+        "url": "https://genius.com/a/frank-ocean-recorded-swim-good-in-10-minutes"
+      },
+      {
+        "date": "2014-07-11",
+        "last_updated": "2026-05-19",
+        "place_metadata": null,
+        "snippet": "{ts:13} sonics but you know um I take my time some songs come quick swim good came quick that I wrote that in like half an\n{ts:20} hour you know um American Wedding took me a week and a half you know it really just depends on you know what the story",
+        "source": "web",
+        "title": "Frank Ocean for MTV | 2011 Interview",
+        "url": "https://www.youtube.com/watch?v=FxLoUMiu3DM"
+      },
+      {
+        "date": "2022-07-05",
+        "last_updated": "2026-05-19",
+        "place_metadata": null,
+        "snippet": "{ts:81} went on to become a fan favorite track the track focuses in on a man that's going through heartbreak specifically\n{ts:87} looking at what he does to deal with it the opening line introduces us to a car the car is meant to represent the",
+        "source": "web",
+        "title": "Frank Ocean's Swim Good: A Story Of Overcoming Heartbreak",
+        "url": "https://www.youtube.com/watch?v=gbbuHdM5Tlc"
+      },
+      {
+        "date": "2021-07-17",
+        "last_updated": "2025-08-15",
+        "place_metadata": null,
+        "snippet": "A ***Swim Good*** az amerikai énekes Frank Ocean dala, amely a második kislemezként jelent meg a *Nostalgia, Ultra* (2011) című mixtape-jéről.\nA dalt Ocean, illetve Midi Mafia és Charles Gambetta producerek írták.\nA dalon közreműködött Tyler, The Creator is.\nA dal szövege egy férfiról szól, aki sok ...",
+        "source": "web",
+        "title": "Swim Good – Wikipédia",
+        "url": "https://hu.wikipedia.org/wiki/Swim_Good"
+      },
+      {
+        "date": "2012-08-10",
+        "last_updated": "2025-10-06",
+        "place_metadata": null,
+        "snippet": "**\"Swim Good\"** é uma canção gravada pelo cantor e compositor norte-americano Frank Ocean, contida em seu primeiro *mixtape* *Nostalgia, Ultra* (2011).\nFoi composta pelo cantor juntamente com Waynne Nugent e Kevin Risto e produzida por Midi Mafia.\nA faixa foi lançado como segundo *single* do disco e...",
+        "source": "web",
+        "title": "Swim Good – Wikipédia, a enciclopédia livre",
+        "url": "https://pt.wikipedia.org/wiki/Swim_Good"
+      },
+      {
+        "date": "2019-12-18",
+        "last_updated": "2026-01-06",
+        "place_metadata": null,
+        "snippet": "That is the story of “Swim Good,” one of the deceptively darker cuts off Frank Ocean’s career-making mixtape,\n*nostalgia, ULTRA.* The imagery is direct, and the metaphors are clear.",
+        "source": "web",
+        "title": "Exploring the Healing Power of Frank Ocean's “Swim Good”",
+        "url": "https://djbooth.net/features/2019-12-18-frank-ocean-swim-good-overcoming-heart/"
+      },
+      {
+        "date": "2018-07-24",
+        "last_updated": "2025-07-30",
+        "place_metadata": null,
+        "snippet": "Composer Lyricist: Frank Ocean\nComposer Lyricist: Waynne Nugent",
+        "source": "web",
+        "title": "Swim Good",
+        "url": "https://www.youtube.com/watch?v=ic1nhvWBvIo"
+      },
+      {
+        "date": "2011-08-01",
+        "last_updated": "2026-04-05",
+        "place_metadata": null,
+        "snippet": "Frank Ocean (aka Christopher Breaux) blends soul, pop-infused R&B.\nThe track is off his debut LP “Nostalgia, Ultra“.",
+        "source": "web",
+        "title": "Frank Ocean: “Swim Good”",
+        "url": "https://tuhinternational.com/2011/08/01/frank-ocean-swim-good/"
+      },
+      {
+        "date": "2011-10-18",
+        "last_updated": "2025-02-21",
+        "place_metadata": null,
+        "snippet": "Track 10 on nostalgia,ULTRA.",
+        "source": "web",
+        "title": "Frank Ocean – Swim Good",
+        "url": "https://genius.com/Frank-ocean-swim-good-lyrics"
+      },
+      {
+        "date": "2024-06-28",
+        "last_updated": "2026-01-06",
+        "place_metadata": null,
+        "snippet": "**A deep analysis of Frank Ocean’s song “Swim Good,” exploring themes of lost love, grief, and redemption.**\n**Frank Ocean’s “Swim Good” is a haunting R&B ballad that captures the essence of pain and loss with poetic beauty.** The song, released in 2011 as part of the album “ **Nostalgia, Ultra**” ,...",
+        "source": "web",
+        "title": "Swim Good: An Introspective Journey into the Depths of the Soul",
+        "url": "https://www.songsmagazine.com/rnb/2024/06/28/swim-good-an-introspective-journey-into-the-depths-of-the-soul/"
+      },
+      {
+        "date": "2021-10-05",
+        "last_updated": "2026-07-13",
+        "place_metadata": null,
+        "snippet": "When delving into his creative process and his inspirations for this album, Frank Ocean mentions that overall, he is inspired to tell stories with his music.\n...\nHe creates narratives with his lyrics and embodies it with a musical journey that conveys the emotions from the narrative, using musical t...",
+        "source": "web",
+        "title": "How Frank Ocean tells Stories",
+        "url": "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 555,
+      "cost": {
+        "input_tokens_cost": 0.00125,
+        "output_tokens_cost": 0.00833,
+        "request_cost": 0.006,
+        "total_cost": 0.01557
+      },
+      "prompt_tokens": 415,
+      "search_context_size": "low",
+      "total_tokens": 970
+    }
+  }
+}

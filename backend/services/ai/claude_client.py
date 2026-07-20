@@ -16,8 +16,8 @@ load_dotenv()
 # Model IDs per provider (STORY_PROVIDER env var selects: anthropic | openai)
 NARRATIVE_MODEL = "claude-sonnet-4-6"
 MOOD_MODEL = "claude-haiku-4-5"
-OPENAI_NARRATIVE_MODEL = "gpt-4o"
-OPENAI_MOOD_MODEL = "gpt-4o-mini"
+OPENAI_NARRATIVE_MODEL = "gpt-5-mini"
+OPENAI_MOOD_MODEL = "gpt-5-nano"
 OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions"
 
 MOOD_COLORS = {
@@ -219,15 +219,22 @@ class ClaudeStorytellingClient:
         model = self._model_for(tier)
 
         if self.provider == "openai":
+            payload: Dict = {
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+            }
+            if model.startswith("gpt-5"):
+                # GPT-5 models run at fixed default temperature and spend
+                # hidden reasoning tokens from the completion budget
+                payload["max_completion_tokens"] = max_tokens
+                payload["reasoning_effort"] = "minimal"
+            else:
+                payload["max_tokens"] = max_tokens
+                payload["temperature"] = temperature
             response = httpx.post(
                 OPENAI_CHAT_URL,
                 headers={"Authorization": f"Bearer {self.openai_key}"},
-                json={
-                    "model": model,
-                    "max_tokens": max_tokens,
-                    "temperature": temperature,
-                    "messages": [{"role": "user", "content": prompt}],
-                },
+                json=payload,
                 timeout=120,
             )
             response.raise_for_status()
@@ -263,7 +270,7 @@ class ClaudeStorytellingClient:
 
         try:
             narrative_text, tokens_used, model_used = self._generate_text(
-                "narrative", prompt, max_tokens=2000, temperature=0.7
+                "narrative", prompt, max_tokens=3000, temperature=0.7
             )
         except (anthropic.APIError, httpx.HTTPError) as e:
             print(f"Error calling story API: {e}")
@@ -308,7 +315,7 @@ class ClaudeStorytellingClient:
 
         try:
             story_text, tokens_used, model_used = self._generate_text(
-                "narrative", prompt, max_tokens=1500, temperature=0.7
+                "narrative", prompt, max_tokens=2500, temperature=0.7
             )
         except (anthropic.APIError, httpx.HTTPError) as e:
             print(f"Error creating song story: {e}")
@@ -373,7 +380,7 @@ class ClaudeStorytellingClient:
         """Extract the emotional mood from a song story using Claude."""
         try:
             mood_text, _, _ = self._generate_text(
-                "mood", _build_mood_prompt(story_text), max_tokens=16, temperature=0.3
+                "mood", _build_mood_prompt(story_text), max_tokens=64, temperature=0.3
             )
             mood = mood_text.strip().lower()
             return mood if mood in MOOD_COLORS else DEFAULT_MOOD
