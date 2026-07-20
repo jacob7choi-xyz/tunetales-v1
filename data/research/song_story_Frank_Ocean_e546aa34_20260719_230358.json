@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:03:58.009859",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Monks",
+    "model_used": "sonar",
+    "tokens_used": 915,
+    "cost_estimate": 0.004575
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "The song **“Monks”** by Frank Ocean is the thirteenth track on his 2012 debut album *channel ORANGE*, exploring a relationship with a female groupie he met on tour while framing concert audiences as spiritual devotees akin to Buddhist monks worshiping the Dalai Lama [1][6].\n\nHowever, **no search results were found from your required premium sources** (Genius verified annotations, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts) that contain the specific detailed production credits, writing timeline, musical analysis (key/tempo beyond external sites), or direct artist interviews you requested. The available results include:\n- A **Genius lyrics page** with a brief, unverified summary of the song’s meaning (not the full verified artist annotation layer) [1].\n- An **external key database** (getsongkey.com) stating the song is in **G minor** [2].\n- A **DJ Booth article** (not in your required list) offering thematic analysis [3].\n- A **Seattle Times** snippet noting it is the album’s sole funk track [5].\n- A **Fandom wiki** listing credits: written by **James Ho** and **Lonnie Breaux**, produced by **Malay, Frank Ocean, and Om'Mas Keith**, engineered by **Jeff Ellis** [6].\n\nBecause your prompt strictly requires **only** the listed premium sources and excludes all others (including Wikipedia, fan sites, blogs, and unverified sources like DJ Booth, getsongkey.com, and Fandom), **I cannot provide the comprehensive story you requested using only your allowed sources**. The required depth of verified artist statements, co-writer confirmation, demo history, production techniques, and critical reception from Rolling Stone, Pitchfork, etc., is **not present in the current search results**.\n\nTo fulfill your request accurately under your constraints, I would need access to search results containing:\n- Verified Genius artist annotations for “Monks”\n- Frank Ocean interviews in Rolling Stone, Pitchfork, Complex, The Fader, or NPR Music discussing the song’s creation\n- Professional music analysis from Pitchfork or NPR on key, tempo, instrumentation, and samples\n- Songfacts’ verified entry on “Monks”\n\nUntil those specific premium sources are retrieved, the most reliable information I can offer is limited to the brief Genius summary and the Fandom credits, which you explicitly excluded.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-monks-lyrics",
+      "https://getsongkey.com/song/monks/vo76kg",
+      "https://djbooth.net/features/2020-03-25-frank-ocean-monks-nostalgia-forever/",
+      "https://www.lacoccinelle.net/1400522-frank-ocean-monks.html",
+      "https://www.seattletimes.com/entertainment/music/fall-with-frank-ocean-monks/",
+      "https://frankocean.fandom.com/wiki/Monks"
+    ],
+    "created": 1784520238,
+    "id": "75966dd6-9591-428c-8a41-c2966068d9d7",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2012-07-10",
+        "last_updated": "2025-07-11",
+        "place_metadata": null,
+        "snippet": "## Monks LyricsIn “Monks,” Frank Ocean discusses the relationship he had with a female groupie he had met on a tour.\nHe compares the audience at his tours to Buddhist monks and their spiritual idol, the Dalai Lama.[Verse 1]\n...\nJuly 10, 2012",
+        "source": "web",
+        "title": "Frank Ocean – Monks",
+        "url": "https://genius.com/Frank-ocean-monks-lyrics"
+      },
+      {
+        "date": "2012-01-01",
+        "last_updated": "2024-09-22",
+        "place_metadata": null,
+        "snippet": "**Monks is written in the key of Gm**.\nOpen Key notation:\n**11m**.\n...\n**Dm** (dominant key), **Cm** (subdominant),\nand **A♯** (relative major).\n**Notes in the scale:**\nG, A, A#, C, D, D#, F, G\n...\n*Open Keys* are **12m**, **10m**,\nand **11d**.",
+        "source": "web",
+        "title": "Song Key of Monks (Frank Ocean)",
+        "url": "https://getsongkey.com/song/monks/vo76kg"
+      },
+      {
+        "date": "2020-03-25",
+        "last_updated": "2025-09-17",
+        "place_metadata": null,
+        "snippet": "“Monks” is, among other things, about Frank’s relationship with a series of women attending his concerts.\nHe positions each concert as a religious experience.\nWorship is baked into the text of “Monks.”\nFrank is on a literal pedestal: the stage.\nThe women of the track are inclined to see him as holie...",
+        "source": "web",
+        "title": "Frank Ocean's “Monks” & the Fantasy of Worship",
+        "url": "https://djbooth.net/features/2020-03-25-frank-ocean-monks-nostalgia-forever/"
+      },
+      {
+        "date": "2021-04-21",
+        "last_updated": "2026-02-22",
+        "place_metadata": null,
+        "snippet": "**Monks ** *Moines*\n**(Verse 1)Mosh pits and bare chest**\n**(Verse 2)Monks in the mosh pit**\n**(Bridge)I never ask for much**\n**You're beautiful to me** *Je te trouve belle* **Run, run, run, run, you'd better run** *Cours, cours, cours, tu ferais mieux de courir* **You mean so much to me** *Tu repré...",
+        "source": "web",
+        "title": "Paroles et traduction Frank Ocean : Monks",
+        "url": "https://www.lacoccinelle.net/1400522-frank-ocean-monks.html"
+      },
+      {
+        "date": "2012-11-21",
+        "last_updated": "2024-05-26",
+        "place_metadata": null,
+        "snippet": "Musically, it stands out from the other tracks on the album as the sole location of the funk.",
+        "source": "web",
+        "title": "Fall with Frank Ocean: 'Monks'",
+        "url": "https://www.seattletimes.com/entertainment/music/fall-with-frank-ocean-monks/"
+      },
+      {
+        "date": "2012-01-01",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**Monks** is the thirteenth song from Frank Ocean's debut studio album *channel ORANGE* (2012).\nThe song is about a relationship that Frank had with a female groupie he met while on tour.\n...\n- **Performed by** Frank Ocean\n- **Written by** James Ho, Lonnie Breaux\n- **Produced by** Malay, Frank Ocean...",
+        "source": "web",
+        "title": "Monks | Frank Ocean Wiki - Fandom",
+        "url": "https://frankocean.fandom.com/wiki/Monks"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 501,
+      "cost": {
+        "input_tokens_cost": 0.00041,
+        "output_tokens_cost": 0.0005,
+        "request_cost": 0.005,
+        "total_cost": 0.00592
+      },
+      "prompt_tokens": 414,
+      "search_context_size": "low",
+      "total_tokens": 915
+    }
+  }
+}

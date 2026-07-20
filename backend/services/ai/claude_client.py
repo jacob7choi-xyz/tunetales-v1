@@ -72,6 +72,12 @@ def _build_narrative_prompt(artist_name: str, artist_content: str, timeline_cont
         - 700-900 words of pure warmth and wonder
         - End on a note that makes listeners feel inspired and happy
 
+        PROSE CRAFT (non-negotiable):
+        - Write in full, flowing sentences shaped by commas and periods, the way a storyteller speaks aloud
+        - Never use em dashes or en dashes, and avoid hyphenated phrases wherever graceful wording exists instead
+        - Avoid stock phrases that sound machine written, such as "little did he know", "a testament to", "in many ways", "it is worth noting"
+        - Vary your sentence rhythm the way spoken stories do
+
         Remember: This isn't a biography - it's a gentle celebration of a remarkable person, told with all the heart and magic of classic Disney storytelling."""
 
 
@@ -108,7 +114,29 @@ def _build_song_prompt(artist_name: str, song_name: str, song_content: str) -> s
         - 500-700 words
         - End with why this song stays with people, in a way that is true to its feeling: hopeful endings for hopeful songs, tender endings for sad ones
 
+        PROSE CRAFT (non-negotiable):
+        - Write the way a master storyteller speaks aloud: full, flowing sentences shaped by commas and periods
+        - Never use em dashes or en dashes, and avoid hyphenated phrases wherever graceful wording exists instead
+        - No lists, no headings inside your sections, no parentheses asides
+        - Avoid stock phrases that sound machine written, such as "little did he know", "a testament to", "in many ways", "it is worth noting"
+        - Vary your sentence rhythm the way spoken stories do: some sentences long and winding, some short
+        - Every sentence should sound natural read aloud by a warm human voice
+
         Remember: You're not writing a documentary - you're sharing a gentle, magical story about how something beautiful came into the world, told with all the heart of classic Disney storytelling."""
+
+
+def _polish_prose(text: str) -> str:
+    """Deterministic safety net for the no-dash prose rule.
+
+    The prompts forbid em and en dashes, but if one slips through it is
+    softened into a comma so published stories never carry the tell.
+    """
+    import re
+
+    text = re.sub(r"\s*[—–]\s*", ", ", text)
+    text = re.sub(r", ,", ",", text)
+    text = re.sub(r"  +", " ", text)
+    return text
 
 
 def _build_mood_prompt(story_text: str) -> str:
@@ -281,6 +309,7 @@ class ClaudeStorytellingClient:
             narrative_text, tokens_used, model_used = self._generate_text(
                 "narrative", prompt, max_tokens=3000, temperature=0.7
             )
+            narrative_text = _polish_prose(narrative_text)
         except (anthropic.APIError, httpx.HTTPError) as e:
             print(f"Error calling story API: {e}")
             return {"error": str(e)}
@@ -310,11 +339,18 @@ class ClaudeStorytellingClient:
         """Transform song research into an intimate story about the song's creation."""
         research_data = self._load_research_data(artist_name)
 
+        # Exact match first: at catalog scale, substring matching confuses
+        # "Solo" with "Solo (Reprise)" and "White" with "White Ferrari"
         song_research = None
         for song_data in research_data["songs"]:
-            if song_name.lower() in song_data["metadata"]["query_details"].lower():
+            if song_data["metadata"]["query_details"].strip().lower() == song_name.strip().lower():
                 song_research = song_data
                 break
+        if not song_research:
+            for song_data in research_data["songs"]:
+                if song_name.lower() in song_data["metadata"]["query_details"].lower():
+                    song_research = song_data
+                    break
 
         if not song_research:
             raise ValueError(f"No research found for song: {song_name}")
@@ -326,6 +362,7 @@ class ClaudeStorytellingClient:
             story_text, tokens_used, model_used = self._generate_text(
                 "narrative", prompt, max_tokens=2500, temperature=0.7
             )
+            story_text = _polish_prose(story_text)
         except (anthropic.APIError, httpx.HTTPError) as e:
             print(f"Error creating song story: {e}")
             return {"error": str(e)}
@@ -346,25 +383,60 @@ class ClaudeStorytellingClient:
         self._save_story("song", artist_name, song_name, story_data)
         return story_data
 
-    def create_bubble_universe(self, artist_name: str) -> Dict:
-        """Create the complete bubble universe data structure for the artist."""
+    def _load_existing_song_story(self, artist_name: str, song_name: str) -> str | None:
+        """Return the newest saved story text for a song, if one exists."""
+        safe_artist = artist_name.replace(" ", "_")
+        safe_song = song_name.replace(" ", "_")
+        matches = sorted(
+            glob.glob(f"{self.stories_dir}/song_{safe_artist}_{safe_song}_*.json"),
+            key=os.path.basename,
+        )
+        if not matches:
+            return None
+        try:
+            with open(matches[-1], "r", encoding="utf-8") as f:
+                return json.load(f).get("story")
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    def create_bubble_universe(self, artist_name: str, skip_existing: bool = True) -> Dict:
+        """Create the complete bubble universe data structure for the artist.
+
+        Incremental by default: songs that already have a saved story are
+        reused instead of regenerated, so growing the catalog only pays for
+        the new songs.
+        """
         research_data = self._load_research_data(artist_name)
 
-        song_bubbles = []
+        # Files are sorted oldest-first, so keeping the last occurrence per
+        # song means re-researched songs use their newest research
+        unique_songs: Dict[str, Dict] = {}
         for song_data in research_data["songs"]:
+            unique_songs[song_data["metadata"]["query_details"].strip().lower()] = song_data
+
+        song_bubbles = []
+        for song_data in unique_songs.values():
             song_name = song_data["metadata"]["query_details"]
             try:
-                song_story = self.create_song_story(artist_name, song_name)
-                if "error" not in song_story:
-                    mood = self._extract_song_mood(song_story["story"])
-                    song_bubbles.append(
-                        {
-                            "song_name": song_name,
-                            "story": song_story["story"],
-                            "mood": mood,
-                            "bubble_color": self._get_bubble_color(mood),
-                        }
-                    )
+                story_text = (
+                    self._load_existing_song_story(artist_name, song_name)
+                    if skip_existing
+                    else None
+                )
+                if story_text is None:
+                    song_story = self.create_song_story(artist_name, song_name)
+                    if "error" in song_story:
+                        continue
+                    story_text = song_story["story"]
+                mood = self._extract_song_mood(story_text)
+                song_bubbles.append(
+                    {
+                        "song_name": song_name,
+                        "story": story_text,
+                        "mood": mood,
+                        "bubble_color": self._get_bubble_color(mood),
+                    }
+                )
             except (ValueError, KeyError) as e:
                 print(f"Error creating story for {song_name}: {e}")
                 continue

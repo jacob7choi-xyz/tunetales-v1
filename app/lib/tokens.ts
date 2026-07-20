@@ -1,6 +1,6 @@
 // Design tokens for TuneTales. CSS custom properties live in globals.css;
 // these constants are for inline styles, which this project prefers for
-// visual props (see CLAUDE.md Tailwind v4 rule).
+// visual props since Tailwind v4 utilities are unreliable here.
 
 export const COLORS = {
   purplePrimary: "rgba(147, 51, 234, 1)",

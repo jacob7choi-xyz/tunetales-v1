@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlayIcon, MusicalNoteIcon, SparklesIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
@@ -20,7 +20,7 @@ const RESEARCH_STEPS = [
   {
     number: '01',
     title: 'Researched',
-    body: 'Perplexity gathers reporting, interviews, and reviews from across the web, with citations. Every response is saved verbatim as JSON.',
+    body: 'Our research engine gathers reporting, interviews, and reviews from across the music press, with citations. Every response is saved verbatim.',
   },
   {
     number: '02',
@@ -47,9 +47,16 @@ function formatResearchDate(iso: string): string {
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-export default function FrankOceanPage() {
+const TAB_IDS = ['journey', 'discography', 'impact', 'sources'];
+
+function FrankOceanContent() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('journey');
+  const searchParams = useSearchParams();
+  // Deep-linkable tabs: /artists/frank-ocean?tab=discography
+  const requestedTab = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(
+    requestedTab && TAB_IDS.includes(requestedTab) ? requestedTab : 'journey'
+  );
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
   const [research, setResearch] = useState<ResearchFile[]>([]);
   const [universe, setUniverse] = useState<SongUniverse | null>(null);
@@ -427,9 +434,8 @@ export default function FrankOceanPage() {
                         </div>
                       </div>
                       <div className="text-right shrink-0" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>
-                        <div>{file.metadata?.model_used}</div>
                         {typeof file.metadata?.tokens_used === 'number' && file.metadata.tokens_used > 0 && (
-                          <div style={{ marginTop: '3px' }}>{file.metadata.tokens_used.toLocaleString()} tokens</div>
+                          <div>{file.metadata.tokens_used.toLocaleString()} tokens of source material</div>
                         )}
                       </div>
                     </div>
@@ -449,5 +455,19 @@ export default function FrankOceanPage() {
       </AnimatePresence>
     </main>
     </div>
+  );
+}
+
+export default function FrankOceanPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center text-white animated-bg">
+          <div className="text-lg animate-pulse">Loading...</div>
+        </div>
+      }
+    >
+      <FrankOceanContent />
+    </Suspense>
   );
 }

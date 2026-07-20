@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:05:54.604031",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "In Here Somewhere",
+    "model_used": "sonar",
+    "tokens_used": 944,
+    "cost_estimate": 0.00472
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "There is no song titled \"In Here Somewhere\" by Frank Ocean in his official catalog, and therefore no verified story, lyrics, or production details exist from premium music sources like Genius, Rolling Stone, Pitchfork, or NPR Music.\n\nThe track you are referencing appears to be a misidentified or unofficially titled instrumental from Frank Ocean's 2016 visual album ***Endless***. According to the Frank Ocean Wiki (a fan database, not a premium source), the eleventh track on *Endless* is titled **\"In Here Somewhere\"** [1]. However, this track is described as an **instrumental with unintelligible vocals**, meaning it has no lyrical content to analyze and no artist-verified lyrical meaning [1].\n\nBecause the song is instrumental and lacks intelligible lyrics:\n*   **Lyrical Content:** There are no lyrics to break down, and Genius has no annotations for this specific track (Genius annotations in the search results refer to other songs like \"Adjectives,\" \"Slide,\" \"Solo,\" and \"Nights\") [4][5][6][7].\n*   **Writing Process & Inspiration:** No interviews from Frank Ocean, Rolling Stone, or Pitchfork discuss the inspiration for \"In Here Somewhere\" specifically, likely due to its instrumental nature and the album's conceptual focus on his departure from Atlantic Records rather than individual song narratives.\n*   **Production Credits:** The only available production data (from a fan wiki, not a premium source) lists **Troy NōKA** and **Vegyn** as contributors, with Troy Noka handling synthesizers and drum programming alongside Joe Thornalley [1].\n*   **Release Context:** The track appears on *Endless*, a visual album released in June 2016 that served as a contractual fulfillment to allow Frank Ocean to leave Atlantic Records and sign with Def Jam [1].\n\n**Conclusion:** Premium sources (Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR, Songfacts) do not contain a story for \"In Here Somewhere\" because it is an obscure, instrumental track from a niche visual album (*Endless*) that was not promoted as a standalone single. The information available is limited to production credits found in fan databases, and no verified artist statements explain its meaning. If you are looking for a different Frank Ocean song with similar themes or a title you might have misremembered (e.g., \"Come Through and Chill,\" \"Self Control,\" or \"Nights\"), please clarify, and I can research that track using the required premium sources.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://frankocean.fandom.com/wiki/In_Here_Somewhere",
+      "https://www.reddit.com/r/FrankOcean/comments/11uxplz/just_listened_to_in_here_somewhere_for_the_first/",
+      "https://www.reddit.com/r/FrankOcean/comments/1uqopyk/genius_annotations_make_no_sense_for_me/",
+      "https://genius.com/Frank-ocean-tumblr-post-on-adjectives-annotated",
+      "https://www.complex.com/pigeons-and-planes/a/adrienne-black/frank-ocean-annotates-slide-lyrics",
+      "https://genius.com/Frank-ocean-solo-lyrics",
+      "https://genius.com/Frank-ocean-nights-lyrics"
+    ],
+    "created": 1784520354,
+    "id": "31d82cd5-ef71-4303-b7de-8f0f00905682",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2024-10-29",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**In Here Somewhere** is the eleventh song from Frank Ocean's visual album *Endless* (2016).\nIt is an instrumental track with unintelligible vocals.\nTroy NōKA and Vegyn contributed to production for this track.\n...\n- **Guitars:** Spaceman\n- **Synthesizers:** Troy Noka\n- **Drum Programming:** Troy No...",
+        "source": "web",
+        "title": "In Here Somewhere - Frank Ocean Wiki - Fandom",
+        "url": "https://frankocean.fandom.com/wiki/In_Here_Somewhere"
+      },
+      {
+        "date": "2023-03-18",
+        "last_updated": "2025-09-16",
+        "place_metadata": null,
+        "snippet": "\"This song begins at either 15:41 or 16:51 and ends at 18:57.",
+        "source": "web",
+        "title": "Just listened to \"In Here Somewhere\" for the first time",
+        "url": "https://www.reddit.com/r/FrankOcean/comments/11uxplz/just_listened_to_in_here_somewhere_for_the_first/"
+      },
+      {
+        "date": "2026-07-08",
+        "last_updated": "2026-07-19",
+        "place_metadata": null,
+        "snippet": "Bad Religion explores the theme of unreciprocated love, employing religious imagery as a metaphor.",
+        "source": "web",
+        "title": "Genius Annotations make no sense for me",
+        "url": "https://www.reddit.com/r/FrankOcean/comments/1uqopyk/genius_annotations_make_no_sense_for_me/"
+      },
+      {
+        "date": "2013-08-02",
+        "last_updated": "2025-04-02",
+        "place_metadata": null,
+        "snippet": "ProducerFrank Ocean\nWriterFrank Ocean\nReleased in\n2011",
+        "source": "web",
+        "title": "Frank Ocean – Tumblr post on adjectives",
+        "url": "https://genius.com/Frank-ocean-tumblr-post-on-adjectives-annotated"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-07-22",
+        "place_metadata": null,
+        "snippet": "In his annotation, he explains the opening lyrics—\"I might / Empty my bank account / And buy that boy with a pipe\"—refers to \"A Picasso painting that sold for so much money.\"\nMore specifically, Pablo Picasso's 1905 painting\n*Garçon à la pipe* (which translates to \"Boy with a pipe\") that was auctione...",
+        "source": "web",
+        "title": "Frank Ocean Explains His \"Slide\" Lyrics",
+        "url": "https://www.complex.com/pigeons-and-planes/a/adrienne-black/frank-ocean-annotates-slide-lyrics"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-04-09",
+        "place_metadata": null,
+        "snippet": "“Solo,” one of the prime cuts off Frank Ocean’s sophomore album\n*Blonde*, talks about loneliness in different angles from the perspectives of different persons-all of which are having a good time being alone as they cope with their situation in life in an almost ironic fashion.\nThe song title means ...",
+        "source": "web",
+        "title": "Frank Ocean – Solo",
+        "url": "https://genius.com/Frank-ocean-solo-lyrics"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-07-28",
+        "place_metadata": null,
+        "snippet": "“Nights” tells the story of Frank Ocean’s previous relationship, detailing the highs & lows they both faced while dating.\nIt also touches upon the events Ocean faced while living in Houston, Texas, after relocating from New Orleans, Louisiana, due to Hurricane Katrina.\nThe song’s title is taken from...",
+        "source": "web",
+        "title": "Frank Ocean – Nights",
+        "url": "https://genius.com/Frank-ocean-nights-lyrics"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 528,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00053,
+        "request_cost": 0.005,
+        "total_cost": 0.00594
+      },
+      "prompt_tokens": 416,
+      "search_context_size": "low",
+      "total_tokens": 944
+    }
+  }
+}

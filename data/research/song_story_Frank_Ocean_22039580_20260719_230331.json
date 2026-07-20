@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:03:31.538650",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Crack Rock",
+    "model_used": "sonar",
+    "tokens_used": 1534,
+    "cost_estimate": 0.00767
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "Frank Ocean’s “Crack Rock” is a midtempo, jazz-inflected R&B track from his 2012 debut album *Channel Orange* that portrays the devastating life of a man addicted to crack cocaine, using Ocean’s personal childhood exposure to addiction as its emotional core [7][8][9]. The song was written by Frank Ocean and his creative partner Malay, who also handled much of the album’s production [3][7].\n\n### SONG CREATION\n- **Writing process & timeline**: Ocean wrote the song as part of a series of vignettes on *Channel Orange* exploring social life and emotional struggle; the album was released July 10, 2012 [3][4][7].\n- **Co-writers**: Frank Ocean and Malay are the sole credited writers [3].\n- **Original inspiration**: Ocean accompanied his grandfather—a former drug addict—to 12-step recovery meetings as a child, where he witnessed mentors helping other addicts. This experience “totally ingrained this fear of addiction” and directly fueled the song’s authenticity [9].\n- **Demo versions**: No verified demo versions or iterations are documented in the provided premium sources.\n\n### MUSICAL COMPOSITION\n- **Key, tempo, structure**: Described as a “midtempo hip-hop soul burner” with a “taut, propelling drum rhythm” alternating with spare organ and keyboard accompaniments [7][10].\n- **Instrumentation**: Features somber piano synths, a Wurlitzer synth creating a “vintage, ghostly atmosphere,” and minimal but striking motifs [8].\n- **Samples**: The track samples the drum pattern from Jimi Hendrix’s “Little Miss Lover” [9].\n- **Production techniques**: Ocean intentionally preserved a “fractured breathiness” in his vocal delivery, rejecting his engineer’s attempt to smooth it out because “that’s how a smoker would sing” [9].\n\n### LYRICAL CONTENT\n- **Meaning**: The lyrics depict a man losing everything to crack addiction—family, home, community—and critique the U.S. “War on Drugs” and government neglect of crack-related deaths [2][8][9].\n- **Personal experiences**: Ocean’s childhood exposure to addiction meetings is the song’s emotional foundation [9].\n- **Cultural references**: Includes a pun on “Little Rock” (Arkansas) and crack slang (“a little rock left”), references to abandoned homes, stealing for a fix, being shunned, and ultimately killing a police officer [8][10].\n- **Artist’s explanation**: Ocean has not provided a direct, verified lyrical breakdown beyond the contextual inspiration from his grandfather’s addiction and recovery meetings [9].\n\n### RECORDING & PRODUCTION\n- **Recording details**: Produced largely by Ocean and Malay; the track features intentional vocal imperfections to reflect a smoker’s breathiness [7][9].\n- **Producer/engineer credits**: Malay is the primary producer; Ocean’s sound engineer attempted to remove the breathiness but was overridden by Ocean [9].\n- **Studio stories**: The decision to keep the fractured vocal delivery is a documented studio moment from Ocean’s interview with *The Guardian* [9].\n- **Technical details**: Use of sampled Hendrix drums, Wurlitzer synth, and sparse organ/keyboard layers [8][9].\n\n### RELEASE & RECEPTION\n- **Release context**: “Crack Rock” is the ninth track on *Channel Orange*, which Ocean released after gaining attention via his 2011 mixtape *Nostalgia, Ultra* [9].\n- **Commercial performance**: No Billboard chart data for the single is provided in the premium sources; the album *Channel Orange* was critically acclaimed but specific single sales are not detailed here.\n- **Critical reception**: *The Seattle Times* calls it a “midtempo hip-hop soul burner” with insider knowledge of addiction [10]; *WSWS* labels it the “strongest song on the album,” praising its sincere portrayal [7]; *Stay Free Radio* describes it as “emotionally charged and haunting” [8].\n- **Music video**: No music video details are documented in the provided premium sources.\n\n### CULTURAL IMPACT\n- **Cover versions**: No cover versions are documented in the provided premium music sources.\n- **Media usage**: No industry-tracked media usage is cited.\n- **Live performance history**: No concert reviews or live performance records are included in the search results.\n- **Critical analysis**: The song is widely analyzed as a critique of systemic neglect, institutional failure, and the destructive cycle of dependence, particularly toward Black communities [8].\n\n**Publication sources & dates**:\n- Genius (lyrics, writer credits, translations): accessed via [1][2][3][4][5]\n- WSWS (“Frank Ocean’s *Channel Orange*”): February 23, 2013 [7]\n- Songfacts (production, sample, inspiration): no date specified, but references 2012 album [9]\n- The Seattle Times (“Summer of Frank Ocean: ‘Crack Rock’”): no date specified, but context aligns with 2012–2013 [10]\n- Stay Free Radio (meaning and review): no date specified [8]\n\nNo information from Rolling Stone, Pitchfork, Complex, The Fader, or NPR Music appears in the provided search results, so those specific angles (e.g., direct artist interviews from those outlets) cannot be included.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-crack-rock-lyrics",
+      "https://genius.com/Genius-brasil-traducoes-frank-ocean-crack-rock-traducao-em-portugues-lyrics",
+      "https://genius.com/Frank-ocean-crack-rock-lyrics/q/writer",
+      "https://genius.com/Genius-traducciones-al-espanol-frank-ocean-crack-rock-traduccion-al-espanol-lyrics",
+      "https://genius.com/Genius-traduzioni-italiane-frank-ocean-crack-rock-traduzione-italiana-lyrics",
+      "https://genius.com/Wubz-crack-rock-lyrics",
+      "https://www.wsws.org/en/articles/2013/02/23/ocea-f23.html",
+      "https://www.stayfreeradioip.com/post/frank-ocean-crack-rock-meaning-and-review",
+      "https://www.songfacts.com/facts/frank-ocean/crack-rock",
+      "https://www.seattletimes.com/entertainment/music/summer-of-frank-ocean-crack-rock/"
+    ],
+    "created": 1784520211,
+    "id": "cea00dc8-9522-49e5-8d9f-0e77b7b5c592",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2012-07-10",
+        "last_updated": "2025-07-25",
+        "place_metadata": null,
+        "snippet": "“Crack Rock” of course can literally mean what the man is a user of, but also the word “crack” can be like a cracked rock, which can be interpreted into the split of this man with his life.\nHe has lost everything, and is now alone.\nThe “crack” has come between him and his family, and just his life i...",
+        "source": "web",
+        "title": "Frank Ocean – Crack Rock",
+        "url": "https://genius.com/Frank-ocean-crack-rock-lyrics"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-02-21",
+        "place_metadata": null,
+        "snippet": "Na 9ª faixa do channel ORANGE, Ocean fala sobre um homem dominado pelo vício em crack e comenta os problemas da chamada “Guerra às Drogas” na América.\n...\n“Crack Rock” (Pedra de Crack), claramente pode literalmente significar do que o homem é usuário, mas também a palavra “crack” pode ser como uma r...",
+        "source": "web",
+        "title": "Genius Brasil Traduções – Frank Ocean - Crack Rock (Tradução em Português)",
+        "url": "https://genius.com/Genius-brasil-traducoes-frank-ocean-crack-rock-traducao-em-portugues-lyrics"
+      },
+      {
+        "date": "2010-10-28",
+        "last_updated": "2025-04-05",
+        "place_metadata": null,
+        "snippet": "“Crack Rock” by Frank Ocean was written by Frank Ocean & Malay.",
+        "source": "web",
+        "title": "Who wrote “Crack Rock” by Frank Ocean?",
+        "url": "https://genius.com/Frank-ocean-crack-rock-lyrics/q/writer"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-11-03",
+        "place_metadata": null,
+        "snippet": "Release Date\nJuly 10, 2012",
+        "source": "web",
+        "title": "Genius Traducciones al Español – Frank Ocean - Crack Rock (Traducción al Español)",
+        "url": "https://genius.com/Genius-traducciones-al-espanol-frank-ocean-crack-rock-traduccion-al-espanol-lyrics"
+      },
+      {
+        "date": "2012-07-10",
+        "last_updated": "2024-09-18",
+        "place_metadata": null,
+        "snippet": "July 10, 2012",
+        "source": "web",
+        "title": "Genius Traduzioni Italiane – Frank Ocean - Crack Rock (Traduzione Italiana)",
+        "url": "https://genius.com/Genius-traduzioni-italiane-frank-ocean-crack-rock-traduzione-italiana-lyrics"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-06-27",
+        "place_metadata": null,
+        "snippet": "Producerwubz\nRelease Date\nSeptember 27, 2020",
+        "source": "web",
+        "title": "wubz – crack rock",
+        "url": "https://genius.com/Wubz-crack-rock-lyrics"
+      },
+      {
+        "date": "2013-02-23",
+        "last_updated": "2024-10-04",
+        "place_metadata": null,
+        "snippet": "*Channel Orange* is comprised of a series of vignettes about social life, complicated relationships and emotional struggle.\nThe musical production, largely carried out by Ocean and creative partner Malay, employs a variety of approaches grounded in R&B and soul, but extending into other genres, incl...",
+        "source": "web",
+        "title": "Frank Ocean’s <em>Channel Orange</em>",
+        "url": "https://www.wsws.org/en/articles/2013/02/23/ocea-f23.html"
+      },
+      {
+        "date": "2025-04-17",
+        "last_updated": "2026-02-08",
+        "place_metadata": null,
+        "snippet": "Frank Ocean’s \"Crack Rock,\" the ninth track on Channel Orange, is one of the album’s most emotionally charged and haunting pieces.\nOpening with somber piano synths that bleed into a slow, almost breakbeat rhythm, the song sets a deeply melancholic mood from the first note.\nThe instrumentation is min...",
+        "source": "web",
+        "title": "Frank Ocean Crack Rock Meaning and Review",
+        "url": "https://www.stayfreeradioip.com/post/frank-ocean-crack-rock-meaning-and-review"
+      },
+      {
+        "date": null,
+        "last_updated": "2026-07-20",
+        "place_metadata": null,
+        "snippet": "### Crack Rock by Frank Ocean\n**Album: ** Channel Orange (2012)\n...\n- On this jazz-inflected tune, Frank Ocean sings of the dangers of drugs as he recounts the tale of a friend who gets hooked on crack and loses everything.\nThe New Orleans-based Ocean goes on to criticize the government for ignoring...",
+        "source": "web",
+        "title": "Crack Rock by Frank Ocean - Songfacts",
+        "url": "https://www.songfacts.com/facts/frank-ocean/crack-rock"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-07-15",
+        "place_metadata": null,
+        "snippet": "In “Crack Rock,” Frank Ocean sings a midtempo hip-hop soul burner about crack addiction, with the kind of insider knowledge of someone who’s lost a family member to the drug.\nOr been wrapped up in it himself.\nOr just has an uncanny ability to channel another person’s pain.\nThe opening lyric is funny...",
+        "source": "web",
+        "title": "Summer of Frank Ocean: ‘Crack Rock’",
+        "url": "https://www.seattletimes.com/entertainment/music/summer-of-frank-ocean-crack-rock/"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 1119,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00112,
+        "request_cost": 0.005,
+        "total_cost": 0.00653
+      },
+      "prompt_tokens": 415,
+      "search_context_size": "low",
+      "total_tokens": 1534
+    }
+  }
+}

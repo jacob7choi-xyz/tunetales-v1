@@ -15,10 +15,24 @@ export async function GET(
   try {
     const research = await getResearchFiles(slug);
 
+    // Provider and cost details are internal; never expose them publicly
+    const sanitized = research.map((file) => ({
+      ...file,
+      metadata: {
+        ...file.metadata,
+        model_used: undefined,
+        cost_estimate: undefined,
+      },
+      response: {
+        ...file.response,
+        model: undefined,
+      },
+    }));
+
     return NextResponse.json({
       artist: slug,
-      fileCount: research.length,
-      research,
+      fileCount: sanitized.length,
+      research: sanitized,
     });
   } catch {
     return NextResponse.json(

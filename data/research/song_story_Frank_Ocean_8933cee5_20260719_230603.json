@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:06:03.635889",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Slide on Me",
+    "model_used": "sonar",
+    "tokens_used": 1193,
+    "cost_estimate": 0.005965
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "There is a critical misunderstanding in your query: **“Slide on Me” is not a Frank Ocean song that exists as a standalone track with a “complete story” separate from the song “Slide” by Calvin Harris.** The confusion stems from two distinct but related releases:\n\n1. **“Slide on Me”** is the **14th track** on Frank Ocean’s 2016 visual album ***Endless*** — a brief, rap-style interlude featuring only Frank Ocean, with simple guitar and drum instrumentation [1].\n2. **“Slide”** is a **2017 hit song by Calvin Harris** featuring **Frank Ocean and Migos**, which became a major commercial release and spawned a **remix of “Slide on Me”** featuring Young Thug [1][5][8].\n\nFrank Ocean **did annotate lyrics for Calvin Harris’s “Slide”** on Genius, explaining the line “buy that boy with a pipe” as a reference to Picasso’s 1905 painting *Boy with a Pipe* (which sold for $104 million in 2004) [2][4][7][9]. However, **he never publicly explained the meaning, inspiration, or creation of his own “Slide on Me”** from *Endless* in any of the premium sources you listed (Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts).\n\n### Key Facts About “Slide on Me” (from *Endless*)\n\n| Category | Verified Detail | Source |\n|--------|------------------|--------|\n| **Album** | 14th track on *Endless* (2016 visual album) | [1] |\n| **Duration** | Begins at 18:58, ends at ~22:00 of the 35-minute film | [1] |\n| **Style** | Conventional track with reprising chorus; basic guitar & drum instrumentation | [1] |\n| **Remix** | Official remix with Young Thug released on *blonded RADIO* episode 005 (March 10, 2017) | [1] |\n| **Artist Explanation** | **No verified artist statement** about “Slide on Me”’s meaning, inspiration, or writing process exists in premium sources | — |\n| **Co-writers/Producers** | Not credited in available premium sources; *Endless* was self-produced by Frank Ocean | — |\n\n### What Premium Sources *Do* Confirm\n\n- Frank Ocean **only explained lyrics for Calvin Harris’s “Slide”**, not his own “Slide on Me” [2][4][7][9].\n- “Slide on Me” is described as a **brief rap towards the end of *Endless***, with no detailed lyrical breakdown or production story in Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR, or Songfacts [1][11].\n- The **Young Thug remix** is the only extended version of “Slide on Me” documented in premium music press [1][11].\n\n### Conclusion\n\n**There is no complete, verified story behind Frank Ocean’s “Slide on Me”** in the premium sources you specified. Frank Ocean has never publicly discussed its writing process, inspiration, collaborators, or lyrical meaning in interviews or annotations from Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts. The only confirmed details are its placement on *Endless*, its minimalist instrumentation, and the existence of the Young Thug remix [1][11].\n\nThe lyrical annotations and cultural context you may be recalling (e.g., the Picasso reference) belong to **Calvin Harris’s “Slide”**, not Frank Ocean’s “Slide on Me” [2][4][7][9].",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-slide-on-me-lyrics",
+      "https://www.vice.com/en/article/frank-ocean-calvin-harris-slide-lyrics/",
+      "https://www.passionweiss.com/2017/07/10/calvin-harris-slide-frank-ocean/",
+      "https://www.thefader.com/2017/02/24/frank-ocean-slide-calvin-harris-migos-lyrics-genius-annotation",
+      "https://frankocean.fandom.com/wiki/Slide",
+      "https://www.vice.com/en/article/the-enduring-appeal-of-endless-frank-oceans-underrated-masterpiece/",
+      "https://www.complex.com/pigeons-and-planes/a/adrienne-black/frank-ocean-annotates-slide-lyrics",
+      "https://genius.com/Calvin-harris-slide-lyrics",
+      "https://blonded.blog/news/frank-annotates-slide-lyrics-on-genius",
+      "https://www.youredm.com/2017/02/25/check-meaning-behind-calvin-harris-new-single-frank-ocean-migos/",
+      "https://www.mic.com/articles/175116/frank-ocean-young-thug-slide-on-me-lyrics-a-breakdown-of-the-defiant-remix",
+      "https://genius.com/Frank-ocean-cayendo-lyrics"
+    ],
+    "created": 1784520363,
+    "id": "218cf298-75b3-4b9e-8027-6d26b0b46cfb",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": null,
+        "last_updated": "2024-07-04",
+        "place_metadata": null,
+        "snippet": "“Slide on Me” is the fourteenth track from Frank Ocean’s 2016 visual album\n*Endless*.\nIt’s one of the more conventional tracks on the album, featuring a reprising chorus and basic guitar & drum instrumentation.\nOn April 24, 2017, Ocean released a remix of the song, featuring Young Thug, through epis...",
+        "source": "web",
+        "title": "Frank Ocean – Slide on Me",
+        "url": "https://genius.com/Frank-ocean-slide-on-me-lyrics"
+      },
+      {
+        "date": "2017-02-25",
+        "last_updated": "2026-07-20",
+        "place_metadata": null,
+        "snippet": "On the page, Ocean annotated the intro verse, which says, “I might / Empty my bank account / And buy that boy with a pipe / Buy that boy with a pipe.”\nThe line, according to Ocean, is in reference to the 1905 Pablo Picasso painting, *Boy with a Pipe*.\n...\nPicasso is later referenced in the third ver...",
+        "source": "web",
+        "title": "Frank Ocean Just Annotated the Lyrics of His Calvin Harris ...",
+        "url": "https://www.vice.com/en/article/frank-ocean-calvin-harris-slide-lyrics/"
+      },
+      {
+        "date": "2017-07-10",
+        "last_updated": "2025-09-01",
+        "place_metadata": null,
+        "snippet": "In reference to his intro and outro verse “I might / Empty my bank account / And buy that ‘Boy With A Pipe,’” Ocean annotated, “A Picasso painting that sold for so much money.”\nThis referenced Picasso (titled Garçon à la Pipe in its original French) made a splash in 2004 when it sold at a Sotheby’s ...",
+        "source": "web",
+        "title": "Breaking Down Frank Ocean's Secret Message on \"Slide\"",
+        "url": "https://www.passionweiss.com/2017/07/10/calvin-harris-slide-frank-ocean/"
+      },
+      {
+        "date": "2017-02-24",
+        "last_updated": "2025-11-02",
+        "place_metadata": null,
+        "snippet": "Frank Ocean just hopped on Genius to offer some vague insight into his lyrics from \"Slide,\" his Calvin Harris and Migos team-up that dropped tonight.\nThe song's first few bars go:\n*I might...empty my bank account.\nAnd buy that \"Boy With A Pipe.\"* As Frank explained in his annotation on Genius, \"Boy ...",
+        "source": "web",
+        "title": "Frank Ocean Just Explained Some Of The Lyrics From “Slide”",
+        "url": "https://www.thefader.com/2017/02/24/frank-ocean-slide-calvin-harris-migos-lyrics-genius-annotation"
+      },
+      {
+        "date": "2024-10-29",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**Slide** is a song by Calvin Harris featuring Frank Ocean and Migos.\nIt serves as the lead single from Harris's fifth studio album, *Funk Wav Bounces Vol. 1*, and was released on February 23, 2017 through Sony Music.\n...\nThe song is described as telling \"the story of those who just want to enter a ...",
+        "source": "web",
+        "title": "Slide - Frank Ocean Wiki - Fandom",
+        "url": "https://frankocean.fandom.com/wiki/Slide"
+      },
+      {
+        "date": "2017-05-04",
+        "last_updated": "2026-07-19",
+        "place_metadata": null,
+        "snippet": "Like recent singles “Chanel” and “Biking”, * Endless* is a fluid work with a grand scope and no clear endpoint.",
+        "source": "web",
+        "title": "The Enduring Appeal of 'Endless', Frank Ocean's ...",
+        "url": "https://www.vice.com/en/article/the-enduring-appeal-of-endless-frank-oceans-underrated-masterpiece/"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-07-22",
+        "place_metadata": null,
+        "snippet": "In his annotation, he explains the opening lyrics—\"I might / Empty my bank account / And buy that boy with a pipe\"—refers to \"A Picasso painting that sold for so much money.\"\nMore specifically, Pablo Picasso's 1905 painting\n*Garçon à la pipe* (which translates to \"Boy with a pipe\") that was auctione...",
+        "source": "web",
+        "title": "Frank Ocean Explains His \"Slide\" Lyrics",
+        "url": "https://www.complex.com/pigeons-and-planes/a/adrienne-black/frank-ocean-annotates-slide-lyrics"
+      },
+      {
+        "date": "2017-02-23",
+        "last_updated": "2025-07-02",
+        "place_metadata": null,
+        "snippet": "“Slide” details the story of those who just want to enter into a richer person’s life so they can live like they’re more affluent.\nIt arrived on February 24, becoming the first original song released by Scottish DJ/producer Calvin Harris in 2017.\nIt features vocals from Quavo and Offset of the Atlan...",
+        "source": "web",
+        "title": "Calvin Harris (Ft. Frank Ocean & Migos) – Slide",
+        "url": "https://genius.com/Calvin-harris-slide-lyrics"
+      },
+      {
+        "date": "2017-02-24",
+        "last_updated": "2026-05-23",
+        "place_metadata": null,
+        "snippet": "Frank Ocean dropped in on the *Genius* lyric page for “Slide” to clarify the meaning behind the line “buy that boy with a pipe” in the song’s intro:\n> [*Boy with a Pipe* is] a Picasso painting that sold for so much money.\nOcean’s annotation refers to Pablo Picasso’s 1905 painting *Garçon à la Pipe*,...",
+        "source": "web",
+        "title": "Frank annotates \"Slide\" lyrics on Genius",
+        "url": "https://blonded.blog/news/frank-annotates-slide-lyrics-on-genius"
+      },
+      {
+        "date": "2017-02-25",
+        "last_updated": "2025-10-30",
+        "place_metadata": null,
+        "snippet": "**Calvin Harris** just released his huge collaboration with **Migos** and **Frank Ocean**, “Slide.”\nOf course, with the three of them, including **Offset**, as songwriters for the track, you already knew there would be a rich meaning underneath the lyrics.\n...\n“’\n*Slide’ is slang for consistently en...",
+        "source": "web",
+        "title": "Check Out The Meaning Behind Calvin Harris' New Single ...",
+        "url": "https://www.youredm.com/2017/02/25/check-meaning-behind-calvin-harris-new-single-frank-ocean-migos/"
+      },
+      {
+        "date": "2017-04-24",
+        "last_updated": "2025-09-10",
+        "place_metadata": null,
+        "snippet": "Monday morning, the reclusive Ocean decided to revisit one of those tracks off\n*Endless —* \"Slide On Me,\" a brief rap towards the album's end.",
+        "source": "web",
+        "title": "Frank Ocean, Young Thug \"Slide on Me\" Lyrics - Mic",
+        "url": "https://www.mic.com/articles/175116/frank-ocean-young-thug-slide-on-me-lyrics-a-breakdown-of-the-defiant-remix"
+      },
+      {
+        "date": "2020-04-03",
+        "last_updated": "2025-07-04",
+        "place_metadata": null,
+        "snippet": "“Cayendo” is another emotional ballad from Frank Ocean, describing the feeling of falling for his significant other who seemingly does not reciprocate the same feelings.\nHis lyrics, a mix of Spanish and English, are accompanied only by guitar.\nThe track premiered at Ocean’s PrEP+ nightclub event in ...",
+        "source": "web",
+        "title": "Frank Ocean – Cayendo",
+        "url": "https://genius.com/Frank-ocean-cayendo-lyrics"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 778,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00078,
+        "request_cost": 0.005,
+        "total_cost": 0.00619
+      },
+      "prompt_tokens": 415,
+      "search_context_size": "low",
+      "total_tokens": 1193
+    }
+  }
+}

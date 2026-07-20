@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:05:02.657578",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Mine",
+    "model_used": "sonar",
+    "tokens_used": 1095,
+    "cost_estimate": 0.005475000000000001
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "There is no song titled \"Mine\" by Frank Ocean on his major albums (*Ocean*, *Channel Orange*, *Blonde*, or *Endless*) that matches the detailed profile you requested (writing process, co-writers, key/tempo, samples, production credits, commercial performance, etc.) **from the premium music sources you specified** (Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, Songfacts).\n\nThe only verified reference to a track named \"Mine\" in the provided search results is a **30-second experimental interlude** on Frank Ocean’s 2016 visual album *Endless*, produced by **Arca**, which interpolates a poem titled \"My Random\" from Ocean’s Tumblr [4]. This track does not have:\n- A writing timeline or co-writers beyond Ocean and Arca [4]\n- Key, tempo, or structural analysis from professional music critics [4]\n- Samples beyond the poem interpolation [4]\n- Commercial performance data (it was not released as a single) [4]\n- Critical reception from Rolling Stone, Pitchfork, or NPR (no such reviews exist for this 30-second piece) [4]\n- Live performance history or cover versions (it has never been performed live) [4]\n\nThe search results contain extensive information about Frank Ocean’s general songwriting process (e.g., improvising verses over beats, looping bars, drawing from personal experiences and divas like Whitney Houston and Prince) [1][2][3], but **none of this applies specifically to a song called \"Mine\"** beyond the *Endless* interlude.\n\nIt is highly likely you are conflating \"Mine\" with one of Frank Ocean’s actual songs, such as:\n- **\"Think About You\"** (from *Channel Orange*, originally written for Bridget Kelly) [5]\n- **\"Crack Rock\"** or **\"Sweet Life\"** (also from *Channel Orange*) [5]\n- **\"Nights\"** or **\"Self Control\"** (from *Blonde*)\n- **\"Ivy\"** or **\"Pink + White\"** (from *Blonde*)\n\nIf you meant a different song, please clarify the title, and I will research it using only your required premium sources. If you specifically want details on the 30-second *Endless* interlude \"Mine,\" the only verified facts are:\n- It is track 4 on *Endless* (2016) [4]\n- Duration: ~30 seconds (7:36–8:01 on the album) [4]\n- Producer: **Arca** (experimental producer who worked with FKA Twiz, Kelela, Kanye West) [4]\n- Lyrics: Interpolate Ocean’s Tumblr poem \"My Random\" (April 28, 2014), including the line: *\"How come the ecstasy only depresses me so; chemically I don’t have any new places to go\"* [4]\n- No official release as a single, no commercial chart data, no critical reviews from major publications [4]\n\nNo premium music source (Genius, Rolling Stone, Pitchfork, etc.) has published a full breakdown of \"Mine\" beyond these minimal facts, confirming it is not a standalone song with the comprehensive details you requested.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://onairwithryan.iheart.com/featured/ryan-seacrest/content/2019-04-21-frank-ocean-reveals-the-secret-to-his-songwriting-process/",
+      "https://genius.com/Frank-ocean-frank-ocean-gq-men-of-the-year-interview-annotated",
+      "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/",
+      "https://genius.com/Frank-ocean-mine-lyrics",
+      "https://www.youtube.com/watch?v=5dsGBohAq4s",
+      "https://www.youtube.com/watch?v=m8KUe5_6aHw"
+    ],
+    "created": 1784520302,
+    "id": "aa48862c-3ac6-41c2-93db-80860a7def3b",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2019-04-22",
+        "last_updated": "2026-05-18",
+        "place_metadata": null,
+        "snippet": "\"I just start improvising verses and putting it together, which is something I would do on my own, where you’re listening with your headphones on, listening to the beat over and over, and you’re piecing it together in your head and you blurt out the verse,\" he explains.\n\"Maybe you’ll blurt out a few...",
+        "source": "web",
+        "title": "Frank Ocean Reveals the Secret to His Songwriting Process",
+        "url": "https://onairwithryan.iheart.com/featured/ryan-seacrest/content/2019-04-21-frank-ocean-reveals-the-secret-to-his-songwriting-process/"
+      },
+      {
+        "date": "2012-11-20",
+        "last_updated": "2025-02-15",
+        "place_metadata": null,
+        "snippet": "Frank Ocean: fo: I feel like I was writing as I was learning to talk.\nWriting was always a goto form of communication.\nAnd I knew I could sing from being in tune with the radio.\nI would listen to whatever my mom played in the car—the big divas: Whitney, Mariah, Celine, Anita Baker.\nThen I got expose...",
+        "source": "web",
+        "title": "Frank Ocean (Ft. Amy Wallace) – Frank Ocean GQ 'Men of the Year' Interview",
+        "url": "https://genius.com/Frank-ocean-frank-ocean-gq-men-of-the-year-interview-annotated"
+      },
+      {
+        "date": "2021-10-05",
+        "last_updated": "2026-07-13",
+        "place_metadata": null,
+        "snippet": "When delving into his creative process and his inspirations for this album, Frank Ocean mentions that overall, he is inspired to tell stories with his music.\n...\nHe creates narratives with his lyrics and embodies it with a musical journey that conveys the emotions from the narrative, using musical t...",
+        "source": "web",
+        "title": "How Frank Ocean tells Stories",
+        "url": "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/"
+      },
+      {
+        "date": "2016-08-19",
+        "last_updated": "2025-02-09",
+        "place_metadata": null,
+        "snippet": "“Mine” is the fourth track from Frank Ocean’s 2016 visual album\n*Endless*.\nIt’s one of the shortest tracks on the album, running for roughly thirty seconds.\nThe lyrics interpolate a poem by Ocean titled “My Random,” shared to Tumblr on April 28, 2014, that featured the lines, “How come the ecstasy o...",
+        "source": "web",
+        "title": "Frank Ocean – Mine",
+        "url": "https://genius.com/Frank-ocean-mine-lyrics"
+      },
+      {
+        "date": "2025-06-29",
+        "last_updated": "2026-03-26",
+        "place_metadata": null,
+        "snippet": "So to share his stories with the world, Frank worked closely with producer and songwriter Malay for the\n{ts:367} album and they began writing songs for the album in February of 2011.\n...\nAnd I\n...\nHe typed the lyrics on his laptop as\n...\nAfter the album was\n{ts:557} done being written, Frank arrange...",
+        "source": "web",
+        "title": "how frank ocean made channel orange",
+        "url": "https://www.youtube.com/watch?v=5dsGBohAq4s"
+      },
+      {
+        "date": "2023-03-05",
+        "last_updated": "2026-07-18",
+        "place_metadata": null,
+        "snippet": "{ts:315} building the picture of this Central character to vocalizing the voice of the character he is able to develop a\n{ts:321} classic story structure with a satisfying beginning middle and end for his audience returning now to the lyric",
+        "source": "web",
+        "title": "Frank Ocean: Songwriting Analysis and Creative Advice For Artists.",
+        "url": "https://www.youtube.com/watch?v=m8KUe5_6aHw"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 682,
+      "cost": {
+        "input_tokens_cost": 0.00041,
+        "output_tokens_cost": 0.00068,
+        "request_cost": 0.005,
+        "total_cost": 0.0061
+      },
+      "prompt_tokens": 413,
+      "search_context_size": "low",
+      "total_tokens": 1095
+    }
+  }
+}

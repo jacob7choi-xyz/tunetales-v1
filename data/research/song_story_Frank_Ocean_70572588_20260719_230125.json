@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:01:25.193231",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "We All Try",
+    "model_used": "sonar",
+    "tokens_used": 1446,
+    "cost_estimate": 0.00723
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "There is a critical factual error in your query: **Frank Ocean did not release a song titled “We All Try.”** The song you are referencing is actually titled **“We All Try”** by **Frank Ocean** only in the sense that it appears on his 2011 debut mixtape ***Nostalgia, Ultra***, but **the correct title is “We All Try”** — wait, let’s verify this carefully.\n\nActually, upon cross-referencing verified premium music sources:\n\n- **Genius** lists the song as **“We All Try”** by Frank Ocean, released February 16, 2011, on *Nostalgia, Ultra* [1].\n- **The Fandom Wiki** (though not a premium source, it cites industry credits) confirms: “**We All Try** is the fourth song from Frank Ocean's debut mixtape *Nostalgia, Ultra* (2011)” [6].\n- **DJBooth** (a respected music publication, though not in your required list) provides a full narrative breakdown of the song’s story [2].\n- However, **none of your required premium sources** (Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, Songfacts) contain **verified artist annotations, interviews, or professional analyses** specifically about “We All Try” beyond the basic Genius lyric page [1] and a non-verified lyric analysis slide [3].\n\nLet’s clarify the core issue:\n\n### ✅ The song exists, but **there is no verified artist commentary or deep professional analysis from your required premium sources** about “We All Try.”\n\n- **Genius** only provides the lyrics and a note that the song is sampled by others — **no artist annotation** for this track [1].\n- **Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, and Songfacts** have **no published articles, interviews, or analyses** specifically about “We All Try” in their archives (as of current knowledge up to 2026).\n- **DJBooth** offers a narrative interpretation: the song depicts Frank encouraging a depressed “She,” who questions his optimism, leading Frank to reveal he has been in her shoes [2]. But DJBooth is **not** in your required source list.\n- The **lyric analysis PPTX** [3] claims Frank discusses religion, war, women’s rights, marriage, and disbelief in time travel — but this is **not from a verified artist statement** and appears to be an academic or fan interpretation, not from Genius, Rolling Stone, etc.\n\n### 🚫 Critical Conclusion:\n**You cannot research the “complete story” behind “We All Try” using ONLY your specified premium sources**, because **those sources do not contain verified artist interviews, co-writer confirmations, production details, or lyrical explanations for this specific song.**\n\nThe only credible information available from your allowed sources is:\n- **Title**: “We All Try”\n- **Artist**: Frank Ocean\n- **Release Date**: February 16, 2011\n- **Album**: *Nostalgia, Ultra* (mixtape)\n- **Lyrics available** on Genius [1]\n- **No verified artist annotations** on Genius for this track [1]\n\n### What *is* known from non-premium but credible industry sources (outside your list):\n- **Co-writers**: Frank Ocean and **Happy Perez** [6]\n- **Producers**: **Happy Perez** and **Corey Chase** [6]\n- **Narrative**: A conversation between Frank and a depressed woman, where he shares his own past struggles to encourage her [2]\n- **Themes**: Faith, self-belief, humanity’s tendency to sin but try to be good, skepticism of certain cultural symbols (e.g., American flag on the moon) [2][3]\n\nHowever, **none of these details are confirmed by Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts** in published, verifiable content.\n\n### Final Answer:\n**There is no complete, verified story behind Frank Ocean’s “We All Try” available exclusively through your required premium music sources (Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, Songfacts), because none of these outlets have published artist interviews, annotated lyrics, or professional analyses for this specific track.** The only confirmed facts from your allowed sources are the song’s title, release date, and placement on *Nostalgia, Ultra* [1]. All deeper details about writing process, collaborators, inspiration, and lyrical meaning come from **non-premium sources** (e.g., DJBooth, fandom wikis, academic slides) and **cannot be included** under your strict sourcing rules.\n\nIf you wish to proceed with the most credible available information (including DJBooth and industry credits), I can provide that—but it would violate your “ONLY premium sources” constraint.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-we-all-try-lyrics",
+      "https://djbooth.net/features/2019-11-20-frank-ocean-we-all-try-nostalgia-forever-series/",
+      "https://www.slideshare.net/slideshow/lyric-analysis-of-we-all-try/44093064",
+      "https://www.youtube.com/watch?v=oFFoyZ-pWsg",
+      "https://genius.com/Frank-ocean-try-lyrics",
+      "https://frankocean.fandom.com/wiki/We_All_Try",
+      "https://www.complex.com/pigeons-and-planes/a/adrienne-black/frank-ocean-annotates-slide-lyrics",
+      "https://singersroom.com/content/2011-06-10/frank-ocean-we-all-try/",
+      "https://daydreamingdifferent.wordpress.com/2011/09/26/frank-oceans-we-all-try-tries-to-push-beliefs/"
+    ],
+    "created": 1784520085,
+    "id": "1d13ef19-07de-4dfe-b622-e06b89c79d6e",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2011-02-16",
+        "last_updated": "2025-07-11",
+        "place_metadata": null,
+        "snippet": "February 16, 2011Songs That Sample we all try",
+        "source": "web",
+        "title": "Frank Ocean – we all try",
+        "url": "https://genius.com/Frank-ocean-we-all-try-lyrics"
+      },
+      {
+        "date": "2019-11-20",
+        "last_updated": "2025-07-29",
+        "place_metadata": null,
+        "snippet": "His goal here is to demystify belief in the self and goodness.\n...\nThe clear message of “We All Try” is about pacing yourself as you recover.\n...\nThe full story of “We All Try” goes as follows: Frank sees depressed “ *She*”; Frank encourages her; “ *She*” questions Frank’s perspective; Frank reveals...",
+        "source": "web",
+        "title": "Frank Ocean's “We All Try” & the Power of Believing in ...",
+        "url": "https://djbooth.net/features/2019-11-20-frank-ocean-we-all-try-nostalgia-forever-series/"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-06-21",
+        "place_metadata": null,
+        "snippet": "Frank Ocean analyzes his own song \"We All Try\" through three verses.\nIn the first verse, he discusses his beliefs in religion, war, women's rights, and marriage.\nThe second verse expresses his continued belief in humanity despite being questioned.\nFrank believes people are not wicked, just prone to ...",
+        "source": "web",
+        "title": "Lyric analysis of We All Try By Frank Ocean | PPTX",
+        "url": "https://www.slideshare.net/slideshow/lyric-analysis-of-we-all-try/44093064"
+      },
+      {
+        "date": "2013-09-08",
+        "last_updated": "2025-11-22",
+        "place_metadata": null,
+        "snippet": "{ts:50} but the first thing you gotta know is first chord is an a major i believe left hand plays a\n{ts:59} right hand plays a c sharp e second chord f chord left hand plays f right hand plays c\n{ts:71} f a third chord it's a d chord left hand plays d right hand plays\n{ts:83} d f a fourth chord you ...",
+        "source": "web",
+        "title": "How to play 'We All Try\" by Frank Ocean",
+        "url": "https://www.youtube.com/watch?v=oFFoyZ-pWsg"
+      },
+      {
+        "date": "2011-08-29",
+        "last_updated": "2025-02-14",
+        "place_metadata": null,
+        "snippet": "ProducerMidi Mafia\nWriterFrank Ocean\nReleased on\nAugust 29, 2011",
+        "source": "web",
+        "title": "Frank Ocean – Try",
+        "url": "https://genius.com/Frank-ocean-try-lyrics"
+      },
+      {
+        "date": "2011-02-16",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**We All Try** is the fourth song from Frank Ocean's debut mixtape *Nostalgia, Ultra* (2011).\nOn the song, Frank discusses his what he believes and doesn't believe in, including contentious topics such as the legality of same-sex marriage and abortion rights.\nThe song was written jointly between Fra...",
+        "source": "web",
+        "title": "We All Try",
+        "url": "https://frankocean.fandom.com/wiki/We_All_Try"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-07-22",
+        "place_metadata": null,
+        "snippet": "In his annotation, he explains the opening lyrics—\"I might / Empty my bank account / And buy that boy with a pipe\"—refers to \"A Picasso painting that sold for so much money.\"\nMore specifically, Pablo Picasso's 1905 painting\n*Garçon à la pipe* (which translates to \"Boy with a pipe\") that was auctione...",
+        "source": "web",
+        "title": "Frank Ocean Explains His \"Slide\" Lyrics",
+        "url": "https://www.complex.com/pigeons-and-planes/a/adrienne-black/frank-ocean-annotates-slide-lyrics"
+      },
+      {
+        "date": "2011-06-10",
+        "last_updated": "2024-11-24",
+        "place_metadata": null,
+        "snippet": "The track manages to bring together a mix of genres – from modern soul to classic rhythm & blues – creating a soundscape unlike anything heard before.\n...\nAs Frank Ocean’s career has progressed, his music has become increasingly introspective and reflective.\n‘We All Try’ is no exception; a soulful t...",
+        "source": "web",
+        "title": "Frank Ocean – We All Try",
+        "url": "https://singersroom.com/content/2011-06-10/frank-ocean-we-all-try/"
+      },
+      {
+        "date": "2011-09-26",
+        "last_updated": "2025-10-10",
+        "place_metadata": null,
+        "snippet": "Frank Ocean challenges people to discover and define their personal beliefs in his song “We All Try”, from his recent mixtape Nostalgia.\n...\nThe song is split into two verses—the first being a more optimistic set of beliefs, while the second summons a cynical belief system.",
+        "source": "web",
+        "title": "Frank Ocean's “We All Try”, Tries to Push Beliefs.",
+        "url": "https://daydreamingdifferent.wordpress.com/2011/09/26/frank-oceans-we-all-try-tries-to-push-beliefs/"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 1031,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00103,
+        "request_cost": 0.005,
+        "total_cost": 0.00645
+      },
+      "prompt_tokens": 415,
+      "search_context_size": "low",
+      "total_tokens": 1446
+    }
+  }
+}

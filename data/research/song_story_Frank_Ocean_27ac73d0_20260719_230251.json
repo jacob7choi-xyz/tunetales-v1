@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:02:51.518758",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Sierra Leone",
+    "model_used": "sonar",
+    "tokens_used": 1534,
+    "cost_estimate": 0.00767
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "“Sierra Leone” by Frank Ocean is a **fictional coming-of-age story** about a teenage Frank getting a girl pregnant, using the country’s “pink skies” as an extended metaphor for her womb while exploring his transition from irresponsible youth to reluctant fatherhood [1][5]. The song was **written by Frank Ocean (Christopher Breaux) and James Ho**, produced by **Frank Ocean, Malay, and Om’Mas Keith**, and released as the **fourth track** on Ocean’s debut album *channel ORANGE* on **July 10, 2012** [2][6][8].\n\n---\n\n## SONG CREATION\n\n- **Writing process & timeline**: The song was crafted during the *channel ORANGE* writing period (2011–2012), with Ocean developing its narrative as a fictionalized reflection on his own teenage years and the emotional weight of impending parenthood [1][5].\n- **Co-writers**: **Christopher Breaux (Frank Ocean)** and **James Ho** are credited as writers [6][8].\n- **Original inspiration**: Ocean uses a **fictional story** of his younger self getting a girl pregnant, drawing emotional resonance from his real-life experience of his father leaving when he was five, which left him without a father figure [1].\n- **Demo versions**: No verified demo versions or iterations are documented in the provided premium sources.\n\n---\n\n## MUSICAL COMPOSITION\n\n- **Key**: The song is in **A Mixolydian**, a scale similar to A Major but with a lowered 7th note (G) [4].\n- **Complexity**: It features **above-average chord and melodic complexity**, with notable chord-melody tension and novel progressions [4].\n- **Instrumentation**: Includes **vocals by Frank Ocean**, **cello by Dave Eggar**, and string instruments by **Chuck Palmer** and **Sara Parkins** (violin) [8].\n- **Samples**: No samples are cited in the provided sources; the track appears to be **original composition** [2][8].\n- **Production techniques**: Layered **floaty vocals** combined with a **brief rap verse**, showcasing Ocean’s evolving vocal style [5].\n\n---\n\n## LYRICAL CONTENT\n\n- **Meaning**: The lyrics depict Ocean addressing a **fictional younger self**, using “pink skies of Sierra Leone” as a metaphor for the girl’s **vagina and womb** [1].\n- **Personal experiences**: Though the story is fictional, the theme of **maturing into parenthood** carries weight due to Ocean’s own **fatherless upbringing** [1].\n- **Cultural references**: The song’s **call-and-response structure** may homage **Marvin Gaye’s “Save the Children” (1971)** [1].\n- **Artist’s explanation**: Ocean has not provided a direct lyrical breakdown in the available premium sources, but Genius annotations confirm the fictional narrative and metaphorical use of “Sierra Leone” [1].\n\n---\n\n## RECORDING & PRODUCTION\n\n- **Producers**: **Frank Ocean, Malay, Om’Mas Keith** [2][6][8].\n- **Engineers**:\n  - Recording: **Calvin Bailiff, Phil Scott, Pat Thrall, Vic Wainstein, Jeff Ellis**\n  - Assistant Recording: **Wil Anspach, Chad Carlisle, Adam Harr**\n  - Mixing: **Frank Ocean, Malay**\n  - Mastering: **Vlado Meller** [8].\n- **Studio stories**: No specific studio anecdotes are documented in the provided premium sources.\n- **Technical details**: The track features **layered vocals** and **string instrumentation**, contributing to its atmospheric, floaty quality [5][8].\n\n---\n\n## RELEASE & RECEPTION\n\n- **Release context**: “Sierra Leone” is Track 4 on *channel ORANGE*, released **July 10, 2012** [6][8].\n- **Commercial performance**: No Billboard data is included in the provided sources.\n- **Critical reception**: The song is noted for its **narrative depth** and **vocal experimentation**, though specific reviews from Rolling Stone, Pitchfork, or NPR are not present in the current search results.\n- **Music video**: No music video exists for “Sierra Leone”; it was not released as a single [6].\n\n---\n\n## CULTURAL IMPACT\n\n- **Cover versions**: No documented covers appear in the provided premium sources.\n- **Media usage**: No industry tracking of media usage is available in the current results.\n- **Live performances**: The song has been performed live, but specific concert reviews or performance history are not detailed in the provided sources.\n- **Critical analysis**: The song is recognized as a **metaphor-rich journey of growing up**, exploring **unexpected parenthood** and the shift from **reckless youth to cautious wisdom** [7].\n\n---\n\n**Note**: While the search results include verified data from **Genius** and **Apple Music**, premium sources like **Rolling Stone, Pitchfork, Complex, The Fader, NPR Music**, and **Songfacts** did not return specific articles on “Sierra Leone” in this search. Therefore, some sections (e.g., critical reception, live performance history) lack direct citations from those outlets. The information provided is grounded in the **most credible available sources** from the required list.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-sierra-leone-lyrics",
+      "https://genius.com/Frank-ocean-sierra-leone-lyrics/q/producer",
+      "https://genius.com/Genius-how-to-annotate-and-edit-on-genius-annotated",
+      "https://www.hooktheory.com/theorytab/view/frank-ocean/sierra-leone",
+      "https://coogradio.com/2021/08/track-by-track-frank-oceans-channel-orange-2012/",
+      "https://frankocean.fandom.com/wiki/Sierra_Leone",
+      "https://www.youtube.com/watch?v=EixthOBvaGk",
+      "https://music.apple.com/gb/song/sierra-leone/1440766139",
+      "https://genius.com/Frank-ocean-solo-lyrics"
+    ],
+    "created": 1784520171,
+    "id": "64fff86e-9c94-4692-9d83-9b665171b298",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2012-07-10",
+        "last_updated": "2025-07-06",
+        "place_metadata": null,
+        "snippet": "## Sierra Leone LyricsIn “Sierra Leone,” Frank Ocean talks to a (fictional) younger version of himself who fooled around and got a girl pregnant.\n...\nIn “Sierra Leone,” Frank Ocean talks to a (fictional) younger version of himself who fooled around and got a girl pregnant.\nHe uses the extended metap...",
+        "source": "web",
+        "title": "Frank Ocean – Sierra Leone",
+        "url": "https://genius.com/Frank-ocean-sierra-leone-lyrics"
+      },
+      {
+        "date": "2010-10-28",
+        "last_updated": "2025-07-03",
+        "place_metadata": null,
+        "snippet": "“Sierra Leone” by Frank Ocean was produced by Frank Ocean, Malay & Om'Mas Keith.",
+        "source": "web",
+        "title": "Who produced “Sierra Leone” by Frank Ocean?",
+        "url": "https://genius.com/Frank-ocean-sierra-leone-lyrics/q/producer"
+      },
+      {
+        "date": "2018-02-06",
+        "last_updated": "2025-07-03",
+        "place_metadata": null,
+        "snippet": "✧ Here are the rules you should always follow when annotating:\n**Don't Restate The Lyric**-> Click here to learn more **Write Like A Human**-> Click here to learn more **Watch Grammar & Spelling**-> Click here to learn more **Do Research & Hyperlink Sources**-> Click here to learn more **Highlight A...",
+        "source": "web",
+        "title": "✧",
+        "url": "https://genius.com/Genius-how-to-annotate-and-edit-on-genius-annotated"
+      },
+      {
+        "date": "2025-09-22",
+        "last_updated": "2025-10-12",
+        "place_metadata": null,
+        "snippet": "In terms of chords and melody, Sierra Leone is more complex than the typical song, having above average scores in Chord Complexity, Melodic Complexity, Chord-Melody Tension and Chord Progression Novelty.\nSierra Leone is written in the key of A Mixolydian.\nAccording to the Theorytab database, it is t...",
+        "source": "web",
+        "title": "Sierra Leone by Frank Ocean Chords and Melody - Hooktheory",
+        "url": "https://www.hooktheory.com/theorytab/view/frank-ocean/sierra-leone"
+      },
+      {
+        "date": "2021-08-19",
+        "last_updated": "2026-07-16",
+        "place_metadata": null,
+        "snippet": "“Sierra Leone” is next, a song which takes a look back at Ocean’s teenage years, in which he got a girl pregnant.\nIn this song, Ocean starts to unveil his higher, floaty vocals, expertly layering them with a brief rap verse.",
+        "source": "web",
+        "title": "Track-by-Track: Frank Ocean's Channel ORANGE (2012)",
+        "url": "https://coogradio.com/2021/08/track-by-track-frank-oceans-channel-orange-2012/"
+      },
+      {
+        "date": "2022-12-15",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**Sierra Leone** is the fourth track from Frank Ocean's debut studio album *channel ORANGE* (2012).\nThe song is centered around a fictional story of his younger self fooling around and getting a girl pregnant.\n...\n- **Performed by** Frank Ocean\n- **Written by** James Ho, Lonnie Breaux\n- **Produced b...",
+        "source": "web",
+        "title": "Sierra Leone | Frank Ocean Wiki | Fandom",
+        "url": "https://frankocean.fandom.com/wiki/Sierra_Leone"
+      },
+      {
+        "date": "2026-04-12",
+        "last_updated": "2026-04-13",
+        "place_metadata": null,
+        "snippet": "{ts:0} Frank Ocean Sierra Leone is a coming [music] of age story that tells a tale\n{ts:3} of young lovers who conceive a child too young and it's told from the perspective of the boyfriend.\nAnd while at first\n{ts:9} glance Sierra Leone is a story about two kids who get caught up in the own world ben...",
+        "source": "web",
+        "title": "Frank Ocean - Sierra Leone Explained | Track 365",
+        "url": "https://www.youtube.com/watch?v=EixthOBvaGk"
+      },
+      {
+        "date": "2012-07-10",
+        "last_updated": "2026-02-15",
+        "place_metadata": null,
+        "snippet": "channel ORANGE Frank Ocean 10 July 2012\n## Performing Artists\n- Frank Ocean\nVocals\n- Dave Eggar\nCello\n- Chuck Palmer\nString Instrument\n- Sara Parkins\nViolin\n## Composition & Lyrics\n- Christopher Breaux\nSongwriter\n- James Ho\nSongwriter\n## Production & Engineering\n- Frank Ocean\nProducer, Mixing Engine...",
+        "source": "web",
+        "title": "Sierra Leone – Song by Frank Ocean",
+        "url": "https://music.apple.com/gb/song/sierra-leone/1440766139"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-04-09",
+        "place_metadata": null,
+        "snippet": "The song title means two things: ‘solo’ as in alone and ‘so low,’ pertaining to the emotionally depressing moments in an individual’s virtually loveless, lonely life.",
+        "source": "web",
+        "title": "Frank Ocean – Solo",
+        "url": "https://genius.com/Frank-ocean-solo-lyrics"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 1119,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00112,
+        "request_cost": 0.005,
+        "total_cost": 0.00653
+      },
+      "prompt_tokens": 415,
+      "search_context_size": "low",
+      "total_tokens": 1534
+    }
+  }
+}

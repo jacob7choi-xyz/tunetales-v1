@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:02:18.402232",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "American Wedding",
+    "model_used": "sonar",
+    "tokens_used": 1740,
+    "cost_estimate": 0.0087
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "Frank Ocean’s **“American Wedding”** is an unreleased alternative R&B track built entirely over the instrumental of the Eagles’ 1977 hit **“Hotel California,”** serving as a critique of hasty, materialistic American marriages and the insincerity of contemporary Western romance [1][3]. The song was originally included on Ocean’s 2011 free mixtape *Nostalgia, Ultra*, written solely by Ocean alongside co-writer and producer **James Fauntleroy**, who also performed the song’s outro vocals [3][5]. It was released on **February 16, 2011**, but was later removed from all streaming platforms after **Don Henley** of the Eagles threatened legal action for the unauthorized use of “Hotel California,” with Henley later calling Ocean “arrogant” in 2014 [2][5].\n\n---\n\n### **Song Creation**\n- **Writing Process & Timeline**: Ocean wrote the song independently as part of *Nostalgia, Ultra*, a project released for free on Tumblr in early 2011. He described the mixtape as a “nostalgic” reflection on his youth and early relationships [1][2].\n- **Co-writers & Collaborators**: The song was co-written by **Frank Ocean** (Christopher Breaux) and **James Fauntleroy**, who also produced it. Fauntleroy contributed vocals to the outro [3].\n- **Original Inspiration**: Ocean stated the song critiques the “sham of everlasting love” and American individualism, suggesting marriage should stem from love rather than materialism [3]. He framed the narrative around a young, impulsive marriage that ends in divorce, leaving him with only his **Ford Mustang** as his sole asset [3][7].\n- **Demo Versions**: No official demo versions are documented in premium sources; the track was released directly as part of the mixtape [2].\n\n---\n\n### **Musical Composition**\n- **Key, Tempo, Structure**: The song uses the exact **instrumental arrangement** of “Hotel California,” preserving its original key and tempo. It follows a standard verse-chorus structure with an extended outro featuring Fauntleroy’s medley about dreams [1][3][5].\n- **Instrumentation**: The track consists entirely of the Eagles’ recorded instrumental, with Ocean’s vocals layered over it. No additional instrumentation was added [1][3].\n- **Samples**: The song is a **direct, unlicensed sample** of “Hotel California” by the Eagles (1977), using its full instrumental track [1][3][5].\n- **Production Techniques**: James Fauntleroy handled production, layering Ocean’s vocals over the pre-existing Eagles track without altering the original instrumentation [3].\n\n---\n\n### **Lyrical Content**\n- **Meaning**: Ocean portrays a **toxic, rushed relationship** that ends in divorce, critiquing the “hypocritical nature of American love” and the commodification of romance [3][7][8].\n- **Personal Experiences**: While not explicitly autobiographical, Ocean draws from themes of youthful impulsivity and failed romance, reflecting his own early relationship experiences [3][7].\n- **Cultural References**:\n  - **“My pretty woman in a ballgown / My Richard Gere in a tux”** references the film *Pretty Woman* (1990), symbolizing a fairy-tale marriage that collapses [8].\n  - The **Ford Mustang** represents Ocean’s lost identity and youth, as it’s the only asset he retains after divorce [3].\n  - The **wedding ring** (“This wedding ring won’t ever wipe off”) symbolizes a permanent emotional scar, even after legal divorce [4][8].\n- **Artist’s Explanation**: Ocean acknowledged the song as an homage to “Hotel California” but admitted the Eagles threatened to sue if he performed it live again [1].\n\n---\n\n### **Recording & Production**\n- **Recording Details**: The track was recorded as part of *Nostalgia, Ultra*, a mixtape produced entirely by James Fauntleroy and Bill Szymczyk (the latter for the original Eagles track) [3].\n- **Producer & Engineer Credits**: **James Fauntleroy** is the primary producer; **Bill Szymczyk** is credited as producer for the original “Hotel California” instrumental [3].\n- **Studio Stories**: No specific studio anecdotes are documented in premium sources; the mixtape was released digitally via Tumblr [1][2].\n- **Technical Details**: The song uses the **unaltered instrumental** of “Hotel California,” with no additional mixing or editing beyond vocal layering [1][3].\n\n---\n\n### **Release & Reception**\n- **Release Context**: Released as the 12th track on *Nostalgia, Ultra*, a free mixtape that gained viral attention online [2][5].\n- **Commercial Performance**: The song was **never commercially released** and was removed from streaming platforms due to legal disputes [5].\n- **Critical Reception**: While not reviewed individually in major publications at release, the track is now recognized as a defining moment in Ocean’s early career, highlighting his lyrical depth and bold sampling choices [3][7].\n- **Music Video**: No official music video exists; the song was only promoted through live performances and the mixtape [5].\n\n---\n\n### **Cultural Impact**\n- **Cover Versions**: No documented cover versions in premium music press; the song’s legal status limits its public performance [5].\n- **Media Usage**: The track was widely shared online before its removal, becoming a viral symbol of Ocean’s early artistic risk-taking [1][2].\n- **Live Performance History**: Ocean performed the song live early in his career but stopped after the Eagles’ legal threat [1].\n- **Critical Analysis**: Music journalists note the song as a **critique of Western love**, using the Eagles’ iconic track to underscore the emptiness of materialistic marriage [3][6][7].\n\n---\n\n### **Key Takeaway**\n“American Wedding” remains one of Frank Ocean’s most **controversial and unreleased** works, defined by its **unauthorized use of “Hotel California”** and its **sharp critique of American romantic ideals**. Its removal from streaming platforms underscores the legal risks of unlicensed sampling, while its legacy highlights Ocean’s early willingness to challenge artistic and cultural norms [1][3][5].",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-american-wedding-lyrics",
+      "https://genius.com/Frank-ocean-american-wedding-lyrics/q/release-date",
+      "https://en.wikipedia.org/wiki/American_Wedding_(song)",
+      "https://note.com/ryugetsu8/n/n28dc94d2174a",
+      "https://frankocean.fandom.com/wiki/American_Wedding",
+      "https://medium.com/@williamspa4/frank-oceans-critique-of-western-love-274ff07bd554",
+      "https://djbooth.net/features/2020-01-15-frank-ocean-nostalgia-forever-american-wedding-heartbreak/",
+      "https://www.poudrepress.com/post/american-wedding-the-often-misinterpreted-meanign"
+    ],
+    "created": 1784520138,
+    "id": "4803668a-4dcd-424c-911d-533b53db7c3f",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2011-02-16",
+        "last_updated": "2025-07-26",
+        "place_metadata": null,
+        "snippet": "“American Wedding” is heavily (if not completely) over a beat consistent with the 1977 hit “Hotel California” by the Eagles.\nSince\n*nostalgia, ULTRA* was officially considered a mixtape and released for free via Tumblr, it wasn’t illegal for Frank Ocean to do it.\nHowever, due to the profile of the p...",
+        "source": "web",
+        "title": "Frank Ocean – american wedding",
+        "url": "https://genius.com/Frank-ocean-american-wedding-lyrics"
+      },
+      {
+        "date": "2011-02-16",
+        "last_updated": "2025-07-26",
+        "place_metadata": null,
+        "snippet": "Frank Ocean released “american wedding” on February 16, 2011.",
+        "source": "web",
+        "title": "When did Frank Ocean release “american wedding”?",
+        "url": "https://genius.com/Frank-ocean-american-wedding-lyrics/q/release-date"
+      },
+      {
+        "date": "2022-06-09",
+        "last_updated": "2026-07-08",
+        "place_metadata": null,
+        "snippet": "\"**American Wedding**\" is a song by American alternative R&B singer Frank Ocean, originally included on his 2011 mixtape *Nostalgia, Ultra*.\nThe song, an alternative R&B and alternative rock track, was written by Ocean himself, alongside James Fauntleroy, who also produced the song.\nIt would eventua...",
+        "source": "web",
+        "title": "American Wedding (song) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/American_Wedding_(song)"
+      },
+      {
+        "date": "2025-07-09",
+        "last_updated": "2026-03-25",
+        "place_metadata": null,
+        "snippet": "- **「American Wedding」＝恋愛の消費文化への風刺**\n→ 結婚も離婚も、愛も別れも、**すべてが形式化・制度化されたアメリカ的価値観** への批判と哀しみがある。\n- **「イスラムとの対比」**\n→ アメリカ的自由な恋愛 vs arranged marriage（政略結婚）という構図は、**皮肉にもアメリカの恋愛も“形式”に縛られている** ことを示唆。\n- **「マスタングを渡す」＝アイデンティティの喪失**\n→ 彼にとって唯一の財産を「法」によって奪われることで、**恋愛に人生を賭けた男の敗北が象徴される**。\n- **「This wedding ring won't...",
+        "source": "web",
+        "title": "Frank Ocean – American Wedding｜kenken",
+        "url": "https://note.com/ryugetsu8/n/n28dc94d2174a"
+      },
+      {
+        "date": "2011-02-16",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**American Wedding** is the twelfth song from Frank Ocean's debut mixtape *Nostalgia, Ultra* (2011).\nIt is a lengthy track about the longevity of marriages in America, telling the narrative of a young marriage that was called off not long after the ceremony.\nJames Fauntleroy sings the song's outro w...",
+        "source": "web",
+        "title": "American Wedding | Frank Ocean Wiki - Fandom",
+        "url": "https://frankocean.fandom.com/wiki/American_Wedding"
+      },
+      {
+        "date": "2024-11-01",
+        "last_updated": "2025-09-23",
+        "place_metadata": null,
+        "snippet": "One of these songs sampled *Hotel California*, creating a unique blend of R&B and rock and sustaining the critique that The Eagles’ had brought about American culture.\nThis song was *American Wedding*.\nFrank Ocean’s *American Wedding* successfully uses a narrative from the POV of an uncultured Ameri...",
+        "source": "web",
+        "title": "Frank Ocean's Critique of Western Love | by Alex Williams",
+        "url": "https://medium.com/@williamspa4/frank-oceans-critique-of-western-love-274ff07bd554"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-04-07",
+        "place_metadata": null,
+        "snippet": "The narrative of “American Wedding” is rather straightforward: Frank and his lover jump the gun and get married before their feelings have a chance to mature and settle into themselves.\nOf course, this leads to “\n*American divorce*.”\nHere, Ocean critiques his lustful tendencies, his impulses, and ye...",
+        "source": "web",
+        "title": "Frank Ocean’s “American Wedding” Is Forever the Sound of American Heartbreak",
+        "url": "https://djbooth.net/features/2020-01-15-frank-ocean-nostalgia-forever-american-wedding-heartbreak/"
+      },
+      {
+        "date": "2025-06-02",
+        "last_updated": "2026-03-04",
+        "place_metadata": null,
+        "snippet": "Many misinterpret Frank Ocean's most famous unreleased song, *American Wedding*.\nOften interpreted as a long, mourning, tragic love story over the summer turns into a toxic relationship as you look closer.\nThe 12th song off the mixtape *Nostalgia, Ultra* was released in February of 2011.\nTaken off o...",
+        "source": "web",
+        "title": "\"American Wedding\": the Often Misinterpreted Meaning",
+        "url": "https://www.poudrepress.com/post/american-wedding-the-often-misinterpreted-meanign"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 1326,
+      "cost": {
+        "input_tokens_cost": 0.00041,
+        "output_tokens_cost": 0.00133,
+        "request_cost": 0.005,
+        "total_cost": 0.00674
+      },
+      "prompt_tokens": 414,
+      "search_context_size": "low",
+      "total_tokens": 1740
+    }
+  }
+}

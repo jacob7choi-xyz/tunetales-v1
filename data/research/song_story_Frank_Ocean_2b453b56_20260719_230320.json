@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:03:20.374429",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Pilot Jones",
+    "model_used": "sonar",
+    "tokens_used": 1370,
+    "cost_estimate": 0.006849999999999999
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "Based on a review of the provided search results, **no information from the required premium sources** (Genius verified annotations, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts) is available in the current dataset to fulfill your request for the \"complete story\" behind \"Pilot Jones.\"\n\nThe available results contain:\n*   **Genius:** A lyrical breakdown explaining the double entendre of \"Pilot Jones\" (first love/drug craving) [1].\n*   **Fan/Unverified Sources:** A Fandom wiki entry with credits and a Tumblr post with fan interpretation [2][6].\n*   **Non-Required Publications:** Articles from *The DJ Booth* (a hip-hop blog), *Spin*, and *The Vault Publication* [3][5][7].\n*   **Technical Data:** Apple Music credits listing producers and engineers [4].\n\nBecause your instructions strictly exclude Wikipedia, fan sites, blogs, and unverified sources, and the search results do not include the specific premium articles you requested (e.g., no Rolling Stone interview or Pitchfork analysis), I cannot provide the verified writing process, original inspiration, or studio stories from those specific outlets.\n\nHowever, based on the **verified technical data** present in the results (which aligns with industry credits), here are the confirmed facts available:\n\n### **Confirmed Song Details (From Verified Credits & Genius)**\n\n| Category | Detail | Source |\n| :--- | :--- | :--- |\n| **Album Position** | 8th track on *channel ORANGE* (2012) | [1][2] |\n| **Songwriters** | Christopher Breaux (Frank Ocean), Shea Taylor | [2][4] |\n| **Producers** | Malay, Frank Ocean, Om'Mas Keith | [2][4] |\n| **Recording Engineers** | Jeff Ellis, Vic Wainstein | [2][4] |\n| **Mastering Engineer** | Vlado Meller | [4] |\n| **Core Theme** | First love compared to a drug; \"Pilot\" = first (episode) or driver; \"Jones\" = craving | [1] |\n| **Key Lyric** | \"I know what I was on, I had a Pilot Jones / She took me high, then she took me home\" | [1][5] |\n| **Structural Note** | Begins with a skit about a shared refrigerator; ends with a plane taking off | [2] |\n\n### **Lyrical Interpretation (From Genius Verified Annotation)**\nThe title \"Pilot Jones\" functions as a **double entendre**:\n1.  **Pilot as \"First\":** A \"pilot episode\" is the first in a series, symbolizing a **first love** [1].\n2.  **Pilot as \"Driver\":** A pilot steers a vehicle, likening lovers who are \"jonesing\" (craving) each other to a pilot driving them toward one another [1].\n3.  **Drug Metaphor:** The song compares this first love to a drug, noting the subject may smoke frequently, making the drug comparison an \"easy\" metaphor for their shared intensity [1].\n\n### **Missing Information (Requires Premium Sources)**\nTo answer the following components of your request, you would need to access the specific articles from the excluded/missing premium sources:\n*   **Writing Process & Timeline:** No interview from Frank Ocean or Shea Taylor regarding the specific timeline is in the results.\n*   **Original Inspiration:** No verified artist statement on the specific real-life person or event inspiring the song is present.\n*   **Demo Versions:** No industry reporting on iterations or demos is available.\n*   **Musical Composition (Key/Tempo):** The specific key, tempo, and sample sources are not listed in the provided text.\n*   **Critical Reception:** While *Spin* called it a \"love song (about a drug dealer)\" [5], the comprehensive critical analysis from *Pitchfork* or *Rolling Stone* is missing.\n\n**Recommendation:** To obtain the complete story with the specific premium sources you requested, you would need to search directly for:\n*   *Rolling Stone*: \"Frank Ocean channel ORANGE Pilot Jones interview\"\n*   *Pitchfork*: \"Frank Ocean Pilot Jones review analysis\"\n*   *Genius*: \"Pilot Jones verified artist annotation\" (Note: The snippet [1] is from Genius, but the full verified annotation may contain more depth).\n*   *NPR Music*: \"Frank Ocean Pilot Jones feature\"",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-pilot-jones-lyrics",
+      "https://frankocean.fandom.com/wiki/Pilot_Jones",
+      "https://djbooth.net/features/2020-02-26-frank-ocean-pilot-jones-nostalgia-forever/",
+      "https://music.apple.com/us/song/pilot-jones/1440766420",
+      "https://www.spin.com/2012/07/frank-ocean-channel-orange-def-jam/",
+      "https://www.tumblr.com/everythingfrank0cean/27529597026/what-does-frank-mean-by-having-a-pilot-jones",
+      "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/"
+    ],
+    "created": 1784520200,
+    "id": "f41bbfec-0b52-4aff-98b0-e45454ddc6ce",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2012-07-10",
+        "last_updated": "2025-04-09",
+        "place_metadata": null,
+        "snippet": "In eighth track from Frank Ocean’s 2012 debut studio album\n*channel ORANGE*, he discusses the topic of first love and compares it with a drug by using the double entendre “Pilot Jones.”\nThis is because a pilot is one who drives or steers, likening how lovers are “jonesing” or craving each other to a...",
+        "source": "web",
+        "title": "Frank Ocean – Pilot Jones",
+        "url": "https://genius.com/Frank-ocean-pilot-jones-lyrics"
+      },
+      {
+        "date": "2024-10-29",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**Pilot Jones** is the eighth track from Frank Ocean's debut studio album *channel ORANGE* (2012).\nIn the song, he compares his first love to a drug, calling it a \"pilot jones.\"\nThe song was co-written by Shea Taylor.\nThe song starts with a brief skit in which Frank jokes that the only thing that he...",
+        "source": "web",
+        "title": "Pilot Jones | Frank Ocean Wiki - Fandom",
+        "url": "https://frankocean.fandom.com/wiki/Pilot_Jones"
+      },
+      {
+        "date": "2020-02-26",
+        "last_updated": "2025-10-23",
+        "place_metadata": null,
+        "snippet": "In 2012, on “Pilot Jones,” Frank gives us the definitive three-act unfolding of being in, escaping, and soaring high above a toxic love.\nIn three minutes, “Pilot Jones” takes us from the past to the present and drops us off at a questionable future.\n...\nThe three acts of “Pilot Jones” can be broken ...",
+        "source": "web",
+        "title": "How Can Frank Ocean Truly Leave Behind What Once Felt ...",
+        "url": "https://djbooth.net/features/2020-02-26-frank-ocean-pilot-jones-nostalgia-forever/"
+      },
+      {
+        "date": null,
+        "last_updated": "2026-07-15",
+        "place_metadata": null,
+        "snippet": "# Pilot Jones\nchannel ORANGE Frank Ocean July 10, 2012\n## Performing Artists\n- Frank Ocean\nLead Vocals\n- Om'Mas Keith\nVocals\n- Juliet Buck\nVocals\n## Composition & Lyrics\n- Shea Taylor\nSongwriter\n- Christopher Breaux\nSongwriter\n## Production & Engineering\n- Frank Ocean\nProducer, Mixing Engineer\n- Mal...",
+        "source": "web",
+        "title": "‎Pilot Jones - Song by Frank Ocean",
+        "url": "https://music.apple.com/us/song/pilot-jones/1440766420"
+      },
+      {
+        "date": "2024-05-16",
+        "last_updated": "2026-02-03",
+        "place_metadata": null,
+        "snippet": "Release Date: July 17, 2012\nLabel: Def Jam\n...\nSee\n*channel ORANGE*‘s “Pilot Jones,” a love song (about a drug dealer) whose beginning, middle, and end is expressed in a single, melancholy couplet: “I know what I was on, I had a Pilot Jones / She took me high, then she took me home.”",
+        "source": "web",
+        "title": "Review: Frank Ocean, 'channel ORANGE'",
+        "url": "https://www.spin.com/2012/07/frank-ocean-channel-orange-def-jam/"
+      },
+      {
+        "date": "2012-07-19",
+        "last_updated": "2025-03-29",
+        "place_metadata": null,
+        "snippet": "**PILOT JONES is another one of my personal favorites.\nIt has a smooth and sexy vibe to it, similar to SIERRA LEONE.\n** ** Frank Ocean starts it off by speaking and graduating into falsettos, telling the story of how he was in love with a woman addicted to drugs.\nThe two lovers started out with plen...",
+        "source": "web",
+        "title": "Post by @everythingfrank0cean",
+        "url": "https://www.tumblr.com/everythingfrank0cean/27529597026/what-does-frank-mean-by-having-a-pilot-jones"
+      },
+      {
+        "date": "2021-10-05",
+        "last_updated": "2026-07-13",
+        "place_metadata": null,
+        "snippet": "When delving into his creative process and his inspirations for this album, Frank Ocean mentions that overall, he is inspired to tell stories with his music.\n...\nHe creates narratives with his lyrics and embodies it with a musical journey that conveys the emotions from the narrative, using musical t...",
+        "source": "web",
+        "title": "How Frank Ocean tells Stories",
+        "url": "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 955,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00096,
+        "request_cost": 0.005,
+        "total_cost": 0.00637
+      },
+      "prompt_tokens": 415,
+      "search_context_size": "low",
+      "total_tokens": 1370
+    }
+  }
+}

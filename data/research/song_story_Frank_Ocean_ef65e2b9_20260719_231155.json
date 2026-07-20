@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:11:55.457487",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Purity (A$AP Rocky featuring Frank Ocean)",
+    "model_used": "sonar",
+    "tokens_used": 1826,
+    "cost_estimate": 0.00913
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "\"Purity\" is the album-closing track on A$AP Rocky’s 2018 album *Testing*, featuring Frank Ocean, who **improvised his entire verse** live in the studio rather than writing it beforehand, building his lyrics over a chopped sample of Lauryn Hill’s acoustic performance of \"I Gotta Find Peace of Mind\" [1][3].\n\n## SONG CREATION\n- **Writing Process & Timeline**: Frank Ocean arrived at the session, heard Rocky play the Lauryn Hill sample chopped up with an open vocal space, and immediately improvised his verse by listening to the beat repeatedly in his head and \"blurting out\" the words [1]. Ocean noted this pushed him out of his comfort zone, as he typically writes lyrics alone with headphones on [3].\n- **Co-writers & Collaborators**: The song was written by A$AP Rocky (Rakim Mayers), Frank Ocean, Dean Blunt, Michael Mulé, Hector Delgado, Isaac De Boni, and Lauryn Hill (for the sample) [6][9].\n- **Original Inspiration**: Rocky stated the song was inspired by **\"losing people\"**—including family members, friends, and business partners—and by the disillusionment of fame swallowing his life at the expense of relationships [2][3]. He specifically references not checking on his niece in weeks and the death of A$AP Mob affiliate **A$AP Press** (March 2016) [2][3].\n- **Demo Versions**: No public demo versions are documented in the provided premium sources.\n\n## MUSICAL COMPOSITION\n- **Key, Tempo, Structure**: The track is built on a **slowed-down, pitched sample** of Lauryn Hill’s \"I Gotta Find Peace of Mind\" from her 2002 *MTV Unplugged No. 2.0* album, creating a \"trudging, melancholic\" and \"meditative\" atmosphere [2][7][10]. Frank Ocean takes the first verse as a rapper, then Rocky follows with a more introspective, emotional delivery [7][10].\n- **Instrumentation**: The instrumental backbone is Hill’s **acoustic guitar strums** and vocal line, manipulated by the production team [7][10]. Erik Alcock is credited for guitar on the track [6].\n- **Samples**: The song prominently samples **\"I Gotta Find Peace of Mind\"** by Lauryn Hill (2002 *MTV Unplugged No. 2.0*) [2][4][5]. Hill receives official writing credit due to the sample [4].\n- **Production Techniques**: Producers **Dean Blunt, FnZ (Finatik N Zac), Hector Delgado, and A$AP Rocky** transformed Hill’s vocal line and guitar figure into a new meditative quality, slowing and chopping the sample [2][5][10]. Dean Blunt’s involvement was noted as part of Rocky’s effort to merge mainstream and underground aesthetics [2].\n\n## LYRICAL CONTENT\n- **Meaning**: The lyrics address **fame, disillusionment, and loss**. Rocky reflects on strained family ties (e.g., his sister and niece) and the death of A$AP Press [2][3]. Frank Ocean rhymes about his **struggles to find peace of mind**, echoing the sample’s theme [3].\n- **Personal Experiences**: Rocky explicitly references not speaking to his sister for months and only seeing his niece in September 2016 [3]. He describes the song as an effort to be **\"genuine\" and \"real\"** with his audience [2].\n- **Cultural References**: The track uses Hill’s *MTV Unplugged* moment—a performance that signaled the start of her retreat from public life—as a metaphor for the artists’ own vulnerability about fame’s hidden pressures [8].\n- **Artist’s Lyrical Explanations**: Ocean confirmed his verse was improvised and tied to the sample’s theme of seeking peace [1][3]. Rocky described the track as emotionally honest, inspired by loss [2].\n\n## RECORDING & PRODUCTION\n- **Recording Details**: Ocean recorded his verse by improvising over the looped sample in the studio [2][3].\n- **Producer & Engineer Credits**:\n  - **Producers**: Dean Blunt, FnZ (Finatik N Zac), Hector Delgado, A$AP Rocky [2][5][9].\n  - **Mixing Engineer/Producer**: Hector Delgado [6][9].\n  - **Mastering**: Tatsuya Sato [9].\n  - **Guitarist**: Erik Alcock [6].\n- **Studio Stories**: Ocean recalled the session as unusual for him, as he typically writes alone; putting the verse together in front of others was uncomfortable [3].\n- **Technical Details**: The sample was **chopped, pitched, and slowed** to create a \"trudging\" tempo and meditative quality [7][10].\n\n## RELEASE & RECEPTION\n- **Release Context**: \"Purity\" was released as the **final track** on *Testing*, which Rocky surprise-released in May 2018 [2][7]. It is the second *Testing* track featuring Frank Ocean (after \"Brotha Man\") [3].\n- **Commercial Performance**: Billboard commercial performance data is not included in the provided premium sources.\n- **Critical Reception**:\n  - **Pitchfork** praised Ocean’s rapid-fire verse, calling it proof he could be \"one of the best rappers working\" if he chose to [10].\n  - **Spin** highlighted the song as the album’s most notable track, describing it as melancholic and focused on fame’s pressures [7].\n  - **The Fader** noted the song uses Hill’s retreat-from-fame moment to explore the artists’ own disillusionment [8].\n- **Music Video**: No music video details are documented in the provided premium sources.\n\n## CULTURAL IMPACT\n- **Cover Versions**: No cover versions are documented in the provided premium sources.\n- **Media Usage**: No specific media usage tracking is available in the provided sources.\n- **Live Performance History**: No live performance reviews are included in the provided premium sources.\n- **Professional Critical Analysis**: Critics emphasize the song’s **emotional honesty**, the innovative use of Lauryn Hill’s sample, and Ocean’s unexpected rap performance as a standout moment on *Testing* [7][8][10].\n\n**Sources**: Genius (2019 interview with Frank Ocean) [1][3][4][5]; The Fader (May 25, 2018) [8]; Pitchfork (track review) [10]; Spin (May 2018) [7]; Songfacts [3]; Apple Music credits [9]; YouTube credits [6].",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/a/frank-ocean-improvised-his-verse-on-asap-rocky-s-purity",
+      "https://en.wikipedia.org/wiki/Purity_(ASAP_Rocky_song)",
+      "https://www.songfacts.com/facts/asap-rocky/purity",
+      "https://genius.com/A-ap-rocky-purity-lyrics",
+      "https://genius.com/a/asap-rocky-s-new-frank-ocean-collaboration-purity-samples-a-lauryn-hill-classic",
+      "https://www.youtube.com/watch?v=2jfX85BIIwk&list=PLMoScOnoctXgwMuTHmuJ-L2rAEKQTYhpz&index=9",
+      "https://www.spin.com/2018/05/asap-rocky-frank-ocean-purity-stream/",
+      "https://www.thefader.com/2018/05/25/asap-rocky-frank-ocean-purity-testing-lauryn-hill",
+      "https://music.apple.com/cz/song/purity-feat-frank-ocean/1387635198?l=cs",
+      "https://pitchfork.com/reviews/tracks/asap-rocky-purity-ft-frank-ocean/"
+    ],
+    "created": 1784520715,
+    "id": "2e15b3f7-6331-4a0a-9478-fa0d7b8709f2",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": null,
+        "last_updated": "2025-02-19",
+        "place_metadata": null,
+        "snippet": "Ocean contributes a lengthy verse to the album-closing song, “Purity,” and in a new interview with *GayLetter* magazine, he revealed that the feature largely came together through improvisation.\n“I went to that session and he played me Lauryn Hill’s sample chopped up and the open space he wanted me ...",
+        "source": "web",
+        "title": "Frank Ocean Improvised His Verse On A$AP Rocky’s “Purity”",
+        "url": "https://genius.com/a/frank-ocean-improvised-his-verse-on-asap-rocky-s-purity"
+      },
+      {
+        "date": "2018-05-25",
+        "last_updated": "2026-05-19",
+        "place_metadata": null,
+        "snippet": "\"**Purity**\" is a song by American rapper ASAP Rocky, featuring vocals from American artist Frank Ocean.\nProduced by Hector Delgado, FnZ, Dean Blunt and A$AP Rocky, it appears as the final track on Rocky's third studio album, *Testing* (2018).\nThe song prominently samples \"I Gotta Find Peace of Mind...",
+        "source": "web",
+        "title": "Purity (ASAP Rocky song)",
+        "url": "https://en.wikipedia.org/wiki/Purity_(ASAP_Rocky_song)"
+      },
+      {
+        "date": null,
+        "last_updated": "2026-07-10",
+        "place_metadata": null,
+        "snippet": "- Over a tranquil production, A$AP Rocky laments about fame swallowing up his life at the expense of his relationships with the people he loves.\n*Haven't checked on my niece in weeks\nMonths past and months in between since me and my sister would speak\nNot a call or visit in weeks, lost, nothin' sinc...",
+        "source": "web",
+        "title": "Purity by A$AP Rocky (featuring Frank Ocean)",
+        "url": "https://www.songfacts.com/facts/asap-rocky/purity"
+      },
+      {
+        "date": "2018-05-25",
+        "last_updated": "2024-09-24",
+        "place_metadata": null,
+        "snippet": "“Purity“ is the final track on A$AP Rocky’s album,\n*TESTING*, and the second track to feature Frank Ocean.\n“Purity“ finds an introspective Rocky looking back on his life of fame and realizing how his busy lifestyle has made it difficult for him to find time for himself and his family.\nThe song promi...",
+        "source": "web",
+        "title": "A$AP Rocky (Ft. Frank Ocean) – Purity",
+        "url": "https://genius.com/A-ap-rocky-purity-lyrics"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-04-13",
+        "place_metadata": null,
+        "snippet": "The final track “Purity” features Frank Ocean, and is built around a sample of Lauryn Hill’s 2002 song “I Gotta Find Peace of Mind.”\nThe beat boasts production from FNZ, Dean Blunt, Hector Delgado, and Rocky himself.",
+        "source": "web",
+        "title": "A$AP Rocky’s New Frank Ocean Collaboration “Purity” Samples A Lauryn Hill Classic",
+        "url": "https://genius.com/a/asap-rocky-s-new-frank-ocean-collaboration-purity-samples-a-lauryn-hill-classic"
+      },
+      {
+        "date": "2018-05-24",
+        "last_updated": "2025-12-30",
+        "place_metadata": null,
+        "snippet": "Composer, Associated Performer, Lyricist: Frank Ocean\nGuitar: Erik Alcock\nComposer, Lyricist: Rakim Mayers\nLyricist, Composer, Producer: Dean Blunt\nComposer, Lyricist: Michael Mulé\nProducer, Mixing Engineer, Composer, Lyricist, Recording Engineer: Hector Delgado",
+        "source": "web",
+        "title": "Purity",
+        "url": "https://www.youtube.com/watch?v=2jfX85BIIwk&list=PLMoScOnoctXgwMuTHmuJ-L2rAEKQTYhpz&index=9"
+      },
+      {
+        "date": "2018-05-25",
+        "last_updated": "2025-10-21",
+        "place_metadata": null,
+        "snippet": "A$AP Rocky‘s new album\n*Testing* was surprise released last night, and arguably the most notable song comes at the end of the album, when Rocky and the always elusive Frank Ocean connect for “Purity.”\nThe record uses a slowed-down version of Lauryn Hill‘s “I Gotta Find Peace of Mind,” from her *MTV ...",
+        "source": "web",
+        "title": "Lauryn Hill Stars in Spirit on A$AP Rocky and Frank Ocean's ...",
+        "url": "https://www.spin.com/2018/05/asap-rocky-frank-ocean-purity-stream/"
+      },
+      {
+        "date": "2018-05-25",
+        "last_updated": "2025-10-27",
+        "place_metadata": null,
+        "snippet": "When the credits for A$AP Rocky's third studio album were released on Thursday, everyone invested in the A$AP mythos, and many who aren't, were surprised and excited about the very last song on the album, \"Purity,\" which features Frank Ocean and Ms.\nLauryn Hill.\n...\nOn \"Purity,\" which samples \"I Got...",
+        "source": "web",
+        "title": "A$AP Rocky and Frank Ocean try to find peace on ...",
+        "url": "https://www.thefader.com/2018/05/25/asap-rocky-frank-ocean-purity-testing-lauryn-hill"
+      },
+      {
+        "date": "2018-05-25",
+        "last_updated": "2026-02-19",
+        "place_metadata": null,
+        "snippet": "## Účinkující\n- A$AP Rocky\nVokály\n- Frank Ocean\nVokály\n- E.\nAlcock\nKytara\n## Kompozice A Text Skladby\n- Frank Ocean\nAutorství skladby\n- Rakim Mayers\nAutorství skladby\n- Dean Blunt\nAutorství skladby\n- Michael Mule\nAutorství skladby\n- Hector Delgado\nKompozice, Text skladby\n- Isaac De Boni\nAutorství sk...",
+        "source": "web",
+        "title": "‎Purity (feat. Frank Ocean) – Song by A$AP Rocky – Apple Music",
+        "url": "https://music.apple.com/cz/song/purity-feat-frank-ocean/1387635198?l=cs"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-06-27",
+        "place_metadata": null,
+        "snippet": "“Purity” is built on top of a snippet of Hill’s “I Gotta Find Peace of Mind,” a spare, lovesick performance pulled from her\n*MTV Unplugged No. 2.0* album.\nIt’s the kind of instantly recognizable sample few producers this side of Kanye would touch but here, the production team (Rocky, Dean Blunt, FnZ...",
+        "source": "web",
+        "title": "A$AP Rocky: “Purity” [ft. Frank Ocean]",
+        "url": "https://pitchfork.com/reviews/tracks/asap-rocky-purity-ft-frank-ocean/"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 1404,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.0014,
+        "request_cost": 0.005,
+        "total_cost": 0.00683
+      },
+      "prompt_tokens": 422,
+      "search_context_size": "low",
+      "total_tokens": 1826
+    }
+  }
+}

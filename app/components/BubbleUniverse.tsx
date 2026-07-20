@@ -10,20 +10,82 @@ interface BubbleUniverseProps {
   bubbles: SongBubble[];
 }
 
-// Album eras give the constellation its structure
+// Album eras give the constellation its structure: the complete catalog
 const ALBUM_ERAS: ReadonlyArray<{ title: string; year: string; songs: string[] }> = [
-  { title: 'Nostalgia, Ultra', year: '2011', songs: ['Novacane', 'Swim Good'] },
+  {
+    title: 'Nostalgia, Ultra',
+    year: '2011',
+    songs: [
+      'Strawberry Swing', 'Novacane', 'We All Try', 'Songs 4 Women', 'Lovecrimes',
+      'There Will Be Tears', 'Swim Good', 'Dust', 'American Wedding', 'Nature Feels',
+    ],
+  },
   {
     title: 'Channel Orange',
     year: '2012',
-    songs: ['Thinkin Bout You', 'Pyramids', 'Super Rich Kids', 'Bad Religion', 'Pink Matter'],
+    songs: [
+      'Thinkin Bout You', 'Fertilizer', 'Sierra Leone', 'Sweet Life', 'Super Rich Kids',
+      'Pilot Jones', 'Crack Rock', 'Pyramids', 'Lost', 'White', 'Monks', 'Bad Religion',
+      'Pink Matter', 'Forrest Gump', 'Golden Girl',
+    ],
+  },
+  {
+    title: 'Endless',
+    year: '2016',
+    songs: [
+      'Device Control', 'At Your Best (You Are Love)', 'Alabama', 'Mine', 'U-N-I-T-Y',
+      'Comme Des Garcons', 'Wither', 'Hublots', 'In Here Somewhere', 'Slide on Me',
+      'Sideways', 'Florida', 'Deathwish (ASR)', 'Rushes', 'Rushes To', 'Higgs',
+    ],
   },
   {
     title: 'Blonde',
     year: '2016',
-    songs: ['Nikes', 'Ivy', 'Self Control', 'Nights', 'White Ferrari', 'Godspeed', 'Seigfried'],
+    songs: [
+      'Nikes', 'Ivy', 'Pink + White', 'Be Yourself', 'Solo', 'Skyline To', 'Self Control',
+      'Good Guy', 'Nights', 'Solo (Reprise)', 'Pretty Sweet', 'Facebook Story',
+      'Close to You', 'White Ferrari', 'Seigfried', 'Godspeed', 'Futura Free',
+    ],
+  },
+  {
+    title: 'Singles',
+    year: '2017-2020',
+    songs: [
+      'Chanel', 'Biking', 'Lens', 'Provider', 'Moon River', 'DHL', 'In My Room',
+      'Dear April', 'Cayendo',
+    ],
+  },
+  {
+    title: 'With Friends',
+    year: 'Collaborations',
+    songs: [
+      'No Church in the Wild (with Jay-Z and Kanye West)',
+      'Made in America (with Jay-Z and Kanye West)',
+      'Oceans (Jay-Z featuring Frank Ocean)',
+      'Superpower (Beyonce featuring Frank Ocean)',
+      'Slide (Calvin Harris featuring Frank Ocean and Migos)',
+      'RAF (A$AP Mob featuring Frank Ocean)',
+      'Purity (A$AP Rocky featuring Frank Ocean)',
+      'She (Tyler, the Creator featuring Frank Ocean)',
+      'Sunday (Earl Sweatshirt featuring Frank Ocean)',
+      'Oldie (Odd Future)',
+    ],
   },
 ];
+
+// Short display labels for long collaboration titles; lookups stay exact
+const SHORT_LABELS: Record<string, string> = {
+  'No Church in the Wild (with Jay-Z and Kanye West)': 'No Church in the Wild',
+  'Made in America (with Jay-Z and Kanye West)': 'Made in America',
+  'Oceans (Jay-Z featuring Frank Ocean)': 'Oceans',
+  'Superpower (Beyonce featuring Frank Ocean)': 'Superpower',
+  'Slide (Calvin Harris featuring Frank Ocean and Migos)': 'Slide',
+  'RAF (A$AP Mob featuring Frank Ocean)': 'RAF',
+  'Purity (A$AP Rocky featuring Frank Ocean)': 'Purity',
+  'She (Tyler, the Creator featuring Frank Ocean)': 'She',
+  'Sunday (Earl Sweatshirt featuring Frank Ocean)': 'Sunday',
+  'Oldie (Odd Future)': 'Oldie',
+};
 
 // Verified Spotify track IDs (same set the Journey uses)
 const SONG_TRACK_IDS: Record<string, string> = {
@@ -105,7 +167,7 @@ function Bubble({ bubble, index, onOpen }: { bubble: SongBubble; index: number; 
           textAlign: 'center',
         }}
       >
-        {bubble.song_name}
+        {SHORT_LABELS[bubble.song_name] ?? bubble.song_name}
       </span>
     </button>
   );
@@ -179,7 +241,7 @@ function StoryOverlay({ bubble, onClose }: { bubble: SongBubble; onClose: () => 
             marginBottom: '24px',
           }}
         >
-          {bubble.song_name}
+          {SHORT_LABELS[bubble.song_name] ?? bubble.song_name}
         </h3>
 
         {sections.map((section, i) => (

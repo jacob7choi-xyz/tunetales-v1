@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:04:55.112507",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Alabama",
+    "model_used": "sonar",
+    "tokens_used": 1248,
+    "cost_estimate": 0.00624
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "Frank Ocean’s song **“Alabama”** is a brief, 1:24-minute track from his 2016 visual album *Endless*, named after **Alabama Street** in New Orleans’ Seabrook neighborhood where he spent formative years of his youth [1]. The song serves as a **reminiscent tale** of his childhood memories—family, friends, and his first love—capturing the relationships that defined that era of his life [1].\n\n### SONG CREATION\n- **Writing process & timeline**: The track was created as part of *Endless*, a visual album released on **August 19, 2016**, via Apple Music [1]. No specific interview details about the writing timeline are available in the provided premium sources.\n- **Co-writers & collaborators**: Frank Ocean is credited as the **producer** of the song [1]. It features **additional vocals** from **Sampha** and **Jazmine Sullivan** [1].\n- **Original inspiration**: Ocean explicitly stated the song is named after **Alabama Street**, where he grew up, and reflects on memories from that time [1]. In 2017, he shared a childhood photo captioned “Alabama St.” showing himself as “Lonny” Breaux with his mother, Katonya Breaux [1].\n- **Demo versions**: No information on demo versions or iterations is available in the provided sources.\n\n### MUSICAL COMPOSITION\n- **Key, tempo, structure**: The song begins at **6:16** and ends at **7:40** of the *Endless* album runtime, lasting **1:24** [1]. Specific musical details like key or tempo are not provided in the available premium sources.\n- **Instrumentation**: No detailed instrumentation breakdown is available beyond the credit of Frank Ocean as producer and the vocal contributions [1].\n- **Samples**: No samples are mentioned in the provided sources.\n- **Production techniques**: Only that Frank Ocean produced the track is confirmed [1].\n\n### LYRICAL CONTENT\n- **Meaning**: The lyrics explore **memories of growing up** on Alabama Street, reflecting on family, friends, and first love [1].\n- **Personal experiences**: Directly tied to Ocean’s childhood in New Orleans East, including his identity as “Lonny” Breaux [1].\n- **Cultural references**: The title references a specific **real-world location** tied to his personal history [1].\n- **Artist’s explanation**: Ocean’s Instagram post and the song’s context confirm the autobiographical nature of the track [1].\n\n### RECORDING & PRODUCTION\n- **Recording details**: No studio-specific details are available in the provided sources.\n- **Producer/engineer credits**: Frank Ocean is the sole credited producer [1].\n- **Studio stories & technical details**: Not covered in the available premium sources.\n\n### RELEASE & RECEPTION\n- **Release context**: Part of *Endless*, a **visual album** released exclusively on Apple Music [1].\n- **Commercial performance**: No Billboard data or sales figures are included in the provided sources.\n- **Critical reception**: No reviews from Rolling Stone, Pitchfork, Complex, The Fader, NPR, or Songfacts are present in the search results.\n- **Music video**: *Endless* is a visual album, but specific video details for “Alabama” are not detailed in the available sources.\n\n### CULTURAL IMPACT\n- **Cover versions, media usage, live performances, critical analysis**: None of these are documented in the provided premium music sources.\n\n---\n\n**Limitations**: While Genius provides verified lyrical and contextual information, the other required premium sources (Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, Songfacts) do not appear in the search results. Therefore, details on writing process interviews, production techniques, critical reception, and cultural impact are **not available** from the mandated sources in this dataset. For a fully comprehensive story, additional searches within those specific publications would be necessary.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-alabama-lyrics",
+      "https://de.wikipedia.org/wiki/Frank_Ocean"
+    ],
+    "created": 1784520295,
+    "id": "a827a1d5-e2cb-488d-a1f6-d3bb8080590c",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2016-08-19",
+        "last_updated": "2025-03-06",
+        "place_metadata": null,
+        "snippet": "ProducerFrank Ocean“Alabama” is the third track from Frank Ocean’s 2016 visual album Endless, released on Apple Music on August 19, 2016.\n...\n“Alabama” is the third track from Frank Ocean’s 2016 visual album\n*Endless*, released on Apple Music on August 19, 2016.\nIt features additional vocals from Sa...",
+        "source": "web",
+        "title": "Frank Ocean – Alabama",
+        "url": "https://genius.com/Frank-ocean-alabama-lyrics"
+      },
+      {
+        "date": "2011-12-28",
+        "last_updated": "2026-05-17",
+        "place_metadata": null,
+        "snippet": "**Christopher Francis „Frank“ Ocean** (* 28. Oktober 1987 in Long Beach, Kalifornien als *Christopher Edwin Breaux*) ist ein US-amerikanischer Singer-Songwriter, R&B-Musiker, Rapper, Musikproduzent und Fotograf, der auch als Songwriter für andere Künstler in Erscheinung tritt.",
+        "source": "web",
+        "title": "Frank Ocean – Wikipedia",
+        "url": "https://de.wikipedia.org/wiki/Frank_Ocean"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 835,
+      "cost": {
+        "input_tokens_cost": 0.00041,
+        "output_tokens_cost": 0.00084,
+        "request_cost": 0.005,
+        "total_cost": 0.00625
+      },
+      "prompt_tokens": 413,
+      "search_context_size": "low",
+      "total_tokens": 1248
+    }
+  }
+}

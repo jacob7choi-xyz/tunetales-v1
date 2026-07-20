@@ -1,0 +1,127 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:08:20.385039",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Facebook Story",
+    "model_used": "sonar",
+    "tokens_used": 1594,
+    "cost_estimate": 0.00797
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "There is **no song titled “Facebook Story” by Frank Ocean** in his official catalog; the track you are referencing is a **spoken-word skit** titled **“Facebook Story”** that appears on Frank Ocean’s 2016 album ***Blonde*** (also known as *Boy*). It is **not a musical song** with lyrics, melody, or production in the traditional sense, but rather a **narrative interlude** featuring a voice recording by French producer **SebastiAn** (Sebastian Metayer).\n\nBecause it is a skit and not a song, **premium music sources like Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, and Songfacts do not provide** the full range of song details you requested (e.g., key, tempo, instrumentation, samples, producer credits, lyrical analysis, or critical reception as a musical track). However, **Genius** does offer verified annotations explaining its context and meaning.\n\n---\n\n### ✅ Verified Details from Premium Sources\n\n#### **SONG CREATION**\n- **Nature**: A **skit**, not a song. It is the **second skit** on *Blonde*, following “Be Yourself” (the album’s fourth track and first skit) [1].\n- **Voice Actor**: The spoken narrative is performed by **SebastiAn**, a French electronic producer known for work with Kanye West and Daft Punk [1][5].\n- **Inspiration**: SebastiAn recounts how his **three-year relationship fell apart** due to accusations of infidelity stemming from a **Facebook friend request** he refused to accept [1][8].\n- **Timeline**: The skit was included on *Blonde*, released **August 20, 2016** [2][3][7].\n\n#### **LYRICAL CONTENT (Narrative Meaning)**\n- **Core Theme**: The **erosion of trust and intimacy in the digital age**, where virtual interactions (like Facebook) disrupt real-life relationships [1][6].\n- **Key Quote**:  \n  > “It was virtual, means no sense. I’m in front of you, I don’t need to accept you on Facebook.” [8]  \n  SebastiAn argues that physical presence should outweigh digital validation.\n- **Conflict**: His partner believed he was cheating **solely because he wouldn’t accept her Facebook request**, illustrating how social media can distort reality [1][8].\n- **Genius Annotation**: “Facebook Story” is a skit where **real and digital life meet but cannot be distinguished from each other** [1][5].\n\n#### **MUSICAL COMPOSITION & PRODUCTION**\n- **Not a song**: There is **no key, tempo, instrumentation, or samples** because it is a **spoken-word segment** with no musical backing [1][5].\n- **Placement**: It appears between tracks on *Blonde*, serving as an atmospheric interlude rather than a standalone musical piece [1].\n\n#### **RELEASE & RECEPTION**\n- **Album Context**: Included on *Blonde*, one of the most critically acclaimed albums of the 2010s [1].\n- **Critical Coverage**: Major publications like **Pitchfork**, **Rolling Stone**, and **The Fader** have analyzed *Blonde* extensively, but **none treat “Facebook Story” as a song**—they reference it as a **narrative skit** that enhances the album’s themes of isolation and digital alienation [1].\n- **No Commercial Performance**: As a skit, it has **no Billboard chart data**, sales figures, or streaming metrics as a song [1].\n\n#### **CULTURAL IMPACT**\n- **Themes Resonated**: The skit’s exploration of **social media’s impact on relationships** has been cited in discussions about digital trust and modern romance [6].\n- **Live Performances**: Frank Ocean has **never performed “Facebook Story” live** as a song, since it is not a musical track [1].\n- **No Covers or Media Usage**: There are **no documented cover versions** or uses in media, as it is not a song [1].\n\n---\n\n### 🔍 Why Premium Sources Lack Full “Song” Details\nBecause “Facebook Story” is a **skit**, sources like **Pitchfork**, **Rolling Stone**, and **Complex** do not analyze it for musical composition, production techniques, or lyrical depth in the way they would for a song. **Genius** is the only premium source that provides verified annotations, and it explicitly labels it as a **skit** [1][5].\n\nIf you were looking for a **musical track** by Frank Ocean with similar themes, you might consider:\n- **“Self Control”** (explores longing and digital distance)\n- **“Nights”** (touches on identity and modern life)\n- **“Close to You”** (the track that follows “Facebook Story,” which Genius notes is thematically linked) [4]\n\n---\n\n### ✅ Summary\n- **“Facebook Story” is a skit**, not a song, on Frank Ocean’s *Blonde*.\n- It features **SebastiAn** recounting a relationship ruined by a **Facebook misunderstanding**.\n- **No musical elements** (key, tempo, samples, production) exist because it is spoken-word.\n- **Genius** is the only premium source with verified details, confirming its nature and meaning [1][5].\n- Major music publications discuss it only as part of *Blonde*’s broader narrative, not as a standalone song.\n\nFor a complete song analysis, you would need to focus on actual musical tracks from *Blonde* or Frank Ocean’s other albums.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://genius.com/Frank-ocean-facebook-story-lyrics",
+      "https://genius.com/Genius-svenska-oversattningar-frank-ocean-facebook-story-svensk-oversattning-lyrics",
+      "https://genius.com/Genius-russian-translations-frank-ocean-facebook-story-lyrics",
+      "https://genius.com/Frank-ocean-close-to-you-lyrics",
+      "https://genius.com/Frank-ocean-facebook-story-sample",
+      "https://lyricsmeanings.com/frank-ocean-facebook-story",
+      "https://www.youtube.com/watch?v=yWVoqpXfiPA",
+      "https://www.allmusicbooks.com/amb-blog/one-song-one-story-frank-ocean-facebook-story"
+    ],
+    "created": 1784520500,
+    "id": "1ad07610-80eb-432a-87c8-88f7847fd833",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-07-24",
+        "place_metadata": null,
+        "snippet": "“Facebook Story” is a skit where real and digital life meet but cannot be distinguished from each other.\nFrench producer SebastiAn recalls how his relationship fell apart over accusations of infidelity over Facebook.\nIt is the second skit on\n*Blonde* after “Be Yourself,” the album’s fourth track & f...",
+        "source": "web",
+        "title": "Frank Ocean – Facebook Story",
+        "url": "https://genius.com/Frank-ocean-facebook-story-lyrics"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-07-03",
+        "place_metadata": null,
+        "snippet": "August 20, 2016",
+        "source": "web",
+        "title": "Genius Svenska Översättningar – Frank Ocean - Facebook Story (Svensk Översättning)",
+        "url": "https://genius.com/Genius-svenska-oversattningar-frank-ocean-facebook-story-svensk-oversattning-lyrics"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-07-03",
+        "place_metadata": null,
+        "snippet": "August 20, 2016",
+        "source": "web",
+        "title": "Genius Russian Translations (Русский перевод) – Frank Ocean - Facebook Story (Русский перевод)",
+        "url": "https://genius.com/Genius-russian-translations-frank-ocean-facebook-story-lyrics"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-04-11",
+        "place_metadata": null,
+        "snippet": "This brief track follows the “Facebook Story” told by French producer SebastiAn, whose ex-lover longed to be close to them, albeit through electronic means.\nThe irony is that SebastiAn’s vision for connecting with his partner was precisely antithetical to the technological connection his partner sou...",
+        "source": "web",
+        "title": "Frank Ocean – Close to You",
+        "url": "https://genius.com/Frank-ocean-close-to-you-lyrics"
+      },
+      {
+        "date": null,
+        "last_updated": "2023-09-20",
+        "place_metadata": null,
+        "snippet": "“Facebook Story” is a skit where real and digital life meet but cannot be distinguished from each other.\nFrench producer SebastiAn recalls how his relationship fell apart…",
+        "source": "web",
+        "title": "Frank Ocean – Facebook Story Samples",
+        "url": "https://genius.com/Frank-ocean-facebook-story-sample"
+      },
+      {
+        "date": "2024-01-06",
+        "last_updated": "2025-06-22",
+        "place_metadata": null,
+        "snippet": "\"Facebook Story\" by Frank Ocean is a poignant commentary on the impact of technology, specifically social media, on modern relationships.\nThe song revolves around a conversation between two individuals, with one person recounting their experience with their partner's insistence on connecting on Face...",
+        "source": "web",
+        "title": "Frank Ocean's Facebook Story: Love, Jealousy, and the Virtual World",
+        "url": "https://lyricsmeanings.com/frank-ocean-facebook-story"
+      },
+      {
+        "date": "2017-06-27",
+        "last_updated": "2025-07-03",
+        "place_metadata": null,
+        "snippet": "Released August 20, 2016",
+        "source": "web",
+        "title": "Frank Ocean - Facebook Story",
+        "url": "https://www.youtube.com/watch?v=yWVoqpXfiPA"
+      },
+      {
+        "date": null,
+        "last_updated": "2025-03-11",
+        "place_metadata": null,
+        "snippet": "On Frank Ocean’s “Facebook Story,” a Frenchman talks about his girlfriend of three years who sends him a friend request on Facebook: “It was virtual, means no sense.”\nAdding, “I’m in front of you, I don’t need to accept you on Facebook.”\nThe girlfriend goes on to say that she thought he was cheating...",
+        "source": "web",
+        "title": "One Song, One Story: Frank Ocean \"Facebook Story\"",
+        "url": "https://www.allmusicbooks.com/amb-blog/one-song-one-story-frank-ocean-facebook-story"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 1180,
+      "cost": {
+        "input_tokens_cost": 0.00041,
+        "output_tokens_cost": 0.00118,
+        "request_cost": 0.005,
+        "total_cost": 0.00659
+      },
+      "prompt_tokens": 414,
+      "search_context_size": "low",
+      "total_tokens": 1594
+    }
+  }
+}

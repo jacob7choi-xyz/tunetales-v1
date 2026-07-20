@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T22:58:20.493479",
+    "artist_name": "Frank Ocean",
+    "song_name": "Swim Good",
+    "story_type": "song_story",
+    "model_used": "gpt-5-mini",
+    "tokens_used": 723
+  },
+  "story": "He was in the small hours of the night, the kind of hour when the city is breathing but not speaking, when ideas feel like they arrive on their own. Frank Ocean sat with the beat already there, the room quiet except for the soft hum of late-night energy, and the song arrived almost before he could notice it. He later told an interviewer that \"Swim Good\" came together very quickly, written in about half an hour, and the producers from Midi Mafia, Waynne Nugent and Kevin Risto, remember how fast the idea landed, saying the track was made in probably ten minutes. That hush of time, windows open to night air, is where the first lines and the car that keeps returning in the lyrics took shape.\n\nThe work of making the song felt like a small voyage. Midi Mafia supplied the immediate musical space, the rhythm and tone that allowed Frank to move across it, and the three names, Frank Ocean, Waynne Nugent, and Kevin Risto, carry the song on their credits. They recorded during those late-night to early-morning hours when focus stretches thin and imagination lengthens, and what happens then is often honest and uncluttered. In that intimacy the music was simple enough to hold words that were raw and sharp, and the studio became a gentle witness to lines about driving and a restless heart. There were no long battles over structure, just the quiet discovery of which images sang truest, and the team let the song keep its overnight tenderness without overworking it.\n\nAt the heart of the song is a car rolling through darkness, and with that car comes a feeling of wanting to leave and of carrying something too heavy to unload. The lyrics circle around travel and escape, around the ache that pushes someone to go and the hope that maybe moving forward will change things. For Frank, those images were personal tools for making pain legible; he used concrete things, like cars and roads, to hold what the heart could not name plainly. For listeners the song opens like a small lantern in a night road, showing a person who is both determined and fragile. It does not end in simple answers. Instead it lets the space between the lines hold longing and a kind of brave sadness, and that is why the song feels honest: it trusts the listener to feel the ache without being told exactly how to feel it.\n\nThis is a song that arrived fast and true, and because of that it keeps its edges. It was lifted into the world as part of nostalgia, ULTRA, and it found its place quickly among the mixtape's songs, speaking to people who heard themselves in the car headlights and the quiet decisions that follow a broken thing. It matters because it names solitude without making solitude theatrical; it places a human being in a small scene and lets their choices and fears fill the air. Sometimes a song stays with us because it tells a whole life in a simple image, and \"Swim Good\" gives us a clear image to carry: a car, a road, a person trying to move on.\n\nWhen I remember that late-night studio, the quick catching of lines, and the names who shaped the beat, I think of how rare it is to catch a song like this in the first breath. It remains a quiet companion for the people who need a song to sit with them on long drives or lonely rooms. It stays with us because it knows how to be both honest and gentle, and because it lets the heart's complicated motion be seen by the light of a single set of headlights.",
+  "source_research": {
+    "timestamp": "2026-07-19T22:38:06.074032",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Swim Good",
+    "model_used": "sonar-pro",
+    "tokens_used": 970,
+    "cost_estimate": 0.0194
+  }
+}

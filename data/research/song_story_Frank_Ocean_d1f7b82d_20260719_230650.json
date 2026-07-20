@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "timestamp": "2026-07-19T23:06:50.238040",
+    "query_type": "song_story",
+    "artist_name": "Frank Ocean",
+    "query_details": "Rushes To",
+    "model_used": "sonar",
+    "tokens_used": 1122,
+    "cost_estimate": 0.0056099999999999995
+  },
+  "response": {
+    "choices": [
+      {
+        "delta": {
+          "content": "",
+          "role": "assistant"
+        },
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "There is **no verified information** from premium music sources (Genius, Rolling Stone, Pitchfork, Complex, The Fader, NPR Music, or Songfacts) regarding a song titled **\"Rushes To\"** by Frank Ocean that includes lyrical content, artist interviews about its writing, or detailed production stories, because the track is an **instrumental interlude** with no lyrics and minimal public documentation outside of fan wikis.\n\n### Core Facts Verified by Available Sources\n*   **Nature of the Track:** \"Rushes To\" is an **instrumental track** (no lyrics) that serves as an interlude immediately following the song \"Rushes\" on Frank Ocean’s 2016 visual album *Endless* [1][3].\n*   **Title Meaning:** The title is a pun that can be heard as \"Rushes Two\" but is also interpreted as a reference to \"rushing to\" something (likely love or infatuation), connecting to the themes of the preceding song \"Rushes\" [1][3].\n*   **Production Credits:** The track is credited to producers **Troy NōKA**, **Vegyn**, and **Michael Uzowuru** [1].\n*   **Instrumentation:** Frank Ocean is credited with playing **guitars** on the track [1].\n*   **Album Context:** It is the 17th track on *Endless* (a 35-minute continuous visual album released in 2016) [1].\n\n### Limitations of Premium Source Data\nThe specific details you requested—such as **writing process timelines**, **co-writer interviews**, **original inspiration statements**, **demo versions**, **key/tempo analysis**, **sample sources**, and **recording studio stories**—are **not available** in the provided search results from the required premium sources (Genius, Pitchfork, Rolling Stone, etc.).\n\n*   **Genius:** Only confirms the track is instrumental and offers a brief interpretation of the title's thematic link to \"Rushes\" [3]. It does not provide artist annotations for the writing process because there are no lyrics to annotate.\n*   **Pitchfork:** Mentions **SebastiAn** (a French producer) contributed \"programming\" to \"Rushes\" and \"Higgs\" on *Endless*, but does not explicitly detail his involvement in \"Rushes To\" or provide interview quotes about the interlude's creation [4].\n*   **Fan Wikis vs. Premium Sources:** Detailed credits (like Troy NōKA, Vegyn, Michael Uzowuru) and the specific track order are found in fan wikis (Frank Ocean Fandom), which are **excluded** from your required source list [1][2]. No premium source in the search results explicitly lists these producers for \"Rushes To.\"\n\n### Conclusion\nBecause \"Rushes To\" is a short, instrumental interlude without lyrics, it has not been the subject of the deep lyrical analysis, artist interviews, or production breakdowns typically found in premium music journalism. The \"complete story\" you are looking for (including writing timelines, specific inspiration quotes, and demo iterations) **does not exist in the public record** within the specified premium sources. The only confirmed facts are its status as an instrumental, its position on *Endless*, and its thematic connection to the song \"Rushes.\"",
+          "role": "assistant"
+        }
+      }
+    ],
+    "citations": [
+      "https://frankocean.fandom.com/wiki/Rushes_To",
+      "https://frankocean.fandom.com/wiki/Rushes",
+      "https://genius.com/Frank-ocean-rushes-to-lyrics",
+      "https://pitchfork.com/news/67821-sebastian-frank-oceans-facebook-story-narrator-talks-blonde-and-endless/",
+      "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/",
+      "https://pitchfork.com/news/68405-frank-ocean-has-hours-of-unreleased-blonde-and-endless-recordings/",
+      "https://www.tumblr.com/azersam/149208660004/album-of-the-day-frank-ocean-endless",
+      "https://genius.com/Frank-ocean-rushes-lyrics",
+      "https://en.wikipedia.org/wiki/Frank_Ocean"
+    ],
+    "created": 1784520410,
+    "id": "35e4a7a8-610b-42c7-8a82-cc8b645717a8",
+    "model": "sonar",
+    "object": "chat.completion",
+    "search_results": [
+      {
+        "date": "2012-01-01",
+        "last_updated": "2026-01-16",
+        "place_metadata": null,
+        "snippet": "**Rushes To** is the seventeenth song from Frank Ocean's visual album *Endless* (2016).\nIt is an instrumental track that immediately follows \"Rushes.\"\nThe track's title can be heard as \"rushes two,\" but also seen as a reference to the idea of \"rushing to something\", which happens to be one of the th...",
+        "source": "web",
+        "title": "Rushes To",
+        "url": "https://frankocean.fandom.com/wiki/Rushes_To"
+      },
+      {
+        "date": "2026-01-09",
+        "last_updated": "2026-02-22",
+        "place_metadata": null,
+        "snippet": "**Rushes** is the seventeenth song from Frank Ocean's visual album *Endless* (2016).\nIt is a song about the ups and downs of a romantic relationship, including references to cutting teeth on sheets in Paris, not feeling the emotions he's feeling now in years, as well as the eponymous lines \"first, I...",
+        "source": "web",
+        "title": "Rushes - Frank Ocean Wiki - Fandom",
+        "url": "https://frankocean.fandom.com/wiki/Rushes"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-04-30",
+        "place_metadata": null,
+        "snippet": "This song is an instrumental\n...\nThe title may also reference ‘rushing into’ love, or being overcome by infatuation, as described in the preceding song “Rushes.”",
+        "source": "web",
+        "title": "Frank Ocean – Rushes To",
+        "url": "https://genius.com/Frank-ocean-rushes-to-lyrics"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-05-28",
+        "place_metadata": null,
+        "snippet": "Last week, when Frank Ocean released his\n*Endless* visual album, French producer SebastiAn was credited with “programming” on two songs—“Rushes” and “Higgs”—and with “additional programming” on a third, “Slide on Me.”\nSebastian was also listed in the credits for Ocean’s other new album, *Blonde*, an...",
+        "source": "web",
+        "title": "SebastiAn, Frank Ocean’s “Facebook Story” Narrator, Talks Blonde and Endless",
+        "url": "https://pitchfork.com/news/67821-sebastian-frank-oceans-facebook-story-narrator-talks-blonde-and-endless/"
+      },
+      {
+        "date": "2021-10-05",
+        "last_updated": "2026-07-13",
+        "place_metadata": null,
+        "snippet": "When delving into his creative process and his inspirations for this album, Frank Ocean mentions that overall, he is inspired to tell stories with his music.\n...\nHe creates narratives with his lyrics and embodies it with a musical journey that conveys the emotions from the narrative, using musical t...",
+        "source": "web",
+        "title": "How Frank Ocean tells Stories",
+        "url": "https://thevaultpublication.com/2021/10/05/how-frank-ocean-tells-stories/"
+      },
+      {
+        "date": null,
+        "last_updated": "2024-07-01",
+        "place_metadata": null,
+        "snippet": "*Endless* credits Spaceman for guitar on “In Here Somewhere,” “Rushes,” and “Deathwish (ASR).”\nHe said he’s also on *Endless* tracks “Slide on Me” and “U-N-I-T-Y.”\nOn *Blonde*, Spaceman recalls hearing his contributions on “Nights,” “Skyline To,” “Seigfreid,” “Ivy,” “Pink & White,” and possibly “Pre...",
+        "source": "web",
+        "title": "Frank Ocean Has Hours of Unreleased Blonde and Endless Recordings",
+        "url": "https://pitchfork.com/news/68405-frank-ocean-has-hours-of-unreleased-blonde-and-endless-recordings/"
+      },
+      {
+        "date": "2016-08-20",
+        "last_updated": "2025-04-05",
+        "place_metadata": null,
+        "snippet": "With this album, Frank has taken a whole new path with his music and lyrics.\nA lot of these songs (18 tracks in total) have no form or structure.\nAt times they sound as if they were created in one day as Frank was experimenting with different sounds and vibes with his producers without any sort of p...",
+        "source": "web",
+        "title": "Post by @azersam · 4 images",
+        "url": "https://www.tumblr.com/azersam/149208660004/album-of-the-day-frank-ocean-endless"
+      },
+      {
+        "date": "2016-08-19",
+        "last_updated": "2025-07-24",
+        "place_metadata": null,
+        "snippet": "## Rushes Lyrics“Rushes” is the eighteenth track from Frank Ocean’s 2016 visual album Endless.\nThe song features backing vocals from Jazmine Sullivan as Ocean sings about the ups & downs of a romantic relationship.\n...\n“Rushes” is the eighteenth track from Frank Ocean’s 2016 visual album\n*Endless*.\n...",
+        "source": "web",
+        "title": "Frank Ocean – Rushes",
+        "url": "https://genius.com/Frank-ocean-rushes-lyrics"
+      },
+      {
+        "date": "2011-02-25",
+        "last_updated": "2026-07-15",
+        "place_metadata": null,
+        "snippet": "While *nostalgia, ULTRA* featured both original music by Ocean and tracks relying on sampled melodies, *Channel Orange* showcased Ocean as the primary musical composer, of which music journalist Robert Christgau opines, \"when he's the sole composer Ocean resists making a show of himself—resists the ...",
+        "source": "web",
+        "title": "Frank Ocean - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Frank_Ocean"
+      }
+    ],
+    "usage": {
+      "completion_tokens": 706,
+      "cost": {
+        "input_tokens_cost": 0.00042,
+        "output_tokens_cost": 0.00071,
+        "request_cost": 0.005,
+        "total_cost": 0.00612
+      },
+      "prompt_tokens": 416,
+      "search_context_size": "low",
+      "total_tokens": 1122
+    }
+  }
+}
