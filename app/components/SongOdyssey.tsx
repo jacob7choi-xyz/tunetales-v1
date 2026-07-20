@@ -6,6 +6,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import type { SongBubble } from '../lib/types';
 import { coverFor } from '../lib/covers';
+import { TRACK_IDS } from '../lib/tracks';
 import AmbienceLayer from './AmbienceLayer';
 import SpotifyEmbed from './SpotifyEmbed';
 
@@ -115,15 +116,6 @@ const SHORT_LABELS: Record<string, string> = {
   'Oldie (Odd Future)': 'Oldie',
 };
 
-// Verified Spotify track IDs (same set the Journey uses)
-const SONG_TRACK_IDS: Record<string, string> = {
-  'Thinkin Bout You': '7DfFc7a6Rwfi3YQMRbDMau',
-  Seigfried: '1BViPjTT585XAhkUUrkts0',
-  Novacane: '14sSJIBdHiANpcvZToFrko',
-  'Bad Religion': '2pMPWE7PJH1PizfgGRMnR9',
-  Nikes: '19YKaevk2bce4odJkP5L22',
-  'Pink Matter': '1fOkmYW3ZFkkjIdOZSf596',
-};
 
 function parseStorySections(story: string): Array<{ heading: string | null; body: string }> {
   const parts = story.split(/^##\s+(.+)$/m);
@@ -233,7 +225,7 @@ function SongPoster({ bubble, cover, onOpen }: { bubble: SongBubble; cover: stri
 function StoryReader({ bubble, cover, onClose }: { bubble: SongBubble; cover: string | null; onClose: () => void }) {
   const hex = moodHex(bubble);
   const sections = parseStorySections(bubble.story);
-  const trackId = SONG_TRACK_IDS[bubble.song_name];
+  const trackId = TRACK_IDS[bubble.song_name];
   const label = SHORT_LABELS[bubble.song_name] ?? bubble.song_name;
 
   return (
@@ -358,7 +350,20 @@ function StoryReader({ bubble, cover, onClose }: { bubble: SongBubble; cover: st
           </div>
         ))}
 
-        {trackId && <SpotifyEmbed trackId={trackId} label={label} />}
+        {trackId ? (
+          <SpotifyEmbed trackId={trackId} label={label} />
+        ) : (
+          <p
+            style={{
+              marginTop: '32px',
+              fontSize: '14px',
+              fontStyle: 'italic',
+              color: 'rgba(255, 255, 255, 0.4)',
+            }}
+          >
+            This one lives outside streaming. Some songs prefer it that way.
+          </p>
+        )}
       </motion.div>
     </motion.div>
   );
