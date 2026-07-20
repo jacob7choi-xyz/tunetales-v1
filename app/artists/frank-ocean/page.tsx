@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-import type { ArtistStory } from '../../lib/types';
+import type { ArtistStory, ResearchFile } from '../../lib/types';
 import Navbar from '../../components/Navbar';
 
 const Starfield = dynamic(() => import('../../components/Starfield'), {
@@ -15,10 +15,42 @@ const Starfield = dynamic(() => import('../../components/Starfield'), {
   loading: () => <div></div>
 });
 
+const RESEARCH_STEPS = [
+  {
+    number: '01',
+    title: 'Researched',
+    body: 'Perplexity gathers reporting, interviews, and reviews from across the web, with citations. Every response is saved verbatim as JSON.',
+  },
+  {
+    number: '02',
+    title: 'Written',
+    body: 'Claude shapes that research into the warm, chapter-based narrative you read in the Journey. It writes from the research, not from memory.',
+  },
+  {
+    number: '03',
+    title: 'Finished by hand',
+    body: 'Chapters are fact-checked, put in true chronological order, and paired with the right songs before anything ships.',
+  },
+];
+
+const QUERY_LABELS: Record<string, string> = {
+  artist_info: 'Artist profile research',
+  timeline: 'Career timeline research',
+  album_info: 'Album deep dive',
+  song_story: 'Song story research',
+};
+
+function formatResearchDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 export default function FrankOceanPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('journey');
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
+  const [research, setResearch] = useState<ResearchFile[]>([]);
   const [storyError, setStoryError] = useState(false);
 
   useEffect(() => {
@@ -29,6 +61,16 @@ export default function FrankOceanPage() {
       })
       .then((data: { story: ArtistStory }) => setFrankOceanStory(data.story))
       .catch(() => setStoryError(true));
+
+    fetch('/api/research/frank-ocean')
+      .then((res) => (res.ok ? res.json() : { research: [] }))
+      .then((data: { research: ResearchFile[] }) => {
+        const sorted = [...(data.research ?? [])].sort((a, b) =>
+          (b.metadata?.timestamp ?? '').localeCompare(a.metadata?.timestamp ?? '')
+        );
+        setResearch(sorted);
+      })
+      .catch(() => setResearch([]));
   }, []);
 
 
@@ -286,171 +328,106 @@ export default function FrankOceanPage() {
           )}
 
           {activeTab === 'sources' && (
-            <div className="max-w-6xl mx-auto py-12">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold mb-4">Research Methodology & Sources</h2>
-                <p className="text-xl text-white/70 max-w-3xl mx-auto">
-                  TuneTales uses a hybrid research approach: AI-powered content aggregation combined with manual verification 
-                  from premium music journalism. Full transparency in our methodology ensures content credibility.
-                </p>
+            <div style={{ maxWidth: '860px', margin: '0 auto', padding: '20px 0 40px' }}>
+              <h2
+                style={{
+                  fontSize: '32px',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-display)',
+                  color: '#fff',
+                  marginBottom: '14px',
+                }}
+              >
+                How this story was made
+              </h2>
+              <p style={{ fontSize: '16px', lineHeight: 1.65, color: 'rgba(255,255,255,0.6)', maxWidth: '620px' }}>
+                Every chapter starts as sourced research, becomes a draft in an AI writer&apos;s
+                hands, and is finished by a person. This is the actual paper trail.
+              </p>
+
+              <div className="grid sm:grid-cols-3" style={{ gap: '16px', marginTop: '36px' }}>
+                {RESEARCH_STEPS.map((step) => (
+                  <div key={step.number} className="card-clean rounded-2xl" style={{ padding: '24px' }}>
+                    <div
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        letterSpacing: '0.15em',
+                        color: '#c4b5fd',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      {step.number}
+                    </div>
+                    <h3 style={{ fontSize: '17px', fontWeight: 600, color: '#fff', marginBottom: '8px' }}>
+                      {step.title}
+                    </h3>
+                    <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(255,255,255,0.55)' }}>
+                      {step.body}
+                    </p>
+                  </div>
+                ))}
               </div>
 
-              <div className="card-clean rounded-2xl p-8 mb-8">
-                <h3 className="text-2xl font-bold mb-8 text-white">Research Methodology</h3>
-                
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-3 h-3 rounded-full bg-blue-400 mt-2"></div>
-                    <div>
-                      <h4 className="font-bold text-white mb-2">AI-Powered Foundation</h4>
-                      <p className="text-white/70">Perplexity sonar-pro aggregates comprehensive research from multiple sources</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-3 h-3 rounded-full bg-purple-400 mt-2"></div>
-                    <div>
-                      <h4 className="font-bold text-white mb-2">Manual Verification</h4>
-                      <p className="text-white/70">Human fact-checking against premium music journalism sources</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-3 h-3 rounded-full bg-teal-400 mt-2"></div>
-                    <div>
-                      <h4 className="font-bold text-white mb-2">Quality Control</h4>
-                      <p className="text-white/70">All factual claims reviewed before publication</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-3 h-3 rounded-full bg-green-400 mt-2"></div>
-                    <div>
-                      <h4 className="font-bold text-white mb-2">Premium Enhancement</h4>
-                      <p className="text-white/70">Key stories supplemented with Rolling Stone, Pitchfork research</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="card-clean rounded-2xl p-8 mb-8">
-                <h3 className="text-2xl font-bold mb-6 text-white">Source Quality Distribution</h3>
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h4 className="font-bold mb-4 text-white">Automated Research Sources</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-white/70">General encyclopedias</span>
-                        <span className="text-yellow-300">40-50%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Music databases</span>
-                        <span className="text-blue-300">20-30%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Community forums</span>
-                        <span className="text-orange-300">15-20%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Premium journalism</span>
-                        <span className="text-green-300">10-15%</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-bold mb-4 text-white">Manual Enhancement Focus</h4>
-                    <div className="space-y-2 text-white/70">
-                      <div>• Key biographical facts verification</div>
-                      <div>• Album release timeline accuracy</div>
-                      <div>• Quote attribution and context</div>
-                      <div>• Cultural impact claims</div>
-                      <div>• Industry relationships & collaborations</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="card-clean rounded-2xl p-8 mb-8">
-                <h3 className="text-2xl font-bold mb-6 text-white">Example: Boys Don&apos;t Cry Magazine Research</h3>
-                
-                <div className="grid lg:grid-cols-2 gap-8">
-                  <div>
-                    <h4 className="font-bold mb-4 text-white">Research Query</h4>
-                    <div className="bg-black/20 rounded-lg p-4 mb-4">
-                      <div className="text-sm text-white/60 mb-2">Query Details:</div>
-                      <div className="text-white">&quot;Frank Ocean Boys Don&apos;t Cry magazine details&quot;</div>
-                    </div>
-                    
-                    <div className="space-y-3 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Model Used:</span>
-                        <span className="text-blue-300">sonar-pro</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Tokens:</span>
-                        <span className="text-green-300">893 total</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Cost:</span>
-                        <span className="text-purple-300">$0.018</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-white/70">Citations:</span>
-                        <span className="text-yellow-300">9 sources</span>
-                      </div>
-                    </div>
-                  </div>
+              <h3
+                style={{
+                  fontSize: '22px',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-display)',
+                  color: '#fff',
+                  marginTop: '52px',
+                  marginBottom: '8px',
+                }}
+              >
+                The research archive
+              </h3>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '20px' }}>
+                The raw research behind this story, exactly as it came back. Nothing is written
+                that is not on file.
+              </p>
 
-                  <div>
-                    <h4 className="font-bold mb-4 text-white">Key Findings</h4>
-                    <div className="space-y-3 text-sm text-white/80">
-                      <div>• 360-page magazine released August 20, 2016</div>
-                      <div>• Free distribution at 4 global pop-up locations</div>
-                      <div>• Featured Wolfgang Tillmans & Viviane Sassen photography</div>
-                      <div>• Included Kanye West&apos;s viral McDonald&apos;s poem</div>
-                      <div>• Personal letter from Frank about masculinity &amp; memory</div>
-                      <div>• Extended &quot;Nikes&quot; version with Japanese rapper KOHH</div>
-                      <div>• Marked independence from major label system</div>
+              <div className="card-clean rounded-2xl" style={{ padding: '6px 0' }}>
+                {research.length === 0 ? (
+                  <div style={{ padding: '20px 22px', fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
+                    Loading the archive...
+                  </div>
+                ) : (
+                  research.map((file, i) => (
+                    <div
+                      key={`${file.metadata?.query_type}-${file.metadata?.timestamp}-${i}`}
+                      className="flex items-center justify-between"
+                      style={{
+                        padding: '14px 22px',
+                        gap: '16px',
+                        borderBottom:
+                          i < research.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                      }}
+                    >
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontSize: '15px', fontWeight: 500, color: '#fff' }}>
+                          {QUERY_LABELS[file.metadata?.query_type] ?? file.metadata?.query_type}
+                        </div>
+                        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '3px' }}>
+                          {formatResearchDate(file.metadata?.timestamp ?? '')}
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>
+                        <div>{file.metadata?.model_used}</div>
+                        {typeof file.metadata?.tokens_used === 'number' && file.metadata.tokens_used > 0 && (
+                          <div style={{ marginTop: '3px' }}>{file.metadata.tokens_used.toLocaleString()} tokens</div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  ))
+                )}
               </div>
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="card-clean rounded-2xl p-6">
-                  <h3 className="text-xl font-bold mb-4 text-white">Verification Standards</h3>
-                  <div className="space-y-2 text-sm text-white/70">
-                    <div>- Multiple source cross-referencing</div>
-                    <div>- Publication date verification</div>
-                    <div>- Author credibility assessment</div>
-                    <div>- Fact-checking against primary sources</div>
-                  </div>
-                </div>
 
-                <div className="card-clean rounded-2xl p-6">
-                  <h3 className="text-xl font-bold mb-4 text-white">Data Transparency</h3>
-                  <div className="space-y-2 text-sm text-white/70">
-                    <div>• Full JSON research files stored</div>
-                    <div>• Metadata tracking for all queries</div>
-                    <div>• Source URLs and timestamps</div>
-                    <div>• Cost tracking per research session</div>
-                  </div>
-                </div>
-
-                <div className="card-clean rounded-2xl p-6">
-                  <h3 className="text-xl font-bold mb-4 text-white">Current Metrics</h3>
-                  <div className="space-y-2 text-sm text-white/70">
-                    <div>Mixed source quality (improving)</div>
-                    <div>3-7 citations per query</div>
-                    <div>Manual fact verification for key claims</div>
-                    <div>Transparent methodology documentation</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-center mt-12 pt-8 border-t border-white/10">
-                <p className="text-white/50 text-sm">
-                  All research data is stored as structured JSON files with full metadata tracking. 
-                  TuneTales maintains the highest standards for source verification and academic integrity 
-                  in music journalism and artist storytelling.
-                </p>
-              </div>
+              <p style={{ fontSize: '13px', lineHeight: 1.7, color: 'rgba(255,255,255,0.4)', marginTop: '28px', maxWidth: '620px' }}>
+                Research files are stored as open JSON in the project&apos;s data folder. Artist
+                photography is free-licensed via Wikimedia Commons. Music plays through official
+                Spotify embeds. And when the research does not know something, the story does not
+                say it.
+              </p>
             </div>
           )}
         </motion.div>
