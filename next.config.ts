@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // API routes read data/ JSON at request time; the file tracer cannot see
+  // dynamic fs paths, so include them in the serverless bundles explicitly
+  outputFileTracingIncludes: {
+    "/api/**": ["./data/**"],
+  },
   images: {
     remotePatterns: [
       {
