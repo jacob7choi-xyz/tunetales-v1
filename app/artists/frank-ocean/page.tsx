@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 
 import type { ArtistStory, ResearchFile, SongUniverse } from '../../lib/types';
 import Navbar from '../../components/Navbar';
-import BubbleUniverse from '../../components/BubbleUniverse';
+import SongOdyssey from '../../components/SongOdyssey';
 
 const Starfield = dynamic(() => import('../../components/Starfield'), {
   ssr: false,
@@ -314,7 +314,7 @@ function FrankOceanContent() {
                 </p>
               </div>
               {universe && universe.song_bubbles.length > 0 ? (
-                <BubbleUniverse bubbles={universe.song_bubbles} />
+                <SongOdyssey bubbles={universe.song_bubbles} />
               ) : (
                 <div className="text-center">
                   <div
