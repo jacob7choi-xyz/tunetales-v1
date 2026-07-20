@@ -210,8 +210,9 @@ function StoryReader({ bubble, onClose }: { bubble: SongBubble; onClose: () => v
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain"
-      style={{ background: 'rgb(7, 4, 16)' }}
+      className="fixed inset-0 overflow-y-auto overscroll-contain"
+      style={{ background: 'rgb(7, 4, 16)', zIndex: 200 }}
+      onClick={onClose}
     >
       {/* The room takes this song's color */}
       <div
@@ -225,8 +226,9 @@ function StoryReader({ bubble, onClose }: { bubble: SongBubble; onClose: () => v
       <button
         onClick={onClose}
         aria-label="Close story"
-        className="fixed z-10 flex items-center transition-all duration-200 hover:scale-105 backdrop-blur-md"
+        className="fixed flex items-center transition-all duration-200 hover:scale-105 backdrop-blur-md"
         style={{
+          zIndex: 210,
           top: '20px',
           right: '24px',
           gap: '8px',
@@ -249,7 +251,8 @@ function StoryReader({ bubble, onClose }: { bubble: SongBubble; onClose: () => v
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, duration: 0.55, ease: 'easeOut' }}
         className="relative"
-        style={{ maxWidth: '680px', margin: '0 auto', padding: '110px 28px 80px' }}
+        style={{ maxWidth: '680px', margin: '0 auto', padding: '90px 28px 80px' }}
+        onClick={(e) => e.stopPropagation()}
       >
         <div
           style={{
@@ -328,6 +331,18 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
+
+  // Freeze the page behind the reader so closing returns you exactly
+  // where you left off in the song list
+  useEffect(() => {
+    if (openSong) {
+      const previous = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = previous;
+      };
+    }
+  }, [openSong]);
 
   // The room drifts to each act's color as it crosses mid-viewport
   useEffect(() => {
