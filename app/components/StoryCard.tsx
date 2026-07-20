@@ -150,33 +150,19 @@ export default function StoryCard({
   const isComingSoon = status === 'coming-soon';
   const accent = accentHsl ?? DEFAULT_ACCENT;
 
-  if (isComingSoon) {
-    return (
-      <div className="group relative" style={{ opacity: 0.85 }}>
-        <Poster
-          artistName={artistName}
-          coverImageUrl={coverImageUrl}
-          category={category}
-          year={year}
-          comingSoon
-          teaser={teaser}
-          accent={accent}
-        />
-      </div>
-    );
-  }
-
+  // Coming-soon artists link to their teaser page; slightly dimmed at rest
   return (
     <Link
       href={`/artists/${createArtistSlug(artistName)}`}
-      className="group relative block transition-transform duration-500 hover:-translate-y-1.5"
+      className="group relative block transition-all duration-500 hover:-translate-y-1.5"
+      style={isComingSoon ? { opacity: 0.85 } : undefined}
     >
       <Poster
         artistName={artistName}
         coverImageUrl={coverImageUrl}
         category={category}
         year={year}
-        comingSoon={false}
+        comingSoon={isComingSoon}
         teaser={teaser}
         accent={accent}
       />

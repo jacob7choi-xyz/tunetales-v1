@@ -87,7 +87,7 @@ describe("StoryCard", () => {
     ).toBeGreaterThan(0);
   });
 
-  it("renders a coming-soon label and no link when status is coming-soon", () => {
+  it("renders a coming-soon label and links to the teaser page", () => {
     render(
       <StoryCard
         {...defaultProps}
@@ -96,8 +96,7 @@ describe("StoryCard", () => {
       />
     );
     expect(screen.getAllByText("Coming soon").length).toBeGreaterThan(0);
-    expect(
-      screen.queryByRole("link", { name: /kendrick lamar/i })
-    ).toBeNull();
+    const links = screen.getAllByRole("link", { name: /kendrick lamar/i });
+    expect(links[0]).toHaveAttribute("href", "/artists/kendrick-lamar");
   });
 });
