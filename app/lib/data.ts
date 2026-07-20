@@ -5,6 +5,7 @@ import type {
   ArtistStory,
   LegacyArtistStory,
   ResearchFile,
+  SongUniverse,
   StoryChapter,
 } from "./types";
 import { SLUG_PATTERN } from "./tokens";
@@ -69,6 +70,32 @@ export async function getArtistStory(slug: string): Promise<ArtistStory | null> 
     );
     const parsed = JSON.parse(raw) as ArtistStory | LegacyArtistStory;
     return normalizeLegacyStory(parsed, slug);
+  } catch {
+    return null;
+  }
+}
+
+export async function getSongUniverse(slug: string): Promise<SongUniverse | null> {
+  validateSlug(slug);
+  const storiesDir = path.join(DATA_DIR, "stories");
+  const artistToken = slug.replace(/-/g, "_");
+
+  try {
+    const files = await readdir(storiesDir);
+    // Timestamped filenames sort lexicographically; last match is newest
+    const matching = files
+      .filter(
+        (f) =>
+          f.startsWith("universe_") &&
+          f.toLowerCase().includes(artistToken) &&
+          f.endsWith(".json")
+      )
+      .sort();
+    const newest = matching[matching.length - 1];
+    if (!newest) return null;
+
+    const raw = await readFile(path.join(storiesDir, newest), "utf-8");
+    return JSON.parse(raw) as SongUniverse;
   } catch {
     return null;
   }

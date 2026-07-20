@@ -77,15 +77,15 @@ def _build_narrative_prompt(artist_name: str, artist_content: str, timeline_cont
 
 def _build_song_prompt(artist_name: str, song_name: str, song_content: str) -> str:
     """Build the Disney-narrator prompt for a single song's origin story."""
-    return f"""You are a gentle Disney storyteller, and you're about to share the delightful tale of how a very special song came to be. Think of how Jiminy Cricket might tell the story of how "{song_name}" was born - with wonder, warmth, and that special Disney magic that makes even ordinary moments feel extraordinary.
+    return f"""You are a warm, wise storyteller in the spirit of the great Disney narrators, about to share the true story of how a special song came to be. Your gift is making listeners feel close to the moment of creation - with wonder and warmth, but always honest to what the song really is. Some songs are joyful; some ache. You tell both truthfully.
 
         RESEARCH TO WEAVE INTO YOUR STORY:
         {song_content}
 
-        Tell the enchanting story of "{song_name}" by {artist_name} with these gentle chapters:
+        Tell the story of "{song_name}" by {artist_name} with these chapters:
 
         ## How It All Began
-        Set the scene like the opening of a Disney film. Where was {artist_name} when this song first whispered to them? What was happening in their world? Make it feel magical but real - like the moment when Pinocchio first wishes upon a star.
+        Open inside a specific real moment from this song's creation. Where was {artist_name} when this song first took shape? What was happening in their world? Make it feel vivid and real.
 
         ## The Creative Adventure
         Tell us how the song grew and changed, like watching a garden bloom. Who helped along the way? What challenges did they face? What moments of discovery happened? Make it feel like a gentle adventure story.
@@ -96,28 +96,37 @@ def _build_song_prompt(artist_name: str, song_name: str, song_content: str) -> s
         ## Why It Matters
         End with how this song touches hearts and why it's become special to so many people. Keep it warm and hopeful.
 
-        DISNEY STORYTELLING MAGIC:
-        - Write as a warm, wise narrator telling a bedtime story
-        - Use simple, beautiful language that makes people smile
-        - Include gentle moments of wonder and discovery
-        - Focus on the joy of creation and human connection
-        - Keep it light and magical, never heavy or dramatic
-        - Use warm metaphors (music "dancing through the air" rather than complex imagery)
-        - Make listeners feel like they were there watching the magic happen
-        - 500-700 words of pure enchantment
-        - End with something that makes people feel happy and connected
+        STORYTELLING GUIDELINES:
+        - Write as a warm, wise narrator who truly loves this song
+        - Use simple, beautiful language that makes people feel something real
+        - Honor the song's true emotional weight: if it is heartbroken, aching, fierce, or strange, let the story carry that feeling, held gently. Warmth means honesty told kindly, never avoidance
+        - Match the story's energy to the song's energy: a quiet ballad gets a hushed story, an epic gets sweep and momentum
+        - Ground the story in 2-3 verified specifics from the research (real names, places, dates, studio moments)
+        - Do NOT open with "Once upon" or any stock fairy-tale phrase; begin inside a specific real moment, place, or image from this song's actual story
+        - Use warm metaphors sparingly, and only ones this particular song has earned
+        - Make listeners feel like they were there watching it happen
+        - 500-700 words
+        - End with why this song stays with people, in a way that is true to its feeling: hopeful endings for hopeful songs, tender endings for sad ones
 
         Remember: You're not writing a documentary - you're sharing a gentle, magical story about how something beautiful came into the world, told with all the heart of classic Disney storytelling."""
 
 
 def _build_mood_prompt(story_text: str) -> str:
-    """Build the single-word mood classification prompt."""
+    """Build the single-word mood classification prompt.
+
+    Reads the full story (not just the opening) and judges the song itself,
+    since the narration style is uniformly warm and would otherwise collapse
+    every song into the same one or two moods.
+    """
     moods = "\n".join(f"- {mood}" for mood in MOOD_COLORS)
-    return f"""Analyze this song story and identify its primary emotional mood in one word.
+    return f"""You are classifying the emotional mood of a SONG, based on the story of how it was made and what it means.
 
-Story: {story_text[:500]}...
+Story:
+{story_text[:6000]}
 
-Choose the single word that best captures the emotional tone:
+Which single word best captures the emotional character of the song itself -- its sound, its subject matter, and how it makes listeners feel? Ignore the storytelling style of the narration; judge the song underneath it. A song about heartbreak is melancholic even when narrated warmly. An epic, pulsing song is intense even when described gently.
+
+Choose exactly one:
 {moods}
 
 Respond with only the mood word."""

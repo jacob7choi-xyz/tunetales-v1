@@ -146,6 +146,20 @@ body {
   }
 }
 
+/* Song bubbles: slow vertical bob, staggered per bubble via --delay */
+@keyframes bubble-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.song-bubble {
+  animation: bubble-bob var(--duration, 7s) var(--delay, 0s) ease-in-out infinite;
+}
+
 /* Clean flat card (Spotify-style): subtle surface, brightens on hover */
 .card-clean {
   background: rgba(255, 255, 255, 0.04);

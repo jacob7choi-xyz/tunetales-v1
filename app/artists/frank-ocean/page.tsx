@@ -7,8 +7,9 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-import type { ArtistStory, ResearchFile } from '../../lib/types';
+import type { ArtistStory, ResearchFile, SongUniverse } from '../../lib/types';
 import Navbar from '../../components/Navbar';
+import BubbleUniverse from '../../components/BubbleUniverse';
 
 const Starfield = dynamic(() => import('../../components/Starfield'), {
   ssr: false,
@@ -24,7 +25,7 @@ const RESEARCH_STEPS = [
   {
     number: '02',
     title: 'Written',
-    body: 'Claude shapes that research into the warm, chapter-based narrative you read in the Journey. It writes from the research, not from memory.',
+    body: 'An AI storyteller shapes that research into the warm narratives you read here. It writes from the research, not from memory.',
   },
   {
     number: '03',
@@ -51,6 +52,7 @@ export default function FrankOceanPage() {
   const [activeTab, setActiveTab] = useState('journey');
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
   const [research, setResearch] = useState<ResearchFile[]>([]);
+  const [universe, setUniverse] = useState<SongUniverse | null>(null);
   const [storyError, setStoryError] = useState(false);
 
   useEffect(() => {
@@ -71,6 +73,11 @@ export default function FrankOceanPage() {
         setResearch(sorted);
       })
       .catch(() => setResearch([]));
+
+    fetch('/api/universe/frank-ocean')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: SongUniverse | null) => setUniverse(data))
+      .catch(() => setUniverse(null));
   }, []);
 
 
@@ -292,20 +299,28 @@ export default function FrankOceanPage() {
           )}
 
           {activeTab === 'discography' && (
-            <div className="text-center py-20">
-              <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)' }}>Musical Creations</h2>
-              <p className="text-xl text-white/70 mb-8">
-                Explore Frank&apos;s complete catalog of albums, singles, and rare gems
-              </p>
-              <div
-                className="card-clean rounded-2xl inline-flex items-center"
-                style={{ padding: '20px 36px', gap: '12px' }}
-              >
-                <MusicalNoteIcon style={{ width: '22px', height: '22px', color: '#c4b5fd' }} />
-                <span style={{ color: 'rgba(255,255,255,0.7)' }}>
-                  A universe of song bubbles is being composed. Coming soon.
-                </span>
+            <div style={{ padding: '20px 0 40px' }}>
+              <div className="text-center" style={{ marginBottom: '48px' }}>
+                <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Musical Creations</h2>
+                <p className="text-xl text-white/70">
+                  Every song is a small world. Touch one to hear how it came to be.
+                </p>
               </div>
+              {universe && universe.song_bubbles.length > 0 ? (
+                <BubbleUniverse bubbles={universe.song_bubbles} />
+              ) : (
+                <div className="text-center">
+                  <div
+                    className="card-clean rounded-2xl inline-flex items-center"
+                    style={{ padding: '20px 36px', gap: '12px' }}
+                  >
+                    <MusicalNoteIcon style={{ width: '22px', height: '22px', color: '#c4b5fd' }} />
+                    <span style={{ color: 'rgba(255,255,255,0.7)' }}>
+                      A universe of song bubbles is being composed. Coming soon.
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
