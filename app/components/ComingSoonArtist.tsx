@@ -1,12 +1,12 @@
 'use client';
 
-
 import { motion } from 'framer-motion';
 import { SparklesIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Navbar from './Navbar';
+import AmbienceLayer from './AmbienceLayer';
 
 const Starfield = dynamic(() => import('./Starfield'), {
   ssr: false
@@ -17,154 +17,148 @@ interface ComingSoonArtistProps {
   artistImage: string;
   description: string;
   genre: string;
-  accentColor: string;
+  accentHsl?: string;
+  teaser?: string;
 }
+
+const DEFAULT_ACCENT = '260, 65%, 55%';
 
 export default function ComingSoonArtist({
   artistName,
   artistImage,
   description,
   genre,
-  accentColor
+  accentHsl,
+  teaser,
 }: ComingSoonArtistProps) {
   const router = useRouter();
+  const accent = accentHsl ?? DEFAULT_ACCENT;
 
   return (
-    <div className="min-h-screen text-white font-sans animated-bg">
+    <div className="min-h-screen text-white animated-bg relative overflow-hidden">
+      {/* The whole room glows in this artist's color */}
+      <AmbienceLayer accentHsl={accent} />
       <Starfield />
 
       <Navbar backHref="/" backLabel="Back to Artists" subtitle="Coming Soon" />
 
-      {/* Main Content */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '120px 24px 80px' }}>
+      <section className="relative" style={{ zIndex: 10, padding: '120px 48px 80px' }}>
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="flex flex-col sm:flex-row items-center sm:items-end"
+          style={{ maxWidth: '1200px', margin: '0 auto', gap: '40px' }}
         >
-          {/* Artist Image */}
-          <div style={{ position: 'relative', width: '200px', height: '200px', marginBottom: '40px' }}>
-            <div style={{
-              width: '200px',
-              height: '200px',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              border: '4px solid rgba(255,255,255,0.2)',
-              boxShadow: '0 25px 50px rgba(0,0,0,0.3)',
-              position: 'relative',
-            }}>
-              <Image
-                src={artistImage}
-                alt={artistName}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div style={{
-              position: 'absolute',
-              inset: '-16px',
-              borderRadius: '50%',
-              background: 'linear-gradient(to right, rgba(96,165,250,0.2), rgba(167,139,250,0.2), rgba(45,212,191,0.2))',
-              filter: 'blur(24px)',
-              zIndex: -1,
-            }} />
-          </div>
-
-          {/* Artist Name */}
-          <h1 style={{ fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
-            <span className={`bg-gradient-to-r ${accentColor} bg-clip-text text-transparent`}>
-              {artistName}
-            </span>
-          </h1>
-
-          {/* Genre Badge */}
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            padding: '8px 24px',
-            marginBottom: '32px',
-            fontSize: '16px',
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.8)',
-            background: 'rgba(255,255,255,0.1)',
-            borderRadius: '9999px',
-            backdropFilter: 'blur(12px)',
-          }}>
-            {genre}
-          </div>
-
-          {/* Description */}
-          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.65)', lineHeight: '1.7', maxWidth: '680px', marginBottom: '56px' }}>
-            {description}
-          </p>
-
-          {/* Coming Soon Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            style={{
-              width: '100%',
-              maxWidth: '600px',
-              padding: '48px 40px',
-              marginBottom: '56px',
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '24px',
-              backdropFilter: 'blur(12px)',
-              textAlign: 'center',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '24px' }}>
-              <SparklesIcon className="text-blue-400" style={{ width: '32px', height: '32px' }} />
-              <h2 style={{ fontSize: '30px', fontWeight: 700, color: '#fff' }}>Coming Soon</h2>
-            </div>
-            <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.7', maxWidth: '460px', margin: '0 auto 28px' }}>
-              We&apos;re crafting an immersive, cinematic experience for {artistName} that will revolutionize
-              how you discover their musical journey.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'rgba(255,255,255,0.35)' }}>
-              <ClockIcon style={{ width: '18px', height: '18px' }} />
-              <span style={{ fontSize: '14px' }}>Currently building their musical odyssey...</span>
-            </div>
-          </motion.div>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-          >
-            <p style={{ color: 'rgba(255,255,255,0.55)', marginBottom: '24px', fontSize: '16px' }}>
-              Want to experience our first artist deep dive?
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => router.push('/artists/frank-ocean')}
+          {/* Portrait wrapped in the artist's aura */}
+          <div className="relative shrink-0" style={{ width: '190px', height: '190px' }}>
+            <div
+              aria-hidden="true"
+              className="absolute"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '16px 36px',
-                fontSize: '17px',
-                fontWeight: 700,
-                color: '#fff',
-                background: 'rgba(147,51,234,0.4)',
-                border: '2px solid rgba(192,132,252,0.5)',
-                borderRadius: '9999px',
-                boxShadow: '0 0 30px rgba(147,51,234,0.25)',
-                cursor: 'pointer',
+                inset: '-24px',
+                borderRadius: '50%',
+                background: `radial-gradient(circle, hsla(${accent}, 0.45) 0%, transparent 70%)`,
+                filter: 'blur(26px)',
+              }}
+            />
+            <div
+              className="relative overflow-hidden"
+              style={{
+                width: '190px',
+                height: '190px',
+                borderRadius: '50%',
+                border: `1px solid hsla(${accent}, 0.4)`,
+                boxShadow: '0 16px 48px rgba(0, 0, 0, 0.5)',
               }}
             >
-              <SparklesIcon style={{ width: '24px', height: '24px', marginRight: '12px' }} />
-              Explore Frank Ocean
-            </motion.button>
-          </motion.div>
+              <Image src={artistImage} alt={artistName} fill className="object-cover" />
+            </div>
+          </div>
+
+          {/* Identity */}
+          <div className="text-center sm:text-left">
+            <div
+              style={{
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: `hsla(${accent}, 0.9)`,
+                marginBottom: '10px',
+              }}
+            >
+              Story in the Making
+            </div>
+            <h1
+              style={{
+                fontSize: 'clamp(44px, 6vw, 72px)',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.05,
+                fontFamily: 'var(--font-display)',
+                color: '#fff',
+                marginBottom: '14px',
+              }}
+            >
+              {artistName}
+            </h1>
+            <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.55)', marginBottom: '18px' }}>
+              {genre}
+            </p>
+            <p
+              style={{
+                fontSize: '16px',
+                lineHeight: 1.65,
+                color: 'rgba(255, 255, 255, 0.6)',
+                maxWidth: '560px',
+                marginBottom: '14px',
+              }}
+            >
+              {description}
+            </p>
+            {teaser && (
+              <p
+                style={{
+                  fontSize: '15px',
+                  fontStyle: 'italic',
+                  color: `hsla(${accent}, 0.9)`,
+                  marginBottom: '26px',
+                }}
+              >
+                {teaser}
+              </p>
+            )}
+
+            <div
+              className="flex items-center justify-center sm:justify-start"
+              style={{ gap: '10px', marginBottom: '32px', color: 'rgba(255, 255, 255, 0.45)' }}
+            >
+              <ClockIcon style={{ width: '17px', height: '17px' }} />
+              <span style={{ fontSize: '14px' }}>
+                Their odyssey is being written with care. It will be worth the wait.
+              </span>
+            </div>
+
+            <div className="flex items-center justify-center sm:justify-start">
+              <button
+                onClick={() => router.push('/artists/frank-ocean')}
+                className="inline-flex items-center rounded-full font-semibold text-white transition-all duration-300 hover:scale-105"
+                style={{
+                  padding: '13px 30px',
+                  fontSize: '15px',
+                  background: '#9333ea',
+                  boxShadow: '0 4px 20px rgba(147, 51, 234, 0.35)',
+                  cursor: 'pointer',
+                }}
+              >
+                <SparklesIcon style={{ width: '18px', height: '18px', marginRight: '10px' }} />
+                Explore Frank Ocean
+              </button>
+            </div>
+          </div>
         </motion.div>
-      </div>
+      </section>
     </div>
   );
 }
