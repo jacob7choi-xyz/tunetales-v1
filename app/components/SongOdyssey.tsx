@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import type { SongBubble } from '../lib/types';
+import { coverFor } from '../lib/covers';
 import AmbienceLayer from './AmbienceLayer';
 import SpotifyEmbed from './SpotifyEmbed';
 
@@ -137,7 +139,7 @@ function moodHex(bubble: SongBubble): string {
   return /^#[0-9A-Fa-f]{6}$/.test(bubble.bubble_color) ? bubble.bubble_color : '#9A6B9A';
 }
 
-function SongPoster({ bubble, onOpen }: { bubble: SongBubble; onOpen: () => void }) {
+function SongPoster({ bubble, cover, onOpen }: { bubble: SongBubble; cover: string | null; onOpen: () => void }) {
   const hex = moodHex(bubble);
   const label = SHORT_LABELS[bubble.song_name] ?? bubble.song_name;
   return (
@@ -169,7 +171,35 @@ function SongPoster({ bubble, onOpen }: { bubble: SongBubble; onOpen: () => void
           boxShadow: '0 10px 30px rgba(0, 0, 0, 0.45)',
         }}
       >
+        {cover && (
+          <>
+            <Image
+              src={cover}
+              alt=""
+              fill
+              sizes="164px"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* Scrim so the mood and title stay readable over the artwork */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(to top, rgba(5, 2, 15, 0.94) 0%, rgba(5, 2, 15, 0.45) 42%, rgba(5, 2, 15, 0.05) 75%)',
+              }}
+            />
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 transition-opacity duration-500 opacity-35 group-hover:opacity-60"
+              style={{
+                background: `radial-gradient(ellipse at 50% 110%, ${hex}66 0%, transparent 60%)`,
+              }}
+            />
+          </>
+        )}
         <span
+          className="relative"
           style={{
             fontSize: '10px',
             fontWeight: 600,
@@ -177,18 +207,20 @@ function SongPoster({ bubble, onOpen }: { bubble: SongBubble; onOpen: () => void
             textTransform: 'uppercase',
             color: hex,
             marginBottom: '8px',
-            filter: 'brightness(1.5)',
+            filter: 'brightness(1.6)',
           }}
         >
           {bubble.mood}
         </span>
         <span
+          className="relative"
           style={{
             fontSize: '17px',
             fontWeight: 700,
             lineHeight: 1.25,
             fontFamily: 'var(--font-display)',
             color: '#fff',
+            textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
           }}
         >
           {label}
@@ -198,7 +230,7 @@ function SongPoster({ bubble, onOpen }: { bubble: SongBubble; onOpen: () => void
   );
 }
 
-function StoryReader({ bubble, onClose }: { bubble: SongBubble; onClose: () => void }) {
+function StoryReader({ bubble, cover, onClose }: { bubble: SongBubble; cover: string | null; onClose: () => void }) {
   const hex = moodHex(bubble);
   const sections = parseStorySections(bubble.story);
   const trackId = SONG_TRACK_IDS[bubble.song_name];
@@ -254,6 +286,21 @@ function StoryReader({ bubble, onClose }: { bubble: SongBubble; onClose: () => v
         style={{ maxWidth: '680px', margin: '0 auto', padding: '90px 28px 80px' }}
         onClick={(e) => e.stopPropagation()}
       >
+        {cover && (
+          <div
+            className="relative overflow-hidden"
+            style={{
+              width: '108px',
+              height: '108px',
+              borderRadius: '12px',
+              marginBottom: '26px',
+              border: `1px solid ${hex}55`,
+              boxShadow: `0 0 36px ${hex}33, 0 14px 30px rgba(0, 0, 0, 0.5)`,
+            }}
+          >
+            <Image src={cover} alt="" fill sizes="108px" className="object-cover" />
+          </div>
+        )}
         <div
           style={{
             fontSize: '12px',
@@ -421,6 +468,7 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
                 <SongPoster
                   key={bubble.song_name}
                   bubble={bubble}
+                  cover={coverFor(bubble.song_name, act.title)}
                   onOpen={() => setOpenSong(bubble.song_name)}
                 />
               ))}
@@ -447,6 +495,7 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
               <SongPoster
                 key={bubble.song_name}
                 bubble={bubble}
+                cover={coverFor(bubble.song_name, '')}
                 onOpen={() => setOpenSong(bubble.song_name)}
               />
             ))}
@@ -455,7 +504,16 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
       )}
 
       <AnimatePresence>
-        {openBubble && <StoryReader bubble={openBubble} onClose={() => setOpenSong(null)} />}
+        {openBubble && (
+          <StoryReader
+            bubble={openBubble}
+            cover={coverFor(
+              openBubble.song_name,
+              ACTS.find((a) => a.songs.includes(openBubble.song_name))?.title ?? ''
+            )}
+            onClose={() => setOpenSong(null)}
+          />
+        )}
       </AnimatePresence>
     </div>
   );
