@@ -2,6 +2,7 @@ import { readFile, readdir } from "fs/promises";
 import path from "path";
 import type {
   Artist,
+  ArtistLegacy,
   ArtistStory,
   LegacyArtistStory,
   ResearchFile,
@@ -96,6 +97,19 @@ export async function getSongUniverse(slug: string): Promise<SongUniverse | null
 
     const raw = await readFile(path.join(storiesDir, newest), "utf-8");
     return JSON.parse(raw) as SongUniverse;
+  } catch {
+    return null;
+  }
+}
+
+export async function getLegacy(slug: string): Promise<ArtistLegacy | null> {
+  validateSlug(slug);
+  try {
+    const raw = await readFile(
+      path.join(DATA_DIR, "stories", `legacy_${slug}.json`),
+      "utf-8"
+    );
+    return JSON.parse(raw) as ArtistLegacy;
   } catch {
     return null;
   }

@@ -7,9 +7,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-import type { ArtistStory, ResearchFile, SongUniverse } from '../../lib/types';
+import type { ArtistLegacy, ArtistStory, ResearchFile, SongUniverse } from '../../lib/types';
 import Navbar from '../../components/Navbar';
 import SongOdyssey from '../../components/SongOdyssey';
+import CulturalLegacy from '../../components/CulturalLegacy';
 
 const Starfield = dynamic(() => import('../../components/Starfield'), {
   ssr: false,
@@ -60,6 +61,7 @@ function FrankOceanContent() {
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
   const [research, setResearch] = useState<ResearchFile[]>([]);
   const [universe, setUniverse] = useState<SongUniverse | null>(null);
+  const [legacy, setLegacy] = useState<ArtistLegacy | null>(null);
   const [storyError, setStoryError] = useState(false);
 
   useEffect(() => {
@@ -85,6 +87,11 @@ function FrankOceanContent() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data: SongUniverse | null) => setUniverse(data))
       .catch(() => setUniverse(null));
+
+    fetch('/api/legacy/frank-ocean')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: ArtistLegacy | null) => setLegacy(data))
+      .catch(() => setLegacy(null));
   }, []);
 
 
@@ -332,20 +339,28 @@ function FrankOceanContent() {
           )}
 
           {activeTab === 'impact' && (
-            <div className="text-center py-20">
-              <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)' }}>Cultural Legacy</h2>
-              <p className="text-xl text-white/70 mb-8">
-                How Frank Ocean changed music, culture, and representation forever
-              </p>
-              <div
-                className="card-clean rounded-2xl inline-flex items-center"
-                style={{ padding: '20px 36px', gap: '12px' }}
-              >
-                <SparklesIcon style={{ width: '22px', height: '22px', color: '#c4b5fd' }} />
-                <span style={{ color: 'rgba(255,255,255,0.7)' }}>
-                  An interactive map of his influence is on the way. Coming soon.
-                </span>
+            <div style={{ padding: '20px 0 40px' }}>
+              <div className="text-center" style={{ marginBottom: '36px' }}>
+                <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Cultural Legacy</h2>
+                <p className="text-xl text-white/70">
+                  How Frank Ocean changed music, culture, and representation forever
+                </p>
               </div>
+              {legacy && legacy.pillars.length > 0 ? (
+                <CulturalLegacy legacy={legacy} />
+              ) : (
+                <div className="text-center">
+                  <div
+                    className="card-clean rounded-2xl inline-flex items-center"
+                    style={{ padding: '20px 36px', gap: '12px' }}
+                  >
+                    <SparklesIcon style={{ width: '22px', height: '22px', color: '#c4b5fd' }} />
+                    <span style={{ color: 'rgba(255,255,255,0.7)' }}>
+                      An interactive map of his influence is on the way. Coming soon.
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
