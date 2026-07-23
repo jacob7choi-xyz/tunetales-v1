@@ -19,6 +19,10 @@ const Starfield = dynamic(() => import('@/app/components/Starfield'), {
 interface JourneyClientProps {
   story: ArtistStory;
   initialChapter?: number;
+  // Embedded mode: rendered inside a full-screen overlay on the artist
+  // page instead of as its own route; exiting closes the overlay
+  embedded?: boolean;
+  onExit?: () => void;
 }
 
 function ChapterPanel({ chapter, total }: { chapter: StoryChapter; total: number }) {
@@ -90,11 +94,15 @@ function ChapterPanel({ chapter, total }: { chapter: StoryChapter; total: number
   );
 }
 
-export default function JourneyClient({ story, initialChapter = 0 }: JourneyClientProps) {
+export default function JourneyClient({ story, initialChapter = 0, embedded = false, onExit }: JourneyClientProps) {
   const router = useRouter();
   const [current, setCurrent] = useState(initialChapter);
   const chapters = story.chapters;
   const chapter = chapters[current];
+  const exit = useCallback(() => {
+    if (onExit) onExit();
+    else router.push('/artists/frank-ocean');
+  }, [onExit, router]);
 
   const goNext = useCallback(() => {
     setCurrent((c) => Math.min(c + 1, chapters.length - 1));
@@ -108,29 +116,55 @@ export default function JourneyClient({ story, initialChapter = 0 }: JourneyClie
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowDown') goNext();
       else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') goPrev();
-      else if (event.key === 'Escape') router.push('/artists/frank-ocean');
+      else if (event.key === 'Escape') exit();
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [goNext, goPrev, router]);
+  }, [goNext, goPrev, exit]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [current]);
+    if (!embedded) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [current, embedded]);
 
   return (
-    <div className="min-h-screen text-white animated-bg relative overflow-hidden">
+    <div
+      className={embedded ? 'min-h-full text-white relative' : 'min-h-screen text-white animated-bg relative overflow-hidden'}
+    >
       <AmbienceLayer accentHsl={chapter.ambience.accentHsl} />
-      <Starfield />
+      {!embedded && <Starfield />}
 
-      <Navbar
-        backHref="/artists/frank-ocean"
-        backLabel="Frank Ocean"
-        subtitle={story.title}
-      />
+      {embedded ? (
+        <button
+          onClick={exit}
+          aria-label="Close the journey"
+          className="fixed flex items-center transition-all duration-200 hover:scale-105 backdrop-blur-md"
+          style={{
+            zIndex: 210,
+            top: '20px',
+            right: '24px',
+            gap: '8px',
+            padding: '9px 18px',
+            fontSize: '13px',
+            fontWeight: 600,
+            color: 'rgba(255, 255, 255, 0.85)',
+            background: 'rgba(255, 255, 255, 0.08)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            borderRadius: '9999px',
+            cursor: 'pointer',
+          }}
+        >
+          Close
+        </button>
+      ) : (
+        <Navbar
+          backHref="/artists/frank-ocean"
+          backLabel="Frank Ocean"
+          subtitle={story.title}
+        />
+      )}
 
       {/* Chapter content */}
-      <main className="relative" style={{ zIndex: 10, padding: '130px 24px 40px' }}>
+      <main className="relative" style={{ zIndex: 10, padding: embedded ? '84px 24px 40px' : '130px 24px 40px' }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={chapter.id}
