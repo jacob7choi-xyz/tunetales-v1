@@ -11,6 +11,7 @@ import type { ArtistLegacy, ArtistStory, ResearchFile, SongUniverse } from '../.
 import Navbar from '../../components/Navbar';
 import SongOdyssey from '../../components/SongOdyssey';
 import CulturalLegacy from '../../components/CulturalLegacy';
+import JourneyIndex from '../../components/JourneyIndex';
 
 const Starfield = dynamic(() => import('../../components/Starfield'), {
   ssr: false,
@@ -273,42 +274,8 @@ function FrankOceanContent() {
           className="min-h-[60vh]"
         >
           {activeTab === 'journey' && (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '80px 24px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '20px' }}>
-                <SparklesIcon className="text-blue-400" style={{ width: '36px', height: '36px' }} />
-                <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#fff' }}>Frank&apos;s Musical Odyssey</h2>
-              </div>
-              <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.6)', maxWidth: '560px', lineHeight: '1.7', marginBottom: '40px' }}>
-                Dive deep into the meticulously researched story of Christopher Breaux&apos;s transformation
-                into one of music&apos;s most enigmatic artists.
-              </p>
-
-              <motion.button
-                onClick={handleEnterJourney}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '13px 30px',
-                  fontSize: '15px',
-                  fontWeight: 600,
-                  color: '#fff',
-                  background: '#9333ea',
-                  border: 'none',
-                  borderRadius: '9999px',
-                  boxShadow: '0 4px 20px rgba(147, 51, 234, 0.35)',
-                  cursor: 'pointer',
-                }}
-              >
-                <PlayIcon style={{ width: '18px', height: '18px', marginRight: '10px' }} />
-                Enter the Journey
-              </motion.button>
-
-              <div style={{ marginTop: '48px', fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
-                Based on comprehensive research from premium music journalism sources
-              </div>
+            <div style={{ padding: '20px 0 40px' }}>
+              <JourneyIndex story={frankOceanStory} />
             </div>
           )}
 

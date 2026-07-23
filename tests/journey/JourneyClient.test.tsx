@@ -88,6 +88,11 @@ describe("JourneyClient", () => {
     expect(screen.getAllByText(/Chapter 1 of 3/).length).toBeGreaterThan(0);
   });
 
+  it("starts at the requested chapter when deep-linked", () => {
+    render(<JourneyClient story={story} initialChapter={2} />);
+    expect(screen.getAllByText("CHAPTER THREE TITLE").length).toBeGreaterThan(0);
+  });
+
   it("splits chapter content into paragraphs", () => {
     render(<JourneyClient story={story} />);
     expect(screen.getAllByText("First paragraph.").length).toBeGreaterThan(0);

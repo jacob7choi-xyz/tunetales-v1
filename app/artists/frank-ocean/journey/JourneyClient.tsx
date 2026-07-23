@@ -18,6 +18,7 @@ const Starfield = dynamic(() => import('@/app/components/Starfield'), {
 
 interface JourneyClientProps {
   story: ArtistStory;
+  initialChapter?: number;
 }
 
 function ChapterPanel({ chapter, total }: { chapter: StoryChapter; total: number }) {
@@ -89,9 +90,9 @@ function ChapterPanel({ chapter, total }: { chapter: StoryChapter; total: number
   );
 }
 
-export default function JourneyClient({ story }: JourneyClientProps) {
+export default function JourneyClient({ story, initialChapter = 0 }: JourneyClientProps) {
   const router = useRouter();
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(initialChapter);
   const chapters = story.chapters;
   const chapter = chapters[current];
 
