@@ -18,7 +18,7 @@
     "@tailwindcss/postcss": "^4.2.1",
     "framer-motion": "^12.10.5",
     "next": "^16.1.6",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.12",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwindcss": "^4.2.1"
@@ -36,5 +36,9 @@
     "jsdom": "^28.1.0",
     "typescript": "^5",
     "vitest": "^4.1.0"
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "sharp": ">=0.35.0"
   }
 }
