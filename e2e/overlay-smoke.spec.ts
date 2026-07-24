@@ -47,9 +47,10 @@ test("escape-then-tab lands in the page, not a focus black hole", async ({ page,
 
   // Focus restored to the trigger means Tab continues from the scene,
   // proving restoration happened after the background became interactive.
-  // WebKit follows Safari's platform semantics where plain Tab skips
-  // buttons; Option+Tab traverses all focusables. Same invariant, the
-  // platform-correct keystroke.
+  // Playwright's WebKit build follows Safari-style keyboard navigation
+  // (plain Tab skips buttons by default; Option+Tab traverses all
+  // focusables; users can change this in system settings). Same
+  // invariant, the keystroke this test environment requires.
   await expect(trigger).toBeFocused();
   await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
   const focusedTag = await page.evaluate(() => document.activeElement?.tagName);
