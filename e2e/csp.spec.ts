@@ -50,11 +50,14 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
     }
     // Child-frame DOCUMENT responses from the allowlisted origin: the
     // strongest signal that the embed frame's navigation actually
-    // succeeded, not just that a frame URL was assigned
+    // succeeded, not just that a frame URL was assigned. 2xx only here:
+    // an intermediate redirect hop must not count as the final delivered
+    // document (the general inventory above stays <400 deliberately).
     if (
       req.resourceType() === "document" &&
       req.frame() !== page.mainFrame() &&
-      res.status() < 400
+      res.status() >= 200 &&
+      res.status() < 300
     ) {
       try {
         if (new URL(res.url()).origin === "https://open.spotify.com") {
@@ -122,12 +125,22 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
       { message: "Spotify frame never navigated to the allowlisted origin" }
     )
     .toBeGreaterThan(0);
-  // ...and the navigation received a successful HTTP document response:
-  // frame.url() alone is a proxy, not proof of delivery
+  // ...and the navigation received a successful (2xx) HTTP document
+  // response BOUND to the embed we exercised: frame.url() alone is a
+  // proxy, and "some Spotify document loaded somewhere" would age badly
+  // if a second embed ever appears. The delivered document's path must
+  // match an exercised iframe src (CONTRACT: the Spotify embed is
+  // currently the only intentional cross-origin iframe on the page; the
+  // every-iframe origin assertion above encodes that assumption).
+  const exercisedPaths = embedSrcs.map((src) => new URL(src).pathname);
   await expect
-    .poll(() => spotifyFrameResponses.length, {
-      message: "Spotify frame document was never successfully delivered",
-    })
+    .poll(
+      () =>
+        spotifyFrameResponses.filter((url) =>
+          exercisedPaths.some((p) => new URL(url).pathname === p)
+        ).length,
+      { message: "the exercised Spotify embed's document was never successfully delivered" }
+    )
     .toBeGreaterThan(0);
   await page.keyboard.press("Escape");
   // Song reader (lazy universe API)

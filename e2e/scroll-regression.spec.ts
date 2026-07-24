@@ -23,11 +23,16 @@ for (const path of ["/", "/artists/frank-ocean"]) {
 test("?tab=impact lands with the Legacy section in the viewport", async ({ page }) => {
   await page.goto("/artists/frank-ocean?tab=impact");
   const impact = page.locator("#impact");
+  // Generous timeout: on throttled CI runners, late fonts/media shift
+  // layout and the page re-anchors after the document settles
   await expect
-    .poll(async () => {
-      const box = await impact.boundingBox();
-      return box ? Math.abs(box.y) : Number.POSITIVE_INFINITY;
-    })
+    .poll(
+      async () => {
+        const box = await impact.boundingBox();
+        return box ? Math.abs(box.y) : Number.POSITIVE_INFINITY;
+      },
+      { timeout: 15_000 }
+    )
     .toBeLessThan(200);
 });
 
