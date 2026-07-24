@@ -19,9 +19,14 @@ const CHAPTER_ALBUMS: Record<string, string> = {
   legacy: 'Channel Orange',
 };
 
-// Locally pinned photographs override album art for chapters that deserve
-// their own scene (see ASSET_PROVENANCE.md); paths are registry constants
+// Locally pinned photographs override album art for chapters (see
+// ASSET_PROVENANCE.md); paths are registry constants. STANDING RULE: no
+// photograph or artwork appears twice anywhere on the site. Album art
+// stays only on the chapter that owns it thematically (breakthrough is
+// Channel Orange, Boys Don't Cry is Blonde).
 const CHAPTER_PHOTOS: Record<string, string> = {
+  origins: '/artists/frank-ocean/scene-origins.jpg',
+  katrina: '/artists/frank-ocean/scene-katrina.jpg',
   legacy: '/artists/frank-ocean/scene-legacy.jpg',
 };
 
