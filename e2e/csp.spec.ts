@@ -17,6 +17,18 @@ test("CSP is present as Report-Only and NOT yet enforcing", async ({ request }) 
   expect(res.headers()["content-security-policy"]).toBeUndefined();
 });
 
+test("the full security header set is what users actually receive", async ({ request }) => {
+  // The delivered response is the truth, especially through a hosting
+  // platform/CDN; this runs identically against localhost and the
+  // deployed target (E2E_TARGET_URL)
+  const headers = (await request.get("/artists/frank-ocean")).headers();
+  expect(headers["x-content-type-options"]).toBe("nosniff");
+  expect(headers["x-frame-options"]).toBe("DENY");
+  expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+  expect(headers["content-security-policy-report-only"]).toBeDefined();
+  expect(headers["content-security-policy"]).toBeUndefined();
+});
+
 test("exercising the page produces zero CSP violations", async ({ page }) => {
   const violations: string[] = [];
   await page.addInitScript(() => {

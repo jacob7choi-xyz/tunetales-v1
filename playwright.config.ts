@@ -4,6 +4,12 @@ import { defineConfig, devices } from "@playwright/test";
 // chunk loading is unreliable under WebKit, and acceptance evidence
 // should come from the artifact that ships). Kept out of the unit gate;
 // run via `npm run e2e`.
+// Deployed-target mode: set E2E_TARGET_URL to run the suite against a
+// live deployment (no local server started). Used for the Phase-5 CSP
+// observation evidence: shipping code + shipping platform + shipping
+// headers, interpreted by real browsers.
+const targetUrl = process.env.E2E_TARGET_URL;
+
 export default defineConfig({
   testDir: "./e2e",
   timeout: 30_000,
@@ -11,7 +17,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:3105",
+    baseURL: targetUrl ?? "http://localhost:3105",
     trace: "retain-on-failure",
   },
   projects: [
@@ -34,11 +40,13 @@ export default defineConfig({
       dependencies: ["chromium", "webkit"],
     },
   ],
-  webServer: {
-    command: "npm run e2e:server",
-    url: "http://localhost:3105",
-    env: { PORT: "3105" },
-    reuseExistingServer: !process.env.CI,
-    timeout: 240_000,
-  },
+  webServer: targetUrl
+    ? undefined
+    : {
+        command: "npm run e2e:server",
+        url: "http://localhost:3105",
+        env: { PORT: "3105" },
+        reuseExistingServer: !process.env.CI,
+        timeout: 240_000,
+      },
 });

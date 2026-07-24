@@ -17,6 +17,10 @@ const HIDDEN = REGISTRY + ".e2e-hidden";
 test.describe.configure({ mode: "serial" });
 
 test.describe("broken registry surfaces as 500, never 404", () => {
+  // Renames LOCAL files; meaningless (and misleading) against a remote
+  // deployment target
+  test.skip(Boolean(process.env.E2E_TARGET_URL), "local failure injection only");
+
   test("every registry-gated API answers 500 while the registry is unavailable", async ({ request }) => {
     await rename(REGISTRY, HIDDEN);
     try {
