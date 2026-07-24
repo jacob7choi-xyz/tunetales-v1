@@ -29,8 +29,15 @@ test("the full security header set is what users actually receive", async ({ req
   expect(headers["content-security-policy"]).toBeUndefined();
 });
 
-test("exercising the page produces zero CSP violations", async ({ page }) => {
-  const violations: string[] = [];
+test("zero CSP violations across ALL intentional resource classes", async ({ page }) => {
+  // Zero violations is necessary but not sufficient: the run must prove
+  // it actually LOADED every resource class the policy governs, or an
+  // unexercised class could break silently at enforcement time (5c).
+  const mainFrameUrls: string[] = [];
+  page.on("request", (req) => {
+    if (req.frame() === page.mainFrame()) mainFrameUrls.push(req.url());
+  });
+
   await page.addInitScript(() => {
     document.addEventListener("securitypolicyviolation", (event) => {
       const e = event as SecurityPolicyViolationEvent;
@@ -47,18 +54,42 @@ test("exercising the page produces zero CSP violations", async ({ page }) => {
     await page.evaluate((mult) => window.scrollTo(0, window.innerHeight * mult), m);
     await page.waitForTimeout(300);
   }
+  // Journey overlay (lazy story API + embedded Spotify player)
   await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.2));
   await page.getByRole("button", { name: /Enter chapter 1/ }).click();
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(2500);
+  // The Spotify iframe is the ONLY intentional cross-origin surface, so
+  // its instantiation is the highest-value CSP observation: it must
+  // exist, point at the allowlisted origin, and raise no frame-src
+  // violation in the parent
+  const embedSrcs = await page.evaluate(() =>
+    Array.from(document.querySelectorAll("iframe")).map((f) => f.src)
+  );
+  expect(embedSrcs.length).toBeGreaterThan(0);
+  for (const src of embedSrcs) {
+    expect(new URL(src).origin).toBe("https://open.spotify.com");
+  }
   await page.keyboard.press("Escape");
+  // Song reader (lazy universe API)
   await page.evaluate(() => document.getElementById("discography")?.scrollIntoView());
   await page.waitForTimeout(500);
   await page.getByRole("button", { name: /Read the story of/ }).first().click();
   await page.waitForTimeout(2000);
 
-  const collected = await page.evaluate(
+  // Coverage inventory: every governed resource class was exercised
+  const coverage: Record<string, (url: string) => boolean> = {
+    "optimized image (hero/art)": (u) => u.includes("/_next/image"),
+    "static script/chunk": (u) => u.includes("/_next/static/chunks"),
+    "self-hosted font": (u) => /\/_next\/static\/media\/.*\.(woff2?|ttf)/.test(u),
+    "story API": (u) => u.includes("/api/artists/frank-ocean"),
+    "universe API": (u) => u.includes("/api/universe/frank-ocean"),
+  };
+  for (const [label, match] of Object.entries(coverage)) {
+    expect(mainFrameUrls.some(match), `resource class not exercised: ${label}`).toBe(true);
+  }
+
+  const violations = await page.evaluate(
     () => (window as unknown as { __cspViolations?: string[] }).__cspViolations ?? []
   );
-  violations.push(...collected);
   expect(violations).toEqual([]);
 });
