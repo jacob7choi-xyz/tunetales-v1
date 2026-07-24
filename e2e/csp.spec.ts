@@ -31,11 +31,18 @@ test("the full security header set is what users actually receive", async ({ req
 
 test("zero CSP violations across ALL intentional resource classes", async ({ page }) => {
   // Zero violations is necessary but not sufficient: the run must prove
-  // it actually LOADED every resource class the policy governs, or an
-  // unexercised class could break silently at enforcement time (5c).
-  const mainFrameUrls: string[] = [];
-  page.on("request", (req) => {
-    if (req.frame() === page.mainFrame()) mainFrameUrls.push(req.url());
+  // it actually LOADED every intentional application resource class, or
+  // an unexercised class could break silently at enforcement time (5c).
+  // (Precision: this covers the intended positive resource flows; the
+  // restrictive directives with no positive flow, like object-src and
+  // base-uri, are not exercised here.) Coverage counts SUCCESSFUL
+  // responses, not merely started requests, which also catches
+  // CSP-clean-but-404 product failures.
+  const deliveredUrls: string[] = [];
+  page.on("response", (res) => {
+    if (res.request().frame() === page.mainFrame() && res.ok()) {
+      deliveredUrls.push(res.url());
+    }
   });
 
   await page.addInitScript(() => {
@@ -60,8 +67,9 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
   await page.waitForTimeout(2500);
   // The Spotify iframe is the ONLY intentional cross-origin surface, so
   // its instantiation is the highest-value CSP observation: it must
-  // exist, point at the allowlisted origin, and raise no frame-src
-  // violation in the parent
+  // exist, point at the allowlisted origin, ACTUALLY NAVIGATE (a DOM src
+  // attribute alone does not prove the browser loaded the frame), and
+  // raise no frame-src violation in the parent
   const embedSrcs = await page.evaluate(() =>
     Array.from(document.querySelectorAll("iframe")).map((f) => f.src)
   );
@@ -69,6 +77,30 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
   for (const src of embedSrcs) {
     expect(new URL(src).origin).toBe("https://open.spotify.com");
   }
+  // The embed is loading="lazy" below the fold inside the overlay: it
+  // will not navigate until scrolled into view, so the exercise must
+  // genuinely reach it (this exact gap is why src-attribute presence
+  // alone was insufficient evidence)
+  await page.evaluate(() => {
+    document.querySelector('[role="dialog"] iframe')?.scrollIntoView({ block: "center" });
+  });
+  await expect
+    .poll(
+      () =>
+        page
+          .frames()
+          .filter((f) => f !== page.mainFrame())
+          .map((f) => {
+            try {
+              return new URL(f.url()).origin;
+            } catch {
+              return "";
+            }
+          })
+          .filter((origin) => origin === "https://open.spotify.com").length,
+      { message: "Spotify frame never navigated to the allowlisted origin" }
+    )
+    .toBeGreaterThan(0);
   await page.keyboard.press("Escape");
   // Song reader (lazy universe API)
   await page.evaluate(() => document.getElementById("discography")?.scrollIntoView());
@@ -76,7 +108,8 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
   await page.getByRole("button", { name: /Read the story of/ }).first().click();
   await page.waitForTimeout(2000);
 
-  // Coverage inventory: every governed resource class was exercised
+  // Coverage inventory: every intentional resource class was exercised
+  // AND successfully delivered
   const coverage: Record<string, (url: string) => boolean> = {
     "optimized image (hero/art)": (u) => u.includes("/_next/image"),
     "static script/chunk": (u) => u.includes("/_next/static/chunks"),
@@ -85,7 +118,10 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
     "universe API": (u) => u.includes("/api/universe/frank-ocean"),
   };
   for (const [label, match] of Object.entries(coverage)) {
-    expect(mainFrameUrls.some(match), `resource class not exercised: ${label}`).toBe(true);
+    expect(
+      deliveredUrls.some(match),
+      `resource class not successfully delivered: ${label}`
+    ).toBe(true);
   }
 
   const violations = await page.evaluate(
