@@ -3,19 +3,19 @@
 """Compiles the Cultural Legacy dataset: pillars of influence with verified
 voices, grounded in the artist's research files.
 
-Writes data/stories/legacy_frank-ocean.json for the frontend legacy tab.
-Quotes are extracted only from research material; the prompt forbids
-invention and the output is spot-checkable against the cited files.
+Publishes data/public/stories/legacy_frank-ocean.json for the frontend
+legacy tab. Quotes are extracted only from research material; the prompt
+forbids invention and the output is spot-checkable against the cited files.
 """
 
 import json
 import os
 
 from services.ai.claude_client import ClaudeStorytellingClient, _polish_prose
+from services.pipeline.public_artifacts import write_public_json
 
 ARTIST_NAME = "Frank Ocean"
 ARTIST_SLUG = "frank-ocean"
-STORIES_DIR = os.path.join(os.path.dirname(__file__), "../../../data/stories")
 
 LEGACY_PROMPT_TEMPLATE = """You are a warm, wise storyteller writing the Cultural Legacy of {artist}, grounded strictly in the research below.
 
@@ -135,15 +135,31 @@ def run_legacy_pipeline(refresh_quotes: bool = True) -> dict:
         for voice in pillar.get("voices", []):
             voice["quote"] = _polish_prose(voice["quote"])
 
-    legacy["artist_slug"] = ARTIST_SLUG
-    legacy["model_note"] = None  # never persist provider details
+    # Field-by-field projection into the public schema: extra keys the
+    # model might emit never reach data/public
+    public_pillars = [
+        {
+            "id": str(pillar["id"]),
+            "numeral": str(pillar["numeral"]),
+            "title": str(pillar["title"]),
+            "tagline": str(pillar["tagline"]),
+            "mood": str(pillar["mood"]),
+            "accent_hsl": str(pillar["accent_hsl"]),
+            "story": str(pillar["story"]),
+            "moments": [str(moment) for moment in pillar["moments"]],
+            "voices": [
+                {"quote": str(voice["quote"]), "speaker": str(voice["speaker"])}
+                for voice in pillar.get("voices", [])
+            ],
+        }
+        for pillar in legacy["pillars"]
+    ]
+    public_legacy = {"artist_slug": ARTIST_SLUG, "pillars": public_pillars}
 
-    output_path = os.path.join(STORIES_DIR, f"legacy_{ARTIST_SLUG}.json")
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump({"artist_slug": ARTIST_SLUG, "pillars": legacy["pillars"]}, f, indent=2, ensure_ascii=False)
+    output_path = write_public_json(f"stories/legacy_{ARTIST_SLUG}.json", public_legacy)
 
-    print(f"[SAVED] Legacy written to: {output_path} ({len(legacy['pillars'])} pillars)")
-    return legacy
+    print(f"[SAVED] Legacy published to: {output_path} ({len(public_pillars)} pillars)")
+    return public_legacy
 
 
 if __name__ == "__main__":

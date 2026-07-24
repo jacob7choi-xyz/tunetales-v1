@@ -3,10 +3,11 @@ import { readFile } from "fs/promises";
 import path from "path";
 
 const DATA_DIR = path.join(process.cwd(), "data");
+const PUBLIC_DIR = path.join(DATA_DIR, "public");
 
-describe("data/artists.json", () => {
+describe("data/public/artists.json", () => {
   it("is valid JSON with required fields", async () => {
-    const raw = await readFile(path.join(DATA_DIR, "artists.json"), "utf-8");
+    const raw = await readFile(path.join(PUBLIC_DIR, "artists.json"), "utf-8");
     const artists = JSON.parse(raw);
 
     expect(Array.isArray(artists)).toBe(true);
@@ -24,7 +25,7 @@ describe("data/artists.json", () => {
   });
 
   it("has at least one active artist", async () => {
-    const raw = await readFile(path.join(DATA_DIR, "artists.json"), "utf-8");
+    const raw = await readFile(path.join(PUBLIC_DIR, "artists.json"), "utf-8");
     const artists = JSON.parse(raw);
     const active = artists.filter(
       (a: { status: string }) => a.status === "active"
@@ -33,10 +34,10 @@ describe("data/artists.json", () => {
   });
 });
 
-describe("data/stories/frank-ocean.json", () => {
+describe("data/public/stories/frank-ocean.json", () => {
   it("is valid schema v2 JSON with ordered chapters", async () => {
     const raw = await readFile(
-      path.join(DATA_DIR, "stories", "frank-ocean.json"),
+      path.join(PUBLIC_DIR, "stories", "frank-ocean.json"),
       "utf-8"
     );
     const story = JSON.parse(raw);
@@ -60,7 +61,7 @@ describe("data/stories/frank-ocean.json", () => {
 
   it("chapters are in chronological order", async () => {
     const raw = await readFile(
-      path.join(DATA_DIR, "stories", "frank-ocean.json"),
+      path.join(PUBLIC_DIR, "stories", "frank-ocean.json"),
       "utf-8"
     );
     const story = JSON.parse(raw);

@@ -12,6 +12,9 @@ import type {
 import { SLUG_PATTERN } from "./tokens";
 
 const DATA_DIR = path.join(process.cwd(), "data");
+// The public classification boundary: the only data directory that ships.
+// See data/public/README.md before adding any reader outside it.
+const PUBLIC_DIR = path.join(DATA_DIR, "public");
 
 const DEFAULT_AMBIENCE = {
   mood: "introspective",
@@ -55,7 +58,7 @@ function validateSlug(slug: string): void {
 
 export async function getArtists(): Promise<Artist[]> {
   try {
-    const raw = await readFile(path.join(DATA_DIR, "artists.json"), "utf-8");
+    const raw = await readFile(path.join(PUBLIC_DIR, "artists.json"), "utf-8");
     return JSON.parse(raw) as Artist[];
   } catch {
     return [];
@@ -66,7 +69,7 @@ export async function getArtistStory(slug: string): Promise<ArtistStory | null> 
   validateSlug(slug);
   try {
     const raw = await readFile(
-      path.join(DATA_DIR, "stories", `${slug}.json`),
+      path.join(PUBLIC_DIR, "stories", `${slug}.json`),
       "utf-8"
     );
     const parsed = JSON.parse(raw) as ArtistStory | LegacyArtistStory;
@@ -106,7 +109,7 @@ export async function getLegacy(slug: string): Promise<ArtistLegacy | null> {
   validateSlug(slug);
   try {
     const raw = await readFile(
-      path.join(DATA_DIR, "stories", `legacy_${slug}.json`),
+      path.join(PUBLIC_DIR, "stories", `legacy_${slug}.json`),
       "utf-8"
     );
     return JSON.parse(raw) as ArtistLegacy;
