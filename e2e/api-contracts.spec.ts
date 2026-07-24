@@ -111,7 +111,7 @@ test.describe("exact public DTO response shapes (S1/S8)", () => {
       "story.chapters[].ambience.spotifyTrackId", "story.chapters[].ambience.imageryHint",
     ]);
     const actual = new Set(keyPaths(data));
-    for (const path of actual) {
+    for (const path of Array.from(actual)) {
       expect(allowed.has(path), `unexpected key path: ${path}`).toBe(true);
     }
     for (const path of required) {
