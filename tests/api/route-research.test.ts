@@ -44,10 +44,8 @@ describe("GET /api/research/[slug]", () => {
     expect(response.status).toBe(400);
   });
 
-  it("returns an empty result set for an unknown artist", async () => {
+  it("returns 404 for a slug outside the artist registry", async () => {
     const response = await call("unknown-artist");
-    expect(response.status).toBe(200);
-    const data = await response.json();
-    expect(data.sources).toEqual([]);
+    expect(response.status).toBe(404);
   });
 });

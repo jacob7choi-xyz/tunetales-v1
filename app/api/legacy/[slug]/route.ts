@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getLegacy } from "@/app/lib/data";
+import { isRegisteredArtist, readLegacy } from "@/app/lib/data";
 import { toPublicLegacy } from "@/app/lib/public/dto";
 import { SLUG_PATTERN } from "@/app/lib/tokens";
 
@@ -13,18 +13,27 @@ export async function GET(
     return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
   }
 
-  try {
-    const legacy = await getLegacy(slug);
-
-    if (!legacy) {
-      return NextResponse.json({ error: "Legacy not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(toPublicLegacy(legacy));
-  } catch {
+  const registered = await isRegisteredArtist(slug);
+  if (registered.status === "failed") {
     return NextResponse.json(
-      { error: "Failed to load legacy" },
+      { error: "Failed to load legacy", errorId: registered.errorId },
       { status: 500 }
     );
   }
+  if (registered.status === "missing" || !registered.data) {
+    return NextResponse.json({ error: "Legacy not found" }, { status: 404 });
+  }
+
+  const legacy = await readLegacy(slug);
+  if (legacy.status === "missing") {
+    return NextResponse.json({ error: "Legacy not found" }, { status: 404 });
+  }
+  if (legacy.status === "failed") {
+    return NextResponse.json(
+      { error: "Failed to load legacy", errorId: legacy.errorId },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(toPublicLegacy(legacy.data));
 }

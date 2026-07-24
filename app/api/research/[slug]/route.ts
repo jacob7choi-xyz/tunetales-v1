@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getResearchIndex } from "@/app/lib/data";
+import { isRegisteredArtist, readResearchSources } from "@/app/lib/data";
 import { SLUG_PATTERN } from "@/app/lib/tokens";
 
 export async function GET(
@@ -12,15 +12,30 @@ export async function GET(
     return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
   }
 
-  try {
-    // Rows are already projected to the public schema by the pipeline;
-    // raw research never reaches this handler
-    const sources = await getResearchIndex(slug);
-    return NextResponse.json({ artist: slug, sources });
-  } catch {
+  const registered = await isRegisteredArtist(slug);
+  if (registered.status === "failed") {
     return NextResponse.json(
-      { error: "Failed to load research" },
+      { error: "Failed to load research", errorId: registered.errorId },
       { status: 500 }
     );
   }
+  if (registered.status === "missing" || !registered.data) {
+    return NextResponse.json({ error: "Research not found" }, { status: 404 });
+  }
+
+  // Rows are already projected to the public schema by the pipeline and
+  // runtime-validated on read; raw research never reaches this handler.
+  // A registered artist without research is an empty archive, not an error.
+  const sources = await readResearchSources(slug);
+  if (sources.status === "failed") {
+    return NextResponse.json(
+      { error: "Failed to load research", errorId: sources.errorId },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({
+    artist: slug,
+    sources: sources.status === "available" ? sources.data : [],
+  });
 }

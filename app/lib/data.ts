@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto";
 import { readFile } from "fs/promises";
 import path from "path";
 import type {
@@ -16,6 +17,50 @@ const DATA_DIR = path.join(process.cwd(), "data");
 // The public classification boundary: the only data directory that ships.
 // See data/public/README.md before adding any reader outside it.
 const PUBLIC_DIR = path.join(DATA_DIR, "public");
+
+// Tri-state read results: absence and failure are different facts and are
+// never conflated. Missing is an expected state the UI can degrade on;
+// failed carries an opaque errorId that correlates a user-visible outcome
+// with a server-side log line. errorIds contain no paths, no exception
+// text, no request data.
+export type ReadResult<T> =
+  | { status: "available"; data: T }
+  | { status: "missing" }
+  | { status: "failed"; errorId: string };
+
+function fail(context: string, error: unknown): ReadResult<never> {
+  const errorId = randomBytes(6).toString("hex");
+  console.error(`[data:${errorId}] ${context} read failed:`, error);
+  return { status: "failed", errorId };
+}
+
+function isFileMissing(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    (error as NodeJS.ErrnoException).code === "ENOENT"
+  );
+}
+
+// Shared bottom layer for all public-artifact reads. Exported for direct
+// unit testing of the tri-state semantics.
+export async function readJsonFile(
+  filePath: string,
+  context: string
+): Promise<ReadResult<unknown>> {
+  let raw: string;
+  try {
+    raw = await readFile(filePath, "utf-8");
+  } catch (error) {
+    if (isFileMissing(error)) return { status: "missing" };
+    return fail(context, error);
+  }
+  try {
+    return { status: "available", data: JSON.parse(raw) };
+  } catch (error) {
+    return fail(context, error);
+  }
+}
 
 const DEFAULT_AMBIENCE = {
   mood: "introspective",
@@ -57,69 +102,120 @@ function validateSlug(slug: string): void {
   }
 }
 
-export async function getArtists(): Promise<Artist[]> {
+export async function readArtists(): Promise<ReadResult<Artist[]>> {
+  const result = await readJsonFile(
+    path.join(PUBLIC_DIR, "artists.json"),
+    "artists registry"
+  );
+  if (result.status !== "available") return result;
+  if (!Array.isArray(result.data)) {
+    return fail("artists registry", new Error("registry is not an array"));
+  }
+  return { status: "available", data: result.data as Artist[] };
+}
+
+// The canonical slug allowlist (S9): a slug that passes the syntax gate
+// still resolves to nothing unless it names a registered artist.
+export async function isRegisteredArtist(slug: string): Promise<ReadResult<boolean>> {
+  validateSlug(slug);
+  const artists = await readArtists();
+  if (artists.status !== "available") return artists;
+  return {
+    status: "available",
+    data: artists.data.some((artist) => artist.id === slug),
+  };
+}
+
+export async function readArtistStory(
+  slug: string
+): Promise<ReadResult<ArtistStory>> {
+  validateSlug(slug);
+  const result = await readJsonFile(
+    path.join(PUBLIC_DIR, "stories", `${slug}.json`),
+    "artist story"
+  );
+  if (result.status !== "available") return result;
   try {
-    const raw = await readFile(path.join(PUBLIC_DIR, "artists.json"), "utf-8");
-    return JSON.parse(raw) as Artist[];
-  } catch {
-    return [];
+    return {
+      status: "available",
+      data: normalizeLegacyStory(result.data as ArtistStory | LegacyArtistStory, slug),
+    };
+  } catch (error) {
+    return fail("artist story", error);
   }
 }
 
-export async function getArtistStory(slug: string): Promise<ArtistStory | null> {
+export async function readSongUniverse(
+  slug: string
+): Promise<ReadResult<SongUniverse>> {
   validateSlug(slug);
-  try {
-    const raw = await readFile(
-      path.join(PUBLIC_DIR, "stories", `${slug}.json`),
-      "utf-8"
-    );
-    const parsed = JSON.parse(raw) as ArtistStory | LegacyArtistStory;
-    return normalizeLegacyStory(parsed, slug);
-  } catch {
-    return null;
-  }
+  const result = await readJsonFile(
+    path.join(PUBLIC_DIR, "stories", `universe_${slug}.json`),
+    "song universe"
+  );
+  if (result.status !== "available") return result;
+  return { status: "available", data: result.data as SongUniverse };
 }
 
-export async function getSongUniverse(slug: string): Promise<SongUniverse | null> {
+export async function readLegacy(
+  slug: string
+): Promise<ReadResult<ArtistLegacy>> {
   validateSlug(slug);
-  try {
-    const raw = await readFile(
-      path.join(PUBLIC_DIR, "stories", `universe_${slug}.json`),
-      "utf-8"
-    );
-    return JSON.parse(raw) as SongUniverse;
-  } catch {
-    return null;
-  }
-}
-
-export async function getLegacy(slug: string): Promise<ArtistLegacy | null> {
-  validateSlug(slug);
-  try {
-    const raw = await readFile(
-      path.join(PUBLIC_DIR, "stories", `legacy_${slug}.json`),
-      "utf-8"
-    );
-    return JSON.parse(raw) as ArtistLegacy;
-  } catch {
-    return null;
-  }
+  const result = await readJsonFile(
+    path.join(PUBLIC_DIR, "stories", `legacy_${slug}.json`),
+    "artist legacy"
+  );
+  if (result.status !== "available") return result;
+  return { status: "available", data: result.data as ArtistLegacy };
 }
 
 // Runtime never opens raw research. It reads only the pipeline-projected
 // public index (see backend/services/pipeline/build_research_index.py).
+// A structurally invalid index is corruption, not absence: failed.
+export async function readResearchSources(
+  slug: string
+): Promise<ReadResult<PublicResearchSource[]>> {
+  validateSlug(slug);
+  const result = await readJsonFile(
+    path.join(PUBLIC_DIR, "research-index.json"),
+    "research index"
+  );
+  if (result.status !== "available") return result;
+  try {
+    const index = validatePublicResearchIndex(result.data);
+    return { status: "available", data: index[slug] ?? [] };
+  } catch (error) {
+    return fail("research index", error);
+  }
+}
+
+// Compatibility wrappers for consumers that only distinguish data from no
+// data (current client page, homepage). New server code should consume the
+// tri-state readers directly.
+
+export async function getArtists(): Promise<Artist[]> {
+  const result = await readArtists();
+  return result.status === "available" ? result.data : [];
+}
+
+export async function getArtistStory(slug: string): Promise<ArtistStory | null> {
+  const result = await readArtistStory(slug);
+  return result.status === "available" ? result.data : null;
+}
+
+export async function getSongUniverse(slug: string): Promise<SongUniverse | null> {
+  const result = await readSongUniverse(slug);
+  return result.status === "available" ? result.data : null;
+}
+
+export async function getLegacy(slug: string): Promise<ArtistLegacy | null> {
+  const result = await readLegacy(slug);
+  return result.status === "available" ? result.data : null;
+}
+
 export async function getResearchIndex(
   slug: string
 ): Promise<PublicResearchSource[]> {
-  validateSlug(slug);
-  try {
-    const raw = await readFile(
-      path.join(PUBLIC_DIR, "research-index.json"),
-      "utf-8"
-    );
-    const index = validatePublicResearchIndex(JSON.parse(raw));
-    return index[slug] ?? [];
-  } catch {
-    return [];
-  }
+  const result = await readResearchSources(slug);
+  return result.status === "available" ? result.data : [];
 }
