@@ -59,3 +59,7 @@ AGENTS.md
 __pycache__/
 *.pyc
 .venv/
+
+# Playwright artifacts
+test-results/
+playwright-report/
