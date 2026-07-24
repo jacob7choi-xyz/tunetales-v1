@@ -189,33 +189,3 @@ export async function readResearchSources(
   }
 }
 
-// Compatibility wrappers for consumers that only distinguish data from no
-// data (current client page, homepage). New server code should consume the
-// tri-state readers directly.
-
-export async function getArtists(): Promise<Artist[]> {
-  const result = await readArtists();
-  return result.status === "available" ? result.data : [];
-}
-
-export async function getArtistStory(slug: string): Promise<ArtistStory | null> {
-  const result = await readArtistStory(slug);
-  return result.status === "available" ? result.data : null;
-}
-
-export async function getSongUniverse(slug: string): Promise<SongUniverse | null> {
-  const result = await readSongUniverse(slug);
-  return result.status === "available" ? result.data : null;
-}
-
-export async function getLegacy(slug: string): Promise<ArtistLegacy | null> {
-  const result = await readLegacy(slug);
-  return result.status === "available" ? result.data : null;
-}
-
-export async function getResearchIndex(
-  slug: string
-): Promise<PublicResearchSource[]> {
-  const result = await readResearchSources(slug);
-  return result.status === "available" ? result.data : [];
-}

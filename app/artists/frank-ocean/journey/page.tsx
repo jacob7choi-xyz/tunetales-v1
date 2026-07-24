@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { getArtistStory } from "@/app/lib/data";
+import { readArtistStory } from "@/app/lib/data";
 import JourneyClient from "./JourneyClient";
 
 export const metadata: Metadata = {
@@ -14,10 +14,16 @@ export default async function JourneyPage({
 }: {
   searchParams: Promise<{ chapter?: string }>;
 }) {
-  const story = await getArtistStory("frank-ocean");
-  if (!story || story.chapters.length === 0) {
+  // Tri-state policy: absence redirects; corruption of an existing story
+  // is a server fault and stays loud (error boundary + logged errorId)
+  const result = await readArtistStory("frank-ocean");
+  if (result.status === "failed") {
+    throw new Error(`Story read failed (${result.errorId})`);
+  }
+  if (result.status === "missing" || result.data.chapters.length === 0) {
     redirect("/artists/frank-ocean");
   }
+  const story = result.data;
 
   // Deep-linkable chapters: /artists/frank-ocean/journey?chapter=3
   const { chapter } = await searchParams;

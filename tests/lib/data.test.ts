@@ -1,15 +1,26 @@
 import { describe, it, expect } from "vitest";
-import { getArtists, getArtistStory, getResearchIndex } from "@/app/lib/data";
+import {
+  readArtists,
+  readArtistStory,
+  readResearchSources,
+  type ReadResult,
+} from "@/app/lib/data";
 
-describe("getArtists", () => {
-  it("returns an array of artists", async () => {
-    const artists = await getArtists();
+function unwrap<T>(result: ReadResult<T>): T {
+  expect(result.status).toBe("available");
+  if (result.status !== "available") throw new Error("unreachable");
+  return result.data;
+}
+
+describe("readArtists", () => {
+  it("returns an available array of artists", async () => {
+    const artists = unwrap(await readArtists());
     expect(Array.isArray(artists)).toBe(true);
     expect(artists.length).toBeGreaterThan(0);
   });
 
   it("each artist has required fields", async () => {
-    const artists = await getArtists();
+    const artists = unwrap(await readArtists());
     for (const artist of artists) {
       expect(typeof artist.id).toBe("string");
       expect(typeof artist.artistName).toBe("string");
@@ -20,53 +31,52 @@ describe("getArtists", () => {
   });
 });
 
-describe("getArtistStory", () => {
-  it("returns story for frank-ocean", async () => {
-    const story = await getArtistStory("frank-ocean");
-    expect(story).not.toBeNull();
-    expect(story?.title).toBe("Frank Ocean: The Beautiful Mystery");
-    expect(story?.schemaVersion).toBe(2);
-    expect(story?.chapters.length).toBe(6);
-    expect(story?.chapters[0].ambience.mood).toBeDefined();
+describe("readArtistStory", () => {
+  it("returns the story for frank-ocean", async () => {
+    const story = unwrap(await readArtistStory("frank-ocean"));
+    expect(story.title).toBe("Frank Ocean: The Beautiful Mystery");
+    expect(story.schemaVersion).toBe(2);
+    expect(story.chapters.length).toBe(6);
+    expect(story.chapters[0].ambience.mood).toBeDefined();
   });
 
-  it("returns null for unknown artist", async () => {
-    const story = await getArtistStory("nonexistent-artist");
-    expect(story).toBeNull();
+  it("reports missing for an unknown artist, never a silent null", async () => {
+    const result = await readArtistStory("nonexistent-artist");
+    expect(result).toEqual({ status: "missing" });
   });
 
   it("rejects path traversal attempts", async () => {
-    await expect(getArtistStory("../../etc/passwd")).rejects.toThrow(
+    await expect(readArtistStory("../../etc/passwd")).rejects.toThrow(
       "Invalid slug"
     );
   });
 
   it("rejects slugs with special characters", async () => {
-    await expect(getArtistStory("frank_ocean")).rejects.toThrow("Invalid slug");
-    await expect(getArtistStory("frank ocean")).rejects.toThrow("Invalid slug");
-    await expect(getArtistStory("frank/ocean")).rejects.toThrow("Invalid slug");
-    await expect(getArtistStory("")).rejects.toThrow("Invalid slug");
+    await expect(readArtistStory("frank_ocean")).rejects.toThrow("Invalid slug");
+    await expect(readArtistStory("frank ocean")).rejects.toThrow("Invalid slug");
+    await expect(readArtistStory("frank/ocean")).rejects.toThrow("Invalid slug");
+    await expect(readArtistStory("")).rejects.toThrow("Invalid slug");
   });
 });
 
-describe("getResearchIndex", () => {
+describe("readResearchSources", () => {
   it("returns projected sources for frank-ocean", async () => {
-    const sources = await getResearchIndex("frank-ocean");
+    const sources = unwrap(await readResearchSources("frank-ocean"));
     expect(sources.length).toBeGreaterThan(0);
   });
 
-  it("returns empty array for unknown artist", async () => {
-    const sources = await getResearchIndex("nonexistent-artist");
-    expect(sources).toEqual([]);
+  it("returns an empty available list for a registered-shape stranger", async () => {
+    const result = await readResearchSources("nonexistent-artist");
+    expect(result).toEqual({ status: "available", data: [] });
   });
 
   it("rejects path traversal attempts", async () => {
-    await expect(getResearchIndex("../../etc/passwd")).rejects.toThrow(
+    await expect(readResearchSources("../../etc/passwd")).rejects.toThrow(
       "Invalid slug"
     );
   });
 
   it("rejects empty slug", async () => {
-    await expect(getResearchIndex("")).rejects.toThrow("Invalid slug");
+    await expect(readResearchSources("")).rejects.toThrow("Invalid slug");
   });
 });
