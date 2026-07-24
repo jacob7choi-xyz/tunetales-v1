@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent } from "@testing-library/react";
 import TabAnchor from "@/app/artists/frank-ocean/cinema/TabAnchor";
 
 afterEach(() => {
@@ -28,5 +28,44 @@ describe("TabAnchor", () => {
     render(<TabAnchor anchor={null} />);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
+  });
+
+  it("re-anchors after fonts settle, unless the user has taken control", async () => {
+    const target = document.createElement("section");
+    target.id = "impact";
+    target.scrollIntoView = vi.fn();
+    document.body.appendChild(target);
+
+    let resolveFonts: () => void = () => {};
+    Object.defineProperty(document, "fonts", {
+      configurable: true,
+      value: { ready: new Promise<void>((resolve) => (resolveFonts = resolve)) },
+    });
+
+    // Without user input: settles -> re-anchors
+    const first = render(<TabAnchor anchor="impact" />);
+    expect(target.scrollIntoView).toHaveBeenCalledTimes(1);
+    resolveFonts();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(target.scrollIntoView).toHaveBeenCalledTimes(2);
+    first.unmount();
+
+    // With a scroll-intent key pressed: settlement must NOT yank the page
+    (target.scrollIntoView as ReturnType<typeof vi.fn>).mockClear();
+    Object.defineProperty(document, "fonts", {
+      configurable: true,
+      value: { ready: new Promise<void>((resolve) => (resolveFonts = resolve)) },
+    });
+    render(<TabAnchor anchor="impact" />);
+    expect(target.scrollIntoView).toHaveBeenCalledTimes(1);
+    fireEvent.keyDown(window, { key: "ArrowDown" });
+    resolveFonts();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(target.scrollIntoView).toHaveBeenCalledTimes(1);
+
+    target.remove();
+    delete (document as { fonts?: unknown }).fonts;
   });
 });
