@@ -37,3 +37,22 @@ jobs:
 
       - name: Verify deployment boundary
         run: npm run verify:deployment-boundary
+
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Browser acceptance suite
+        run: npm run e2e

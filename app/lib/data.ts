@@ -104,8 +104,11 @@ function validateSlug(slug: string): void {
 
 // The registry is mandatory deployment content: its absence is
 // infrastructure corruption, never a legitimate empty state, and must not
-// cascade into 404s downstream (S7). Exported so the mapping itself is
-// unit-testable without filesystem mocking.
+// cascade into 404s downstream (S7). The registry is also authorization
+// input (S9 slug allowlist), so each entry's identity field is runtime
+// validated before anything trusts it; a malformed entry fails the whole
+// read closed. Exported so the mapping is unit-testable without
+// filesystem mocking.
 export function normalizeRegistryRead(
   result: ReadResult<unknown>
 ): ReadResult<Artist[]> {
@@ -115,6 +118,16 @@ export function normalizeRegistryRead(
   if (result.status === "failed") return result;
   if (!Array.isArray(result.data)) {
     return fail("artists registry", new Error("registry is not an array"));
+  }
+  for (const entry of result.data) {
+    if (
+      typeof entry !== "object" ||
+      entry === null ||
+      typeof (entry as { id?: unknown }).id !== "string" ||
+      !SLUG_PATTERN.test((entry as { id: string }).id)
+    ) {
+      return fail("artists registry", new Error("registry entry has invalid identity"));
+    }
   }
   return { status: "available", data: result.data as Artist[] };
 }

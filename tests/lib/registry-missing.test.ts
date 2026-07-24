@@ -36,4 +36,24 @@ describe("registry absence is corruption, not absence (S7)", () => {
     const result = normalizeRegistryRead({ status: "available", data: [] });
     expect(result).toEqual({ status: "available", data: [] });
   });
+
+  it("fails closed on entries with malformed identity (registry is authorization input)", () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const good = { id: "frank-ocean", artistName: "Frank Ocean" };
+    expect(
+      normalizeRegistryRead({ status: "available", data: [good, { id: 42 }] }).status
+    ).toBe("failed");
+    expect(
+      normalizeRegistryRead({ status: "available", data: [good, { id: "../etc" }] }).status
+    ).toBe("failed");
+    expect(
+      normalizeRegistryRead({ status: "available", data: [good, null] }).status
+    ).toBe("failed");
+    expect(
+      normalizeRegistryRead({ status: "available", data: [good, "frank-ocean"] }).status
+    ).toBe("failed");
+    expect(normalizeRegistryRead({ status: "available", data: [good] }).status).toBe(
+      "available"
+    );
+  });
 });

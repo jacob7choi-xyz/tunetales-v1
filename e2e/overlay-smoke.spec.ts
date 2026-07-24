@@ -36,7 +36,7 @@ test("overlay lifecycle: inert while open, focus restored only after exit", asyn
   await expect(trigger).toBeFocused();
 });
 
-test("escape-then-tab lands in the page, not a focus black hole", async ({ page }) => {
+test("escape-then-tab lands in the page, not a focus black hole", async ({ page, browserName }) => {
   await page.goto(HARNESS);
 
   const trigger = page.getByRole("button", { name: /Enter chapter 1/ });
@@ -46,9 +46,12 @@ test("escape-then-tab lands in the page, not a focus black hole", async ({ page 
   await expect(page.getByRole("dialog")).toHaveCount(0);
 
   // Focus restored to the trigger means Tab continues from the scene,
-  // proving restoration happened after the background became interactive
+  // proving restoration happened after the background became interactive.
+  // WebKit follows Safari's platform semantics where plain Tab skips
+  // buttons; Option+Tab traverses all focusables. Same invariant, the
+  // platform-correct keystroke.
   await expect(trigger).toBeFocused();
-  await page.keyboard.press("Tab");
+  await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
   const focusedTag = await page.evaluate(() => document.activeElement?.tagName);
   expect(focusedTag).not.toBe("BODY");
 });

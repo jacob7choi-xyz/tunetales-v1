@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
+    "e2e:server": "next build && next start",
     "verify": "node scripts/verify-files.js",
     "verify:deployment-boundary": "node scripts/verify-deployment-boundary.js",
     "precommit": "npm run verify",
