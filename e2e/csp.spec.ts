@@ -38,10 +38,31 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
   // base-uri, are not exercised here.) Coverage counts SUCCESSFUL
   // responses, not merely started requests, which also catches
   // CSP-clean-but-404 product failures.
+  // "Delivered" means not an error response (<400): 304 revalidations
+  // are legitimate delivery, and treating them as failures would create
+  // flaky security tests out of harmless caching semantics
   const deliveredUrls: string[] = [];
+  const spotifyFrameResponses: string[] = [];
   page.on("response", (res) => {
-    if (res.request().frame() === page.mainFrame() && res.ok()) {
+    const req = res.request();
+    if (req.frame() === page.mainFrame() && res.status() < 400) {
       deliveredUrls.push(res.url());
+    }
+    // Child-frame DOCUMENT responses from the allowlisted origin: the
+    // strongest signal that the embed frame's navigation actually
+    // succeeded, not just that a frame URL was assigned
+    if (
+      req.resourceType() === "document" &&
+      req.frame() !== page.mainFrame() &&
+      res.status() < 400
+    ) {
+      try {
+        if (new URL(res.url()).origin === "https://open.spotify.com") {
+          spotifyFrameResponses.push(res.url());
+        }
+      } catch {
+        // Non-URL responses are irrelevant here
+      }
     }
   });
 
@@ -100,6 +121,13 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
           .filter((origin) => origin === "https://open.spotify.com").length,
       { message: "Spotify frame never navigated to the allowlisted origin" }
     )
+    .toBeGreaterThan(0);
+  // ...and the navigation received a successful HTTP document response:
+  // frame.url() alone is a proxy, not proof of delivery
+  await expect
+    .poll(() => spotifyFrameResponses.length, {
+      message: "Spotify frame document was never successfully delivered",
+    })
     .toBeGreaterThan(0);
   await page.keyboard.press("Escape");
   // Song reader (lazy universe API)
