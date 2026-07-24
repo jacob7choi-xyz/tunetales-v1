@@ -4,14 +4,25 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import type { SongBubble } from '../lib/types';
 import { coverFor } from '../lib/covers';
 import { TRACK_IDS } from '../lib/tracks';
 import AmbienceLayer from './AmbienceLayer';
 import SpotifyEmbed from './SpotifyEmbed';
 
+// Poster meta is enough to render the odyssey; story text is optional so
+// the server can keep it out of the initial payload and let this island
+// fetch it lazily from the public universe API on first reader open.
+export interface OdysseyBubble {
+  song_name: string;
+  mood: string;
+  bubble_color: string;
+  story?: string;
+}
+
 interface SongOdysseyProps {
-  bubbles: SongBubble[];
+  bubbles: OdysseyBubble[];
+  // Same-origin public API path serving { song_bubbles: [{song_name, story}] }
+  lazyStoriesFrom?: string;
 }
 
 // The discography as a film in six acts, each with its own ambient tint
@@ -127,11 +138,11 @@ function parseStorySections(story: string): Array<{ heading: string | null; body
   return sections;
 }
 
-function moodHex(bubble: SongBubble): string {
+function moodHex(bubble: OdysseyBubble): string {
   return /^#[0-9A-Fa-f]{6}$/.test(bubble.bubble_color) ? bubble.bubble_color : '#9A6B9A';
 }
 
-function SongPoster({ bubble, cover, onOpen }: { bubble: SongBubble; cover: string | null; onOpen: () => void }) {
+function SongPoster({ bubble, cover, onOpen }: { bubble: OdysseyBubble; cover: string | null; onOpen: () => void }) {
   const hex = moodHex(bubble);
   const label = SHORT_LABELS[bubble.song_name] ?? bubble.song_name;
   return (
@@ -222,9 +233,19 @@ function SongPoster({ bubble, cover, onOpen }: { bubble: SongBubble; cover: stri
   );
 }
 
-function StoryReader({ bubble, cover, onClose }: { bubble: SongBubble; cover: string | null; onClose: () => void }) {
+function StoryReader({
+  bubble,
+  story,
+  cover,
+  onClose,
+}: {
+  bubble: OdysseyBubble;
+  story: string | null;
+  cover: string | null;
+  onClose: () => void;
+}) {
   const hex = moodHex(bubble);
-  const sections = parseStorySections(bubble.story);
+  const sections = story ? parseStorySections(story) : [];
   const trackId = TRACK_IDS[bubble.song_name];
   const label = SHORT_LABELS[bubble.song_name] ?? bubble.song_name;
 
@@ -319,6 +340,15 @@ function StoryReader({ bubble, cover, onClose }: { bubble: SongBubble; cover: st
           {label}
         </h3>
 
+        {!story && (
+          <p
+            className="animate-pulse"
+            style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.5)' }}
+          >
+            Opening this song&apos;s story...
+          </p>
+        )}
+
         {sections.map((section, i) => (
           <div key={i}>
             {section.heading && (
@@ -369,12 +399,47 @@ function StoryReader({ bubble, cover, onClose }: { bubble: SongBubble; cover: st
   );
 }
 
-export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
+export default function SongOdyssey({ bubbles, lazyStoriesFrom }: SongOdysseyProps) {
   const [openSong, setOpenSong] = useState<string | null>(null);
   const [roomHsl, setRoomHsl] = useState(ACTS[0].accentHsl);
+  const [fetchedStories, setFetchedStories] = useState<Record<string, string> | null>(null);
+  const fetchStartedRef = useRef(false);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const bubbleByName = new Map(bubbles.map((b) => [b.song_name, b]));
   const openBubble = openSong ? bubbleByName.get(openSong) : undefined;
+  const openStory = openBubble
+    ? openBubble.story ?? fetchedStories?.[openBubble.song_name] ?? null
+    : null;
+
+  // First reader open pulls the full story set once from the public API
+  // and caches it for the session; a failed fetch allows a retry
+  const ensureStories = useCallback(() => {
+    if (!lazyStoriesFrom || fetchStartedRef.current) return;
+    fetchStartedRef.current = true;
+    fetch(lazyStoriesFrom)
+      .then((res) => {
+        if (!res.ok) throw new Error('universe fetch failed');
+        return res.json();
+      })
+      .then((data: { song_bubbles?: Array<{ song_name: string; story: string }> }) => {
+        const stories: Record<string, string> = {};
+        for (const bubble of data.song_bubbles ?? []) {
+          if (typeof bubble.story === 'string') stories[bubble.song_name] = bubble.story;
+        }
+        setFetchedStories(stories);
+      })
+      .catch(() => {
+        fetchStartedRef.current = false;
+      });
+  }, [lazyStoriesFrom]);
+
+  const openReader = useCallback(
+    (songName: string) => {
+      setOpenSong(songName);
+      ensureStories();
+    },
+    [ensureStories]
+  );
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -427,7 +492,7 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
       {ACTS.map((act) => {
         const actBubbles = act.songs
           .map((song) => bubbleByName.get(song))
-          .filter((b): b is SongBubble => Boolean(b));
+          .filter((b): b is OdysseyBubble => Boolean(b));
         if (actBubbles.length === 0) return null;
         return (
           <section
@@ -474,7 +539,7 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
                   key={bubble.song_name}
                   bubble={bubble}
                   cover={coverFor(bubble.song_name, act.title)}
-                  onOpen={() => setOpenSong(bubble.song_name)}
+                  onOpen={() => openReader(bubble.song_name)}
                 />
               ))}
             </div>
@@ -501,7 +566,7 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
                 key={bubble.song_name}
                 bubble={bubble}
                 cover={coverFor(bubble.song_name, '')}
-                onOpen={() => setOpenSong(bubble.song_name)}
+                onOpen={() => openReader(bubble.song_name)}
               />
             ))}
           </div>
@@ -512,6 +577,7 @@ export default function SongOdyssey({ bubbles }: SongOdysseyProps) {
         {openBubble && (
           <StoryReader
             bubble={openBubble}
+            story={openStory}
             cover={coverFor(
               openBubble.song_name,
               ACTS.find((a) => a.songs.includes(openBubble.song_name))?.title ?? ''
