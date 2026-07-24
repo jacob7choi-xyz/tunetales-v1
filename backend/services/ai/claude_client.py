@@ -455,7 +455,33 @@ class ClaudeStorytellingClient:
         }
 
         self._save_story("universe", artist_name, "complete", bubble_universe)
+        self._publish_universe(artist_name, song_bubbles)
         return bubble_universe
+
+    def _publish_universe(self, artist_name: str, song_bubbles: list[Dict]) -> None:
+        """Project the universe into its public artifact and publish it.
+
+        Field-by-field projection: only the four public bubble fields cross
+        into data/public. Internal metadata (models, token counts, the
+        artist overview) never does.
+        """
+        from services.pipeline.public_artifacts import write_public_json
+
+        slug = artist_name.strip().lower().replace(" ", "-")
+        public_universe = {
+            "artist_slug": slug,
+            "song_bubbles": [
+                {
+                    "song_name": str(bubble["song_name"]),
+                    "story": str(bubble["story"]),
+                    "mood": str(bubble["mood"]),
+                    "bubble_color": str(bubble["bubble_color"]),
+                }
+                for bubble in song_bubbles
+            ],
+        }
+        path = write_public_json(f"stories/universe_{slug}.json", public_universe)
+        print(f"[PUBLISHED] Universe published to: {path}")
 
     def _extract_song_mood(self, story_text: str) -> str:
         """Extract the emotional mood from a song story using Claude."""

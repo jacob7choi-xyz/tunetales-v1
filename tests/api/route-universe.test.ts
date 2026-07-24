@@ -13,7 +13,7 @@ describe("GET /api/universe/[slug]", () => {
     expect(response.status).toBe(200);
 
     const universe = await response.json();
-    expect(universe.metadata.artist_name).toBe("Frank Ocean");
+    expect(universe.artist_slug).toBe("frank-ocean");
     expect(Array.isArray(universe.song_bubbles)).toBe(true);
     expect(universe.song_bubbles.length).toBeGreaterThan(0);
     for (const bubble of universe.song_bubbles) {

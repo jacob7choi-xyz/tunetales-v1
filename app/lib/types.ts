@@ -62,14 +62,10 @@ export interface SongBubble {
   bubble_color: string;
 }
 
+// Public projection written by the pipeline into data/public/stories/.
+// Bubbles only; internal generation metadata never enters this artifact.
 export interface SongUniverse {
-  metadata: {
-    timestamp: string;
-    artist_name: string;
-    total_bubbles: number;
-    universe_type: string;
-  };
-  artist_overview: string;
+  artist_slug: string;
   song_bubbles: SongBubble[];
 }
 
