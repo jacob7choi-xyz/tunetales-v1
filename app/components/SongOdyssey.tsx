@@ -6,6 +6,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { coverFor } from '../lib/covers';
 import { TRACK_IDS } from '../lib/tracks';
+import { SLUG_PATTERN } from '../lib/tokens';
 import AmbienceLayer from './AmbienceLayer';
 import SpotifyEmbed from './SpotifyEmbed';
 
@@ -21,8 +22,10 @@ export interface OdysseyBubble {
 
 interface SongOdysseyProps {
   bubbles: OdysseyBubble[];
-  // Same-origin public API path serving { song_bubbles: [{song_name, story}] }
-  lazyStoriesFrom?: string;
+  // Artist slug: the island constructs the one same-origin universe API
+  // path itself (least authority; callers cannot point it at arbitrary
+  // fetch targets). Must match the registry slug shape.
+  lazyStoriesForArtist?: string;
 }
 
 // The discography as a film in six acts, each with its own ambient tint
@@ -399,7 +402,7 @@ function StoryReader({
   );
 }
 
-export default function SongOdyssey({ bubbles, lazyStoriesFrom }: SongOdysseyProps) {
+export default function SongOdyssey({ bubbles, lazyStoriesForArtist }: SongOdysseyProps) {
   const [openSong, setOpenSong] = useState<string | null>(null);
   const [roomHsl, setRoomHsl] = useState(ACTS[0].accentHsl);
   const [fetchedStories, setFetchedStories] = useState<Record<string, string> | null>(null);
@@ -414,9 +417,10 @@ export default function SongOdyssey({ bubbles, lazyStoriesFrom }: SongOdysseyPro
   // First reader open pulls the full story set once from the public API
   // and caches it for the session; a failed fetch allows a retry
   const ensureStories = useCallback(() => {
-    if (!lazyStoriesFrom || fetchStartedRef.current) return;
+    if (!lazyStoriesForArtist || fetchStartedRef.current) return;
+    if (!SLUG_PATTERN.test(lazyStoriesForArtist)) return;
     fetchStartedRef.current = true;
-    fetch(lazyStoriesFrom)
+    fetch(`/api/universe/${lazyStoriesForArtist}`)
       .then((res) => {
         if (!res.ok) throw new Error('universe fetch failed');
         return res.json();
@@ -431,7 +435,7 @@ export default function SongOdyssey({ bubbles, lazyStoriesFrom }: SongOdysseyPro
       .catch(() => {
         fetchStartedRef.current = false;
       });
-  }, [lazyStoriesFrom]);
+  }, [lazyStoriesForArtist]);
 
   const openReader = useCallback(
     (songName: string) => {

@@ -26,7 +26,7 @@ const posterMeta = [
 
 describe("SongOdyssey lazy story loading", () => {
   it("renders posters from meta alone, with no story text in the DOM", () => {
-    render(<SongOdyssey bubbles={posterMeta} lazyStoriesFrom="/api/universe/frank-ocean" />);
+    render(<SongOdyssey bubbles={posterMeta} lazyStoriesForArtist="frank-ocean" />);
     expect(screen.getAllByText("Ivy").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Godspeed").length).toBeGreaterThan(0);
   });
@@ -45,7 +45,7 @@ describe("SongOdyssey lazy story loading", () => {
       }))
     );
 
-    render(<SongOdyssey bubbles={posterMeta} lazyStoriesFrom="/api/universe/frank-ocean" />);
+    render(<SongOdyssey bubbles={posterMeta} lazyStoriesForArtist="frank-ocean" />);
     fireEvent.click(screen.getAllByLabelText("Read the story of Ivy")[0]);
 
     expect(await screen.findByText("The lazily fetched Ivy story body.")).toBeDefined();
@@ -83,7 +83,7 @@ describe("SongOdyssey lazy story loading", () => {
       vi.fn(() => new Promise((resolve) => (resolveFetch = resolve)))
     );
 
-    render(<SongOdyssey bubbles={posterMeta} lazyStoriesFrom="/api/universe/frank-ocean" />);
+    render(<SongOdyssey bubbles={posterMeta} lazyStoriesForArtist="frank-ocean" />);
     fireEvent.click(screen.getAllByLabelText("Read the story of Ivy")[0]);
     expect(screen.getAllByText(/Opening this song's story/).length).toBeGreaterThan(0);
 

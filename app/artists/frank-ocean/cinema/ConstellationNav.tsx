@@ -1,5 +1,7 @@
 'use client';
 
+import { useReducedMotion } from 'framer-motion';
+
 // Client navigation island for the legacy constellation. Receives ONLY
 // presentation meta ({id, numeral, title, accent_hsl}); pillar prose stays
 // server-rendered in LegacySection.
@@ -29,11 +31,13 @@ function nodePosition(index: number, total: number) {
   };
 }
 
-function scrollToPillar(id: string) {
-  document.getElementById(`pillar-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function scrollToPillar(id: string, behavior: ScrollBehavior) {
+  document.getElementById(`pillar-${id}`)?.scrollIntoView({ behavior, block: 'start' });
 }
 
 export default function ConstellationNav({ artistName, pillars }: ConstellationNavProps) {
+  const reduceMotion = useReducedMotion();
+  const scrollBehavior: ScrollBehavior = reduceMotion ? 'auto' : 'smooth';
   return (
     <div>
       <div
@@ -86,7 +90,7 @@ export default function ConstellationNav({ artistName, pillars }: ConstellationN
           return (
             <button
               key={pillar.id}
-              onClick={() => scrollToPillar(pillar.id)}
+              onClick={() => scrollToPillar(pillar.id, scrollBehavior)}
               className="absolute group flex flex-col items-center transition-transform duration-300 hover:scale-110"
               style={{
                 left: `${x}px`,
@@ -137,7 +141,7 @@ export default function ConstellationNav({ artistName, pillars }: ConstellationN
         {pillars.map((pillar) => (
           <button
             key={pillar.id}
-            onClick={() => scrollToPillar(pillar.id)}
+            onClick={() => scrollToPillar(pillar.id, scrollBehavior)}
             className="rounded-full"
             style={{
               padding: '7px 14px',

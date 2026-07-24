@@ -57,9 +57,9 @@ describe("HeroMotion", () => {
 });
 
 describe("SceneMotion", () => {
-  it("renders art (aria-hidden) and content slots", () => {
+  it("renders decorative art (aria-hidden) and content slots", () => {
     const { container } = render(
-      <SceneMotion art={<span>album art</span>}>
+      <SceneMotion decorativeArt={<span>album art</span>}>
         <h3>Chapter title</h3>
       </SceneMotion>
     );

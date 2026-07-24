@@ -4,15 +4,19 @@ import { useRef, type ReactNode } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 interface SceneMotionProps {
-  // Server-rendered slots; no data crosses this boundary
-  art: ReactNode;
+  // CONTRACT: strictly decorative, non-interactive content only (no
+  // meaningful alt text, links, buttons, or focusable descendants). The
+  // whole slot is aria-hidden, so anything meaningful placed here would
+  // be invisible to assistive technology.
+  decorativeArt: ReactNode;
+  // Server-rendered scene content; no data crosses this boundary
   children: ReactNode;
 }
 
 // Full-viewport journey scene: the art drifts vertically across the
 // scene's own scroll progress while the content rises and settles over the
 // first third. Transform and opacity only; reduced motion stills both.
-export default function SceneMotion({ art, children }: SceneMotionProps) {
+export default function SceneMotion({ decorativeArt, children }: SceneMotionProps) {
   const reduceMotion = useReducedMotion();
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -49,7 +53,7 @@ export default function SceneMotion({ art, children }: SceneMotionProps) {
           style={{ inset: '-16% 0', y: artY, willChange: 'transform' }}
           aria-hidden="true"
         >
-          {art}
+          {decorativeArt}
         </motion.div>
       </div>
       <motion.div

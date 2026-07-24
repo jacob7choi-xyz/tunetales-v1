@@ -34,13 +34,17 @@ const story = {
 function Harness() {
   return (
     <div data-cinema-root="">
-      <SceneOverlayProvider storyApiPath="/api/artists/frank-ocean">
+      <SceneOverlayProvider>
         <SceneEnterButton chapterIndex={0} ariaLabel="Enter chapter 1: CHAPTER ONE">
           Enter this chapter
         </SceneEnterButton>
       </SceneOverlayProvider>
     </div>
   );
+}
+
+function fetchUrl(call: unknown[]): string {
+  return String(call[0]);
 }
 
 beforeEach(() => {
@@ -66,7 +70,8 @@ describe("SceneOverlay (S6/S6a contract)", () => {
 
     fireEvent.click(screen.getByLabelText("Enter chapter 1: CHAPTER ONE"));
 
-    const dialog = await screen.findByRole("dialog");
+    await screen.findByTestId("journey-client");
+    const dialog = screen.getByRole("dialog");
     // S6a topology: the dialog is NOT a descendant of the inert subtree
     expect(cinemaRoot.contains(dialog)).toBe(false);
     expect(document.getElementById(OVERLAY_ROOT_ID)!.contains(dialog)).toBe(true);
@@ -83,22 +88,23 @@ describe("SceneOverlay (S6/S6a contract)", () => {
     await waitFor(() => expect(document.activeElement).toBe(close));
   });
 
-  it("lazily fetches the story once and renders the journey", async () => {
+  it("lazily fetches the story once from the fixed endpoint and caches it", async () => {
     render(<Harness />);
     fireEvent.click(screen.getByLabelText("Enter chapter 1: CHAPTER ONE"));
 
     await screen.findByTestId("journey-client");
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("/api/artists/frank-ocean");
+    expect(fetchUrl(vi.mocked(fetch).mock.calls[0])).toBe("/api/artists/frank-ocean");
 
     // Re-open: cached, no second fetch
     fireEvent.click(screen.getByLabelText("Close the journey"));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     fireEvent.click(screen.getByLabelText("Enter chapter 1: CHAPTER ONE"));
     await screen.findByTestId("journey-client");
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it("Escape closes, un-inerts the root, and restores focus to the trigger", async () => {
+  it("Escape closes, un-inerts the root, THEN restores focus to the trigger", async () => {
     const { container } = render(<Harness />);
     const cinemaRoot = container.querySelector("[data-cinema-root]") as HTMLElement;
     const trigger = screen.getByLabelText("Enter chapter 1: CHAPTER ONE");
@@ -108,11 +114,15 @@ describe("SceneOverlay (S6/S6a contract)", () => {
 
     fireEvent.keyDown(window, { key: "Escape" });
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
-    expect(cinemaRoot.hasAttribute("inert")).toBe(false);
-    expect(document.activeElement).toBe(trigger);
+    // Focus restoration happens only after exit completes and inert is
+    // gone: a focus() on an inert-subtree element would fail silently
+    await waitFor(() => {
+      expect(cinemaRoot.hasAttribute("inert")).toBe(false);
+      expect(document.activeElement).toBe(trigger);
+    });
   });
 
-  it("degrades quietly when the story fetch fails and allows retry", async () => {
+  it("keeps the dialog open on fetch failure with a Retry path", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => ({ ok: false, json: async () => ({}) }))
@@ -120,10 +130,43 @@ describe("SceneOverlay (S6/S6a contract)", () => {
     render(<Harness />);
     fireEvent.click(screen.getByLabelText("Enter chapter 1: CHAPTER ONE"));
 
-    // Failed fetch closes the overlay instead of trapping the user
-    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
-    // Retry is permitted: a second open attempts the fetch again
-    fireEvent.click(screen.getByLabelText("Enter chapter 1: CHAPTER ONE"));
+    // Failure is explained, not silently swallowed: the dialog stays up
+    expect(await screen.findByText(/Couldn't open the journey/)).toBeDefined();
+    expect(screen.getByRole("dialog")).toBeDefined();
+
+    fireEvent.click(screen.getByText("Try again"));
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+  });
+
+  it("fetch failure closure goes through the same teardown and focus lifecycle", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: false, json: async () => ({}) }))
+    );
+    const { container } = render(<Harness />);
+    const cinemaRoot = container.querySelector("[data-cinema-root]") as HTMLElement;
+    const trigger = screen.getByLabelText("Enter chapter 1: CHAPTER ONE");
+
+    fireEvent.click(trigger);
+    await screen.findByText(/Couldn't open the journey/);
+
+    fireEvent.click(screen.getByLabelText("Close the journey"));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    await waitFor(() => {
+      expect(cinemaRoot.hasAttribute("inert")).toBe(false);
+      expect(document.activeElement).toBe(trigger);
+    });
+  });
+
+  it("rejects a malformed story shape instead of passing it to the journey", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: true, json: async () => ({ story: { chapters: "nope" } }) }))
+    );
+    render(<Harness />);
+    fireEvent.click(screen.getByLabelText("Enter chapter 1: CHAPTER ONE"));
+
+    expect(await screen.findByText(/Couldn't open the journey/)).toBeDefined();
+    expect(screen.queryByTestId("journey-client")).toBeNull();
   });
 });

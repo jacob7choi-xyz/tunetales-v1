@@ -87,6 +87,9 @@ export default function HeroScene() {
           </div>
         }
       />
+      {/* Zero-height marker: FloatingPillNav observes this to appear
+          exactly when the billboard leaves the viewport */}
+      <div data-hero-sentinel="" aria-hidden="true" />
     </section>
   );
 }

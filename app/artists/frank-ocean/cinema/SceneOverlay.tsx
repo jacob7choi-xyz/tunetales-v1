@@ -22,12 +22,17 @@ const JourneyClient = dynamic(() => import('../journey/JourneyClient'), {
 // S6/S6a overlay topology. The dialog is portaled into #cinema-overlay-root,
 // a SIBLING of [data-cinema-root]; only the cinema root is made inert while
 // the dialog is open, so the dialog stays interactive by topology. Focus
-// moves to Close on open and returns to the invoking scene button on close.
-// The full story enters the browser only here, fetched lazily from the
-// hardened public API on first open and cached for the session.
+// moves to Close on open; it returns to the invoking scene button ONLY
+// after the exit animation completes and inert is removed (focusing an
+// element inside an inert subtree fails silently). The full story enters
+// the browser only here, fetched lazily on first open and cached.
 
 export const OVERLAY_ROOT_ID = 'cinema-overlay-root';
 export const CINEMA_ROOT_ATTR = 'data-cinema-root';
+
+// Least authority: this island can only ever call the one endpoint it
+// needs (S11); callers cannot point it at arbitrary fetch targets
+const STORY_API_PATH = '/api/artists/frank-ocean';
 
 interface SceneOverlayContextValue {
   open: (chapterIndex: number, trigger: HTMLElement | null) => void;
@@ -68,13 +73,29 @@ export function SceneEnterButton({
   );
 }
 
+// Minimal runtime shape guard for the fetched story: the server API owns
+// the trust boundary; this only keeps a malformed response from reaching
+// JourneyClient in an unpredictable state
+function looksLikeStory(value: unknown): value is ArtistStory {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Array.isArray((value as { chapters?: unknown }).chapters) &&
+    (value as { chapters: unknown[] }).chapters.length > 0
+  );
+}
+
 function OverlayDialog({
   story,
+  failed,
   chapterIndex,
+  onRetry,
   onClose,
 }: {
   story: ArtistStory | null;
+  failed: boolean;
   chapterIndex: number;
+  onRetry: () => void;
   onClose: () => void;
 }) {
   const closeRef = useRef<HTMLButtonElement | null>(null);
@@ -136,6 +157,30 @@ function OverlayDialog({
 
       {story ? (
         <JourneyClient story={story} initialChapter={chapterIndex} embedded onExit={onClose} />
+      ) : failed ? (
+        <div
+          className="flex min-h-screen flex-col items-center justify-center text-center"
+          style={{ gap: '18px', padding: '0 24px' }}
+        >
+          <p style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '16px' }}>
+            Couldn&apos;t open the journey.
+          </p>
+          <button
+            onClick={onRetry}
+            className="rounded-full transition-all duration-200 hover:scale-105"
+            style={{
+              padding: '11px 26px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#fff',
+              background: '#9333ea',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            Try again
+          </button>
+        </div>
       ) : (
         <div
           className="flex min-h-screen items-center justify-center"
@@ -149,17 +194,48 @@ function OverlayDialog({
 }
 
 interface SceneOverlayProviderProps {
-  // Same-origin public API path the full story is lazily fetched from
-  storyApiPath: string;
   children: ReactNode;
 }
 
-export function SceneOverlayProvider({ storyApiPath, children }: SceneOverlayProviderProps) {
+export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
   const [openChapter, setOpenChapter] = useState<number | null>(null);
   const [story, setStory] = useState<ArtistStory | null>(null);
+  const [fetchFailed, setFetchFailed] = useState(false);
   const [overlayRoot, setOverlayRoot] = useState<HTMLElement | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const fetchStartedRef = useRef(false);
+  const abortRef = useRef<AbortController | null>(null);
+
+  const loadStory = useCallback(() => {
+    // One in-flight or completed fetch at a time; success caches for the
+    // session, failure shows the retry state instead of tearing down
+    if (abortRef.current) return;
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setFetchFailed(false);
+    fetch(STORY_API_PATH, { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error('story fetch failed');
+        return res.json();
+      })
+      .then((data: { story?: unknown }) => {
+        if (looksLikeStory(data.story)) {
+          setStory(data.story);
+        } else {
+          throw new Error('story shape unexpected');
+        }
+      })
+      .catch((error: unknown) => {
+        abortRef.current = null;
+        if ((error as { name?: string }).name !== 'AbortError') {
+          setFetchFailed(true);
+        }
+      });
+  }, []);
+
+  // Abort any in-flight fetch if the provider unmounts mid-load
+  useEffect(() => {
+    return () => abortRef.current?.abort();
+  }, []);
 
   const open = useCallback(
     (chapterIndex: number, trigger: HTMLElement | null) => {
@@ -168,29 +244,19 @@ export function SceneOverlayProvider({ storyApiPath, children }: SceneOverlayPro
       // before any user can click a scene button
       setOverlayRoot(document.getElementById(OVERLAY_ROOT_ID));
       setOpenChapter(chapterIndex);
-      if (!fetchStartedRef.current) {
-        fetchStartedRef.current = true;
-        fetch(storyApiPath)
-          .then((res) => {
-            if (!res.ok) throw new Error('story fetch failed');
-            return res.json();
-          })
-          .then((data: { story: ArtistStory | null }) => {
-            if (data.story) setStory(data.story);
-            else setOpenChapter(null);
-          })
-          .catch(() => {
-            // Allow a retry on the next open instead of caching the failure
-            fetchStartedRef.current = false;
-            setOpenChapter(null);
-          });
-      }
+      if (!story) loadStory();
     },
-    [storyApiPath]
+    [story, loadStory]
   );
 
-  const close = useCallback(() => {
+  // The ONLY teardown path: every closure (Close button, Escape, journey
+  // exit) funnels through here, and focus restoration happens strictly
+  // after the exit animation completes and inert is removed
+  const requestClose = useCallback(() => {
     setOpenChapter(null);
+  }, []);
+
+  const restoreFocus = useCallback(() => {
     const trigger = triggerRef.current;
     if (trigger?.isConnected) trigger.focus();
   }, []);
@@ -200,9 +266,15 @@ export function SceneOverlayProvider({ storyApiPath, children }: SceneOverlayPro
       {children}
       {overlayRoot &&
         createPortal(
-          <AnimatePresence>
+          <AnimatePresence onExitComplete={restoreFocus}>
             {openChapter !== null && (
-              <OverlayDialog story={story} chapterIndex={openChapter} onClose={close} />
+              <OverlayDialog
+                story={story}
+                failed={fetchFailed}
+                chapterIndex={openChapter}
+                onRetry={loadStory}
+                onClose={requestClose}
+              />
             )}
           </AnimatePresence>,
           overlayRoot

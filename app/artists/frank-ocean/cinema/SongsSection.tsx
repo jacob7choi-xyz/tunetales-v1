@@ -3,14 +3,14 @@ import SongOdyssey from '@/app/components/SongOdyssey';
 
 interface SongsSectionProps {
   bubbles: SongBubble[];
-  universeApiPath: string;
+  artistSlug: string;
 }
 
 // SERVER component: section chrome renders here; the odyssey island
-// receives POSTER META ONLY (song name, mood, color). Story text stays out
-// of the initial payload and is lazily fetched by the island from the
-// hardened public universe API on first reader open.
-export default function SongsSection({ bubbles, universeApiPath }: SongsSectionProps) {
+// receives POSTER META ONLY (song name, mood, color) plus the artist slug.
+// Story text stays out of the initial payload; the island constructs the
+// one universe API path itself and fetches lazily on first reader open.
+export default function SongsSection({ bubbles, artistSlug }: SongsSectionProps) {
   const posterMeta = bubbles.map(({ song_name, mood, bubble_color }) => ({
     song_name,
     mood,
@@ -46,7 +46,7 @@ export default function SongsSection({ bubbles, universeApiPath }: SongsSectionP
           Every song is a small world. Touch one to hear how it came to be.
         </p>
       </div>
-      <SongOdyssey bubbles={posterMeta} lazyStoriesFrom={universeApiPath} />
+      <SongOdyssey bubbles={posterMeta} lazyStoriesForArtist={artistSlug} />
     </section>
   );
 }

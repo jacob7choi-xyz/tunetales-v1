@@ -42,7 +42,26 @@ export const motion = new Proxy(
   }
 );
 
-export const AnimatePresence = ({ children }: { children: React.ReactNode }) => children;
+// Models the exit-completion lifecycle: when children go from present to
+// absent, onExitComplete fires (immediately, since jsdom has no animation
+// frames). Components that sequence work after exit stay testable.
+export const AnimatePresence = ({
+  children,
+  onExitComplete,
+}: {
+  children: React.ReactNode;
+  onExitComplete?: () => void;
+}) => {
+  const hadChildren = React.useRef(false);
+  const hasChildren = Boolean(
+    Array.isArray(children) ? children.some(Boolean) : children
+  );
+  React.useEffect(() => {
+    if (hadChildren.current && !hasChildren) onExitComplete?.();
+    hadChildren.current = hasChildren;
+  }, [hasChildren, onExitComplete]);
+  return children;
+};
 
 export const useScroll = () => ({ scrollY: 0, scrollYProgress: 0 });
 

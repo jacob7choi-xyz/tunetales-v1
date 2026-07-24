@@ -1,26 +1,36 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, cleanup, fireEvent, screen } from "@testing-library/react";
-import FloatingPillNav from "@/app/artists/frank-ocean/cinema/FloatingPillNav";
+import { render, cleanup, fireEvent, screen, act } from "@testing-library/react";
+import FloatingPillNav, {
+  HERO_SENTINEL_ATTR,
+} from "@/app/artists/frank-ocean/cinema/FloatingPillNav";
 import RoomTint from "@/app/artists/frank-ocean/cinema/RoomTint";
 import ConstellationNav from "@/app/artists/frank-ocean/cinema/ConstellationNav";
 
 vi.mock("framer-motion", async () => await import("../helpers/framer-motion-mock"));
 
-// jsdom has no IntersectionObserver; the islands must still render
+// jsdom has no IntersectionObserver; the stub records callbacks so tests
+// can drive intersection transitions manually
+type IOCallback = (entries: Array<Partial<IntersectionObserverEntry>>) => void;
+const ioCallbacks: IOCallback[] = [];
+
 class ObserverStub {
+  constructor(callback: IOCallback) {
+    ioCallbacks.push(callback);
+  }
   observe() {}
   unobserve() {}
   disconnect() {}
 }
 
 beforeEach(() => {
+  ioCallbacks.length = 0;
   vi.stubGlobal("IntersectionObserver", ObserverStub);
 });
 
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
-  Object.defineProperty(window, "scrollY", { value: 0, writable: true });
+  document.querySelectorAll(`[${HERO_SENTINEL_ATTR}]`).forEach((el) => el.remove());
 });
 
 const SECTIONS = [
@@ -28,22 +38,57 @@ const SECTIONS = [
   { id: "discography", label: "Songs" },
 ];
 
+function mountSentinel() {
+  const sentinel = document.createElement("div");
+  sentinel.setAttribute(HERO_SENTINEL_ATTR, "");
+  document.body.appendChild(sentinel);
+  return sentinel;
+}
+
+function driveSentinel(entry: Partial<IntersectionObserverEntry>) {
+  // Deliver to every registered observer inside act(): only the sentinel
+  // observer exists here (no [data-pill-section] elements are mounted)
+  act(() => {
+    for (const callback of ioCallbacks) callback([entry]);
+  });
+}
+
 describe("FloatingPillNav", () => {
-  it("stays hidden at the top of the page", () => {
+  it("is inert (unfocusable, out of the a11y tree) until the hero passes", () => {
+    mountSentinel();
     render(<FloatingPillNav sections={SECTIONS} />);
-    const nav = screen.getByLabelText("Page sections");
-    expect(nav.getAttribute("aria-hidden")).toBe("true");
+    const nav = screen.getByLabelText("Page sections", { selector: "nav" });
+    expect(nav.hasAttribute("inert")).toBe(true);
   });
 
-  it("appears after scrolling past the hero", () => {
+  it("becomes interactive once the hero sentinel scrolls above the viewport", () => {
+    mountSentinel();
     render(<FloatingPillNav sections={SECTIONS} />);
-    Object.defineProperty(window, "scrollY", { value: 2000, writable: true });
-    fireEvent.scroll(window);
-    const nav = screen.getByLabelText("Page sections");
-    expect(nav.getAttribute("aria-hidden")).toBe("false");
+    driveSentinel({
+      isIntersecting: false,
+      boundingClientRect: { bottom: -10 } as DOMRectReadOnly,
+    });
+    const nav = screen.getByLabelText("Page sections", { selector: "nav" });
+    expect(nav.hasAttribute("inert")).toBe(false);
+  });
+
+  it("hides again when scrolling back up to the hero", () => {
+    mountSentinel();
+    render(<FloatingPillNav sections={SECTIONS} />);
+    driveSentinel({
+      isIntersecting: false,
+      boundingClientRect: { bottom: -10 } as DOMRectReadOnly,
+    });
+    driveSentinel({
+      isIntersecting: true,
+      boundingClientRect: { bottom: 400 } as DOMRectReadOnly,
+    });
+    const nav = screen.getByLabelText("Page sections", { selector: "nav" });
+    expect(nav.hasAttribute("inert")).toBe(true);
   });
 
   it("scrolls to the section on pill click", () => {
+    mountSentinel();
     const target = document.createElement("section");
     target.id = "discography";
     target.scrollIntoView = vi.fn();

@@ -7,10 +7,13 @@ export interface ActiveSection {
   accent: string | null;
 }
 
-// One shared observation primitive powers both the pill-nav scrollspy and
-// the room tint: identical semantics share infrastructure. Observes every
-// element matching the selector; the entry crossing the activation band
-// (upper-middle of the viewport) becomes active.
+// Shared observation implementation (each caller gets its own observer;
+// two observers at this scale are trivial) used by both the pill-nav
+// scrollspy and the room tint, so activation semantics stay identical.
+// The activation band sits in the upper-middle of the viewport; when more
+// than one element intersects it in the same callback, the one whose top
+// is nearest the band's top wins, so the choice is deterministic instead
+// of callback-order dependent.
 export default function useActiveSection(selector: string): ActiveSection {
   const [active, setActive] = useState<ActiveSection>({ id: null, accent: null });
 
@@ -21,14 +24,20 @@ export default function useActiveSection(selector: string): ActiveSection {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const el = entry.target as HTMLElement;
-          setActive({
-            id: el.id || null,
-            accent: el.getAttribute('data-accent'),
-          });
-        }
+        const intersecting = entries.filter((entry) => entry.isIntersecting);
+        if (intersecting.length === 0) return;
+        const bandTop = window.innerHeight * 0.4;
+        const nearest = intersecting.reduce((best, entry) =>
+          Math.abs(entry.boundingClientRect.top - bandTop) <
+          Math.abs(best.boundingClientRect.top - bandTop)
+            ? entry
+            : best
+        );
+        const el = nearest.target as HTMLElement;
+        setActive({
+          id: el.id || null,
+          accent: el.getAttribute('data-accent'),
+        });
       },
       { rootMargin: '-40% 0px -55% 0px' }
     );

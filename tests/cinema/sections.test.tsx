@@ -91,7 +91,7 @@ describe("HeroScene", () => {
 
 describe("JourneyScenesSection", () => {
   it("renders a scene per chapter with numeral, title, and whisper", () => {
-    render(<JourneyScenesSection story={story} storyApiPath="/api/artists/frank-ocean" />);
+    render(<JourneyScenesSection story={story} />);
     expect(screen.getByText("THE BOY FROM LONG BEACH")).toBeDefined();
     expect(screen.getByText("THE STORM")).toBeDefined();
     expect(screen.getByText("Warm California sun, old photographs")).toBeDefined();
@@ -101,7 +101,7 @@ describe("JourneyScenesSection", () => {
   });
 
   it("keeps full chapter text OUT of the scene shells", () => {
-    render(<JourneyScenesSection story={story} storyApiPath="/api/artists/frank-ocean" />);
+    render(<JourneyScenesSection story={story} />);
     expect(
       screen.queryByText(/Full origin chapter text that must stay out/)
     ).toBeNull();
@@ -110,7 +110,7 @@ describe("JourneyScenesSection", () => {
 
   it("marks each scene with its accent for the room tint", () => {
     const { container } = render(
-      <JourneyScenesSection story={story} storyApiPath="/api/artists/frank-ocean" />
+      <JourneyScenesSection story={story} />
     );
     const scenes = container.querySelectorAll("[data-accent]");
     expect(scenes.length).toBe(story.chapters.length);
@@ -130,7 +130,7 @@ describe("SongsSection", () => {
             bubble_color: "#9A6B9A",
           },
         ]}
-        universeApiPath="/api/universe/frank-ocean"
+        artistSlug="frank-ocean"
       />
     );
     expect(screen.getByRole("heading", { level: 2, name: "Musical Creations" })).toBeDefined();

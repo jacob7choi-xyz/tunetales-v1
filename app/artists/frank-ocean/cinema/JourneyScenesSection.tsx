@@ -6,7 +6,6 @@ import { SceneEnterButton, SceneOverlayProvider } from './SceneOverlay';
 
 interface JourneyScenesSectionProps {
   story: ArtistStory;
-  storyApiPath: string;
 }
 
 // The album whose artwork sets each chapter's scene (registry constants
@@ -25,7 +24,7 @@ const CHAPTER_ALBUMS: Record<string, string> = {
 // shells. Only chapter index and accent meta cross into client islands;
 // the full story text enters the browser solely via the overlay's lazy
 // API fetch.
-export default function JourneyScenesSection({ story, storyApiPath }: JourneyScenesSectionProps) {
+export default function JourneyScenesSection({ story }: JourneyScenesSectionProps) {
   return (
     <section
       id="journey"
@@ -36,7 +35,7 @@ export default function JourneyScenesSection({ story, storyApiPath }: JourneySce
       <h2 id="journey-heading" className="sr-only">
         The Journey
       </h2>
-      <SceneOverlayProvider storyApiPath={storyApiPath}>
+      <SceneOverlayProvider>
         <div style={{ scrollSnapType: 'y proximity' }}>
           {story.chapters.map((chapter, index) => {
             const hsl = chapter.ambience.accentHsl;
@@ -49,7 +48,7 @@ export default function JourneyScenesSection({ story, storyApiPath }: JourneySce
                 style={{ scrollSnapAlign: 'start' }}
               >
                 <SceneMotion
-                  art={
+                  decorativeArt={
                     <>
                       {cover && (
                         <Image

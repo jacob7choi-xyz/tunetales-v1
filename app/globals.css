@@ -247,4 +247,13 @@ body {
   html {
     scroll-behavior: auto !important;
   }
+
+  .transition-all,
+  .transition-transform,
+  .transition-opacity,
+  .transition-colors,
+  .transition-shadow,
+  [data-navbar-shell] nav {
+    transition: none !important;
+  }
 }
