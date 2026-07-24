@@ -152,8 +152,9 @@ function FrankOceanContent() {
               boxShadow: '0 16px 48px rgba(0, 0, 0, 0.45)',
             }}
           >
+            {/* Pinned local asset; provenance in ASSET_PROVENANCE.md */}
             <Image
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Frank_Ocean_2022_Blonded.jpg/960px-Frank_Ocean_2022_Blonded.jpg"
+              src="/artists/frank-ocean/hero.jpg"
               alt="Frank Ocean"
               fill
               className="object-cover"

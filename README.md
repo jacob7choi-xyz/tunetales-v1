@@ -168,4 +168,4 @@ tunetales-v1/
 
 Built by [Jacob J. Choi](https://jacobjchoi.xyz).
 
-Artist photography via Wikimedia Commons (freely licensed). Album artwork displayed under fair use via Wikipedia and official streaming CDNs. Music playback through official embeds; all rights to the music belong to the artists and their labels. Stories are original writing grounded in cited music journalism.
+Artist photography via Wikimedia Commons (freely licensed). Frank Ocean hero portrait by Andras Ladocsi, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); pinned locally with full provenance in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md). Album artwork displayed under fair use via Wikipedia and official streaming CDNs. Music playback through official embeds; all rights to the music belong to the artists and their labels. Stories are original writing grounded in cited music journalism.
