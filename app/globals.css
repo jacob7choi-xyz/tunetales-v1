@@ -201,3 +201,50 @@ body {
 .scroll-indicator {
   animation: scroll-bounce 2s ease-in-out infinite;
 }
+
+/* Cinematic hero: portrait settles in on load (one-time, GPU compositor) */
+@keyframes hero-portrait-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.045);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-portrait-enter {
+  animation: hero-portrait-enter 1.4s ease-out both;
+}
+
+/* Navbar frost state, owned by the cinema NavbarScrollShell wrapper:
+   transparent over the billboard, frosted after scroll. !important is
+   required because the navbar's base styles are inline. */
+[data-navbar-shell] nav {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  transition: background 0.45s ease, border-color 0.45s ease;
+}
+
+[data-navbar-shell][data-scrolled] nav {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Reduced motion: still every ambient loop; scroll-linked transforms are
+   zeroed in the motion islands via useReducedMotion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait-enter,
+  .song-bubble,
+  .card-enchanted,
+  .shimmer-text,
+  .scroll-indicator,
+  .chapter-ambience {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+}
