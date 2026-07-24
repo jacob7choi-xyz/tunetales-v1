@@ -46,7 +46,8 @@ export default function SongsSection({ bubbles, artistSlug }: SongsSectionProps)
           Every song is a small world. Touch one to hear how it came to be.
         </p>
       </div>
-      <SongOdyssey bubbles={posterMeta} lazyStoriesForArtist={artistSlug} />
+      {/* Page-level RoomTint owns the ambience on the cinematic page */}
+      <SongOdyssey bubbles={posterMeta} lazyStoriesForArtist={artistSlug} renderAmbience={false} />
     </section>
   );
 }

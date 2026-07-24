@@ -217,6 +217,10 @@ export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
   const [overlayRoot, setOverlayRoot] = useState<HTMLElement | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  // Effect cleanup is not the same thing as user closure (Strict Mode and
+  // provider unmount also run it); this intent flag makes focus
+  // restoration happen only for a genuine close
+  const closingRef = useRef(false);
 
   const loadStory = useCallback(() => {
     // One in-flight or completed fetch at a time; success caches for the
@@ -271,11 +275,15 @@ export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
   // exit) funnels through here, and focus restoration happens strictly
   // after the exit animation completes and inert is removed
   const requestClose = useCallback(() => {
+    closingRef.current = true;
     setOpenChapter(null);
   }, []);
 
-  // Called from the dialog's effect cleanup, after inert is removed
+  // Called from the dialog's effect cleanup, after inert is removed;
+  // restores focus only when a genuine close was requested
   const restoreFocus = useCallback(() => {
+    if (!closingRef.current) return;
+    closingRef.current = false;
     const trigger = triggerRef.current;
     if (trigger?.isConnected) trigger.focus();
   }, []);

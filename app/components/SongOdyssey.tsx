@@ -26,6 +26,9 @@ interface SongOdysseyProps {
   // path itself (least authority; callers cannot point it at arbitrary
   // fetch targets). Must match the registry slug shape.
   lazyStoriesForArtist?: string;
+  // Set false when a page-level RoomTint already owns the ambience so
+  // the act tint is not painted twice
+  renderAmbience?: boolean;
 }
 
 // The discography as a film in six acts, each with its own ambient tint
@@ -402,7 +405,7 @@ function StoryReader({
   );
 }
 
-export default function SongOdyssey({ bubbles, lazyStoriesForArtist }: SongOdysseyProps) {
+export default function SongOdyssey({ bubbles, lazyStoriesForArtist, renderAmbience = true }: SongOdysseyProps) {
   const [openSong, setOpenSong] = useState<string | null>(null);
   const [roomHsl, setRoomHsl] = useState(ACTS[0].accentHsl);
   const [fetchedStories, setFetchedStories] = useState<Record<string, string> | null>(null);
@@ -491,7 +494,7 @@ export default function SongOdyssey({ bubbles, lazyStoriesForArtist }: SongOdyss
 
   return (
     <div className="relative z-10">
-      <AmbienceLayer accentHsl={roomHsl} />
+      {renderAmbience && <AmbienceLayer accentHsl={roomHsl} />}
 
       {ACTS.map((act) => {
         const actBubbles = act.songs

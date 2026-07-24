@@ -1,11 +1,12 @@
 import { test, expect } from "@playwright/test";
 
-// Phase-2 acceptance smoke: the two contracts jsdom structurally cannot
-// prove. (1) The overlay's inert -> exit -> focus-restoration ordering
-// under real animation timing. (2) The hero sentinel actually toggling
-// the pill nav under real IntersectionObserver geometry.
+// Browser-semantic contracts jsdom structurally cannot prove, running
+// against the real production page since the Phase-3 flip. (1) The
+// overlay's inert -> exit -> focus-restoration ordering under real
+// animation timing. (2) The hero sentinel toggling the pill nav under
+// real IntersectionObserver geometry.
 
-const HARNESS = "/dev/cinema-harness";
+const HARNESS = "/artists/frank-ocean";
 
 test("overlay lifecycle: inert while open, focus restored only after exit", async ({ page }) => {
   await page.goto(HARNESS);
