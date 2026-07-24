@@ -1,10 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // API routes read data/ JSON at request time; the file tracer cannot see
-  // dynamic fs paths, so include them in the serverless bundles explicitly
+  // ONLY data/public/ may ever be traced into the deployment: the
+  // directory is the classification boundary and raw research/pipeline
+  // artifacts must never ship (see data/public/README.md). The tracer's
+  // static analysis over-approximates dynamic fs paths in app/lib/data.ts
+  // to all of data/, so data/ is excluded wholesale for every route and
+  // the public namespace is added back explicitly where server code
+  // reads it at request time.
+  outputFileTracingExcludes: {
+    "*": ["./data/**"],
+  },
   outputFileTracingIncludes: {
-    "/api/**": ["./data/**"],
+    "/api/**": ["./data/public/**"],
+    "/artists/**": ["./data/public/**"],
   },
   images: {
     remotePatterns: [
