@@ -1,14 +1,14 @@
-import { readFile, readdir } from "fs/promises";
+import { readFile } from "fs/promises";
 import path from "path";
 import type {
   Artist,
   ArtistLegacy,
   ArtistStory,
   LegacyArtistStory,
-  ResearchFile,
   SongUniverse,
   StoryChapter,
 } from "./types";
+import type { PublicResearchIndex, PublicResearchSource } from "./public/types";
 import { SLUG_PATTERN } from "./tokens";
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -105,28 +105,19 @@ export async function getLegacy(slug: string): Promise<ArtistLegacy | null> {
   }
 }
 
-export async function getResearchFiles(slug: string): Promise<ResearchFile[]> {
+// Runtime never opens raw research. It reads only the pipeline-projected
+// public index (see backend/services/pipeline/build_research_index.py).
+export async function getResearchIndex(
+  slug: string
+): Promise<PublicResearchSource[]> {
   validateSlug(slug);
-  const researchDir = path.join(DATA_DIR, "research");
-  const artistName = slug.replace(/-/g, "_").toLowerCase();
-
   try {
-    const files = await readdir(researchDir);
-    const matching = files.filter(
-      (f) => f.toLowerCase().includes(artistName) && f.endsWith(".json")
+    const raw = await readFile(
+      path.join(PUBLIC_DIR, "research-index.json"),
+      "utf-8"
     );
-
-    const results: ResearchFile[] = [];
-    for (const file of matching) {
-      try {
-        const raw = await readFile(path.join(researchDir, file), "utf-8");
-        results.push(JSON.parse(raw) as ResearchFile);
-      } catch {
-        // Skip malformed files
-      }
-    }
-
-    return results;
+    const index = JSON.parse(raw) as PublicResearchIndex;
+    return index[slug] ?? [];
   } catch {
     return [];
   }

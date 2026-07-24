@@ -93,14 +93,3 @@ export interface ArtistLegacy {
   pillars: LegacyPillar[];
 }
 
-export interface ResearchFile {
-  metadata: {
-    timestamp: string;
-    query_type: string;
-    artist_name: string;
-    model_used: string;
-    tokens_used: number;
-    cost_estimate: number;
-  };
-  response: Record<string, unknown>;
-}

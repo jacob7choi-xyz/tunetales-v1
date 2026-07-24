@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getArtists, getArtistStory, getResearchFiles } from "@/app/lib/data";
+import { getArtists, getArtistStory, getResearchIndex } from "@/app/lib/data";
 
 describe("API data layer - artists", () => {
   it("all artists have valid status values", async () => {
@@ -47,23 +47,20 @@ describe("API data layer - stories", () => {
 });
 
 describe("API data layer - research", () => {
-  it("research files have required metadata fields", async () => {
-    const files = await getResearchFiles("frank-ocean");
-    expect(files.length).toBeGreaterThan(0);
-    for (const file of files) {
-      expect(file.metadata).toBeDefined();
-      expect(typeof file.metadata.timestamp).toBe("string");
-      expect(typeof file.metadata.artist_name).toBe("string");
-      expect(typeof file.metadata.model_used).toBe("string");
-      expect(typeof file.metadata.tokens_used).toBe("number");
+  it("research index rows carry only the public fields", async () => {
+    const sources = await getResearchIndex("frank-ocean");
+    expect(sources.length).toBeGreaterThan(0);
+    for (const source of sources) {
+      expect(Object.keys(source).sort()).toEqual(["date", "queryLabel", "tokens"]);
+      expect(typeof source.queryLabel).toBe("string");
+      expect(typeof source.date).toBe("string");
+      expect(typeof source.tokens).toBe("number");
     }
   });
 
-  it("research files have response data", async () => {
-    const files = await getResearchFiles("frank-ocean");
-    for (const file of files) {
-      expect(file.response).toBeDefined();
-      expect(typeof file.response).toBe("object");
-    }
+  it("research index rows are sorted newest first", async () => {
+    const sources = await getResearchIndex("frank-ocean");
+    const dates = sources.map((s) => s.date);
+    expect(dates).toEqual([...dates].sort().reverse());
   });
 });

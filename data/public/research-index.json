@@ -1,0 +1,444 @@
+{
+  "frank-ocean": [
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2026-07-23T17:02:34.334764",
+      "tokens": 2537
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2026-07-23T16:59:11.709899",
+      "tokens": 559
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:12:25.764747",
+      "tokens": 1252
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:12:17.552601",
+      "tokens": 2109
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:12:03.858214",
+      "tokens": 1170
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:11:55.457487",
+      "tokens": 1826
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:11:43.167001",
+      "tokens": 2249
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:11:26.481319",
+      "tokens": 1337
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:11:17.359257",
+      "tokens": 1726
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:11:04.990733",
+      "tokens": 1496
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:10:54.886077",
+      "tokens": 1205
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:10:46.204759",
+      "tokens": 1475
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:10:36.600723",
+      "tokens": 1811
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:10:24.926690",
+      "tokens": 1599
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:10:13.438656",
+      "tokens": 2418
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:09:57.240192",
+      "tokens": 1766
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:09:44.688011",
+      "tokens": 1965
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:09:31.486681",
+      "tokens": 1544
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:09:20.926685",
+      "tokens": 755
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:09:16.114369",
+      "tokens": 1856
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:09:00.367289",
+      "tokens": 1761
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:08:47.434917",
+      "tokens": 1688
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:08:36.950498",
+      "tokens": 2364
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:08:20.385039",
+      "tokens": 1594
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:08:08.816229",
+      "tokens": 1462
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:07:57.571510",
+      "tokens": 1667
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:07:44.832340",
+      "tokens": 1461
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:07:34.283483",
+      "tokens": 1548
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:07:22.411290",
+      "tokens": 1217
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:07:13.642355",
+      "tokens": 839
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:07:08.015697",
+      "tokens": 1363
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:58.131857",
+      "tokens": 1034
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:50.238040",
+      "tokens": 1122
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:42.056727",
+      "tokens": 1303
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:33.425699",
+      "tokens": 1445
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:22.944553",
+      "tokens": 1092
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:14.455076",
+      "tokens": 1347
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:06:03.635889",
+      "tokens": 1193
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:05:54.604031",
+      "tokens": 944
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:05:47.545562",
+      "tokens": 979
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:05:39.947941",
+      "tokens": 1093
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:05:31.915994",
+      "tokens": 1838
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:05:17.489945",
+      "tokens": 1983
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:05:02.657578",
+      "tokens": 1095
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:04:55.112507",
+      "tokens": 1248
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:04:46.273231",
+      "tokens": 1941
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:04:32.361897",
+      "tokens": 1573
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:04:19.490123",
+      "tokens": 1035
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:04:11.967788",
+      "tokens": 1840
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:03:58.009859",
+      "tokens": 915
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:03:50.700294",
+      "tokens": 1767
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:03:37.306077",
+      "tokens": 831
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:03:31.538650",
+      "tokens": 1534
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:03:20.374429",
+      "tokens": 1370
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:03:10.084671",
+      "tokens": 2388
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:02:51.518758",
+      "tokens": 1534
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:02:39.990613",
+      "tokens": 1184
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:02:31.077006",
+      "tokens": 1585
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:02:18.402232",
+      "tokens": 1740
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:02:05.402362",
+      "tokens": 1073
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:01:56.986263",
+      "tokens": 1228
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:01:48.308693",
+      "tokens": 1252
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:01:39.512829",
+      "tokens": 1837
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:01:25.193231",
+      "tokens": 1446
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T23:01:14.732412",
+      "tokens": 1689
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:41:41.040980",
+      "tokens": 2442
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:41:20.572147",
+      "tokens": 2430
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:41:01.243404",
+      "tokens": 2422
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:40:41.762755",
+      "tokens": 2423
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:40:21.401431",
+      "tokens": 2433
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:40:03.716762",
+      "tokens": 2436
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:39:42.621991",
+      "tokens": 1546
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:39:33.900104",
+      "tokens": 2431
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:39:15.362331",
+      "tokens": 2442
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:38:54.171250",
+      "tokens": 2430
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:38:35.438282",
+      "tokens": 2450
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:38:13.478002",
+      "tokens": 1368
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:38:06.074032",
+      "tokens": 970
+    },
+    {
+      "queryLabel": "Song story research",
+      "date": "2026-07-19T22:37:59.062140",
+      "tokens": 2438
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-09-20T18:44:34.749039",
+      "tokens": 1458
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-09-20T18:43:47.166976",
+      "tokens": 854
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-09-20T18:35:47.925715",
+      "tokens": 2442
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-09-20T18:32:44.719252",
+      "tokens": 1599
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-09-19T21:25:25.683252",
+      "tokens": 893
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-09-19T21:21:54.991711",
+      "tokens": 2107
+    },
+    {
+      "queryLabel": "Career timeline research",
+      "date": "2025-06-18T01:36:14.040515",
+      "tokens": 1656
+    },
+    {
+      "queryLabel": "Album deep dive",
+      "date": "2025-06-18T01:30:27.925461",
+      "tokens": 1943
+    },
+    {
+      "queryLabel": "Artist profile research",
+      "date": "2025-06-18T01:28:51.465915",
+      "tokens": 1793
+    }
+  ]
+}

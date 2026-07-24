@@ -7,7 +7,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-import type { ArtistLegacy, ArtistStory, ResearchFile, SongUniverse } from '../../lib/types';
+import type { ArtistLegacy, ArtistStory, SongUniverse } from '../../lib/types';
+import type { PublicResearchSource } from '../../lib/public/types';
 import Navbar from '../../components/Navbar';
 import SongOdyssey from '../../components/SongOdyssey';
 import CulturalLegacy from '../../components/CulturalLegacy';
@@ -36,13 +37,6 @@ const RESEARCH_STEPS = [
   },
 ];
 
-const QUERY_LABELS: Record<string, string> = {
-  artist_info: 'Artist profile research',
-  timeline: 'Career timeline research',
-  album_info: 'Album deep dive',
-  song_story: 'Song story research',
-};
-
 function formatResearchDate(iso: string): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return '';
@@ -60,7 +54,7 @@ function FrankOceanContent() {
     requestedTab && TAB_IDS.includes(requestedTab) ? requestedTab : 'journey'
   );
   const [frankOceanStory, setFrankOceanStory] = useState<ArtistStory | null>(null);
-  const [research, setResearch] = useState<ResearchFile[]>([]);
+  const [research, setResearch] = useState<PublicResearchSource[]>([]);
   const [universe, setUniverse] = useState<SongUniverse | null>(null);
   const [legacy, setLegacy] = useState<ArtistLegacy | null>(null);
   const [storyError, setStoryError] = useState(false);
@@ -75,10 +69,12 @@ function FrankOceanContent() {
       .catch(() => setStoryError(true));
 
     fetch('/api/research/frank-ocean')
-      .then((res) => (res.ok ? res.json() : { research: [] }))
-      .then((data: { research: ResearchFile[] }) => {
-        const sorted = [...(data.research ?? [])].sort((a, b) =>
-          (b.metadata?.timestamp ?? '').localeCompare(a.metadata?.timestamp ?? '')
+      .then((res) => (res.ok ? res.json() : { sources: [] }))
+      .then((data: { sources: PublicResearchSource[] }) => {
+        // The pipeline writes rows newest first; sorting here keeps the
+        // ordering guarantee local to the page
+        const sorted = [...(data.sources ?? [])].sort((a, b) =>
+          (b.date ?? '').localeCompare(a.date ?? '')
         );
         setResearch(sorted);
       })
@@ -396,9 +392,9 @@ function FrankOceanContent() {
                     Loading the archive...
                   </div>
                 ) : (
-                  research.map((file, i) => (
+                  research.map((source, i) => (
                     <div
-                      key={`${file.metadata?.query_type}-${file.metadata?.timestamp}-${i}`}
+                      key={`${source.queryLabel}-${source.date}-${i}`}
                       className="flex items-center justify-between"
                       style={{
                         padding: '14px 22px',
@@ -409,15 +405,15 @@ function FrankOceanContent() {
                     >
                       <div style={{ minWidth: 0 }}>
                         <div style={{ fontSize: '15px', fontWeight: 500, color: '#fff' }}>
-                          {QUERY_LABELS[file.metadata?.query_type] ?? file.metadata?.query_type}
+                          {source.queryLabel}
                         </div>
                         <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '3px' }}>
-                          {formatResearchDate(file.metadata?.timestamp ?? '')}
+                          {formatResearchDate(source.date)}
                         </div>
                       </div>
                       <div className="text-right shrink-0" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>
-                        {typeof file.metadata?.tokens_used === 'number' && file.metadata.tokens_used > 0 && (
-                          <div>{file.metadata.tokens_used.toLocaleString()} tokens of source material</div>
+                        {source.tokens > 0 && (
+                          <div>{source.tokens.toLocaleString()} tokens of source material</div>
                         )}
                       </div>
                     </div>

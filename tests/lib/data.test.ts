@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getArtists, getArtistStory, getResearchFiles } from "@/app/lib/data";
+import { getArtists, getArtistStory, getResearchIndex } from "@/app/lib/data";
 
 describe("getArtists", () => {
   it("returns an array of artists", async () => {
@@ -49,24 +49,24 @@ describe("getArtistStory", () => {
   });
 });
 
-describe("getResearchFiles", () => {
-  it("returns research files for frank-ocean", async () => {
-    const files = await getResearchFiles("frank-ocean");
-    expect(files.length).toBeGreaterThan(0);
+describe("getResearchIndex", () => {
+  it("returns projected sources for frank-ocean", async () => {
+    const sources = await getResearchIndex("frank-ocean");
+    expect(sources.length).toBeGreaterThan(0);
   });
 
   it("returns empty array for unknown artist", async () => {
-    const files = await getResearchFiles("nonexistent-artist");
-    expect(files).toEqual([]);
+    const sources = await getResearchIndex("nonexistent-artist");
+    expect(sources).toEqual([]);
   });
 
   it("rejects path traversal attempts", async () => {
-    await expect(getResearchFiles("../../etc/passwd")).rejects.toThrow(
+    await expect(getResearchIndex("../../etc/passwd")).rejects.toThrow(
       "Invalid slug"
     );
   });
 
   it("rejects empty slug", async () => {
-    await expect(getResearchFiles("")).rejects.toThrow("Invalid slug");
+    await expect(getResearchIndex("")).rejects.toThrow("Invalid slug");
   });
 });

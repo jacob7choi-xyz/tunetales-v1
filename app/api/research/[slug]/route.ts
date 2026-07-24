@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getResearchFiles } from "@/app/lib/data";
+import { getResearchIndex } from "@/app/lib/data";
 import { SLUG_PATTERN } from "@/app/lib/tokens";
 
 export async function GET(
@@ -13,27 +13,10 @@ export async function GET(
   }
 
   try {
-    const research = await getResearchFiles(slug);
-
-    // Provider and cost details are internal; never expose them publicly
-    const sanitized = research.map((file) => ({
-      ...file,
-      metadata: {
-        ...file.metadata,
-        model_used: undefined,
-        cost_estimate: undefined,
-      },
-      response: {
-        ...file.response,
-        model: undefined,
-      },
-    }));
-
-    return NextResponse.json({
-      artist: slug,
-      fileCount: sanitized.length,
-      research: sanitized,
-    });
+    // Rows are already projected to the public schema by the pipeline;
+    // raw research never reaches this handler
+    const sources = await getResearchIndex(slug);
+    return NextResponse.json({ artist: slug, sources });
   } catch {
     return NextResponse.json(
       { error: "Failed to load research" },

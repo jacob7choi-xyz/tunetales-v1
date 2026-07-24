@@ -8,15 +8,35 @@ function call(slug: string) {
 }
 
 describe("GET /api/research/[slug]", () => {
-  it("returns research files for a known artist", async () => {
+  it("returns projected research sources for a known artist", async () => {
     const response = await call("frank-ocean");
     expect(response.status).toBe(200);
 
     const data = await response.json();
     expect(data.artist).toBe("frank-ocean");
-    expect(data.fileCount).toBeGreaterThan(0);
-    expect(Array.isArray(data.research)).toBe(true);
-    expect(data.research.length).toBe(data.fileCount);
+    expect(Array.isArray(data.sources)).toBe(true);
+    expect(data.sources.length).toBeGreaterThan(0);
+  });
+
+  it("responds with exactly the public row schema and nothing else", async () => {
+    const response = await call("frank-ocean");
+    const data = await response.json();
+
+    expect(Object.keys(data).sort()).toEqual(["artist", "sources"]);
+    for (const source of data.sources) {
+      expect(Object.keys(source).sort()).toEqual(["date", "queryLabel", "tokens"]);
+      expect(typeof source.queryLabel).toBe("string");
+      expect(typeof source.date).toBe("string");
+      expect(typeof source.tokens).toBe("number");
+    }
+  });
+
+  it("never leaks provider vocabulary in the response body", async () => {
+    const response = await call("frank-ocean");
+    const body = JSON.stringify(await response.json()).toLowerCase();
+    for (const marker of ["model_used", "cost_estimate", "sonar", "perplexity", "openai", "anthropic", "gpt"]) {
+      expect(body).not.toContain(marker);
+    }
   });
 
   it("rejects an invalid slug with 400", async () => {
@@ -28,6 +48,6 @@ describe("GET /api/research/[slug]", () => {
     const response = await call("unknown-artist");
     expect(response.status).toBe(200);
     const data = await response.json();
-    expect(data.fileCount).toBe(0);
+    expect(data.sources).toEqual([]);
   });
 });
