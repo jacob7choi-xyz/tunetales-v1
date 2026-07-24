@@ -14,6 +14,7 @@ from schemas.story_schema import ArtistStory
 from services.ai.claude_client import ClaudeStorytellingClient
 from services.ai.story_compiler import compile_story
 from services.pipeline.public_artifacts import (
+    require_exact_keys,
     require_int,
     require_str,
     require_str_or_none,
@@ -71,6 +72,44 @@ def to_public_story(story: ArtistStory) -> dict:
     }
 
 
+def validate_public_story(obj: object) -> None:
+    """Structurally validate the public story artifact, recursively.
+
+    Independent of to_public_story: the writer re-proves the shape of
+    whatever it is handed, so a future refactor of the projection cannot
+    silently widen what ships.
+
+    Raises:
+        ValueError: On any deviation from the exact public schema.
+    """
+    story = require_exact_keys(
+        obj, {"schemaVersion", "title", "artistSlug", "chapters"}, "story"
+    )
+    if story["schemaVersion"] != 2:
+        raise ValueError("story.schemaVersion must be 2")
+    require_str(story["title"], "story.title")
+    require_str(story["artistSlug"], "story.artistSlug")
+    if not isinstance(story["chapters"], list) or not story["chapters"]:
+        raise ValueError("story.chapters must be a non-empty list")
+    for chapter in story["chapters"]:
+        require_exact_keys(
+            chapter, {"id", "order", "title", "content", "ambience"}, "chapter"
+        )
+        require_str(chapter["id"], "chapter.id")
+        require_int(chapter["order"], "chapter.order")
+        require_str(chapter["title"], "chapter.title")
+        require_str(chapter["content"], "chapter.content")
+        ambience = require_exact_keys(
+            chapter["ambience"],
+            {"mood", "accentHsl", "spotifyTrackId", "imageryHint"},
+            "chapter.ambience",
+        )
+        require_str(ambience["mood"], "ambience.mood")
+        require_str(ambience["accentHsl"], "ambience.accentHsl")
+        require_str_or_none(ambience["spotifyTrackId"], "ambience.spotifyTrackId")
+        require_str_or_none(ambience["imageryHint"], "ambience.imageryHint")
+
+
 def run_pipeline(output_filename: str = DEFAULT_OUTPUT, publish: bool = False) -> ArtistStory:
     """Generate a fresh Frank Ocean story from the cached research.
 
@@ -98,7 +137,7 @@ def run_pipeline(output_filename: str = DEFAULT_OUTPUT, publish: bool = False) -
 
     if publish:
         public_path = write_public_json(
-            f"stories/{ARTIST_SLUG}.json", to_public_story(story)
+            f"stories/{ARTIST_SLUG}.json", to_public_story(story), validate_public_story
         )
         print(f"[PUBLISHED] Live story replaced at: {public_path}")
 

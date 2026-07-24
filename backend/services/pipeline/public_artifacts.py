@@ -11,7 +11,7 @@ there, and a failed write leaves the previous valid artifact intact.
 import json
 import os
 import tempfile
-from typing import Any
+from typing import Any, Callable
 
 PUBLIC_DIR = os.path.normpath(
     os.path.join(os.path.dirname(__file__), "../../../data/public")
@@ -61,6 +61,28 @@ def require_int(value: Any, context: str) -> int:
     return value
 
 
+def require_exact_keys(value: Any, keys: set[str], context: str) -> dict:
+    """Admit a dict only if its key set EXACTLY equals the public schema.
+
+    Extra keys fail (unclassified disclosure), missing keys fail
+    (malformed artifact). A subset check would silently accept fields
+    that were never classified public.
+
+    Raises:
+        ValueError: If the value is not a dict or its keys deviate.
+    """
+    if not isinstance(value, dict):
+        raise ValueError(
+            "%s must be an object, got %s" % (context, type(value).__name__)
+        )
+    if set(value.keys()) != keys:
+        raise ValueError(
+            "%s keys %s deviate from public schema %s"
+            % (context, sorted(value.keys()), sorted(keys))
+        )
+    return value
+
+
 def assert_publicly_classified(obj: Any, path: str = "$") -> None:
     """Recursively reject objects carrying internal pipeline metadata.
 
@@ -83,8 +105,16 @@ def assert_publicly_classified(obj: Any, path: str = "$") -> None:
             assert_publicly_classified(item, "%s[%d]" % (path, index))
 
 
-def write_public_json(relative_path: str, obj: Any) -> str:
+def write_public_json(
+    relative_path: str, obj: Any, validator: Callable[[Any], None]
+) -> str:
     """Validate obj and atomically publish it inside data/public.
+
+    Publication structurally requires an artifact-specific validator: an
+    internal object cannot reach data/public without passing an explicit
+    schema check, so S2 is a property of the primitive, not a convention
+    callers are trusted to follow. The banned-key tripwire runs after the
+    validator as defense in depth only.
 
     The temp file is created in the target's own directory so the final
     os.replace is a same-filesystem atomic rename.
@@ -92,14 +122,17 @@ def write_public_json(relative_path: str, obj: Any) -> str:
     Args:
         relative_path: Path under data/public (e.g. "stories/universe_x.json").
         obj: JSON-serializable, fully projected public artifact.
+        validator: Artifact-specific structural check; must raise on any
+            deviation from the artifact's exact public schema.
 
     Returns:
         The absolute path of the written artifact.
 
     Raises:
-        ValueError: If the path escapes data/public or obj carries
-            internal metadata.
+        ValueError: If validation fails, the path escapes data/public, or
+            obj carries internal metadata.
     """
+    validator(obj)
     assert_publicly_classified(obj)
 
     # Containment is guaranteed by this primitive, not by callers: reject
@@ -109,7 +142,7 @@ def write_public_json(relative_path: str, obj: Any) -> str:
         raise ValueError("Refusing absolute path: %r" % relative_path)
     root = os.path.realpath(PUBLIC_DIR)
     target = os.path.realpath(os.path.join(root, relative_path))
-    if not target.startswith(root + os.sep):
+    if target == root or os.path.commonpath([root, target]) != root:
         raise ValueError("Refusing to write outside data/public: %r" % relative_path)
 
     target_dir = os.path.dirname(target)

@@ -476,7 +476,25 @@ class ClaudeStorytellingClient:
         superficially valid public data. Internal metadata (models, token
         counts, the artist overview) never crosses.
         """
-        from services.pipeline.public_artifacts import require_str, write_public_json
+        from services.pipeline.public_artifacts import (
+            require_exact_keys,
+            require_str,
+            write_public_json,
+        )
+
+        def validate_public_universe(obj: object) -> None:
+            universe = require_exact_keys(
+                obj, {"artist_slug", "song_bubbles"}, "universe"
+            )
+            require_str(universe["artist_slug"], "universe.artist_slug")
+            if not isinstance(universe["song_bubbles"], list) or not universe["song_bubbles"]:
+                raise ValueError("universe.song_bubbles must be a non-empty list")
+            for entry in universe["song_bubbles"]:
+                bubble = require_exact_keys(
+                    entry, {"song_name", "story", "mood", "bubble_color"}, "bubble"
+                )
+                for field in ("song_name", "story", "mood", "bubble_color"):
+                    require_str(bubble[field], f"bubble.{field}")
 
         slug = artist_name.strip().lower().replace(" ", "-")
         if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
@@ -493,7 +511,9 @@ class ClaudeStorytellingClient:
                 for bubble in song_bubbles
             ],
         }
-        path = write_public_json(f"stories/universe_{slug}.json", public_universe)
+        path = write_public_json(
+            f"stories/universe_{slug}.json", public_universe, validate_public_universe
+        )
         print(f"[PUBLISHED] Universe published to: {path}")
 
     def _extract_song_mood(self, story_text: str) -> str:

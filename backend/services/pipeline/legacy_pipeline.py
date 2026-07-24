@@ -12,7 +12,11 @@ import json
 import os
 
 from services.ai.claude_client import ClaudeStorytellingClient, _polish_prose
-from services.pipeline.public_artifacts import require_str, write_public_json
+from services.pipeline.public_artifacts import (
+    require_exact_keys,
+    require_str,
+    write_public_json,
+)
 
 ARTIST_NAME = "Frank Ocean"
 ARTIST_SLUG = "frank-ocean"
@@ -59,6 +63,36 @@ PILLAR_HUES = {
     "intense": "25, 80%, 55%",
     "playful": "55, 80%, 55%",
 }
+
+
+def validate_public_legacy(obj: object) -> None:
+    """Structurally validate the public legacy artifact, recursively.
+
+    Raises:
+        ValueError: On any deviation from the exact public schema.
+    """
+    legacy = require_exact_keys(obj, {"artist_slug", "pillars"}, "legacy")
+    require_str(legacy["artist_slug"], "legacy.artist_slug")
+    if not isinstance(legacy["pillars"], list) or not legacy["pillars"]:
+        raise ValueError("legacy.pillars must be a non-empty list")
+    for entry in legacy["pillars"]:
+        pillar = require_exact_keys(
+            entry,
+            {"id", "numeral", "title", "tagline", "mood", "accent_hsl", "story", "moments", "voices"},
+            "pillar",
+        )
+        for field in ("id", "numeral", "title", "tagline", "mood", "accent_hsl", "story"):
+            require_str(pillar[field], f"pillar.{field}")
+        if not isinstance(pillar["moments"], list):
+            raise ValueError("pillar.moments must be a list")
+        for moment in pillar["moments"]:
+            require_str(moment, "pillar.moments[]")
+        if not isinstance(pillar["voices"], list):
+            raise ValueError("pillar.voices must be a list")
+        for voice_entry in pillar["voices"]:
+            voice = require_exact_keys(voice_entry, {"quote", "speaker"}, "voice")
+            require_str(voice["quote"], "voice.quote")
+            require_str(voice["speaker"], "voice.speaker")
 
 
 def run_legacy_pipeline(refresh_quotes: bool = True) -> dict:
@@ -162,7 +196,9 @@ def run_legacy_pipeline(refresh_quotes: bool = True) -> dict:
     ]
     public_legacy = {"artist_slug": ARTIST_SLUG, "pillars": public_pillars}
 
-    output_path = write_public_json(f"stories/legacy_{ARTIST_SLUG}.json", public_legacy)
+    output_path = write_public_json(
+        f"stories/legacy_{ARTIST_SLUG}.json", public_legacy, validate_public_legacy
+    )
 
     print(f"[SAVED] Legacy published to: {output_path} ({len(public_pillars)} pillars)")
     return public_legacy

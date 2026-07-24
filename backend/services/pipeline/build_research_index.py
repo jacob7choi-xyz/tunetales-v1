@@ -125,8 +125,7 @@ def build_research_index() -> str:
     for rows in index.values():
         rows.sort(key=lambda row: row["date"], reverse=True)
 
-    _validate_index(index)
-    return write_public_json(INDEX_FILENAME, index)
+    return write_public_json(INDEX_FILENAME, index, _validate_index)
 
 
 if __name__ == "__main__":
