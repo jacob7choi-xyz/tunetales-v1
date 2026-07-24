@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getArtists, getArtistStory } from "@/app/lib/data";
+import { toPublicArtist, toPublicStory } from "@/app/lib/public/dto";
 import { SLUG_PATTERN } from "@/app/lib/tokens";
 
 export async function GET(
@@ -22,7 +23,10 @@ export async function GET(
 
     const story = await getArtistStory(slug);
 
-    return NextResponse.json({ artist, story });
+    return NextResponse.json({
+      artist: toPublicArtist(artist),
+      story: story ? toPublicStory(story) : null,
+    });
   } catch {
     return NextResponse.json(
       { error: "Failed to load artist" },

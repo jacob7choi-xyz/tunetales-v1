@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLegacy } from "@/app/lib/data";
+import { toPublicLegacy } from "@/app/lib/public/dto";
 import { SLUG_PATTERN } from "@/app/lib/tokens";
 
 export async function GET(
@@ -19,7 +20,7 @@ export async function GET(
       return NextResponse.json({ error: "Legacy not found" }, { status: 404 });
     }
 
-    return NextResponse.json(legacy);
+    return NextResponse.json(toPublicLegacy(legacy));
   } catch {
     return NextResponse.json(
       { error: "Failed to load legacy" },

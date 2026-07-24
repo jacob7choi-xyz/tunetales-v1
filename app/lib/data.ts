@@ -8,7 +8,8 @@ import type {
   SongUniverse,
   StoryChapter,
 } from "./types";
-import type { PublicResearchIndex, PublicResearchSource } from "./public/types";
+import type { PublicResearchSource } from "./public/types";
+import { validatePublicResearchIndex } from "./public/validate";
 import { SLUG_PATTERN } from "./tokens";
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -116,7 +117,7 @@ export async function getResearchIndex(
       path.join(PUBLIC_DIR, "research-index.json"),
       "utf-8"
     );
-    const index = JSON.parse(raw) as PublicResearchIndex;
+    const index = validatePublicResearchIndex(JSON.parse(raw));
     return index[slug] ?? [];
   } catch {
     return [];

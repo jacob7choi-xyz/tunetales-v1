@@ -57,7 +57,8 @@ const story: ArtistStory = {
       ambience: {
         mood: "nostalgic",
         accentHsl: "260, 70%, 55%",
-        spotifyTrackId: "track-one",
+        // Spotify-shaped ID: the embed refuses IDs outside [A-Za-z0-9]
+        spotifyTrackId: "trackone111",
       },
     },
     {
@@ -117,7 +118,7 @@ describe("JourneyClient", () => {
     const { container } = render(<JourneyClient story={story} />);
     expect(container.querySelector("iframe")).not.toBeNull();
     fireEvent.click(screen.getAllByRole("button", { name: /Next Chapter/i })[0]);
-    expect(container.querySelector('iframe[src*="track-one"]')).toBeNull();
+    expect(container.querySelector('iframe[src*="trackone111"]')).toBeNull();
   });
 
   it("navigates chapters with arrow keys", () => {
