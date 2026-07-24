@@ -27,8 +27,8 @@ const JourneyClient = dynamic(() => import('../journey/JourneyClient'), {
 // element inside an inert subtree fails silently). The full story enters
 // the browser only here, fetched lazily on first open and cached.
 
-export const OVERLAY_ROOT_ID = 'cinema-overlay-root';
-export const CINEMA_ROOT_ATTR = 'data-cinema-root';
+export { OVERLAY_ROOT_ID, CINEMA_ROOT_ATTR } from './constants';
+import { OVERLAY_ROOT_ID, CINEMA_ROOT_ATTR } from './constants';
 
 // Least authority: this island can only ever call the one endpoint it
 // needs (S11); callers cannot point it at arbitrary fetch targets
@@ -91,16 +91,23 @@ function OverlayDialog({
   chapterIndex,
   onRetry,
   onClose,
+  onTeardown,
 }: {
   story: ArtistStory | null;
   failed: boolean;
   chapterIndex: number;
   onRetry: () => void;
   onClose: () => void;
+  onTeardown: () => void;
 }) {
   const closeRef = useRef<HTMLButtonElement | null>(null);
 
-  // Only the cinema root goes inert; this dialog lives outside it (S6a)
+  // Only the cinema root goes inert; this dialog lives outside it (S6a).
+  // Focus restoration is invoked from THIS cleanup, immediately after
+  // inert is removed: tying it to the dialog's actual unmount is the only
+  // ordering React guarantees. Timing-based deferral (onExitComplete,
+  // requestAnimationFrame) races the commit that releases inert, and a
+  // focus() into a still-inert subtree is a silent no-op.
   useEffect(() => {
     const cinemaRoot = document.querySelector(`[${CINEMA_ROOT_ATTR}]`);
     cinemaRoot?.setAttribute('inert', '');
@@ -110,7 +117,11 @@ function OverlayDialog({
     return () => {
       cinemaRoot?.removeAttribute('inert');
       document.body.style.overflow = previousOverflow;
+      onTeardown();
     };
+    // onTeardown is a stable provider callback; this effect must run
+    // exactly once per dialog lifetime
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -162,7 +173,9 @@ function OverlayDialog({
           className="flex min-h-screen flex-col items-center justify-center text-center"
           style={{ gap: '18px', padding: '0 24px' }}
         >
-          <p style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '16px' }}>
+          {/* role=alert announces the spinner-to-failure transition to
+              assistive technology */}
+          <p role="alert" style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '16px' }}>
             Couldn&apos;t open the journey.
           </p>
           <button
@@ -225,9 +238,14 @@ export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
         }
       })
       .catch((error: unknown) => {
-        abortRef.current = null;
         if ((error as { name?: string }).name !== 'AbortError') {
           setFetchFailed(true);
+        }
+      })
+      .finally(() => {
+        // abortRef non-null means exactly "a fetch is in flight"
+        if (abortRef.current === controller) {
+          abortRef.current = null;
         }
       });
   }, []);
@@ -256,6 +274,7 @@ export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
     setOpenChapter(null);
   }, []);
 
+  // Called from the dialog's effect cleanup, after inert is removed
   const restoreFocus = useCallback(() => {
     const trigger = triggerRef.current;
     if (trigger?.isConnected) trigger.focus();
@@ -266,7 +285,7 @@ export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
       {children}
       {overlayRoot &&
         createPortal(
-          <AnimatePresence onExitComplete={restoreFocus}>
+          <AnimatePresence>
             {openChapter !== null && (
               <OverlayDialog
                 story={story}
@@ -274,6 +293,7 @@ export function SceneOverlayProvider({ children }: SceneOverlayProviderProps) {
                 chapterIndex={openChapter}
                 onRetry={loadStory}
                 onClose={requestClose}
+                onTeardown={restoreFocus}
               />
             )}
           </AnimatePresence>,

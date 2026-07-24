@@ -31,12 +31,19 @@
   box-sizing: border-box;
 }
 
+/* The VIEWPORT is the scroll container. height:100% plus overflow-x
+   hidden on body used to force overflow-y:auto, turning body into an
+   internal scroll box; window.scrollY froze at 0 and every viewport
+   primitive (useScroll, IntersectionObserver, svh) silently broke. */
 html, body {
   width: 100%;
-  height: 100%;
-  overflow-x: hidden;
+  min-height: 100%;
   margin: 0;
   padding: 0;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 body {

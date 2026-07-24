@@ -87,9 +87,10 @@ export default function HeroScene() {
           </div>
         }
       />
-      {/* Zero-height marker: FloatingPillNav observes this to appear
-          exactly when the billboard leaves the viewport */}
-      <div data-hero-sentinel="" aria-hidden="true" />
+      {/* Physical 1px marker (zero-area intersection semantics are
+          unreliable at exact boundaries): FloatingPillNav observes this
+          to appear exactly when the billboard leaves the viewport */}
+      <div data-hero-sentinel="" aria-hidden="true" style={{ height: '1px' }} />
     </section>
   );
 }

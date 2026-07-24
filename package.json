@@ -9,6 +9,7 @@
     "lint": "eslint app/",
     "test": "vitest run",
     "test:watch": "vitest",
+    "e2e": "playwright test",
     "verify": "node scripts/verify-files.js",
     "verify:deployment-boundary": "node scripts/verify-deployment-boundary.js",
     "precommit": "npm run verify",
@@ -25,6 +26,7 @@
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.5.0",
