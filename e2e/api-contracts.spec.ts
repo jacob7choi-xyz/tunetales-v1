@@ -94,18 +94,32 @@ test.describe("exact public DTO response shapes (S1/S8)", () => {
 
   test("/api/artists/frank-ocean returns exactly {artist, story} public keys", async ({ request }) => {
     const data = await (await request.get("/api/artists/frank-ocean")).json();
-    const allowed = new Set([
+    // Required-and-allowed, both directions: no unexpected disclosure
+    // (actual within allowed) AND no silently truncated DTO (required
+    // within actual). Only genuinely optional fields sit in the gap.
+    const required = [
       "artist", "artist.id", "artist.artistName", "artist.coverImageUrl",
-      "artist.category", "artist.year", "artist.status", "artist.accentHsl", "artist.teaser",
+      "artist.category", "artist.year", "artist.status",
       "story", "story.schemaVersion", "story.title", "story.artistSlug", "story.chapters",
       "story.chapters[].id", "story.chapters[].order", "story.chapters[].title",
       "story.chapters[].content", "story.chapters[].ambience",
       "story.chapters[].ambience.mood", "story.chapters[].ambience.accentHsl",
+    ];
+    const allowed = new Set([
+      ...required,
+      "artist.accentHsl", "artist.teaser",
       "story.chapters[].ambience.spotifyTrackId", "story.chapters[].ambience.imageryHint",
     ]);
-    for (const path of keyPaths(data)) {
+    const actual = new Set(keyPaths(data));
+    for (const path of actual) {
       expect(allowed.has(path), `unexpected key path: ${path}`).toBe(true);
     }
+    for (const path of required) {
+      expect(actual.has(path), `missing required key path: ${path}`).toBe(true);
+    }
+    // The story must actually carry chapters for the [] paths to be
+    // meaningful observations
+    expect(data.story.chapters.length).toBeGreaterThan(0);
   });
 
   test("/api/universe/frank-ocean returns exactly the public universe keys", async ({ request }) => {
