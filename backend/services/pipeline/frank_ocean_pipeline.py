@@ -8,18 +8,67 @@ story. Publication into data/public/ is a separate, explicit act via
 publish=True, only after the draft has been reviewed.
 """
 
-import json
 import os
 
 from schemas.story_schema import ArtistStory
 from services.ai.claude_client import ClaudeStorytellingClient
 from services.ai.story_compiler import compile_story
-from services.pipeline.public_artifacts import write_public_json
+from services.pipeline.public_artifacts import (
+    require_int,
+    require_str,
+    require_str_or_none,
+    write_public_json,
+)
 
 ARTIST_NAME = "Frank Ocean"
 ARTIST_SLUG = "frank-ocean"
 DRAFT_DIR = os.path.join(os.path.dirname(__file__), "../../../data/stories")
 DEFAULT_OUTPUT = f"{ARTIST_SLUG}.generated.json"
+
+
+def to_public_story(story: ArtistStory) -> dict:
+    """Project a story into the public artifact schema, field by field.
+
+    Serializing the internal model wholesale would let any future internal
+    field (scores, notes, generation metadata) leak into data/public the
+    moment it is added. Only the fields named here ever cross, and each is
+    type-validated rather than coerced.
+
+    Args:
+        story: The compiled internal story model.
+
+    Returns:
+        A dict containing exactly the public story schema.
+
+    Raises:
+        ValueError: If any field fails strict type validation.
+    """
+    return {
+        "schemaVersion": 2,
+        "title": require_str(story.title, "story.title"),
+        "artistSlug": require_str(story.artist_slug, "story.artistSlug"),
+        "chapters": [
+            {
+                "id": require_str(chapter.id, "chapter.id"),
+                "order": require_int(chapter.order, "chapter.order"),
+                "title": require_str(chapter.title, "chapter.title"),
+                "content": require_str(chapter.content, "chapter.content"),
+                "ambience": {
+                    "mood": require_str(chapter.ambience.mood, "ambience.mood"),
+                    "accentHsl": require_str(
+                        chapter.ambience.accent_hsl, "ambience.accentHsl"
+                    ),
+                    "spotifyTrackId": require_str_or_none(
+                        chapter.ambience.spotify_track_id, "ambience.spotifyTrackId"
+                    ),
+                    "imageryHint": require_str_or_none(
+                        chapter.ambience.imagery_hint, "ambience.imageryHint"
+                    ),
+                },
+            }
+            for chapter in story.chapters
+        ],
+    }
 
 
 def run_pipeline(output_filename: str = DEFAULT_OUTPUT, publish: bool = False) -> ArtistStory:
@@ -49,7 +98,7 @@ def run_pipeline(output_filename: str = DEFAULT_OUTPUT, publish: bool = False) -
 
     if publish:
         public_path = write_public_json(
-            f"stories/{ARTIST_SLUG}.json", json.loads(story.to_json())
+            f"stories/{ARTIST_SLUG}.json", to_public_story(story)
         )
         print(f"[PUBLISHED] Live story replaced at: {public_path}")
 

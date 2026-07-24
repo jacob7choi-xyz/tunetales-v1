@@ -3,6 +3,7 @@
 import glob
 import json
 import os
+import re
 from datetime import datetime
 from typing import Dict
 
@@ -399,12 +400,18 @@ class ClaudeStorytellingClient:
         except (OSError, json.JSONDecodeError):
             return None
 
-    def create_bubble_universe(self, artist_name: str, skip_existing: bool = True) -> Dict:
+    def create_bubble_universe(
+        self, artist_name: str, skip_existing: bool = True, publish: bool = False
+    ) -> Dict:
         """Create the complete bubble universe data structure for the artist.
 
         Incremental by default: songs that already have a saved story are
         reused instead of regenerated, so growing the catalog only pays for
         the new songs.
+
+        Generation and publication are separate acts: the universe is
+        always saved internally; it reaches data/public only when
+        publish=True, after the generated stories have been reviewed.
         """
         research_data = self._load_research_data(artist_name)
 
@@ -455,27 +462,33 @@ class ClaudeStorytellingClient:
         }
 
         self._save_story("universe", artist_name, "complete", bubble_universe)
-        self._publish_universe(artist_name, song_bubbles)
+        if publish:
+            self.publish_universe(artist_name, song_bubbles)
         return bubble_universe
 
-    def _publish_universe(self, artist_name: str, song_bubbles: list[Dict]) -> None:
+    def publish_universe(self, artist_name: str, song_bubbles: list[Dict]) -> None:
         """Project the universe into its public artifact and publish it.
 
-        Field-by-field projection: only the four public bubble fields cross
-        into data/public. Internal metadata (models, token counts, the
-        artist overview) never does.
+        A deliberate classification act, called only after review.
+        Field-by-field projection with strict type validation: only the
+        four public bubble fields cross into data/public, and malformed
+        values fail the publish instead of being repaired into
+        superficially valid public data. Internal metadata (models, token
+        counts, the artist overview) never crosses.
         """
-        from services.pipeline.public_artifacts import write_public_json
+        from services.pipeline.public_artifacts import require_str, write_public_json
 
         slug = artist_name.strip().lower().replace(" ", "-")
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
+            raise ValueError(f"Cannot derive a publishable slug from {artist_name!r}")
         public_universe = {
             "artist_slug": slug,
             "song_bubbles": [
                 {
-                    "song_name": str(bubble["song_name"]),
-                    "story": str(bubble["story"]),
-                    "mood": str(bubble["mood"]),
-                    "bubble_color": str(bubble["bubble_color"]),
+                    "song_name": require_str(bubble["song_name"], "bubble.song_name"),
+                    "story": require_str(bubble["story"], "bubble.story"),
+                    "mood": require_str(bubble["mood"], "bubble.mood"),
+                    "bubble_color": require_str(bubble["bubble_color"], "bubble.bubble_color"),
                 }
                 for bubble in song_bubbles
             ],

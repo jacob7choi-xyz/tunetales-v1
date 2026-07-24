@@ -19,7 +19,46 @@ PUBLIC_DIR = os.path.normpath(
 
 # Keys that must never appear anywhere in a public artifact. The frontend
 # repo test scans the written files for the same set (defense in depth).
+# This is a tripwire, NOT the allowlist: every publisher must still
+# construct its artifact field by field through the require_* validators.
 BANNED_KEYS = frozenset({"model_used", "cost_estimate", "prompt", "provider"})
+
+
+def require_str(value: Any, context: str) -> str:
+    """Admit a value into a public artifact only if it is a real string.
+
+    Publication code validates, it never repairs: coercing None or a dict
+    with str() would turn invalid internal data into superficially valid
+    public data.
+
+    Raises:
+        ValueError: If the value is not a str.
+    """
+    if not isinstance(value, str):
+        raise ValueError(
+            "%s must be a string, got %s" % (context, type(value).__name__)
+        )
+    return value
+
+
+def require_str_or_none(value: Any, context: str) -> str | None:
+    """Like require_str but permits an explicit None."""
+    if value is None:
+        return None
+    return require_str(value, context)
+
+
+def require_int(value: Any, context: str) -> int:
+    """Admit a value only if it is a real integer (bool excluded).
+
+    Raises:
+        ValueError: If the value is not an int.
+    """
+    if not isinstance(value, int) or isinstance(value, bool):
+        raise ValueError(
+            "%s must be an integer, got %s" % (context, type(value).__name__)
+        )
+    return value
 
 
 def assert_publicly_classified(obj: Any, path: str = "$") -> None:
@@ -63,8 +102,14 @@ def write_public_json(relative_path: str, obj: Any) -> str:
     """
     assert_publicly_classified(obj)
 
-    target = os.path.normpath(os.path.join(PUBLIC_DIR, relative_path))
-    if not target.startswith(PUBLIC_DIR + os.sep):
+    # Containment is guaranteed by this primitive, not by callers: reject
+    # absolute paths outright, then resolve symlinks and traversal and
+    # require the real target to live inside the real public root.
+    if os.path.isabs(relative_path):
+        raise ValueError("Refusing absolute path: %r" % relative_path)
+    root = os.path.realpath(PUBLIC_DIR)
+    target = os.path.realpath(os.path.join(root, relative_path))
+    if not target.startswith(root + os.sep):
         raise ValueError("Refusing to write outside data/public: %r" % relative_path)
 
     target_dir = os.path.dirname(target)

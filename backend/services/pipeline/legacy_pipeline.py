@@ -12,7 +12,7 @@ import json
 import os
 
 from services.ai.claude_client import ClaudeStorytellingClient, _polish_prose
-from services.pipeline.public_artifacts import write_public_json
+from services.pipeline.public_artifacts import require_str, write_public_json
 
 ARTIST_NAME = "Frank Ocean"
 ARTIST_SLUG = "frank-ocean"
@@ -135,20 +135,26 @@ def run_legacy_pipeline(refresh_quotes: bool = True) -> dict:
         for voice in pillar.get("voices", []):
             voice["quote"] = _polish_prose(voice["quote"])
 
-    # Field-by-field projection into the public schema: extra keys the
-    # model might emit never reach data/public
+    # Field-by-field projection into the public schema with strict type
+    # validation: extra keys the model might emit never reach data/public,
+    # and malformed values fail the publish instead of being repaired
     public_pillars = [
         {
-            "id": str(pillar["id"]),
-            "numeral": str(pillar["numeral"]),
-            "title": str(pillar["title"]),
-            "tagline": str(pillar["tagline"]),
-            "mood": str(pillar["mood"]),
-            "accent_hsl": str(pillar["accent_hsl"]),
-            "story": str(pillar["story"]),
-            "moments": [str(moment) for moment in pillar["moments"]],
+            "id": require_str(pillar["id"], "pillar.id"),
+            "numeral": require_str(pillar["numeral"], "pillar.numeral"),
+            "title": require_str(pillar["title"], "pillar.title"),
+            "tagline": require_str(pillar["tagline"], "pillar.tagline"),
+            "mood": require_str(pillar["mood"], "pillar.mood"),
+            "accent_hsl": require_str(pillar["accent_hsl"], "pillar.accent_hsl"),
+            "story": require_str(pillar["story"], "pillar.story"),
+            "moments": [
+                require_str(moment, "pillar.moments[]") for moment in pillar["moments"]
+            ],
             "voices": [
-                {"quote": str(voice["quote"]), "speaker": str(voice["speaker"])}
+                {
+                    "quote": require_str(voice["quote"], "voice.quote"),
+                    "speaker": require_str(voice["speaker"], "voice.speaker"),
+                }
                 for voice in pillar.get("voices", [])
             ],
         }
