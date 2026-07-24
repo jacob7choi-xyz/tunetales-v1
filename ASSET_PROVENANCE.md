@@ -9,15 +9,18 @@ asset is added or replaced.
 
 | Field | Value |
 |-------|-------|
-| Source | https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Frank_Ocean_2022_Blonded.jpg/1920px-Frank_Ocean_2022_Blonded.jpg |
-| Original file | https://commons.wikimedia.org/wiki/File:Frank_Ocean_2022_Blonded.jpg |
-| Author | Andras Ladocsi |
-| License | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) |
-| Original publication | https://blonded.co/blogs/p/frank-ocean-by-andras-ladocsi |
-| Retrieved | 2026-07-23 |
-| Dimensions | 1920 x 2395 (1920px rendition of a 3207 x 4000 original) |
-| SHA-256 | 1591be5d991f1b43e7b43a1341b7e191c9a67041f8643726dbc2fe57067595cf |
+| Source | https://upload.wikimedia.org/wikipedia/commons/8/8f/Frank_Ocean_%282013%29.jpg |
+| Original file | https://commons.wikimedia.org/wiki/File:Frank_Ocean_(2013).jpg |
+| Author | RJ photos UK (https://www.flickr.com/photos/rorals/) |
+| License | CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/) |
+| Retrieved | 2026-07-24 |
+| Dimensions | 2560 x 1920 (downscaled locally from the 4320 x 3240 original) |
+| SHA-256 | 7906b4736e533acb08e9539fed9258786d58fa86c38f888372c737638055bd24 |
 
-Attribution requirement: CC BY-SA 4.0 requires crediting the author and
+Attribution requirement: CC BY 2.0 requires crediting the author and
 linking the license. The README Credits section carries the attribution
 line for this portrait.
+
+Previously pinned (2026-07-23, replaced for composition): Frank Ocean
+2022 Blonded.jpg by Andras Ladocsi, CC BY-SA 4.0,
+https://commons.wikimedia.org/wiki/File:Frank_Ocean_2022_Blonded.jpg

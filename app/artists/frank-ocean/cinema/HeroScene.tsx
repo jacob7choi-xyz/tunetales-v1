@@ -10,6 +10,9 @@ export default function HeroScene() {
       <HeroMotion
         portrait={
           <>
+            {/* Landscape stage shot: Frank centered in blue haze; keep his
+                full figure in frame and let the dark stage floor anchor
+                the title block */}
             <Image
               src="/artists/frank-ocean/hero.jpg"
               alt=""
@@ -17,7 +20,7 @@ export default function HeroScene() {
               priority
               sizes="100vw"
               className="object-cover hero-portrait-enter"
-              style={{ objectPosition: '50% 18%' }}
+              style={{ objectPosition: '50% 32%' }}
             />
             {/* Scrim: keeps the title readable and grounds the billboard */}
             <div
