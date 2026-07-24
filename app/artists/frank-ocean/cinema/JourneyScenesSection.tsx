@@ -9,7 +9,7 @@ interface JourneyScenesSectionProps {
 }
 
 // The album whose artwork sets each chapter's scene (registry constants
-// only, S11); falls back to rotating through the era covers
+// only, S11)
 const CHAPTER_ALBUMS: Record<string, string> = {
   origins: 'Channel Orange',
   katrina: 'Blonde',
@@ -17,6 +17,12 @@ const CHAPTER_ALBUMS: Record<string, string> = {
   breakthrough: 'Channel Orange',
   boys_dont_cry: 'Blonde',
   legacy: 'Channel Orange',
+};
+
+// Locally pinned photographs override album art for chapters that deserve
+// their own scene (see ASSET_PROVENANCE.md); paths are registry constants
+const CHAPTER_PHOTOS: Record<string, string> = {
+  legacy: '/artists/frank-ocean/scene-legacy.jpg',
 };
 
 // SERVER component: six full-viewport scenes. Titles, numerals, and
@@ -39,7 +45,10 @@ export default function JourneyScenesSection({ story }: JourneyScenesSectionProp
         <div style={{ scrollSnapType: 'y proximity' }}>
           {story.chapters.map((chapter, index) => {
             const hsl = chapter.ambience.accentHsl;
-            const cover = ACT_COVERS[CHAPTER_ALBUMS[chapter.id] ?? ''] ?? null;
+            const cover =
+              CHAPTER_PHOTOS[chapter.id] ??
+              ACT_COVERS[CHAPTER_ALBUMS[chapter.id] ?? ''] ??
+              null;
             return (
               <div
                 key={chapter.id}
