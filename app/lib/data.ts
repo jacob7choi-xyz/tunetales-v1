@@ -102,16 +102,27 @@ function validateSlug(slug: string): void {
   }
 }
 
-export async function readArtists(): Promise<ReadResult<Artist[]>> {
-  const result = await readJsonFile(
-    path.join(PUBLIC_DIR, "artists.json"),
-    "artists registry"
-  );
-  if (result.status !== "available") return result;
+// The registry is mandatory deployment content: its absence is
+// infrastructure corruption, never a legitimate empty state, and must not
+// cascade into 404s downstream (S7). Exported so the mapping itself is
+// unit-testable without filesystem mocking.
+export function normalizeRegistryRead(
+  result: ReadResult<unknown>
+): ReadResult<Artist[]> {
+  if (result.status === "missing") {
+    return fail("artists registry", new Error("registry file is missing"));
+  }
+  if (result.status === "failed") return result;
   if (!Array.isArray(result.data)) {
     return fail("artists registry", new Error("registry is not an array"));
   }
   return { status: "available", data: result.data as Artist[] };
+}
+
+export async function readArtists(): Promise<ReadResult<Artist[]>> {
+  return normalizeRegistryRead(
+    await readJsonFile(path.join(PUBLIC_DIR, "artists.json"), "artists registry")
+  );
 }
 
 // The canonical slug allowlist (S9): a slug that passes the syntax gate

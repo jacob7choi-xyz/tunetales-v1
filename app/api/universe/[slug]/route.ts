@@ -13,14 +13,19 @@ export async function GET(
     return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
   }
 
+  // A broken registry is a 500, never a 404: only a healthy registry
+  // that lacks the slug means the resource does not exist
   const registered = await isRegisteredArtist(slug);
-  if (registered.status === "failed") {
+  if (registered.status !== "available") {
     return NextResponse.json(
-      { error: "Failed to load universe", errorId: registered.errorId },
+      {
+        error: "Failed to load universe",
+        ...(registered.status === "failed" ? { errorId: registered.errorId } : {}),
+      },
       { status: 500 }
     );
   }
-  if (registered.status === "missing" || !registered.data) {
+  if (!registered.data) {
     return NextResponse.json({ error: "Universe not found" }, { status: 404 });
   }
 

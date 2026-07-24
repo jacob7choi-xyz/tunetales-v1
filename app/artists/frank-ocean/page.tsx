@@ -41,12 +41,15 @@ export default async function FrankOceanPage({
   searchParams: Promise<{ tab?: string }>;
 }) {
   // S9: the slug resolves through the canonical registry before any
-  // content read
+  // content read. A broken registry is a server fault (loud); only a
+  // healthy registry that lacks the slug is a legitimate 404.
   const registered = await isRegisteredArtist(ARTIST_SLUG);
-  if (registered.status === 'failed') {
-    throw new Error(`Artist registry read failed (${registered.errorId})`);
+  if (registered.status !== 'available') {
+    throw new Error(
+      `Artist registry read failed (${registered.status === 'failed' ? registered.errorId : 'missing'})`
+    );
   }
-  if (registered.status === 'missing' || !registered.data) {
+  if (!registered.data) {
     notFound();
   }
 
