@@ -1,5 +1,6 @@
-import Image from 'next/image';
 import HeroMotion from './HeroMotion';
+import GradedPhoto from './GradedPhoto';
+import { HERO_GRADE } from '../eraGrades';
 
 // SERVER component: billboard hero. All content renders on the server;
 // HeroMotion receives it as children slots and only animates them.
@@ -13,22 +14,21 @@ export default function HeroScene() {
             {/* Landscape stage shot: Frank centered in blue haze; keep his
                 full figure in frame and let the dark stage floor anchor
                 the title block */}
-            <Image
+            <GradedPhoto
               src="/artists/frank-ocean/hero.jpg"
-              alt=""
-              fill
+              grade={HERO_GRADE}
+              objectPosition="50% 32%"
               priority
-              sizes="100vw"
-              className="object-cover hero-portrait-enter"
-              style={{ objectPosition: '50% 32%' }}
+              className="hero-portrait-enter"
             />
-            {/* Scrim: keeps the title readable and grounds the billboard */}
+            {/* Scrim: bottom-weighted so it grounds the title block without
+                darkening the portrait itself */}
             <div
               aria-hidden="true"
               className="absolute inset-0"
               style={{
                 background:
-                  'linear-gradient(to top, rgb(10, 5, 24) 0%, rgba(10, 5, 24, 0.55) 34%, rgba(10, 5, 24, 0.18) 60%, rgba(10, 5, 24, 0.35) 100%)',
+                  'linear-gradient(to top, rgb(10, 5, 24) 0%, rgba(10, 5, 24, 0.82) 18%, rgba(10, 5, 24, 0.3) 45%, transparent 72%)',
               }}
             />
           </>

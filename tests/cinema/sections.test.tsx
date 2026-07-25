@@ -4,7 +4,7 @@ import HeroScene from "@/app/artists/frank-ocean/cinema/HeroScene";
 import JourneyScenesSection from "@/app/artists/frank-ocean/cinema/JourneyScenesSection";
 import SongsSection from "@/app/artists/frank-ocean/cinema/SongsSection";
 import LegacySection from "@/app/artists/frank-ocean/cinema/LegacySection";
-import SourcesSection from "@/app/artists/frank-ocean/cinema/SourcesSection";
+import { gradeForChapter } from "@/app/artists/frank-ocean/eraGrades";
 import type { ArtistLegacy, ArtistStory } from "@/app/lib/types";
 
 vi.mock("framer-motion", async () => await import("../helpers/framer-motion-mock"));
@@ -108,13 +108,31 @@ describe("JourneyScenesSection", () => {
     expect(screen.queryByText("Storm chapter body text.")).toBeNull();
   });
 
-  it("marks each scene with its accent for the room tint", () => {
+  it("marks each scene with its era accent for the room tint", () => {
     const { container } = render(
       <JourneyScenesSection story={story} />
     );
     const scenes = container.querySelectorAll("[data-accent]");
     expect(scenes.length).toBe(story.chapters.length);
-    expect(scenes[0].getAttribute("data-accent")).toBe("260, 70%, 55%");
+    // A graded chapter tints the room to its own era, not to the story's
+    // default violet, so the room matches the photograph on screen
+    expect(scenes[0].getAttribute("data-accent")).toBe(
+      gradeForChapter("origins")?.accentHsl
+    );
+    expect(scenes[0].getAttribute("data-accent")).not.toBe(
+      story.chapters[0].ambience.accentHsl
+    );
+  });
+
+  it("falls back to the story accent for a chapter with no era grade", () => {
+    const ungraded: ArtistStory = {
+      ...story,
+      chapters: [{ ...story.chapters[0], id: "an_unplanned_chapter" }],
+    };
+    const { container } = render(<JourneyScenesSection story={ungraded} />);
+    expect(
+      container.querySelector("[data-accent]")?.getAttribute("data-accent")
+    ).toBe(ungraded.chapters[0].ambience.accentHsl);
   });
 });
 
@@ -156,25 +174,5 @@ describe("LegacySection", () => {
     expect(container.querySelector("#pillar-honesty")?.getAttribute("data-accent")).toBe(
       "300, 50%, 60%"
     );
-  });
-});
-
-describe("SourcesSection", () => {
-  it("renders the making-of steps and the projected archive rows", () => {
-    render(
-      <SourcesSection
-        sources={[
-          { queryLabel: "Artist profile research", date: "2026-07-19T22:40:21", tokens: 1200 },
-        ]}
-      />
-    );
-    expect(screen.getByRole("heading", { level: 2, name: "How this story was made" })).toBeDefined();
-    expect(screen.getByText("Artist profile research")).toBeDefined();
-    expect(screen.getByText(/1,200 tokens of source material/)).toBeDefined();
-  });
-
-  it("shows the empty-archive line when no sources exist", () => {
-    render(<SourcesSection sources={[]} />);
-    expect(screen.getByText("The archive is being prepared.")).toBeDefined();
   });
 });

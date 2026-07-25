@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import type { ArtistStory } from '@/app/lib/types';
 import { ACT_COVERS } from '@/app/lib/covers';
 import SceneMotion from './SceneMotion';
+import GradedPhoto from './GradedPhoto';
+import { gradeForChapter } from '../eraGrades';
 import { SceneEnterButton, SceneOverlayProvider } from './SceneOverlay';
 
 interface JourneyScenesSectionProps {
@@ -49,11 +50,12 @@ export default function JourneyScenesSection({ story }: JourneyScenesSectionProp
       <SceneOverlayProvider>
         <div style={{ scrollSnapType: 'y proximity' }}>
           {story.chapters.map((chapter, index) => {
-            const hsl = chapter.ambience.accentHsl;
-            const cover =
-              CHAPTER_PHOTOS[chapter.id] ??
-              ACT_COVERS[CHAPTER_ALBUMS[chapter.id] ?? ''] ??
-              null;
+            const photo = CHAPTER_PHOTOS[chapter.id] ?? null;
+            const cover = photo ?? ACT_COVERS[CHAPTER_ALBUMS[chapter.id] ?? ''] ?? null;
+            const grade = gradeForChapter(chapter.id);
+            // Numeral, whisper, button, and room glow all take the era's own
+            // color so the type belongs to the same world as the photograph
+            const hsl = grade?.accentHsl ?? chapter.ambience.accentHsl;
             return (
               <div
                 key={chapter.id}
@@ -64,21 +66,32 @@ export default function JourneyScenesSection({ story }: JourneyScenesSectionProp
                 <SceneMotion
                   decorativeArt={
                     <>
-                      {cover && (
-                        <Image
+                      {cover && grade && (
+                        <GradedPhoto
                           src={cover}
-                          alt=""
-                          fill
-                          sizes="100vw"
-                          className="object-cover"
-                          style={{ opacity: 0.4 }}
+                          grade={grade}
+                          treatment={photo ? 'photo' : 'artwork'}
                         />
                       )}
+                      {/* Legibility floor only: weighted to the bottom in the
+                          era's own darkness so the upper frame stays
+                          photograph and each scene keeps its color world */}
                       <div
                         aria-hidden="true"
                         className="absolute inset-0"
                         style={{
-                          background: `linear-gradient(to top, rgb(10, 5, 24) 0%, rgba(10, 5, 24, 0.72) 30%, hsla(${hsl}, 0.16) 75%, rgba(10, 5, 24, 0.55) 100%)`,
+                          background: grade
+                            ? `linear-gradient(to top, ${grade.base} 0%, ${grade.base} 8%, transparent 62%)`
+                            : `linear-gradient(to top, rgb(10, 5, 24) 0%, transparent 62%)`,
+                        }}
+                      />
+                      {/* Era light bleeding up from the horizon */}
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0"
+                        style={{
+                          background: `linear-gradient(to top, hsla(${hsl}, 0.22) 0%, transparent 45%)`,
+                          mixBlendMode: 'screen',
                         }}
                       />
                     </>
