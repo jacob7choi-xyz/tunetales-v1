@@ -5,7 +5,7 @@ interface SourcesSectionProps {
 }
 
 // SERVER-ONLY section: zero client JavaScript. Renders the pipeline
-// transparency story and the projected research archive rows.
+// transparency story and a summary of the research archive.
 const RESEARCH_STEPS = [
   {
     number: '01',
@@ -24,13 +24,103 @@ const RESEARCH_STEPS = [
   },
 ];
 
-function formatResearchDate(iso: string): string {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+export interface ArchiveGroup {
+  label: string;
+  count: number;
+  earliest: number;
+  latest: number;
 }
 
+export interface ArchiveSummary {
+  total: number;
+  groups: ArchiveGroup[];
+  earliest: number | null;
+  latest: number | null;
+}
+
+// The archive holds one file per research run, so listing it row by row
+// prints the same two labels dozens of times and tells a reader nothing.
+// What is actually worth knowing is the shape of the work: how much was
+// researched, of what kind, and over what period. Volume metrics from the
+// pipeline (token counts) are deliberately not surfaced: they measure our
+// machinery, not the story's grounding.
+export function summarizeArchive(sources: PublicResearchSource[]): ArchiveSummary {
+  const byLabel = new Map<string, ArchiveGroup>();
+  let earliest: number | null = null;
+  let latest: number | null = null;
+
+  for (const source of sources) {
+    const time = new Date(source.date).getTime();
+    const valid = !Number.isNaN(time);
+    if (valid) {
+      if (earliest === null || time < earliest) earliest = time;
+      if (latest === null || time > latest) latest = time;
+    }
+    const existing = byLabel.get(source.queryLabel);
+    if (!existing) {
+      byLabel.set(source.queryLabel, {
+        label: source.queryLabel,
+        count: 1,
+        earliest: valid ? time : Number.NaN,
+        latest: valid ? time : Number.NaN,
+      });
+      continue;
+    }
+    existing.count += 1;
+    if (valid) {
+      existing.earliest = Number.isNaN(existing.earliest)
+        ? time
+        : Math.min(existing.earliest, time);
+      existing.latest = Number.isNaN(existing.latest)
+        ? time
+        : Math.max(existing.latest, time);
+    }
+  }
+
+  return {
+    total: sources.length,
+    // Largest bodies of work first; ties keep a stable alphabetical order
+    groups: Array.from(byLabel.values()).sort(
+      (a, b) => b.count - a.count || a.label.localeCompare(b.label)
+    ),
+    earliest,
+    latest,
+  };
+}
+
+function monthYear(time: number): string {
+  if (Number.isNaN(time)) return '';
+  return new Date(time).toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+function span(earliest: number | null, latest: number | null): string {
+  if (earliest === null || latest === null) return '';
+  const from = monthYear(earliest);
+  const to = monthYear(latest);
+  return from === to ? from : `${from} to ${to}`;
+}
+
+const STAT_LABEL: React.CSSProperties = {
+  fontSize: '13px',
+  color: 'rgba(255,255,255,0.5)',
+  marginTop: '4px',
+};
+
+const STAT_VALUE: React.CSSProperties = {
+  fontSize: 'clamp(28px, 4vw, 40px)',
+  fontWeight: 700,
+  fontFamily: 'var(--font-display)',
+  color: '#fff',
+  lineHeight: 1,
+};
+
 export default function SourcesSection({ sources }: SourcesSectionProps) {
+  const archive = summarizeArchive(sources);
+  const period = span(archive.earliest, archive.latest);
+
   return (
     <section
       id="sources"
@@ -96,55 +186,78 @@ export default function SourcesSection({ sources }: SourcesSectionProps) {
       >
         The research archive
       </h3>
-      <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '20px' }}>
-        The raw research behind this story, exactly as it came back. Nothing is written
-        that is not on file.
+      <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', marginBottom: '24px', maxWidth: '620px' }}>
+        Nothing here is written from memory. Every chapter and every song story
+        traces back to research saved on file before the writing began.
       </p>
 
-      <div className="card-clean rounded-2xl" style={{ padding: '6px 0' }}>
-        {sources.length === 0 ? (
-          <div style={{ padding: '20px 22px', fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
-            The archive is being prepared.
-          </div>
-        ) : (
-          sources.map((source, i) => (
-            <div
-              key={`${source.queryLabel}-${source.date}-${i}`}
-              className="flex items-center justify-between"
-              style={{
-                padding: '14px 22px',
-                gap: '16px',
-                borderBottom: i < sources.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-              }}
-            >
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: '15px', fontWeight: 500, color: '#fff' }}>
-                  {source.queryLabel}
-                </div>
-                <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '3px' }}>
-                  {formatResearchDate(source.date)}
-                </div>
-              </div>
-              <div
-                className="text-right shrink-0"
-                style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}
-              >
-                {source.tokens > 0 && (
-                  <div>{source.tokens.toLocaleString()} tokens of source material</div>
-                )}
+      {archive.total === 0 ? (
+        <div
+          className="card-clean rounded-2xl"
+          style={{ padding: '20px 22px', fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}
+        >
+          The archive is being prepared.
+        </div>
+      ) : (
+        <div className="card-clean rounded-2xl" style={{ padding: '26px' }}>
+          <div className="grid sm:grid-cols-3" style={{ gap: '20px' }}>
+            <div>
+              <div style={STAT_VALUE}>{archive.total}</div>
+              <div style={STAT_LABEL}>research files on record</div>
+            </div>
+            <div>
+              <div style={STAT_VALUE}>{archive.groups.length}</div>
+              <div style={STAT_LABEL}>
+                {archive.groups.length === 1 ? 'kind of research' : 'kinds of research'}
               </div>
             </div>
-          ))
-        )}
-      </div>
+            {period && (
+              <div>
+                <div style={{ ...STAT_VALUE, fontSize: 'clamp(19px, 2.4vw, 24px)', paddingTop: '6px' }}>
+                  {period}
+                </div>
+                <div style={STAT_LABEL}>the period it was gathered</div>
+              </div>
+            )}
+          </div>
 
+          <div style={{ marginTop: '26px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            {archive.groups.map((group) => (
+              <div
+                key={group.label}
+                className="flex items-baseline justify-between"
+                style={{
+                  gap: '16px',
+                  padding: '13px 0',
+                  borderBottom: '1px solid rgba(255,255,255,0.06)',
+                }}
+              >
+                <span style={{ fontSize: '15px', color: '#fff', minWidth: 0 }}>
+                  {group.label}
+                </span>
+                <span
+                  className="shrink-0 text-right"
+                  style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}
+                >
+                  {group.count} {group.count === 1 ? 'file' : 'files'}
+                  {monthYear(group.latest) && `, ${monthYear(group.latest)}`}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Closing colophon: centered under the full-width card so it reads as
+          a deliberate sign-off rather than a paragraph left hanging */}
       <p
+        className="text-center"
         style={{
           fontSize: '13px',
-          lineHeight: 1.7,
-          color: 'rgba(255,255,255,0.4)',
-          marginTop: '28px',
-          maxWidth: '620px',
+          lineHeight: 1.8,
+          color: 'rgba(255,255,255,0.42)',
+          maxWidth: '600px',
+          margin: '44px auto 0',
         }}
       >
         Research files are stored as open JSON in the project&apos;s data folder. Artist
