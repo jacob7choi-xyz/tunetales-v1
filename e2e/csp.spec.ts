@@ -155,6 +155,12 @@ test("zero CSP violations across ALL intentional resource classes", async ({ pag
     "optimized image (hero/art)": (u) => u.includes("/_next/image"),
     "static script/chunk": (u) => u.includes("/_next/static/chunks"),
     "self-hosted font": (u) => /\/_next\/static\/media\/.*\.(woff2?|ttf)/.test(u),
+    // The grain was moved OUT of an inline data: URI so img-src can drop
+    // `data:` in 5c. A same-origin CSS background fails silently when the
+    // path is wrong: no exception, no violation, and unit tests that only
+    // read the style string stay green. Counting its delivered response
+    // is what actually closes that gap.
+    "vendored film grain": (u) => u.includes("/film-grain.svg"),
     "story API": (u) => u.includes("/api/artists/frank-ocean"),
     "universe API": (u) => u.includes("/api/universe/frank-ocean"),
   };

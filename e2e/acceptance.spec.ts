@@ -118,3 +118,29 @@ test.describe("lazy content: story text loads only on demand", () => {
     await expect(page.getByLabel("Close story")).toBeVisible();
   });
 });
+
+// The media type contract, independent of how a host serializes the
+// header: "image/svg+xml; charset=utf-8" satisfies "image/svg+xml". This
+// suite also runs against the deployed target, where the CDN chooses the
+// exact string.
+function mediaType(headers: Record<string, string>): string {
+  return (headers["content-type"] ?? "").split(";")[0].trim().toLowerCase();
+}
+
+test("locally pinned media assets are actually served, not just referenced", async ({
+  request,
+}) => {
+  // A CSS background that 404s degrades silently: no exception, no CSP
+  // violation (it is same-origin), and a unit test reading the style
+  // string still passes. Only a delivered response proves the asset is
+  // really there, with the media type a browser needs to decode it.
+  const grain = await request.get("/film-grain.svg");
+  expect(grain.status()).toBe(200);
+  expect(mediaType(grain.headers())).toBe("image/svg+xml");
+
+  // The hero portrait is pinned with recorded provenance (S5); prove the
+  // running app serves the bytes rather than depending on a remote host
+  const hero = await request.get("/artists/frank-ocean/hero.jpg");
+  expect(hero.status()).toBe(200);
+  expect(mediaType(hero.headers())).toBe("image/jpeg");
+});
