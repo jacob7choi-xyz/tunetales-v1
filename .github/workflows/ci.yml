@@ -20,8 +20,18 @@ jobs:
 
       - run: npm ci
 
+      # Named in the run log so a future audit-schema or exit-status change
+      # can be traced to the toolchain that produced it.
+      - name: Toolchain versions
+        run: node --version && npm --version
+
+      # Blocking. Shipped dependencies must be free of high and critical
+      # advisories; the full graph may carry only the one evidenced,
+      # expiring waiver recorded in scripts/audit-policy.mjs. Any other
+      # finding, a rescoring of the waived advisory, a changed dependency
+      # chain, a moved installed version, or an unreadable report fails.
       - name: Audit
-        run: npm audit --audit-level=high
+        run: npm run audit:policy
 
       - name: Lint
         run: npm run lint
