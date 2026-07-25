@@ -24,7 +24,7 @@ export default function Navbar({ subtitle, backHref, backLabel }: NavbarProps) {
         className="flex items-center justify-between"
         style={{ height: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}
       >
-        <div className="flex items-center" style={{ gap: '14px' }}>
+        <div className="flex items-center" style={{ gap: '10px' }}>
           {backHref && (
             <Link
               href={backHref}
@@ -44,10 +44,27 @@ export default function Navbar({ subtitle, backHref, backLabel }: NavbarProps) {
             </Link>
           )}
           <Link href="/" className="flex items-center" style={{ gap: '10px' }}>
-            <Image src="/TuneTales_Transparent_Logo.png" alt="" width={28} height={28} />
+            {/* Mark cropped to its ink (tunetales-mark.png) so flex centering
+                aligns the visible artwork, not the source file's uneven
+                transparent margins */}
+            <Image
+              src="/tunetales-mark.png"
+              alt=""
+              width={28}
+              height={28}
+              // Optical nudge knob, same as the wordmark and Beta pill
+              style={{ position: 'relative', top: '-1px' }}
+            />
             <span
               className="font-bold tracking-tight text-white"
-              style={{ fontSize: '19px', fontFamily: 'var(--font-display)' }}
+              style={{
+                fontSize: '27px',
+                fontFamily: 'var(--font-display)',
+                // Optical correction: Playfair's lowercase mass reads low
+                // against the mark and pill even when box centers match
+                position: 'relative',
+                top: '-2px',
+              }}
             >
               TuneTales
             </span>
@@ -55,11 +72,17 @@ export default function Navbar({ subtitle, backHref, backLabel }: NavbarProps) {
           <span
             className="rounded-full font-semibold uppercase"
             style={{
-              padding: '3px 9px',
-              fontSize: '10px',
+              padding: '4px 8.5px',
+              fontSize: '12px',
               letterSpacing: '0.1em',
               background: 'rgba(147, 51, 234, 0.3)',
               color: '#d8b4fe',
+              // Spacing knob: distance from the wordmark, on top of the
+              // row's shared 8px gap
+              marginLeft: '1px',
+              // Optical nudge knob, same idea as the wordmark's top above
+              position: 'relative',
+              top: '0px',
             }}
           >
             Beta
