@@ -19,6 +19,15 @@ test("overlay lifecycle: inert while open, focus restored only after exit", asyn
   await expect(dialog).toBeVisible();
   const close = page.getByRole("button", { name: "Close the journey" });
   await expect(close).toBeFocused();
+
+  // Exactly one close control, asserted only AFTER the lazily-loaded
+  // reader has mounted: the embedded reader used to render its own close
+  // at the identical position with the identical label, invisible under
+  // the overlay's but present to assistive tech and the tab order.
+  // Checking before the reader chunk arrives sees one button either way,
+  // which is how this shipped.
+  await expect(page.getByRole("button", { name: /Next Chapter|The End/ })).toBeVisible();
+  await expect(close).toHaveCount(1);
   const cinemaRoot = page.locator("[data-cinema-root]");
   await expect(cinemaRoot).toHaveJSProperty("inert", true);
 

@@ -141,29 +141,12 @@ export default function JourneyClient({ story, initialChapter = 0, embedded = fa
       <AmbienceLayer accentHsl={chapterAccent(chapter)} />
       {!embedded && <Starfield />}
 
-      {embedded ? (
-        <button
-          onClick={exit}
-          aria-label="Close the journey"
-          className="fixed flex items-center transition-all duration-200 hover:scale-105 backdrop-blur-md"
-          style={{
-            zIndex: 210,
-            top: '20px',
-            right: '24px',
-            gap: '8px',
-            padding: '9px 18px',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: 'rgba(255, 255, 255, 0.85)',
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            borderRadius: '9999px',
-            cursor: 'pointer',
-          }}
-        >
-          Close
-        </button>
-      ) : (
+      {/* Embedded: the host overlay renders the close control and owns the
+          focus contract for it. Rendering a second one here put an
+          identically labelled button at the identical position, invisible
+          under the first but present in the accessibility tree and the tab
+          order. Escape still exits through the same handler. */}
+      {embedded ? null : (
         <Navbar
           backHref="/artists/frank-ocean"
           backLabel="Frank Ocean"
