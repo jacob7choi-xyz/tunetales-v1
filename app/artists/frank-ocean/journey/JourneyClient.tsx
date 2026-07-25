@@ -10,6 +10,14 @@ import AmbienceLayer from '@/app/components/AmbienceLayer';
 import ChapterProgress from '@/app/components/ChapterProgress';
 import ChapterNav from '@/app/components/ChapterNav';
 import SpotifyEmbed from '@/app/components/SpotifyEmbed';
+import { gradeForChapter } from '../eraGrades';
+
+// A chapter is rendered in its era's color wherever it appears: as a
+// scene on the artist page, and here in the reader the scene opens into.
+// Chapters with no era grade keep the story's own accent.
+function chapterAccent(chapter: StoryChapter): string {
+  return gradeForChapter(chapter.id)?.accentHsl ?? chapter.ambience.accentHsl;
+}
 
 const Starfield = dynamic(() => import('@/app/components/Starfield'), {
   ssr: false,
@@ -38,7 +46,7 @@ function ChapterPanel({ chapter, total }: { chapter: StoryChapter; total: number
           fontWeight: 600,
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
-          color: `hsla(${chapter.ambience.accentHsl}, 0.9)`,
+          color: `hsla(${chapterAccent(chapter)}, 0.9)`,
           marginBottom: '16px',
         }}
       >
@@ -130,7 +138,7 @@ export default function JourneyClient({ story, initialChapter = 0, embedded = fa
     <div
       className={embedded ? 'min-h-full text-white relative' : 'min-h-screen text-white animated-bg relative overflow-hidden'}
     >
-      <AmbienceLayer accentHsl={chapter.ambience.accentHsl} />
+      <AmbienceLayer accentHsl={chapterAccent(chapter)} />
       {!embedded && <Starfield />}
 
       {embedded ? (
@@ -183,7 +191,13 @@ export default function JourneyClient({ story, initialChapter = 0, embedded = fa
           style={{ maxWidth: '720px', margin: '56px auto 0', gap: '32px' }}
         >
           <ChapterProgress total={chapters.length} current={current} onSelect={setCurrent} />
-          <ChapterNav chapters={chapters} current={current} onPrev={goPrev} onNext={goNext} />
+          <ChapterNav
+            chapters={chapters}
+            current={current}
+            onPrev={goPrev}
+            onNext={goNext}
+            accentHsl={chapterAccent(chapter)}
+          />
           <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.3)' }}>
             Use arrow keys to turn the page, Escape to leave the journey
           </div>

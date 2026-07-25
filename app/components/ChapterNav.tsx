@@ -8,9 +8,14 @@ interface ChapterNavProps {
   current: number; // 0-indexed
   onPrev: () => void;
   onNext: () => void;
+  // "h, s%, l%" of the chapter being read, so the forward button belongs to
+  // the same era as the page around it
+  accentHsl?: string;
 }
 
-const navButtonStyle = (disabled: boolean, accent: boolean) => ({
+const DEFAULT_ACCENT = '271, 81%, 56%';
+
+const navButtonStyle = (disabled: boolean, accent: boolean, hsl: string) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
@@ -21,12 +26,21 @@ const navButtonStyle = (disabled: boolean, accent: boolean) => ({
   cursor: disabled ? 'default' : 'pointer',
   opacity: disabled ? 0.35 : 1,
   color: '#fff',
-  background: accent && !disabled ? 'rgba(147, 51, 234, 0.4)' : 'rgba(255, 255, 255, 0.1)',
-  border: accent && !disabled ? '1px solid rgba(192, 132, 252, 0.5)' : '1px solid rgba(255, 255, 255, 0.2)',
-  boxShadow: accent && !disabled ? '0 0 20px rgba(147, 51, 234, 0.2)' : 'none',
+  background: accent && !disabled ? `hsla(${hsl}, 0.4)` : 'rgba(255, 255, 255, 0.1)',
+  border:
+    accent && !disabled
+      ? `1px solid hsla(${hsl}, 0.55)`
+      : '1px solid rgba(255, 255, 255, 0.2)',
+  boxShadow: accent && !disabled ? `0 0 20px hsla(${hsl}, 0.2)` : 'none',
 });
 
-export default function ChapterNav({ chapters, current, onPrev, onNext }: ChapterNavProps) {
+export default function ChapterNav({
+  chapters,
+  current,
+  onPrev,
+  onNext,
+  accentHsl = DEFAULT_ACCENT,
+}: ChapterNavProps) {
   const prevChapter = current > 0 ? chapters[current - 1] : null;
   const nextChapter = current < chapters.length - 1 ? chapters[current + 1] : null;
 
@@ -36,7 +50,7 @@ export default function ChapterNav({ chapters, current, onPrev, onNext }: Chapte
         onClick={onPrev}
         disabled={!prevChapter}
         className="transition-all duration-300 hover:scale-105 backdrop-blur-md"
-        style={navButtonStyle(!prevChapter, false)}
+        style={navButtonStyle(!prevChapter, false, accentHsl)}
       >
         <ArrowLeftIcon style={{ width: '18px', height: '18px' }} />
         <span>Previous</span>
@@ -54,7 +68,7 @@ export default function ChapterNav({ chapters, current, onPrev, onNext }: Chapte
         onClick={onNext}
         disabled={!nextChapter}
         className="transition-all duration-300 hover:scale-105 backdrop-blur-md"
-        style={navButtonStyle(!nextChapter, true)}
+        style={navButtonStyle(!nextChapter, true, accentHsl)}
       >
         <span>{nextChapter ? 'Next Chapter' : 'The End'}</span>
         <ArrowRightIcon style={{ width: '18px', height: '18px' }} />
