@@ -30,7 +30,7 @@ const realProduction = readFileSync(
   "utf8"
 );
 
-const BEFORE_EXPIRY = new Date("2026-07-26T00:00:00Z");
+const BEFORE_EXPIRY = new Date("2026-10-08T00:00:00Z");
 
 // The real lockfile is the installed-state oracle, alongside the real audit
 // report as the vulnerability oracle.
@@ -56,7 +56,7 @@ const report = (vulns: Record<string, unknown>) =>
   JSON.stringify({ auditReportVersion: 2, vulnerabilities: vulns, metadata: {} });
 
 const root = (overrides: Record<string, unknown> = {}) => ({
-  name: "brace-expansion",
+  name: WAIVER.rootPackage,
   severity: WAIVER.expectedSeverity,
   isDirect: false,
   range: WAIVER.expectedRange,
@@ -81,7 +81,7 @@ const meta = (name: string, carriers: string[]) => ({
 
 // The exact topology the waiver was evidenced against
 function waivedTree(overrides: Record<string, unknown> = {}) {
-  const tree: Record<string, unknown> = { "brace-expansion": root() };
+  const tree: Record<string, unknown> = { [WAIVER.rootPackage]: root() };
   for (const [name, carriers] of Object.entries(WAIVER.metaChain)) {
     tree[name] = meta(name, carriers as string[]);
   }
@@ -150,7 +150,7 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
         waivedTree({
-          "brace-expansion": root({
+          [WAIVER.rootPackage]: root({
             via: [
               {
                 source: 1,
@@ -177,7 +177,7 @@ describe("dependency audit policy", () => {
           { source: 7, url: "https://example.test/GHSA-extra", severity: "high" },
         ],
       });
-      expect(() => evaluate(waivedTree({ "brace-expansion": doubled }))).toThrow(
+      expect(() => evaluate(waivedTree({ [WAIVER.rootPackage]: doubled }))).toThrow(
         /does not carry exactly the waived advisory/
       );
     });
@@ -186,11 +186,11 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
           waivedTree({
-            minimatch: {
-              name: "minimatch",
+            micromatch: {
+              name: "micromatch",
               severity: "high",
               isDirect: false,
-              via: [{ source: 8, url: "https://example.test/GHSA-minimatch" }],
+              via: [{ source: 8, url: "https://example.test/GHSA-micromatch" }],
             },
           })
         )
@@ -201,28 +201,40 @@ describe("dependency audit policy", () => {
   describe("the topology is exact in both directions", () => {
     it("rejects a package outside the evidenced chain", () => {
       expect(() =>
-        evaluate(waivedTree({ webpack: meta("webpack", ["minimatch"]) }))
+        evaluate(waivedTree({ webpack: meta("webpack", ["micromatch"]) }))
       ).toThrow(/topology has changed[\s\S]*webpack/);
     });
 
     it("rejects an expected finding going missing", () => {
       const tree = JSON.parse(waivedTree());
-      delete tree.vulnerabilities["eslint-plugin-react"];
+      delete tree.vulnerabilities["fast-glob"];
       expect(() => evaluate(JSON.stringify(tree))).toThrow(
-        /expected findings now absent[\s\S]*eslint-plugin-react/
+        /expected findings now absent[\s\S]*fast-glob/
       );
     });
 
     it("rejects a package reached through an unexpected carrier", () => {
       expect(() =>
-        evaluate(waivedTree({ eslint: meta("eslint", ["some-new-package"]) }))
+        evaluate(
+          waivedTree({ "fast-glob": meta("fast-glob", ["some-new-package"]) })
+        )
+      ).toThrow(/chain has changed/);
+    });
+
+    it("rejects a package reached through MORE carriers than evidenced", () => {
+      // A subset check would pass this; the graph has still moved
+      expect(() =>
+        evaluate(
+          waivedTree({
+            "fast-glob": meta("fast-glob", ["micromatch", "some-new-package"]),
+          })
+        )
       ).toThrow(/chain has changed/);
     });
 
     it("rejects a package reached through FEWER carriers than evidenced", () => {
-      // A subset check would pass this; the graph has still moved
       expect(() =>
-        evaluate(waivedTree({ eslint: meta("eslint", ["minimatch"]) }))
+        evaluate(waivedTree({ "fast-glob": meta("fast-glob", []) }))
       ).toThrow(/chain has changed/);
     });
   });
@@ -230,7 +242,7 @@ describe("dependency audit policy", () => {
   describe("malformed records fail closed rather than dropping out", () => {
     it("rejects an entry with no severity", () => {
       expect(() =>
-        evaluate(waivedTree({ mystery: { name: "mystery", via: ["minimatch"] } }))
+        evaluate(waivedTree({ mystery: { name: "mystery", via: ["micromatch"] } }))
       ).toThrow(/unrecognized severity/);
     });
 
@@ -266,7 +278,7 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
           waivedTree({
-            minimatch: { name: "something-else", severity: "high", via: ["brace-expansion"] },
+            micromatch: { name: "something-else", severity: "high", via: ["braces"] },
           })
         )
       ).toThrow(/disagrees with its own name/);
@@ -330,8 +342,8 @@ describe("dependency audit policy", () => {
       // Identity and topology are unchanged; the risk is not. Accepting an
       // id must not silently accept whatever that id later becomes.
       const escalated = JSON.parse(waivedTree());
-      escalated.vulnerabilities["brace-expansion"].severity = "critical";
-      escalated.vulnerabilities["brace-expansion"].via[0].severity = "critical";
+      escalated.vulnerabilities[WAIVER.rootPackage].severity = "critical";
+      escalated.vulnerabilities[WAIVER.rootPackage].via[0].severity = "critical";
       expect(() => evaluate(JSON.stringify(escalated))).toThrow(
         /now critical; the waiver was accepted at high/
       );
@@ -339,9 +351,9 @@ describe("dependency audit policy", () => {
 
     it("rejects a meta package rescored to critical", () => {
       const escalated = JSON.parse(waivedTree());
-      escalated.vulnerabilities["eslint"].severity = "critical";
+      escalated.vulnerabilities["fast-glob"].severity = "critical";
       expect(() => evaluate(JSON.stringify(escalated))).toThrow(
-        /eslint is now critical/
+        /fast-glob is now critical/
       );
     });
 
@@ -349,7 +361,7 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
           waivedTree({
-            "brace-expansion": root({
+            [WAIVER.rootPackage]: root({
               via: [
                 {
                   source: 1,
@@ -368,7 +380,7 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
           waivedTree({
-            "brace-expansion": root({
+            [WAIVER.rootPackage]: root({
               via: [{ source: 1, url: WAIVER.advisory, severity: "high" }],
             }),
           })
@@ -376,9 +388,9 @@ describe("dependency audit policy", () => {
       ).toThrow(/CVSS vector is now absent/);
     });
 
-    it("rejects a widened affected range", () => {
+    it("rejects a moved affected range, such as a patched release appearing", () => {
       expect(() =>
-        evaluate(waivedTree({ "brace-expansion": root({ range: "<=6.0.0" }) }))
+        evaluate(waivedTree({ [WAIVER.rootPackage]: root({ range: "<=3.0.3" }) }))
       ).toThrow(/affected range is now/);
     });
 
@@ -387,10 +399,10 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
           waivedTree({
-            "brace-expansion": root({
+            [WAIVER.rootPackage]: root({
               nodes: [
                 ...Object.keys(WAIVER.expectedNodes),
-                "node_modules/somewhere/new/brace-expansion",
+                "node_modules/somewhere/new/braces",
               ],
             }),
           })
@@ -402,7 +414,7 @@ describe("dependency audit policy", () => {
       expect(() =>
         evaluate(
           waivedTree({
-            "brace-expansion": root({ nodes: [Object.keys(WAIVER.expectedNodes)[0]] }),
+            [WAIVER.rootPackage]: root({ nodes: [] }),
           })
         )
       ).toThrow(/installed graph moved/);
@@ -410,7 +422,7 @@ describe("dependency audit policy", () => {
 
     it("rejects malformed nodes", () => {
       expect(() =>
-        evaluate(waivedTree({ "brace-expansion": root({ nodes: [42] }) }))
+        evaluate(waivedTree({ [WAIVER.rootPackage]: root({ nodes: [42] }) }))
       ).toThrow(/malformed "nodes"/);
     });
   });
@@ -467,11 +479,11 @@ describe("dependency audit policy", () => {
 
   describe("the lockfile is a second, independent installed-state oracle", () => {
     it("rejects a waived node whose installed VERSION moved", () => {
-      // The decisive case: the advisory range "<=5.0.7" still covers both
-      // 1.1.16 and 5.0.7, so the audit report alone cannot see this move
+      // The decisive case: the advisory range "*" still covers both 3.0.3
+      // and 3.0.2, so the audit report alone cannot see this move
       const moved = lockWith({
         ...JSON.parse(matchingLock()).packages,
-        "node_modules/brace-expansion": { version: "5.0.7" },
+        "node_modules/braces": { version: "3.0.2" },
       });
       expect(() => evaluate(waivedTree(), CLEAN, moved)).toThrow(
         /installed state changed even though the advisory range did not/
@@ -480,9 +492,9 @@ describe("dependency audit policy", () => {
 
     it("rejects a waived node disappearing from the lockfile", () => {
       const packages = JSON.parse(matchingLock()).packages;
-      delete packages["node_modules/brace-expansion"];
+      delete packages["node_modules/braces"];
       expect(() => evaluate(waivedTree(), CLEAN, lockWith(packages))).toThrow(
-        /no longer contains node_modules\/brace-expansion/
+        /no longer contains node_modules\/braces/
       );
     });
 

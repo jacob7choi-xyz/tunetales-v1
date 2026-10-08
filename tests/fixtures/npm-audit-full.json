@@ -1,100 +1,89 @@
 {
   "auditReportVersion": 2,
   "vulnerabilities": {
-    "@eslint/config-array": {
-      "name": "@eslint/config-array",
+    "@next/eslint-plugin-next": {
+      "name": "@next/eslint-plugin-next",
       "severity": "high",
       "isDirect": false,
       "via": [
-        "minimatch"
+        "fast-glob"
       ],
       "effects": [
-        "eslint"
+        "eslint-config-next"
       ],
-      "range": "<=0.22.0",
+      "range": ">=14.3.0-canary.0",
       "nodes": [
-        "node_modules/@eslint/config-array"
+        "node_modules/@next/eslint-plugin-next"
       ],
       "fixAvailable": {
-        "name": "eslint",
-        "version": "10.8.0",
+        "name": "eslint-config-next",
+        "version": "14.2.35",
         "isSemVerMajor": true
       }
     },
-    "@eslint/eslintrc": {
-      "name": "@eslint/eslintrc",
-      "severity": "high",
+    "@vitest/mocker": {
+      "name": "@vitest/mocker",
+      "severity": "moderate",
       "isDirect": false,
       "via": [
-        "minimatch"
+        {
+          "source": 1193684,
+          "name": "@vitest/mocker",
+          "dependency": "@vitest/mocker",
+          "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+          "url": "https://github.com/advisories/GHSA-82fw-gwwq-j7x9",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+          },
+          "range": ">=2.1.0 <4.1.11"
+        }
       ],
       "effects": [
-        "eslint"
+        "vitest"
       ],
-      "range": "0.0.1 || >=0.1.1",
+      "range": "2.1.0 - 4.1.10",
       "nodes": [
-        "node_modules/@eslint/eslintrc"
+        "node_modules/@vitest/mocker"
       ],
-      "fixAvailable": {
-        "name": "eslint",
-        "version": "10.8.0",
-        "isSemVerMajor": true
-      }
+      "fixAvailable": true
     },
-    "brace-expansion": {
-      "name": "brace-expansion",
+    "braces": {
+      "name": "braces",
       "severity": "high",
       "isDirect": false,
       "via": [
         {
-          "source": 1124334,
-          "name": "brace-expansion",
-          "dependency": "brace-expansion",
-          "title": "brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash",
-          "url": "https://github.com/advisories/GHSA-mh99-v99m-4gvg",
+          "source": 1240992,
+          "name": "braces",
+          "dependency": "braces",
+          "title": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+          "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
           "severity": "high",
           "cwe": [
-            "CWE-400",
-            "CWE-770"
+            "CWE-674"
           ],
           "cvss": {
             "score": 7.5,
             "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
           },
-          "range": "<=5.0.7"
+          "range": "<=3.0.3"
         }
       ],
       "effects": [
-        "minimatch"
+        "micromatch"
       ],
-      "range": "<=5.0.7",
+      "range": "*",
       "nodes": [
-        "node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion",
-        "node_modules/brace-expansion"
+        "node_modules/braces"
       ],
       "fixAvailable": {
-        "name": "eslint",
-        "version": "10.8.0",
-        "isSemVerMajor": true
-      }
-    },
-    "eslint": {
-      "name": "eslint",
-      "severity": "high",
-      "isDirect": true,
-      "via": [
-        "@eslint/config-array",
-        "@eslint/eslintrc",
-        "minimatch"
-      ],
-      "effects": [],
-      "range": "0.12.0 - 2.0.0-rc.1 || 4.1.0 - 10.0.0-rc.2",
-      "nodes": [
-        "node_modules/eslint"
-      ],
-      "fixAvailable": {
-        "name": "eslint",
-        "version": "10.8.0",
+        "name": "eslint-config-next",
+        "version": "14.2.35",
         "isSemVerMajor": true
       }
     },
@@ -103,109 +92,128 @@
       "severity": "high",
       "isDirect": true,
       "via": [
-        "eslint-plugin-import",
-        "eslint-plugin-jsx-a11y",
-        "eslint-plugin-react"
+        "@next/eslint-plugin-next"
       ],
       "effects": [],
-      "range": ">=10.2.1-canary.2",
+      "range": ">=14.3.0-canary.0",
       "nodes": [
         "node_modules/eslint-config-next"
       ],
       "fixAvailable": {
         "name": "eslint-config-next",
-        "version": "12.0.4",
+        "version": "14.2.35",
         "isSemVerMajor": true
       }
     },
-    "eslint-plugin-import": {
-      "name": "eslint-plugin-import",
+    "fast-glob": {
+      "name": "fast-glob",
       "severity": "high",
       "isDirect": false,
       "via": [
-        "minimatch"
+        "micromatch"
       ],
       "effects": [
-        "eslint-config-next"
+        "@next/eslint-plugin-next"
       ],
-      "range": ">=1.15.0",
+      "range": "*",
       "nodes": [
-        "node_modules/eslint-plugin-import"
+        "node_modules/fast-glob"
       ],
       "fixAvailable": {
         "name": "eslint-config-next",
-        "version": "12.0.4",
+        "version": "14.2.35",
         "isSemVerMajor": true
       }
     },
-    "eslint-plugin-jsx-a11y": {
-      "name": "eslint-plugin-jsx-a11y",
+    "micromatch": {
+      "name": "micromatch",
       "severity": "high",
       "isDirect": false,
       "via": [
-        "minimatch"
+        "braces"
       ],
       "effects": [
-        "eslint-config-next"
+        "fast-glob"
       ],
-      "range": ">=6.5.0",
+      "range": ">=0.2.0",
       "nodes": [
-        "node_modules/eslint-plugin-jsx-a11y"
+        "node_modules/micromatch"
       ],
       "fixAvailable": {
         "name": "eslint-config-next",
-        "version": "12.0.4",
+        "version": "14.2.35",
         "isSemVerMajor": true
       }
     },
-    "eslint-plugin-react": {
-      "name": "eslint-plugin-react",
-      "severity": "high",
-      "isDirect": false,
+    "postcss": {
+      "name": "postcss",
+      "severity": "moderate",
+      "isDirect": true,
       "via": [
-        "minimatch"
+        {
+          "source": 1130709,
+          "name": "postcss",
+          "dependency": "postcss",
+          "title": "PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset",
+          "url": "https://github.com/advisories/GHSA-fxqj-rqcc-2cmp",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-22",
+            "CWE-200"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<=8.5.22"
+        }
       ],
       "effects": [],
-      "range": ">=7.23.0",
+      "range": "<=8.5.22",
       "nodes": [
-        "node_modules/eslint-plugin-react"
+        "node_modules/postcss"
       ],
       "fixAvailable": true
     },
-    "minimatch": {
-      "name": "minimatch",
-      "severity": "high",
-      "isDirect": false,
+    "vitest": {
+      "name": "vitest",
+      "severity": "moderate",
+      "isDirect": true,
       "via": [
-        "brace-expansion"
+        "@vitest/mocker",
+        {
+          "source": 1193683,
+          "name": "vitest",
+          "dependency": "vitest",
+          "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+          "url": "https://github.com/advisories/GHSA-82fw-gwwq-j7x9",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+          },
+          "range": ">=2.1.0 <4.1.11"
+        }
       ],
-      "effects": [
-        "@eslint/config-array",
-        "@eslint/eslintrc",
-        "eslint",
-        "eslint-plugin-import",
-        "eslint-plugin-jsx-a11y",
-        "eslint-plugin-react"
-      ],
-      "range": "2.0.0 - 10.0.2",
+      "effects": [],
+      "range": "2.1.0-beta.1 - 4.1.10",
       "nodes": [
-        "node_modules/minimatch"
+        "node_modules/vitest"
       ],
-      "fixAvailable": {
-        "name": "eslint",
-        "version": "10.8.0",
-        "isSemVerMajor": true
-      }
+      "fixAvailable": true
     }
   },
   "metadata": {
     "vulnerabilities": {
       "info": 0,
       "low": 0,
-      "moderate": 0,
-      "high": 9,
+      "moderate": 3,
+      "high": 5,
       "critical": 0,
-      "total": 9
+      "total": 8
     },
     "dependencies": {
       "prod": 40,

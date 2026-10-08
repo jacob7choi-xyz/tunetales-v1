@@ -35,33 +35,31 @@ const SUPPORTED_REPORT_VERSION = 2;
 // ---------------------------------------------------------------------------
 // Accepted waiver
 // ---------------------------------------------------------------------------
-// GHSA-mh99-v99m-4gvg (CVE-2026-14257): brace-expansion through 5.0.7 can be
-// driven to exhaust memory by a crafted brace expression. Remediated in
-// 5.0.8. Availability impact only; no confidentiality or integrity impact.
+// GHSA-vfj7-8cjw-p6xm (CVE-2026-93687): braces through 3.0.3 can be driven
+// to exhaust the call stack by a deeply nested brace pattern. No patched
+// release exists: 3.0.3 is the latest published version. Availability
+// impact only; no confidentiality or integrity impact.
 //
-// Why accepted rather than fixed (evidence gathered 2026-07-25):
+// Why accepted rather than fixed (evidence gathered 2026-10-07):
 //   * Absent from the production dependency graph. Rule 1 re-proves that on
 //     every run rather than trusting the claim.
-//   * Both real remediations break the build. Overriding brace-expansion to
-//     5.0.8 makes the audit clean and then crashes ESLint, because 5.x is
-//     incompatible with the CommonJS minimatch@3 that ESLint 9 resolves.
-//     Upgrading to eslint@10.8.0 crashes eslint-plugin-react as vendored by
-//     eslint-config-next, and still does not clear the audit.
+//   * There is nothing to upgrade to. braces has no fixed version, and the
+//     only path to it is @next/eslint-plugin-next, which pins fast-glob to
+//     exactly 3.3.1 in every release through 16.4.0. fast-glob depends on
+//     micromatch, which depends on braces.
 //
 // Reachability, stated accurately:
-//   The vulnerable function is reached through ESLint's config matching,
-//   which evaluates `files`/`ignores` globs with minimatch. This repository
-//   is public and CI runs on pull_request with the PR's own code checked
-//   out, so a fork PR CAN author a glob that reaches brace-expansion. The
-//   earlier claim that no PR-supplied string reaches this path was wrong and
-//   is withdrawn.
+//   The vulnerable function is reached when the Next lint plugin expands
+//   the `settings.next.rootDir` glob from ESLint configuration. This
+//   repository is public and CI runs on pull_request with the PR's own code
+//   checked out, so a fork PR CAN author a pattern that reaches braces.
 //
-//   The waiver rests instead on blast radius. A PR that can author a
-//   malicious glob already controls code that executes in the same runner:
+//   The waiver rests on blast radius. A PR that can author a malicious
+//   pattern already controls code that executes in the same runner:
 //   `npm ci` runs lifecycle scripts from the PR's package.json, and the
 //   test and build steps execute PR-authored source. Arbitrary execution in
 //   that runner is therefore pre-existing and strictly stronger than a
-//   memory-exhaustion crash of one lint job. This advisory does not
+//   stack-exhaustion crash of one lint job. This advisory does not
 //   meaningfully widen the CI attack surface. Fork PRs on a public
 //   repository also receive a read-only token and no repository secrets, so
 //   the exposure is the availability of one ephemeral job.
@@ -69,54 +67,46 @@ const SUPPORTED_REPORT_VERSION = 2;
 // Production exposure: none demonstrated, and re-proven every run.
 // CI exposure: reachable, bounded by a threat that already dominates it.
 export const WAIVER = {
-  advisory: "https://github.com/advisories/GHSA-mh99-v99m-4gvg",
-  cve: "CVE-2026-14257",
-  rootPackage: "brace-expansion",
+  advisory: "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+  cve: "CVE-2026-93687",
+  rootPackage: "braces",
   owner: "jacob7choi-xyz",
-  acceptedAt: "2026-07-25",
+  acceptedAt: "2026-10-07",
   // The toolchain the evidence and fixtures were captured against. CI runs a
   // different npm, which is fine: the report-version check fails closed if
   // the schema moves, and CI logs its own versions.
-  characterizedWith: { node: "v25.8.0", npm: "11.11.0" },
+  characterizedWith: { node: "v26.7.0", npm: "11.19.0" },
   // The risk facts this acceptance was made under. Accepting an advisory
   // identity is not the same as accepting whatever that advisory later turns
   // out to be: a rescoring is material new information, so severity, CVSS
   // vector, and affected range are all pinned. Any of them moving fails.
+  // npm reports the range as "*" because no fixed version exists, so a
+  // patched release appearing also moves the range and fails the gate.
   expectedSeverity: "high",
   expectedCvssVector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-  expectedRange: "<=5.0.7",
+  expectedRange: "*",
   // The installed locations of the vulnerable package AND the version at
   // each. Two COMPLEMENTARY oracles with different responsibilities, not
   // independent evidence: npm audit derives its analysis from this same
   // lockfile, so it is one source read two ways. The audit report carries
   // the vulnerability interpretation; the lockfile carries installed-state
   // identity. The advisory's `range` is the vulnerable range, not the
-  // installed version, so range alone cannot detect a node moving from
-  // 1.1.16 to 5.0.7 while both remain in range.
+  // installed version, so range alone cannot detect the installed node
+  // moving while it remains in range.
   expectedNodes: {
-    "node_modules/brace-expansion": "1.1.16",
-    "node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion":
-      "5.0.7",
+    "node_modules/braces": "3.0.3",
   },
   // A waiver that cannot expire becomes permanent by inattention. On or
   // after this date the gate fails until the waiver is renewed with fresh
   // evidence or deleted because it is no longer needed.
-  expiresAt: "2026-08-22",
+  expiresAt: "2026-11-04",
   // Packages npm reports as vulnerable solely because they depend on the
   // root above, each mapped to the exact dependencies that carry it to them.
   metaChain: {
-    minimatch: ["brace-expansion"],
-    "@eslint/config-array": ["minimatch"],
-    "@eslint/eslintrc": ["minimatch"],
-    "eslint-plugin-import": ["minimatch"],
-    "eslint-plugin-jsx-a11y": ["minimatch"],
-    "eslint-plugin-react": ["minimatch"],
-    eslint: ["@eslint/config-array", "@eslint/eslintrc", "minimatch"],
-    "eslint-config-next": [
-      "eslint-plugin-import",
-      "eslint-plugin-jsx-a11y",
-      "eslint-plugin-react",
-    ],
+    micromatch: ["braces"],
+    "fast-glob": ["micromatch"],
+    "@next/eslint-plugin-next": ["fast-glob"],
+    "eslint-config-next": ["@next/eslint-plugin-next"],
   },
 };
 
@@ -428,8 +418,9 @@ export function evaluateAudit({ shippedRaw, fullRaw, lockfileRaw, today = new Da
   if (today >= expiry) {
     reject(
       `The waiver for ${WAIVER.advisory} expired on ${WAIVER.expiresAt}.\n` +
-        `Owner: ${WAIVER.owner}. Re-verify whether eslint-config-next now ` +
-        `resolves onto the patched chain. Renew with fresh evidence, or ` +
+        `Owner: ${WAIVER.owner}. Re-verify whether braces has a patched release ` +
+        `or @next/eslint-plugin-next has moved off fast-glob 3.3.1. Renew ` +
+        `with fresh evidence, or ` +
         `delete the waiver.`
     );
   }
