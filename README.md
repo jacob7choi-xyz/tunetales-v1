@@ -166,6 +166,6 @@ tunetales-v1/
 
 ## Credits
 
-Built by [Jacob J. Choi](https://jacobjchoi.xyz).
+Built by [Jacob J. Choi](https://jacobjchoi.com).
 
 Artist photography via Wikimedia Commons (freely licensed). Frank Ocean hero photograph by [RJ photos UK](https://www.flickr.com/photos/rorals/), licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/); pinned locally with full provenance in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md). Album artwork displayed under fair use via Wikipedia and official streaming CDNs. Music playback through official embeds; all rights to the music belong to the artists and their labels. Stories are original writing grounded in cited music journalism.
